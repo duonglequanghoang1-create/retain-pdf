@@ -1,6 +1,7 @@
 // jobs-actions — pure (no mock)
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildJobDetailEndpoint, submitJson } from "./http.js";
+import { t } from "@retainpdf/i18n";
 
 export type OcrAmbiguityResolutionKind = "bind_existing_receipt" | "accept_duplicate_risk";
 
@@ -80,7 +81,7 @@ export async function fetchJobDiagnostics(jobId: string, apiPrefix?: string): Pr
   const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/diagnostics`, { headers: buildApiHeaders() });
   if (!resp.ok) {
     if (resp.status === 404) return null;
-    throw new Error(`读取失败诊断失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_88acd1e5", [resp.status]));
   }
   return unwrapEnvelope(await resp.json());
 }
@@ -89,7 +90,7 @@ export async function fetchResumePlan(jobId: string, apiPrefix?: string): Promis
   const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/resume-plan`, { headers: buildApiHeaders() });
   if (!resp.ok) {
     if (resp.status === 404) return null;
-    throw new Error(`读取恢复计划失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_34d8f2d5", [resp.status]));
   }
   return unwrapEnvelope(await resp.json());
 }
@@ -122,14 +123,14 @@ export async function fetchJobStageActions(jobId: string, apiPrefix?: string): P
   const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/stage-actions`, { headers: buildApiHeaders() });
   if (!resp.ok) {
     if (resp.status === 404) return null;
-    throw new Error(`读取阶段操作失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_f72b24f7", [resp.status]));
   }
   return unwrapEnvelope<JobStageActionsView>(await resp.json());
 }
 
 export async function retryJobStage(jobId: string, apiPrefix: string | undefined, stage: string, payload: Record<string, unknown> = {}): Promise<any> {
   const normalizedStage = `${stage || ""}`.trim();
-  if (!normalizedStage) throw new Error("阶段重试失败: 缺少 stage");
+  if (!normalizedStage) throw new Error(t("k_707893d5"));
   const result: any = await submitJson(`${buildJobDetailEndpoint(jobId, apiPrefix)}/retry-stage`, { stage: normalizedStage, ...payload });
   const bookMeta: any = payload && typeof payload === "object" ? payload : {};
   const nextJobId = `${result?.job_id || result?.id || jobId}`.trim();

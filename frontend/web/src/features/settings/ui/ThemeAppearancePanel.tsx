@@ -2,6 +2,7 @@
 // 真值：html[data-theme] + localStorage（shared/theme）
 // 字体：渲染字体族（request.render.typst_font_family），持久化至 localStorage 并在创建任务时注入
 
+import { t } from "@retainpdf/i18n";
 import { useEffect, useState } from "react";
 import { cn } from "@/ui/lib/utils";
 import {
@@ -117,7 +118,7 @@ function FontSelector() {
         {fonts.map((f) => (
           <option key={f.family} value={f.family}>
             {f.family}
-            {f.available ? "" : " (不可用)"}
+            {f.available ? "" : t("k_be91754f")}
           </option>
         ))}
       </select>
@@ -152,7 +153,7 @@ export function ThemeAppearancePanel() {
           <div
             className="theme-appearance-grid"
             role="radiogroup"
-            aria-label={`${label}主题`}
+            aria-label={t("k_4e5004f5", [label])}
           >
             {themes.map((meta) => {
               const swatch = meta.preview;

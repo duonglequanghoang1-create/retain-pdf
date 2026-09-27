@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { withTimeout } from "@/platform/utils/async-timeout.js";
 import {
   DEEPSEEK_BALANCE_CHECK_TIMEOUT_MS,
@@ -26,32 +27,32 @@ export async function ensureDeepSeekBudgetReady({
   if (!needsDeepSeekBudgetCheck({ workflow, workflowNeedsUpload, currentBudgetState })) {
     return true;
   }
-  setText("error-box", "正在检测 DeepSeek 余额…");
+  setText("error-box", t("k_bb0af01d"));
   try {
     const result = asBalanceResult(await withTimeout(
       refreshDeepSeekBalance?.({ silent: true }) || Promise.resolve(null),
       timeoutMs,
-      "DeepSeek 余额检测超时，请稍后重试或在接口设置中检测。",
+      t("k_4d0424f2"),
     ));
     if (result?.status === "missing_key") {
-      setText("error-box", "请先填写 DeepSeek API Key。");
+      setText("error-box", t("k_717b5efb"));
       return false;
     }
     if (result?.status === "network_error") {
-      setText("error-box", "DeepSeek 余额检测失败，请稍后重试或在接口设置中检测。");
+      setText("error-box", t("k_6fdb64df"));
       return false;
     }
   } catch (error) {
-    setText("error-box", (error as { message?: string })?.message || "DeepSeek 余额检测失败，请稍后重试。");
+    setText("error-box", (error as { message?: string })?.message || t("k_cb4731e8"));
     return false;
   }
   const budget = asBudgetState(currentBudgetState?.());
   if (budget?.blocking) {
-    setText("error-box", `余额不足：${budget.message}。请充值后再提交。`);
+    setText("error-box", t("k_9a613ffd", [budget.message]));
     return false;
   }
   if (budget?.visible && !budget.balanceChecked) {
-    setText("error-box", "无法确认 DeepSeek 余额，请先在接口设置中完成检测。");
+    setText("error-box", t("k_80b71de5"));
     return false;
   }
   return true;

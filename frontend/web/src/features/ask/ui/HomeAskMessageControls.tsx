@@ -5,6 +5,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, ChevronLeft, ChevronRight, Copy, Pencil, RotateCcw } from "lucide-react";
 import type { HomeAskBranchNav } from "../domain/home-ask-branches.js";
+import { t } from "@retainpdf/i18n";
 
 /**
  * 一条回答下面的操作。阅读器那侧早就有复制与重新生成，主页此前一个都没有。
@@ -69,11 +70,11 @@ export function MessageActions({
         <BranchSwitcher branch={branch} onSwitch={onSwitchBranch} />
       ) : null}
       {content.trim() ? (
-        <button type="button" className="home-ask-msg-action" onClick={copy} title="复制回答">
+        <button type="button" className="home-ask-msg-action" onClick={copy} title={t("k_ab41610f")}>
           {copied
             ? <Check size={13} strokeWidth={2.2} aria-hidden />
             : <Copy size={13} strokeWidth={2.2} aria-hidden />}
-          <span>{copied ? "已复制" : "复制"}</span>
+          <span>{copied ? t("k_e381a576") : t("k_4edd1d00")}</span>
         </button>
       ) : null}
       {canRegenerate ? (
@@ -82,13 +83,13 @@ export function MessageActions({
           className="home-ask-msg-action"
           onClick={onRegenerate}
           title={failed
-            ? "重试这次提问"
+            ? t("k_da1b5703")
             : interrupted
-              ? "重新回答这一轮；被中断的这版留作上一个版本"
-              : "重新生成回答"}
+              ? t("k_54437fca")
+              : t("k_a28c4a15")}
         >
           <RotateCcw size={13} strokeWidth={2.2} aria-hidden />
-          <span>{failed ? "重试" : "重新生成"}</span>
+          <span>{failed ? t("k_e2d53a6d") : t("k_2e190570")}</span>
         </button>
       ) : null}
       {interrupted && onEditQuestion ? (
@@ -96,7 +97,7 @@ export function MessageActions({
           type="button"
           className="home-ask-msg-action"
           onClick={onEditQuestion}
-          title="改写这一轮的问题再问一次"
+          title={t("k_e9ffc19a")}
         >
           <Pencil size={13} strokeWidth={2.2} aria-hidden />
           <span>改写提问</span>
@@ -121,14 +122,14 @@ export function BranchSwitcher({
   onSwitch: (messageId: string) => void;
 }) {
   return (
-    <div className="home-ask-msg-branch" role="group" aria-label="回答版本">
+    <div className="home-ask-msg-branch" role="group" aria-label={t("k_52a787d3")}>
       <button
         type="button"
         className="home-ask-msg-branch-nav"
         onClick={() => branch.prevId && onSwitch(branch.prevId)}
         disabled={!branch.prevId}
-        aria-label="上一版回答"
-        title="上一版回答"
+        aria-label={t("k_53a4170c")}
+        title={t("k_53a4170c")}
       >
         <ChevronLeft size={13} strokeWidth={2.4} aria-hidden />
       </button>
@@ -140,8 +141,8 @@ export function BranchSwitcher({
         className="home-ask-msg-branch-nav"
         onClick={() => branch.nextId && onSwitch(branch.nextId)}
         disabled={!branch.nextId}
-        aria-label="下一版回答"
-        title="下一版回答"
+        aria-label={t("k_a0534704")}
+        title={t("k_a0534704")}
       >
         <ChevronRight size={13} strokeWidth={2.4} aria-hidden />
       </button>
@@ -202,7 +203,7 @@ export function QuestionEditor({
             submit();
           }
         }}
-        aria-label="改写问题"
+        aria-label={t("k_491221cd")}
       />
       <div className="home-ask-msg-editor-actions">
         <button type="button" className="home-ask-msg-action" onClick={onCancel}>

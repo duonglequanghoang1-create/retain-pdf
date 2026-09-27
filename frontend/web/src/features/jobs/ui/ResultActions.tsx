@@ -19,6 +19,7 @@
 import { useHomeArtifactDownloads } from "@/ui/context/home-services-context.js";
 import { useArtifactDownloadBusy } from "@/features/artifacts/index.js";
 import { STATUS_CARD_ACTION_IDS } from "./status-card-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 type ActionLinkProps = {
   id: string;
@@ -33,7 +34,7 @@ function ActionLink({ id, label, ready, url, onClick }: ActionLinkProps) {
   const busyState = useArtifactDownloadBusy(busyStore, id);
   const enabled = Boolean(ready && url) && !busyState.busy;
   const isReaderLink = id === STATUS_CARD_ACTION_IDS.reader;
-  const displayLabel = busyState.busy ? (busyState.label || "下载中...") : label;
+  const displayLabel = busyState.busy ? (busyState.label || t("k_a0ef0da2")) : label;
   return (
     <a
       id={id}
@@ -87,10 +88,10 @@ export function ResultActions({
 
   return (
     <div className={`status-result-actions${hasActions ? "" : " hidden"}`}>
-      <ActionLink id={STATUS_CARD_ACTION_IDS.markdownBundle} label="下载 Markdown" ready={markdownBundleReady} url={markdownBundleUrl} />
-      <ActionLink id={STATUS_CARD_ACTION_IDS.sourcePdf} label="下载原始 PDF" ready={sourcePdfReady} url={sourcePdfUrl} />
-      <ActionLink id={STATUS_CARD_ACTION_IDS.reader} label="对照阅读" ready={readerReady} url={readerUrl} onClick={onReaderClick} />
-      <ActionLink id={STATUS_CARD_ACTION_IDS.pdf} label="下载 PDF" ready={pdfReady} url={pdfUrl} />
+      <ActionLink id={STATUS_CARD_ACTION_IDS.markdownBundle} label={t("k_30bfb9b4")} ready={markdownBundleReady} url={markdownBundleUrl} />
+      <ActionLink id={STATUS_CARD_ACTION_IDS.sourcePdf} label={t("k_ad2b73a4")} ready={sourcePdfReady} url={sourcePdfUrl} />
+      <ActionLink id={STATUS_CARD_ACTION_IDS.reader} label={t("k_5ca75802")} ready={readerReady} url={readerUrl} onClick={onReaderClick} />
+      <ActionLink id={STATUS_CARD_ACTION_IDS.pdf} label={t("k_8aa3abe1")} ready={pdfReady} url={pdfUrl} />
     </div>
   );
 }

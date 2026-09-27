@@ -16,6 +16,7 @@ import { useHomeDialogStore, useHomeSettingsHub, useHomeWorkflowDialog } from ".
 import { useStoreSnapshot } from "@/ui/hooks/use-store.js";
 import { useLibrarySearchBinding } from "@/features/library/index.js";
 import { TRANSLATION_WORKFLOW_DIALOG } from "@/features/ingest/domain.js";
+import { t } from "@retainpdf/i18n";
 
 // 任务中心浮层入口事件：平台 ?tab= 白名单（platform/navigation/pages.js）没有
 // tasks 键且不可动（别的 agent 领地），故任务中心不做顶栏 Tab，走主页浮层——
@@ -38,13 +39,13 @@ export function AppBottomBar({ showSearch = true, hidden = false }) {
   const { query, onSearchChange } = useLibrarySearchBinding();
 
   return (
-    <div className={`library-bottom-bar${hidden ? " is-hidden" : ""}`} aria-label="快捷操作栏">
+    <div className={`library-bottom-bar${hidden ? " is-hidden" : ""}`} aria-label={t("k_2b80fe9c")}>
       <button
         id="library-add-pdf-btn"
         type="button"
         className={`library-bottom-icon-btn primary${open ? " is-active" : ""}`}
-        aria-label="添加 PDF"
-        title="添加 PDF"
+        aria-label={t("k_34be0e84")}
+        title={t("k_34be0e84")}
         aria-controls="translation-workflow-dialog"
         aria-expanded={open ? "true" : "false"}
         data-workflow-open={open
@@ -66,8 +67,8 @@ export function AppBottomBar({ showSearch = true, hidden = false }) {
             id="library-search-input"
             type="search"
             autoComplete="off"
-            placeholder="搜索书籍、任务或日期"
-            aria-label="搜索书籍"
+            placeholder={t("k_ff2848af")}
+            aria-label={t("k_bb961e2a")}
             value={query}
             onChange={onSearchChange}
           />
@@ -77,8 +78,8 @@ export function AppBottomBar({ showSearch = true, hidden = false }) {
               id="library-search-clear-btn"
               type="button"
               className="library-bottom-search-clear"
-              aria-label="清除搜索"
-              title="清除搜索"
+              aria-label={t("k_318ea18e")}
+              title={t("k_318ea18e")}
               onClick={() => onSearchChange({ target: { value: "" } })}
             >
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -93,8 +94,8 @@ export function AppBottomBar({ showSearch = true, hidden = false }) {
         id="home-task-center-btn"
         type="button"
         className="library-bottom-icon-btn"
-        aria-label="任务中心"
-        title="任务中心"
+        aria-label={t("k_f692ff9e")}
+        title={t("k_f692ff9e")}
         onClick={openTaskCenter}
       >
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -108,8 +109,8 @@ export function AppBottomBar({ showSearch = true, hidden = false }) {
         id="app-settings-btn"
         type="button"
         className="library-bottom-icon-btn"
-        aria-label="设置"
-        title="设置"
+        aria-label={t("k_7debf9cb")}
+        title={t("k_7debf9cb")}
         aria-controls="app-settings-dialog"
         onClick={() => settingsHub.dialogStore.open({ tab: "api" })}
       >

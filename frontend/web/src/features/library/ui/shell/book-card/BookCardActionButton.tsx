@@ -3,6 +3,7 @@
 
 import { cn } from "@retainpdf/ui/lib/utils";
 import type { BookCardAction, LibraryCardItem } from "../../../domain/types.js";
+import { t } from "@retainpdf/i18n";
 
 function IconEye(props) {
   return (
@@ -55,7 +56,7 @@ export function BookCardActionButton({
   item?: LibraryCardItem;
   className?: string;
 }) {
-  const label = `${action?.label || action?.id || "操作"}`.trim();
+  const label = `${action?.label || action?.id || t("k_f3ea6d34")}`.trim();
   return (
     <button
       type="button"

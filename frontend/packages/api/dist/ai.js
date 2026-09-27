@@ -3,6 +3,7 @@
 import { API_PREFIX } from "./internal/runtime.js";
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildApiEndpoint } from "./http.js";
+import { t } from "@retainpdf/i18n";
 export class AiAskError extends Error {
     status;
     constructor(message, status = 0) {
@@ -88,7 +89,7 @@ function parseSseEvent(line = "") {
 }
 export async function readAiAskStream(body, { onProgressEvent = null, onToolEvent = null, onAgentToolEvent = null, onAgentOperationEvent = null, onAgentConfirmationRequiredEvent = null, onAgentSessionEvent = null, onAnswerDelta = null, onCompress = null, } = {}) {
     if (!body || typeof body.getReader !== "function")
-        throw new AiAskError("AI 服务响应格式异常,请重试。");
+        throw new AiAskError(t("k_6e4e5038"));
     const reader = body.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
@@ -180,7 +181,7 @@ export async function readAiAskStream(body, { onProgressEvent = null, onToolEven
             return;
         }
         if (event.type === "error" || event.type === "cancelled") {
-            throw new AiAskError(`${event.message || (event.type === "cancelled" ? "AI 请求已取消。" : "AI 服务返回错误。")}`);
+            throw new AiAskError(`${event.message || (event.type === "cancelled" ? t("k_babb1651") : t("k_27163ee8"))}`);
         }
         if (event.type === "compress") {
             onCompress?.(event);
@@ -211,7 +212,7 @@ export async function readAiAskStream(body, { onProgressEvent = null, onToolEven
         reader.releaseLock?.();
     }
     if (!result)
-        throw new AiAskError("AI 服务响应中断,请重试。");
+        throw new AiAskError(t("k_cb7733b9"));
     return result;
 }
 async function extractErrorMessage(resp) {
@@ -244,7 +245,7 @@ async function extractErrorMessage(resp) {
 export async function askLibraryAi({ question = "", documentId = "", jobId = "", conversationId = "", parentId = "", regenerate = false, userMessageId = "", assistantMessageId = "", onToolEvent = null, onProgressEvent = null, onAgentToolEvent = null, onAgentOperationEvent = null, onAgentConfirmationRequiredEvent = null, onAgentSessionEvent = null, onAnswerDelta = null, onCompress = null, signal = null, apiPrefix = API_PREFIX, fetchImpl = fetch, llmApiKey = "", llmBaseUrl = "", llmModel = "", confirmDocumentOperation = false, assistantMode = "auto", } = {}) {
     const trimmed = `${question}`.trim();
     if (!trimmed)
-        throw new AiAskError("请输入问题。", 400);
+        throw new AiAskError(t("k_c0af56b0"), 400);
     const payload = { question: trimmed, stream: true };
     const normalizedDocumentId = `${documentId || ""}`.trim();
     const normalizedJobId = `${jobId || ""}`.trim();
@@ -286,16 +287,16 @@ export async function askLibraryAi({ question = "", documentId = "", jobId = "",
     });
     if (!resp.ok) {
         if (resp.status === 502)
-            throw new AiAskError("AI 服务未运行(502),请先启动 retainpdf-ai 服务。", 502);
+            throw new AiAskError(t("k_24373969"), 502);
         const message = await extractErrorMessage(resp);
         if (resp.status === 401) {
-            const hint = /X-API-Key|api key|invalid api key|Unauthorized/i.test(message) ? message : "服务鉴权失败：X-API-Key 无效或未配置（检查 runtime-config 的 xApiKey / 后端 auth 配置）。";
+            const hint = /X-API-Key|api key|invalid api key|Unauthorized/i.test(message) ? message : t("k_89172e69");
             throw new AiAskError(`${hint}(${resp.status})`, 401);
         }
         if (resp.status === 400 && /LLM|模型\s*API\s*Key|api key/i.test(message)) {
-            throw new AiAskError(message.includes("凭据") || message.includes("设置") ? `${message}(${resp.status})` : `缺少模型 API Key：请到设置 → API 设置填写后再提问。(${resp.status})`, 400);
+            throw new AiAskError(message.includes("凭据") || message.includes("设置") ? `${message}(${resp.status})` : t("k_87eb6491", [resp.status]), 400);
         }
-        throw new AiAskError(`${message || "AI 问答请求失败,请稍后重试。"}(${resp.status})`, resp.status);
+        throw new AiAskError(`${message || t("k_19e37a54")}(${resp.status})`, resp.status);
     }
     const contentType = `${resp.headers?.get?.("content-type") || ""}`.toLowerCase();
     if (contentType.includes("application/json")) {

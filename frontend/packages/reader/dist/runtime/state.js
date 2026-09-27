@@ -1,190 +1,191 @@
-const p = Object.freeze({
+import { t as n } from "../i18n-Bsr2eycf.js";
+const v = Object.freeze({
   source: {
     fallbackSuffix: "source",
-    label: "原始 PDF",
-    operation: "下载原始 PDF"
+    label: n("k_87e9f577"),
+    operation: n("k_ad2b73a4")
   },
   sideBySide: {
     fallbackSuffix: "side-by-side",
-    label: "对照 PDF",
-    operation: "下载对照 PDF"
+    label: n("k_cfe9fa15"),
+    operation: n("k_bc9c0d0d")
   },
   translated: {
     fallbackSuffix: "translated",
-    label: "译文 PDF",
-    operation: "下载译文 PDF"
+    label: n("k_d93c8aae"),
+    operation: n("k_edbcfc1a")
   }
 });
-function g(e) {
+function S(e) {
   return typeof e == "string" ? e.trim() : "";
 }
-function D({ jobId: e = "", jobPayload: t = null, manifestPayload: o = null } = {}) {
+function p({ jobId: e = "", jobPayload: t = null, manifestPayload: d = null } = {}) {
   return {
     currentJobId: e,
-    currentJobManifest: o || null,
+    currentJobManifest: d || null,
     currentJobManifestJobId: e,
     currentJobSnapshot: t || null
   };
 }
-function F(e, t) {
-  return e === "sideBySide" && (!t.source || !t.translated) ? "对照 PDF 需要原始 PDF 和译文 PDF 都可用" : !t.source && (e === "source" || e === "sideBySide") ? "原始 PDF 尚未生成或清单不可用" : !t.translated && (e === "translated" || e === "sideBySide") ? "译文 PDF 尚未生成或清单不可用" : "下载地址暂不可用";
+function R(e, t) {
+  return e === "sideBySide" && (!t.source || !t.translated) ? n("k_66e6dcca") : !t.source && (e === "source" || e === "sideBySide") ? n("k_7b19b7fd") : !t.translated && (e === "translated" || e === "sideBySide") ? n("k_5c3a0605") : n("k_2ee72c4b");
 }
-function I({
-  resolveSourcePdfDownloadName: e = (y, i) => i || "",
-  resolveTranslatedPdfDownloadName: t = (y, i) => i || "",
-  createRuntimePort: o = null,
-  resolveSourcePdf: n = (y) => ""
+function $({
+  resolveSourcePdfDownloadName: e = (m, f) => f || "",
+  resolveTranslatedPdfDownloadName: t = (m, f) => f || "",
+  createRuntimePort: d = null,
+  resolveSourcePdf: o = (m) => ""
 } = {}) {
-  function y({ jobId: l = "", jobPayload: s = null, manifestPayload: m = null } = {}) {
-    let f = "", u = "";
-    if (o) {
-      const P = o({
-        getCurrentJobId: (c) => (c == null ? void 0 : c.currentJobId) || "",
-        getCurrentJobSnapshot: (c) => (c == null ? void 0 : c.currentJobSnapshot) || null,
-        getCachedManifestFor: (c, R) => (c == null ? void 0 : c.currentJobManifest) || null
-      }).currentArtifactUrls(D({ jobId: l, jobPayload: s, manifestPayload: m }));
-      f = P.translatedPdf || "", u = P.sideBySidePdf || "";
+  function m({ jobId: l = "", jobPayload: s = null, manifestPayload: y = null } = {}) {
+    let _ = "", u = "";
+    if (d) {
+      const x = d({
+        getCurrentJobId: (i) => (i == null ? void 0 : i.currentJobId) || "",
+        getCurrentJobSnapshot: (i) => (i == null ? void 0 : i.currentJobSnapshot) || null,
+        getCachedManifestFor: (i, P) => (i == null ? void 0 : i.currentJobManifest) || null
+      }).currentArtifactUrls(p({ jobId: l, jobPayload: s, manifestPayload: y }));
+      _ = x.translatedPdf || "", u = x.sideBySidePdf || "";
     }
-    const r = n(m) || "", d = typeof r == "string" ? r : r && typeof r == "object" && (r.resource_url || r.resource_path || r.resourceUrl || r.resourcePath) || "", a = typeof r == "string" ? r : d || r;
+    const r = o(y) || "", a = typeof r == "string" ? r : r && typeof r == "object" && (r.resource_url || r.resource_path || r.resourceUrl || r.resourcePath) || "", c = typeof r == "string" ? r : a || r;
     return {
-      source: typeof a == "string" ? a : a || "",
-      sideBySide: (typeof a == "string" ? a : d || r) && f ? u : "",
-      translated: f
+      source: typeof c == "string" ? c : c || "",
+      sideBySide: (typeof c == "string" ? c : a || r) && _ ? u : "",
+      translated: _
     };
   }
-  function i(l, { jobId: s, jobPayload: m, manifestPayload: f }) {
+  function f(l, { jobId: s, jobPayload: y, manifestPayload: _ }) {
     var r;
-    const u = `${s || "result"}-${((r = p[l]) == null ? void 0 : r.fallbackSuffix) || "download"}.pdf`, _ = D({ jobId: s, jobPayload: m, manifestPayload: f });
-    return l === "source" ? e(_, u) || u : l === "translated" && t(_, u) || u;
+    const u = `${s || "result"}-${((r = v[l]) == null ? void 0 : r.fallbackSuffix) || "download"}.pdf`, k = p({ jobId: s, jobPayload: y, manifestPayload: _ });
+    return l === "source" ? e(k, u) || u : l === "translated" && t(k, u) || u;
   }
   return Object.freeze({
-    resolveReaderDownloadUrls: y,
-    resolveReaderDownloadName: i,
-    readerDownloadNameState: D,
-    disabledReason: F,
-    trimString: g,
-    READER_DOWNLOAD_ACTIONS: p
+    resolveReaderDownloadUrls: m,
+    resolveReaderDownloadName: f,
+    readerDownloadNameState: p,
+    disabledReason: R,
+    trimString: S,
+    READER_DOWNLOAD_ACTIONS: v
   });
 }
-const v = I(), $ = v.resolveReaderDownloadUrls, k = v.resolveReaderDownloadName;
-function x(e = {}) {
-  const t = `${(e == null ? void 0 : e.favorite_id) || ""}`.trim(), o = `${(e == null ? void 0 : e.quote_text) || ""}`.trim();
-  if (!t || !o)
+const I = $(), N = I.resolveReaderDownloadUrls, O = I.resolveReaderDownloadName;
+function g(e = {}) {
+  const t = `${(e == null ? void 0 : e.favorite_id) || ""}`.trim(), d = `${(e == null ? void 0 : e.quote_text) || ""}`.trim();
+  if (!t || !d)
     return null;
-  const n = Number(e.page_idx);
+  const o = Number(e.page_idx);
   return {
     favoriteId: t,
     documentId: `${e.document_id || ""}`.trim(),
     jobId: `${e.job_id || ""}`.trim(),
-    pageIdx: Number.isFinite(n) && n >= 0 ? n : 0,
+    pageIdx: Number.isFinite(o) && o >= 0 ? o : 0,
     blockId: `${e.block_id || ""}`.trim(),
     kind: `${e.kind || ""}`.trim() || "sentence",
-    quoteText: o,
+    quoteText: d,
     translatedQuoteText: `${e.translated_quote_text || ""}`.trim(),
     note: `${e.note || ""}`.trim(),
     createdAt: `${e.created_at || ""}`.trim()
   };
 }
-function h(e = [], t = []) {
-  const o = new Set(
-    (Array.isArray(t) ? t : []).map((n) => `${(n == null ? void 0 : n.serverFavoriteId) || ""}`.trim()).filter(Boolean)
+function A(e = [], t = []) {
+  const d = new Set(
+    (Array.isArray(t) ? t : []).map((o) => `${(o == null ? void 0 : o.serverFavoriteId) || ""}`.trim()).filter(Boolean)
   );
-  return (Array.isArray(e) ? e : []).filter((n) => (n == null ? void 0 : n.favoriteId) && !o.has(n.favoriteId));
+  return (Array.isArray(e) ? e : []).filter((o) => (o == null ? void 0 : o.favoriteId) && !d.has(o.favoriteId));
 }
-function N({
+function B({
   jobId: e = "",
   apiPrefix: t = "",
-  documentByJobId: o = async (l, s) => null,
-  submitFavorite: n = async (l, s) => null,
-  loadFavorites: y = async (l, s) => ({ favorites: [] }),
-  removeFavorite: i = async (l, s) => null
+  documentByJobId: d = async (l, s) => null,
+  submitFavorite: o = async (l, s) => null,
+  loadFavorites: m = async (l, s) => ({ favorites: [] }),
+  removeFavorite: f = async (l, s) => null
 } = {}) {
   let l = null;
   function s() {
     return l || (l = (async () => {
       try {
-        const r = await o(t, e);
+        const r = await d(t, e);
         return `${(r == null ? void 0 : r.document_id) || ""}`.trim();
       } catch {
         return "";
       }
     })()), l;
   }
-  async function m(r = {}) {
-    const d = `${r.blockId || ""}`.trim(), a = `${r.quoteText || ""}`.trim();
-    if (!d || !a)
+  async function y(r = {}) {
+    const a = `${r.blockId || ""}`.trim(), c = `${r.quoteText || ""}`.trim();
+    if (!a || !c)
       return null;
     try {
-      const b = await n(t, {
+      const b = await o(t, {
         job_id: e,
         page_idx: Number(r.pageIdx) || 0,
-        block_id: d,
-        quote_text: a,
+        block_id: a,
+        quote_text: c,
         translated_quote_text: `${r.translatedQuoteText || ""}`,
         kind: "sentence"
       });
-      return console.info("收藏已同步到服务端", (b == null ? void 0 : b.favorite_id) || ""), b;
+      return console.info(n("k_e5e470e8"), (b == null ? void 0 : b.favorite_id) || ""), b;
     } catch (b) {
-      return console.error("同步收藏到服务端失败", b), null;
+      return console.error(n("k_b00c4d9d"), b), null;
     }
   }
-  async function f() {
+  async function _() {
     const r = await s();
     if (!r)
       return [];
     try {
-      const { favorites: d = [] } = await y(t, { documentId: r });
-      return (Array.isArray(d) ? d : []).map(x).filter(Boolean);
-    } catch (d) {
-      return console.warn("读取服务端收藏失败", d), [];
+      const { favorites: a = [] } = await m(t, { documentId: r });
+      return (Array.isArray(a) ? a : []).map(g).filter(Boolean);
+    } catch (a) {
+      return console.warn(n("k_d2ad92a3"), a), [];
     }
   }
   async function u(r) {
-    const d = `${r || ""}`.trim();
-    if (!d)
+    const a = `${r || ""}`.trim();
+    if (!a)
       return !1;
     try {
-      return await i(t, d), !0;
-    } catch (a) {
-      return console.error("删除服务端收藏失败", a), !1;
+      return await f(t, a), !0;
+    } catch (c) {
+      return console.error(n("k_389a65eb"), c), !1;
     }
   }
-  async function _(r = {}, d = "") {
+  async function k(r = {}, a = "") {
     if (!(r != null && r.favoriteId))
       return null;
     try {
-      const a = await n(t, {
+      const c = await o(t, {
         job_id: `${r.jobId || e || ""}`.trim() || void 0,
         page_idx: Number(r.pageIdx) || 0,
         block_id: `${r.blockId || ""}`.trim(),
         quote_text: `${r.quoteText || ""}`,
         translated_quote_text: `${r.translatedQuoteText || ""}`,
         kind: `${r.kind || "sentence"}`,
-        note: `${d || ""}`
+        note: `${a || ""}`
       });
-      return await u(r.favoriteId), x(a);
-    } catch (a) {
-      return console.error("更新批注笔记失败", a), null;
+      return await u(r.favoriteId), g(c);
+    } catch (c) {
+      return console.error(n("k_f643e159"), c), null;
     }
   }
   return Object.freeze({
-    loadServerFavorites: f,
-    recreateFavoriteNote: _,
+    loadServerFavorites: _,
+    recreateFavoriteNote: k,
     removeServerFavorite: u,
     resolveDocumentId: s,
-    syncFavorite: m
+    syncFavorite: y
   });
 }
-const S = Object.freeze({
-  boot: "正在准备对照阅读…",
-  metadata: "正在读取任务信息…",
-  both: "正在加载原始 PDF 和译文 PDF…",
-  sourceOnly: "原始 PDF 已加载，正在加载译文 PDF…",
-  translatedOnly: "译文 PDF 已加载，正在加载原始 PDF…",
-  ready: "对照阅读已就绪",
-  failed: "对照阅读加载失败"
+const D = Object.freeze({
+  boot: n("k_4268c4a0"),
+  metadata: n("k_9f2b6df7"),
+  both: n("k_2a3a255d"),
+  sourceOnly: n("k_16baf569"),
+  translatedOnly: n("k_49013855"),
+  ready: n("k_ed712d1e"),
+  failed: n("k_239dbe09")
 });
-function O() {
+function J() {
   return {
     reader: {
       totalPages: 0,
@@ -203,33 +204,33 @@ function O() {
     }
   };
 }
-function A(e) {
+function j(e) {
   e != null && e.progress && (e.progress.metadataReady = !1, e.progress.sourceDone = !1, e.progress.translatedDone = !1);
 }
-function B(e, t = S) {
+function F(e, t = D) {
   if (!(e != null && e.metadataReady))
     return { percent: 8, text: t.boot, stage: "boot" };
-  const o = Number(e.sourceDone) + Number(e.translatedDone), n = 24 + o * 30;
-  return o === 0 ? { percent: n, text: t.both, stage: "pdfs" } : o === 1 ? {
-    percent: n,
+  const d = Number(e.sourceDone) + Number(e.translatedDone), o = 24 + d * 30;
+  return d === 0 ? { percent: o, text: t.both, stage: "pdfs" } : d === 1 ? {
+    percent: o,
     text: e.sourceDone ? t.sourceOnly : t.translatedOnly,
     stage: "pdfs"
   } : { percent: 92, text: t.ready, stage: "readying" };
 }
 export {
-  p as READER_DOWNLOAD_ACTIONS,
-  S as READER_PROGRESS_COPY,
-  B as computeReaderProgressSnapshot,
-  I as createReaderDownloadResolver,
-  O as createReaderPageState,
-  N as createReaderServerFavoritesPort,
-  h as dedupeServerFavorites,
-  F as disabledReason,
-  x as normalizeServerFavorite,
-  D as readerDownloadNameState,
-  A as resetReaderProgressState,
-  k as resolveReaderDownloadName,
-  $ as resolveReaderDownloadUrls,
-  g as trimString
+  v as READER_DOWNLOAD_ACTIONS,
+  D as READER_PROGRESS_COPY,
+  F as computeReaderProgressSnapshot,
+  $ as createReaderDownloadResolver,
+  J as createReaderPageState,
+  B as createReaderServerFavoritesPort,
+  A as dedupeServerFavorites,
+  R as disabledReason,
+  g as normalizeServerFavorite,
+  p as readerDownloadNameState,
+  j as resetReaderProgressState,
+  O as resolveReaderDownloadName,
+  N as resolveReaderDownloadUrls,
+  S as trimString
 };
 //# sourceMappingURL=state.js.map

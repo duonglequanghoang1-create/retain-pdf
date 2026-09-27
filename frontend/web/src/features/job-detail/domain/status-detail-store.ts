@@ -8,6 +8,7 @@ import type { OcrAmbiguityView } from "@/platform/api/index.js";
 import type {
   FailureRecoveryModel,
 } from "./dialog/failure-recovery.js";
+import { t } from "@retainpdf/i18n";
 
 // StatusDetailDialog 的读面 store(蓝图 §1 "新 store"清单)。
 //
@@ -196,7 +197,7 @@ const EMPTY_OVERVIEW: StatusDetailOverview = Object.freeze({
     iconMarkup: "",
     jobId: "-",
     note: "",
-    statusLabel: "准备中",
+    statusLabel: t("k_4f1f8aa3"),
     tone: "neutral" as const,
   },
   runtime: {

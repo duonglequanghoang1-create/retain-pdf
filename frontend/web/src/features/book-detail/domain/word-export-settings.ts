@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // Word 排版稿导出的清晰度设置（纯逻辑，不碰 React）。
 //
 // DPI 决定每页背景位图的分辨率——也就直接决定文件大小。后端把它夹在 [72, 300]
@@ -9,9 +11,9 @@ const STORAGE_KEY = "retainpdf.book-detail.word-export.dpi.v1";
 export const DEFAULT_WORD_EXPORT_DPI = 180;
 
 export const WORD_EXPORT_DPI_OPTIONS = [
-  { value: 120, label: "标准", hint: "文件最小，正文清楚，背景略糊" },
-  { value: 180, label: "清晰", hint: "默认。背景图接近原始扫描件的观感" },
-  { value: 300, label: "最高", hint: "背景锐利，文件大小约为标准档的三倍" },
+  { value: 120, label: t("k_8beedd9b"), hint: t("k_8fc79132") },
+  { value: 180, label: t("k_18a72ea0"), hint: t("k_f5944ee9") },
+  { value: 300, label: t("k_2cd489b0"), hint: t("k_850afdb2") },
 ] as const;
 
 export function clampWordExportDpi(value: unknown): number {

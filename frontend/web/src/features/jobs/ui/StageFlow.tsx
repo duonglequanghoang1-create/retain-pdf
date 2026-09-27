@@ -12,6 +12,7 @@ import {
   isSelectableStatusStage,
   statusStageIndex,
 } from "@retainpdf/domain/job-status";
+import { t } from "@retainpdf/i18n";
 
 /** @deprecated 重试已迁出 StageFlow；保留类型以免旧 import 断裂 */
 export type StageFlowRetryAction = {
@@ -44,7 +45,7 @@ export function StageFlow({
   const activeIndex = statusStageIndex(normalized);
 
   return (
-    <div id={flowId || undefined} className="status-stage-flow" role="tablist" aria-label="任务流程">
+    <div id={flowId || undefined} className="status-stage-flow" role="tablist" aria-label={t("k_ba03f0a2")}>
       {STATUS_STAGE_FLOW.map((stageKey) => {
         const stepIndex = statusStageIndex(stageKey);
         const isDone = activeIndex >= 0 && stepIndex >= 0 && stepIndex < activeIndex;

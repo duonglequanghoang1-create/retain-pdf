@@ -7,6 +7,7 @@
 // Nothing in this module touches React, the DOM, fetch, or global storage; the
 // idempotency helpers receive their storage/prefixes from the caller so each
 // surface keeps its exact on-disk sessionStorage format.
+import { t } from "@retainpdf/i18n";
 export const AGENT_OPERATION_ACTIVE_STATUSES = new Set([
     "queued",
     "running",
@@ -98,5 +99,5 @@ export function agentOperationErrorStatus(error) {
 export function agentOperationErrorMessage(error) {
     return error instanceof Error && error.message.trim()
         ? error.message.trim()
-        : "操作请求失败，请重试。";
+        : t("k_b4e4dc6c");
 }

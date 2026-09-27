@@ -4,6 +4,7 @@ import { stageSubtypeOfPayload, } from "../contract/job-stage-substage-adapter.j
 import { firstNonEmpty } from "./job-status-summary-helpers.js";
 import { USER_STAGE_FLOW, USER_STAGE_TOTAL, } from "./job-status-summary-stage-constants.js";
 import { isJobTerminal } from "../../job/core.js";
+import { t } from "@retainpdf/i18n";
 function publicStageKeyOf(payload) {
     const canonicalStage = canonicalStageOf(payload);
     if (canonicalStage) {
@@ -43,15 +44,15 @@ function detailForPayload(payload, fallback) {
 function successDetailForWorkflow(payload) {
     const workflow = `${payload?.workflow || ""}`.trim().toLowerCase();
     return workflow === "ocr"
-        ? "OCR/文档解析已完成"
-        : "翻译 PDF 已生成";
+        ? t("k_cb70ac9b")
+        : t("k_aefbc670");
 }
 function userStageFor(payload) {
     const stageKey = stageKeyOf(payload);
     if (payload.status === "succeeded" && isJobTerminal(payload)) {
         return {
             key: "done",
-            label: "完成",
+            label: t("k_33246f6a"),
             detail: successDetailForWorkflow(payload),
             step: USER_STAGE_TOTAL,
             total: USER_STAGE_TOTAL,
@@ -60,8 +61,8 @@ function userStageFor(payload) {
     if (payload.status === "failed") {
         return {
             key: "failed",
-            label: "失败",
-            detail: "任务失败，请查看详情",
+            label: t("k_3e3c8068"),
+            detail: t("k_0b270e1f"),
             step: null,
             total: USER_STAGE_TOTAL,
         };
@@ -69,8 +70,8 @@ function userStageFor(payload) {
     if (payload.status === "canceled") {
         return {
             key: "canceled",
-            label: "已取消",
-            detail: "任务已取消",
+            label: t("k_a5ffdc95"),
+            detail: t("k_6df9b765"),
             step: null,
             total: USER_STAGE_TOTAL,
         };
@@ -80,8 +81,8 @@ function userStageFor(payload) {
         && !["ocr", "translate", "render"].includes(stageKey)) {
         return {
             key: "queued",
-            label: "排队中",
-            detail: detailForPayload(payload, "等待可用执行槽位"),
+            label: t("k_4dcbbcfa"),
+            detail: detailForPayload(payload, t("k_dc6aee22")),
             step: null,
             total: USER_STAGE_TOTAL,
         };
@@ -99,16 +100,16 @@ function userStageFor(payload) {
     if (payload.status === "running") {
         return {
             key: "running",
-            label: "处理中",
-            detail: detailForPayload(payload, "正在处理任务"),
+            label: t("k_fcb979ef"),
+            detail: detailForPayload(payload, t("k_999b283e")),
             step: null,
             total: USER_STAGE_TOTAL,
         };
     }
     return {
         key: "idle",
-        label: "等待中",
-        detail: "等待任务开始",
+        label: t("k_bd3488d0"),
+        detail: t("k_bb57f21e"),
         step: null,
         total: USER_STAGE_TOTAL,
     };
@@ -118,7 +119,7 @@ function userStageLabel(payload) {
     if (stage.step && stage.total && !isJobTerminal(payload)) {
         const subtype = stageSubtypeOf(payload);
         const subtypeLabel = substageLabel(subtype) || stage.label;
-        return `第 ${stage.step}/${stage.total} 步 · ${subtypeLabel}`;
+        return t("k_ec81c80c", [stage.step, stage.total, subtypeLabel]);
     }
     return stage.label;
 }

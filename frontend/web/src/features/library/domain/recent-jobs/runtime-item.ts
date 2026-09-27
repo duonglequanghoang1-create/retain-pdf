@@ -9,6 +9,7 @@ import type {
   LibraryJobItem,
   RuntimeItemOptions,
 } from "./runtime-item-types.js";
+import { t } from "@retainpdf/i18n";
 
 export type {
   LibraryJobItem,
@@ -39,7 +40,7 @@ export function createLibraryJobItemFromRuntime(
     page_count: null,
     status: "queued",
     stage: "queued",
-    stage_detail: "任务已提交",
+    stage_detail: t("k_7bdaa28b"),
     progress: {},
     created_at: job.created_at || new Date().toISOString(),
     updated_at: job.updated_at || new Date().toISOString(),

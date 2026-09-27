@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { JobListItemView } from "@retainpdf/contracts/job-status";
 import {
@@ -87,7 +88,7 @@ function TaskRow({ job, busyAction, onOpen, onCancel, onRetry }: {
             {job.updated_at ? <span>{formatUpdatedAt(job.updated_at)}</span> : null}
           </div>
           {isActive && progress !== null ? (
-            <div className="mt-2 flex items-center gap-2" aria-label={`任务进度 ${Math.round(progress)}%`}>
+            <div className="mt-2 flex items-center gap-2" aria-label={t("k_6e6796b4", [Math.round(progress)])}>
               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                 <div className="h-full rounded-full bg-foreground transition-[width]" style={{ width: `${progress}%` }} />
               </div>
@@ -115,7 +116,7 @@ function TaskRow({ job, busyAction, onOpen, onCancel, onRetry }: {
             onClick={() => onCancel(job)}
           >
             {busyAction === "cancel" ? <LoaderCircle className="size-3.5 animate-spin" /> : <Square className="size-3.5" />}
-            {busyAction === "cancel" ? "取消中" : "取消任务"}
+            {busyAction === "cancel" ? t("k_733d8ca1") : t("k_d258a63c")}
           </button>
         ) : null}
         {status === "failed" ? (
@@ -201,7 +202,7 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
       void refreshLive();
     } catch (cause) {
       if (!mountedRef.current) return;
-      setError(cause instanceof Error ? cause.message : "读取任务失败，请稍后重试。");
+      setError(cause instanceof Error ? cause.message : t("k_91296afb"));
     } finally {
       requestInFlightRef.current = false;
       if (mountedRef.current) {
@@ -253,10 +254,10 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
     setBusy(job.job_id, "cancel");
     try {
       await cancelTaskCenterJob(job);
-      toast.success("已提交取消请求");
+      toast.success(t("k_5d40c492"));
       await load();
     } catch (cause) {
-      toast.error(cause instanceof Error ? cause.message : "取消失败，请稍后重试。");
+      toast.error(cause instanceof Error ? cause.message : t("k_66483997"));
     } finally {
       if (mountedRef.current) setBusy(job.job_id);
     }
@@ -266,25 +267,25 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
     setBusy(job.job_id, "retry");
     try {
       await retryTaskCenterJob(job.job_id);
-      toast.success("已创建恢复任务");
+      toast.success(t("k_79a8df7f"));
       await load();
     } catch (cause) {
-      toast.error(cause instanceof Error ? cause.message : "重试失败，请稍后重试。");
+      toast.error(cause instanceof Error ? cause.message : t("k_1c472c48"));
     } finally {
       if (mountedRef.current) setBusy(job.job_id);
     }
   }
 
   return (
-    <section id="task-center-view" className="mx-auto flex h-full w-full max-w-6xl flex-col px-5 pb-28 pt-5" aria-label="任务中心">
+    <section id="task-center-view" className="mx-auto flex h-full w-full max-w-6xl flex-col px-5 pb-28 pt-5" aria-label={t("k_f692ff9e")}>
       <header className="mb-5 flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs font-medium text-muted-foreground">任务中心</p>
           <h1 className="mt-1 text-xl font-semibold tracking-tight text-foreground">PDF 处理任务</h1>
           <p className="mt-1 text-xs text-muted-foreground">
             {reachedLimit
-              ? `当前已加载最近 ${TASK_CENTER_MAX_ITEMS} 条，达到前端安全上限。`
-              : `当前加载 ${items.length} 条${hasMore ? "，可继续加载更多" : ""}；每次处理按独立任务展示。`}
+              ? t("k_33b7a098", [TASK_CENTER_MAX_ITEMS])
+              : `当前加载 ${items.length} 条${hasMore ? t("k_5e7a9cef") : ""}；每次处理按独立任务展示。`}
           </p>
         </div>
         <button
@@ -299,13 +300,13 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
         </button>
       </header>
 
-      <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-5" aria-label="当前加载范围任务计数">
+      <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-5" aria-label={t("k_e9bb61bd")}>
         {([
-          ["全部", counts.total],
-          ["运行中", counts.running],
-          ["排队中", counts.queued],
-          ["失败", counts.failed],
-          ["已完成", counts.completed],
+          [t("k_778fc8f9"), counts.total],
+          [t("k_59424970"), counts.running],
+          [t("k_4dcbbcfa"), counts.queued],
+          [t("k_3e3c8068"), counts.failed],
+          [t("k_e99b48a2"), counts.completed],
         ] as const).map(([label, count]) => (
           <div key={label} className="rounded-xl border border-border/70 bg-background/70 px-3 py-2.5">
             <div className="text-lg font-semibold text-foreground">{count}</div>
@@ -369,7 +370,7 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
             <div className="flex justify-center py-4">
               <button type="button" className="rounded-xl border border-border px-4 py-2 text-sm disabled:opacity-50"
                 disabled={refreshing} onClick={() => void load({ append: true })}>
-                {refreshing ? "加载中…" : "加载更多任务"}
+                {refreshing ? t("k_300ee3de") : t("k_1db39d44")}
               </button>
             </div>
           ) : null}

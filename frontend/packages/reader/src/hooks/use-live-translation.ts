@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   createReaderTransportError,
@@ -45,10 +46,10 @@ function errorCode(error: unknown): string {
 function errorMessage(error: unknown, fallback: string): string {
   const code = errorCode(error);
   if (code === "LIVE_TRANSLATION_PAGE_NOT_COMMITTED") {
-    return "尚未收到可显示的页面译文";
+    return t("k_c83066ad");
   }
   if (code === "LIVE_TRANSLATION_LAYOUT_NOT_READY") {
-    return "正在等待 OCR 版面数据";
+    return t("k_ce1e39de");
   }
   const message = `${(error as Error)?.message || ""}`.trim();
   return message || fallback;
@@ -130,7 +131,7 @@ export function useLiveTranslation({
         ...(sameJob ? stateRef.current : EMPTY_LIVE_TRANSLATION_STATE),
         connection: terminalStatus ? "terminal" : "unavailable",
         jobStatus: normalizedJobStatus,
-        error: "实时译文暂不可用",
+        error: t("k_cfad2cb5"),
       };
       stateRef.current = unavailableState;
       setState(unavailableState);
@@ -186,7 +187,7 @@ export function useLiveTranslation({
               ...current,
               connection: terminalStatus ? "terminal" : "unavailable",
               jobStatus: normalizedJobStatus,
-              error: errorMessage(error, "实时译文暂不可用"),
+              error: errorMessage(error, t("k_cfad2cb5")),
             }));
             return;
           }
@@ -203,7 +204,7 @@ export function useLiveTranslation({
             ...current,
             connection: "connecting",
             jobStatus: normalizedJobStatus,
-            error: errorMessage(error, "正在等待 OCR 版面数据"),
+            error: errorMessage(error, t("k_ce1e39de")),
           }));
           await wait(LAYOUT_RETRY_MS[Math.min(retry, LAYOUT_RETRY_MS.length - 1)], abort.signal).catch(() => {});
           retry += 1;
@@ -252,7 +253,7 @@ export function useLiveTranslation({
                 publish((current) => ({
                   ...current,
                   lastSeq: Math.max(current.lastSeq, event.seq),
-                  error: errorMessage(error, "部分页面的实时译文暂时取不到"),
+                  error: errorMessage(error, t("k_8317c1c5")),
                 }));
                 return;
               }
@@ -278,7 +279,7 @@ export function useLiveTranslation({
             ...current,
             connection: terminalStatus ? "terminal" : "reconnecting",
             jobStatus: normalizedJobStatus,
-            error: errorMessage(error, "实时译文连接已中断，正在重连"),
+            error: errorMessage(error, t("k_ebf42cdd")),
           }));
         }
         if (abort.signal.aborted) return;

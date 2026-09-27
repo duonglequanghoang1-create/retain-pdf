@@ -1,3 +1,5 @@
-export const DEFAULT_FILE_LABEL = "点击选择文件或拖到这里";
+import { t } from "@retainpdf/i18n";
+
+export const DEFAULT_FILE_LABEL = t("k_74aa3aff");
 export const FRONT_MAX_BYTES = 50 * 1024 * 1024;
 export const FRONT_MAX_PAGE_COUNT = 999;

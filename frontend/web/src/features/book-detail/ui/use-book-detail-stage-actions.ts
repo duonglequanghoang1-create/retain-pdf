@@ -7,6 +7,7 @@ import type {
 import { resumeJob as resumeJobRequest } from "@/platform/api/index.js";
 import type { DocumentJobSummary } from "@/features/library/domain.js";
 import { isDocumentJobActive } from "./use-document-jobs.js";
+import { t } from "@retainpdf/i18n";
 
 // job_id -> stage-actions 视图。跨文档/跨弹窗复用，但必须有上限，避免长会话无限增长。
 const STAGE_ACTIONS_CACHE_LIMIT = 200;
@@ -97,7 +98,7 @@ export function useBookDetailStageActions({
       if (request === requestRef.current) {
         setView(null);
         setResolvedJobId(jobId);
-        setError(`${(cause as Error)?.message || cause || "读取重新处理能力失败"}`);
+        setError(`${(cause as Error)?.message || cause || t("k_3d4f9797")}`);
       }
       return null;
     } finally {
@@ -179,7 +180,7 @@ export function useBookDetailStageActions({
       }
       return result;
     } catch (cause) {
-      setError(`${(cause as Error)?.message || cause || "重新处理失败"}`);
+      setError(`${(cause as Error)?.message || cause || t("k_cebf8a44")}`);
       throw cause;
     } finally {
       setPendingStage("");

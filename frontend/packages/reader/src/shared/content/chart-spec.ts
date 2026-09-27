@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 回答里的图表：声明式规格的解析与校验。
 //
 // 模型给的是**数据 + 图表类型**，不是 SVG。让模型直接吐 SVG 有两个问题：一是画出来
@@ -72,7 +74,7 @@ function parseSeries(raw: unknown): ChartSeries[] {
     const item = entry as Record<string, unknown>;
     const points = parsePoints(item.points ?? item.data);
     if (!points.length) continue;
-    series.push({ name: toText(item.name, `系列 ${series.length + 1}`), points });
+    series.push({ name: toText(item.name, t("k_8425e94a", [series.length + 1])), points });
     if (series.length >= MAX_SERIES) break;
   }
   return series;

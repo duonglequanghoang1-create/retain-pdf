@@ -19,6 +19,7 @@ import type { StatusDetailControllerApi } from "../useStatusDetailOverview.js";
 import { useRerunAction } from "../useRerunAction.js";
 import { STATUS_DETAIL_DIALOG_IDS } from "../../domain/status-detail-dom-ids.js";
 import { StatusDetailTabPanel } from "./StatusDetailTabPanel.jsx";
+import { t } from "@retainpdf/i18n";
 
 type FailurePanelProps = {
   overview: StatusDetailOverview;
@@ -76,14 +77,14 @@ export function FailurePanel({
   const retrySeconds = retryCountdownSeconds(recovery, countdownNow);
   // 重试按钮禁用必有理由：后端 disabled_reason 为空时给默认文案，保证 title 可达。
   const retryDisabledReason = retryPending
-    ? "正在创建 OCR 恢复任务…"
+    ? t("k_90e36e26")
     : recovery.retryOcr.requiresDuplicateRisk
-      ? "需要确认重复风险后重试"
+      ? t("k_8f5624b8")
       : (!recovery.retryOcr.enabled
-        ? (recovery.retryOcr.reason || "后端当前未开放安全的 OCR 重试操作。")
+        ? (recovery.retryOcr.reason || t("k_2db37522"))
         : "");
   const retryDisabled = (!recovery.retryOcr.enabled && !recovery.retryOcr.requiresDuplicateRisk) || retryPending;
-  const rerunDisabledReason = (rerun.status || "").trim() || "当前任务暂不可从断点恢复。";
+  const rerunDisabledReason = (rerun.status || "").trim() || t("k_fab2d822");
 
   async function confirmOcrRecovery() {
     const outcome = await controller.acceptOcrDuplicateRiskAndRecover?.();
@@ -103,7 +104,7 @@ export function FailurePanel({
       return;
     }
     setRetryPending(true);
-    setRecoveryFeedback("正在创建 OCR 恢复任务…");
+    setRecoveryFeedback(t("k_90e36e26"));
     try {
       await controller.retryOcrNow?.(options);
     } catch (error) {
@@ -118,9 +119,9 @@ export function FailurePanel({
     setRecoveryFeedback("");
     try {
       await controller.copyFailureTraceId?.();
-      setRecoveryFeedback("Trace ID 已复制。");
+      setRecoveryFeedback(t("k_57e48962"));
     } catch (error) {
-      setRecoveryFeedback(`复制失败：${error instanceof Error ? error.message : String(error)}`);
+      setRecoveryFeedback(t("k_fc947f42", [error instanceof Error ? error.message : String(error)]));
     }
   }
 
@@ -167,7 +168,7 @@ export function FailurePanel({
                   type="button"
                   className="button-link secondary"
                   disabled={ocrAmbiguityPending}
-                  title={ocrAmbiguityPending ? "正在处理 OCR 恢复…" : undefined}
+                  title={ocrAmbiguityPending ? t("k_25904019") : undefined}
                   onClick={() => setReceiptDialogOpen(true)}
                 >
                   <Link2 className="h-4 w-4" aria-hidden="true" />
@@ -180,7 +181,7 @@ export function FailurePanel({
                   type="button"
                   className="button-link secondary"
                   disabled={ocrAmbiguityPending}
-                  title={ocrAmbiguityPending ? "正在处理 OCR 恢复…" : undefined}
+                  title={ocrAmbiguityPending ? t("k_25904019") : undefined}
                   onClick={() => setOcrConfirmOpen(true)}
                 >
                   <RefreshCw className="h-4 w-4" aria-hidden="true" />
@@ -188,7 +189,7 @@ export function FailurePanel({
                 </button>
               ) : null}
               {!descriptor ? (
-                <button type="button" className="button-link secondary" disabled title="后端未返回可操作的 OCR 恢复信息，请刷新诊断。">
+                <button type="button" className="button-link secondary" disabled title={t("k_188f7e31")}>
                   恢复信息不可用
                 </button>
               ) : null}
@@ -196,7 +197,7 @@ export function FailurePanel({
                 {overview.ocrAmbiguity.status || (
                   descriptor
                     ? `${descriptor.provider === "mineru" ? "MinerU" : "PaddleOCR"} 返回结果不明确，请选择恢复方式。`
-                    : "后端未返回可操作的 OCR 恢复信息，请刷新诊断。"
+                    : t("k_188f7e31")
                 )}
               </span>
             </div>
@@ -210,7 +211,7 @@ export function FailurePanel({
                 {retrySeconds !== null ? (
                   <span id={ids.failure.queueCountdown} className="status-panel-note" role="status">
                     <Clock3 className="h-4 w-4" aria-hidden="true" />
-                    {retrySeconds > 0 ? `预计 ${retrySeconds} 秒后自动重试` : "即将自动重试"}
+                    {retrySeconds > 0 ? t("k_50830adf", [retrySeconds]) : t("k_3bde165b")}
                   </span>
                 ) : null}
                 <span id={ids.failure.preservation} className="status-panel-note">
@@ -227,16 +228,16 @@ export function FailurePanel({
                   onClick={() => void retryOcrImmediately()}
                 >
                   <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                  {retryPending ? "正在重试…" : "立即重试 OCR"}
+                  {retryPending ? t("k_46fbe12e") : t("k_52a29546")}
                 </button>
                 <ConfirmDialog
                   id="failure-ocr-risk-confirm"
                   open={riskConfirmOpen}
                   onOpenChange={setRiskConfirmOpen}
                   pending={retryPending}
-                  title="确认重试 OCR"
-                  description="上游可能已经收到上一次请求。继续会创建新的 OCR 任务，可能造成重复处理或计费。"
-                  confirmLabel="确认重试"
+                  title={t("k_3ee3fcb0")}
+                  description={t("k_0a31dd35")}
+                  confirmLabel={t("k_f25369d9")}
                   onConfirm={() => {
                     setRiskConfirmOpen(false);
                     void retryOcrImmediately({ acceptDuplicateRisk: true });
@@ -288,7 +289,7 @@ export function FailurePanel({
                 从断点恢复/重新运行
               </button>
               <span id={ids.failure.rerunStatus} className="status-panel-note">
-                {rerun.status || "失败后如后端允许，可基于已有产物创建恢复任务。"}
+                {rerun.status || t("k_333a50c7")}
               </span>
               </div>
             </>
@@ -314,7 +315,7 @@ export function FailurePanel({
             open={ocrConfirmOpen}
             onOpenChange={setOcrConfirmOpen}
             pending={ocrAmbiguityPending}
-            title="确认重新提交 OCR"
+            title={t("k_d10487ee")}
             description={(
               <>
                 <span>上游可能已经收到上一次请求。继续会创建新的 OCR 任务，可能造成重复处理或计费。</span>
@@ -323,7 +324,7 @@ export function FailurePanel({
                 ) : null}
               </>
             )}
-            confirmLabel="接受风险并重新提交"
+            confirmLabel={t("k_ff3ffa59")}
             tone="danger"
             onConfirm={confirmOcrRecovery}
           />

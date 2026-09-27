@@ -9,6 +9,7 @@ import {
 import type {
   StatusDetailControllerDeps,
 } from "./controller-types.js";
+import { t } from "@retainpdf/i18n";
 
 export function createStatusDetailFailureRecoveryActions({
   retryJobStage,
@@ -47,19 +48,19 @@ export function createStatusDetailFailureRecoveryActions({
     const model = store.getSnapshot().overview.failureRecovery;
     const payload = await failureRecoveryActions.retryStageNow(jobId, model, stage, options) as Record<string, unknown>;
     const nextJobId = `${payload?.job_id || payload?.id || ""}`.trim();
-    if (!nextJobId) throw new Error("重试已提交，但响应中没有 job_id。");
+    if (!nextJobId) throw new Error(t("k_4bd539e6"));
     dialogStore.close();
-    setText?.("error-box", `已创建${noticeLabel} ${nextJobId}，开始轮询。`);
+    setText?.("error-box", t("k_2af445ed", [noticeLabel, nextJobId]));
     startPolling?.(nextJobId);
     return payload;
   }
 
   async function retryOcrNow(options: { acceptDuplicateRisk?: boolean } = {}) {
-    return submitStageRetry("ocr", options, " OCR 恢复任务");
+    return submitStageRetry("ocr", options, t("k_778df67b"));
   }
 
   async function retryFailureStage(stage: string, options: { acceptDuplicateRisk?: boolean } = {}) {
-    return submitStageRetry(stage, options, "恢复任务");
+    return submitStageRetry(stage, options, t("k_c6c4880a"));
   }
 
   async function copyFailureTraceId() {

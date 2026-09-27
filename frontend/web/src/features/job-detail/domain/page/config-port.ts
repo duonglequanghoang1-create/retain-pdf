@@ -2,6 +2,7 @@ import {
   buildFrontendPageUrl,
   isMockMode,
 } from "@/platform/config/runtime.js";
+import { t } from "@retainpdf/i18n";
 
 export function createJobDetailConfigPort({
   buildPageUrl = buildFrontendPageUrl,
@@ -29,8 +30,8 @@ export function createJobDetailConfigPort({
 
   function detailShareNote() {
     return isMock()
-      ? "当前为 mock 明细页，可直接分享当前链接。"
-      : "当前详情页可直接通过 URL 分享给其他人。";
+      ? t("k_76563e98")
+      : t("k_97837c4d");
   }
 
   return Object.freeze({

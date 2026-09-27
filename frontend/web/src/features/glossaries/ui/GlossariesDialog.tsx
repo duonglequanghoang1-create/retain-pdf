@@ -31,6 +31,7 @@ import { GlossaryEditor } from "./GlossaryEditor.jsx";
 import { GlossaryImportPanel } from "./GlossaryImportPanel.jsx";
 import { Button as ButtonBase } from "@/ui/Button.jsx";
 import type { ButtonHTMLAttributes, ComponentType } from "react";
+import { t } from "@retainpdf/i18n";
 
 // Button.size 在未注解源文件里被推断为必填;unstyled 路径运行时不用 size。
 // GlossariesDialog 未迁移前的旧写法是 `as any`，这里收敛为"结构相同的按钮契约"，
@@ -115,7 +116,7 @@ export function GlossariesDialog({ feature, view: viewFeature, open, dialogStore
                     id={GLOSSARY_DOM_IDS.nameInput}
                     type="text"
                     autoComplete="off"
-                    placeholder="例如 量子化学术语"
+                    placeholder={t("k_f3e0a079")}
                     value={view.draft.name}
                     onChange={(event) => store.actions.setName(event.target.value)}
                   />
@@ -148,9 +149,9 @@ export function GlossariesDialog({ feature, view: viewFeature, open, dialogStore
             </DialogBody>
             <ConfirmDialog
               id="glossary-delete-confirm"
-              title="删除术语表"
-              description={draftName ? `确定删除术语表「${draftName}」吗？删除后无法恢复。` : "确定删除当前术语表吗？删除后无法恢复。"}
-              confirmLabel="删除"
+              title={t("k_a0f1105a")}
+              description={draftName ? t("k_f9c32f1c", [draftName]) : t("k_acdb4770")}
+              confirmLabel={t("k_3755f56f")}
               tone="danger"
               level="nested"
               open={confirmDeleteOpen}

@@ -6,6 +6,7 @@
 // 激活 tab 是纯页面级 UI 态(HomeApp useState),不持久化——刷新回到图书馆。
 
 import { Tabs as TabsPrimitive } from "radix-ui";
+import { t } from "@retainpdf/i18n";
 
 // 图书馆:书脊排列在书架上
 function IconLibrary() {
@@ -54,11 +55,13 @@ function IconSparkles() {
 // categories-view DOM id / CSS .categories-*。
 // "favorites" / "ask" 为后续入口。
 export const COLLECTIONS_TAB_KEY = "categories"; // 领域名 collections，UI 契约名 categories
+// 存 key 而不是文案：模块级常量在 import 阶段求值，那时 initI18n 还没跑，
+// t() 会回落到中文，切到越南语后这排 tab 也不会更新。渲染时再查表。
 const TABS = [
-  { key: "library", label: "图书馆", Icon: IconLibrary },
-  { key: COLLECTIONS_TAB_KEY, label: "合集", Icon: IconLayers },
-  { key: "favorites", label: "收藏", Icon: IconBookmark },
-  { key: "ask", label: "AI 问答", Icon: IconSparkles },
+  { key: "library", labelKey: "k_21347f9f", Icon: IconLibrary },
+  { key: COLLECTIONS_TAB_KEY, labelKey: "k_01dc4d09", Icon: IconLayers },
+  { key: "favorites", labelKey: "k_d07cee78", Icon: IconBookmark },
+  { key: "ask", labelKey: "k_4e0478a9", Icon: IconSparkles },
 ];
 
 export function LibraryTopTabs({ active, onChange }) {
@@ -68,7 +71,7 @@ export function LibraryTopTabs({ active, onChange }) {
       value={active}
       onValueChange={onChange}
     >
-      <TabsPrimitive.List className="library-top-tabs" aria-label="图书馆视图">
+      <TabsPrimitive.List className="library-top-tabs" aria-label={t("k_fd4dbb66")}>
         {TABS.map((tab) => (
           <TabsPrimitive.Trigger
             key={tab.key}
@@ -77,7 +80,7 @@ export function LibraryTopTabs({ active, onChange }) {
             className={`library-top-tab ${active === tab.key ? "is-active" : ""}`.trim()}
           >
             <tab.Icon />
-            <span>{tab.label}</span>
+            <span>{t(tab.labelKey)}</span>
             {/* 装饰钩子：默认无样式零渲染，皮肤可在 CSS 里给 tab 贴图换装 */}
             <span className="library-top-tab-ornament" aria-hidden="true" />
           </TabsPrimitive.Trigger>

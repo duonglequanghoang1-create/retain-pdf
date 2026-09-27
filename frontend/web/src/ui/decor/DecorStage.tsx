@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { THEME_CHANGE_EVENT, getTheme, getThemeDefinition } from "../theme/theme.js";
 import { planStage, type StagePlan } from "./stage-plan.js";
 import { defaultDecorManifestPort, type DecorManifestFetchPort } from "./decor-manifest-port.js";
+import { t } from "@retainpdf/i18n";
 
 function currentPack(): string {
   return getThemeDefinition(getTheme())?.decorPack || "";
@@ -80,13 +81,13 @@ export function DecorStage({ manifestPort, fetchImpl }: DecorStageProps = {}) {
         if (result.ok) {
           setPlan(result.plan);
         } else {
-          console.warn(`[decor] 装饰包 ${pack} manifest 校验失败:`, result.errors);
+          console.warn(t("k_50c19280", [pack]), result.errors);
           setPlan(null);
         }
       })
       .catch((error) => {
         if (!alive) return;
-        console.warn(`[decor] 装饰包 ${pack} 加载失败:`, error);
+        console.warn(t("k_bb3506eb", [pack]), error);
         setPlan(null);
       });
     return () => {
@@ -144,7 +145,7 @@ export function DecorStage({ manifestPort, fetchImpl }: DecorStageProps = {}) {
             <button
               type="button"
               className="decor-hotspot"
-              aria-label="听一句语录"
+              aria-label={t("k_14b67ae9")}
               onClick={() => showVerse(layer.slot, layer.clickQuote as string)}
             >
               {verse && verse.slot === layer.slot ? (

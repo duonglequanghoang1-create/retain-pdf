@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   createContext,
   useCallback,
@@ -118,13 +119,13 @@ function RetainImageNode({ node }: ImageNodeProps) {
     if (final) {
       return (
         <span className="aui-image-blocked">
-          {alt ? `[图片不可用：${alt}]` : "[图片不可用]"}
+          {alt ? t("k_27855be5", [alt]) : t("k_7c94c106")}
         </span>
       );
     }
     return (
-      <span className="aui-image-pending" aria-label={alt || "图片加载中"}>
-        {alt ? `[图片：${alt}]` : "[图片加载中]"}
+      <span className="aui-image-pending" aria-label={alt || t("k_65a4beea")}>
+        {alt ? t("k_e9a0dae1", [alt]) : t("k_3855c47e")}
       </span>
     );
   }
@@ -145,7 +146,7 @@ function RetainImageNode({ node }: ImageNodeProps) {
       type="button"
       className="reader-ai-image-jump"
       data-page={pageNumber ?? undefined}
-      title={pageNumber ? `定位到 PDF 第 ${pageNumber} 页` : "定位到图片来源"}
+      title={pageNumber ? t("k_6ad2cef9", [pageNumber]) : t("k_53a8c58f")}
       onClick={(event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -154,7 +155,7 @@ function RetainImageNode({ node }: ImageNodeProps) {
     >
       {image}
       <span className="reader-ai-image-jump-label" aria-hidden="true">
-        {pageNumber ? `定位 p.${pageNumber}` : "定位来源"}
+        {pageNumber ? t("k_2ee80ac5", [pageNumber]) : t("k_81b00d3e")}
       </span>
     </button>
   );

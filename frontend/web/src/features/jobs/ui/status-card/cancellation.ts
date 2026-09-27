@@ -5,6 +5,7 @@ import type {
   HasCancellableStatusCardJobOptions,
   StatusCardCancelDescription,
 } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 // 两卡共用的可取消判定：有任务 + 状态非空 + 非终态。
 // 白名单会漏掉 processing 等后端状态词，这里用非终态判断。
@@ -33,7 +34,7 @@ export function describeStatusCardCancel(
     cancellable,
     disabled: !cancellable || busy,
     busy,
-    title: busy ? "正在取消任务" : "停止并取消当前任务",
-    label: busy ? "取消中" : "取消任务",
+    title: busy ? t("k_138ab28d") : t("k_c4422259"),
+    label: busy ? t("k_733d8ca1") : t("k_d258a63c"),
   };
 }

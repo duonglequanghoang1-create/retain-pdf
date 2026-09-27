@@ -1,6 +1,7 @@
 // documents — pure
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildApiEndpoint } from "./http.js";
+import { t } from "@retainpdf/i18n";
 
 export type DocumentRecord = Record<string, any> & {
   document_id?: string;
@@ -176,7 +177,7 @@ export async function fetchDocumentList(
   if (`${collectionId || ""}`.trim()) params.set("collection_id", `${collectionId}`.trim());
   if (`${q || ""}`.trim()) params.set("q", `${q}`.trim());
   const resp = await fetch(`${buildApiEndpoint(apiPrefix, "documents")}?${params.toString()}`, { headers: buildApiHeaders() });
-  if (!resp.ok) throw new Error(`读取文档库失败，请稍后重试。(${resp.status})`);
+  if (!resp.ok) throw new Error(t("k_a92db62b", [resp.status]));
   return unwrapEnvelope<DocumentListView>(await resp.json());
 }
 
@@ -186,7 +187,7 @@ export async function fetchDocumentByJobId(apiPrefix: string, jobId: string): Pr
   const params = new URLSearchParams();
   params.set("job_id", normalized);
   const resp = await fetch(`${buildApiEndpoint(apiPrefix, "documents")}?${params.toString()}`, { headers: buildApiHeaders() });
-  if (!resp.ok) throw new Error(`按 job 查文档失败，请稍后重试。(${resp.status})`);
+  if (!resp.ok) throw new Error(t("k_41e0adf6", [resp.status]));
   const payload: any = unwrapEnvelope(await resp.json()) || { documents: [], total: 0, limit: 0, offset: 0 };
   const { documents = [] } = payload;
   return Array.isArray(documents) && documents.length ? documents[0] : null;
@@ -194,15 +195,15 @@ export async function fetchDocumentByJobId(apiPrefix: string, jobId: string): Pr
 
 export async function fetchDocument(apiPrefix: string, documentId: string): Promise<DocumentRecord> {
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   const resp = await fetch(buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}`), { headers: buildApiHeaders() });
-  if (!resp.ok) throw new Error(`读取文档详情失败，请稍后重试。(${resp.status})`);
+  if (!resp.ok) throw new Error(t("k_1eb9c04a", [resp.status]));
   return unwrapEnvelope<DocumentRecord>(await resp.json());
 }
 
 export async function patchDocument(apiPrefix: string, documentId: string, payload: Record<string, unknown> = {}): Promise<DocumentRecord> {
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   const resp = await fetch(buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}`), {
     method: "PATCH",
     headers: { ...buildApiHeaders(), "Content-Type": "application/json" },
@@ -210,7 +211,7 @@ export async function patchDocument(apiPrefix: string, documentId: string, paylo
   });
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw new Error(`${envelope?.message || "更新文档失败，请稍后重试。"}(${resp.status})`);
+    throw new Error(`${envelope?.message || t("k_089e26ab")}(${resp.status})`);
   }
   return unwrapEnvelope<DocumentRecord>(await resp.json());
 }
@@ -221,7 +222,7 @@ export async function createDocumentMetadataSuggestion(
   payload: CreateDocumentMetadataSuggestionInput = {},
 ): Promise<DocumentMetadataSuggestion> {
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   const resp = await fetch(
     buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}/metadata-suggestions`),
     {
@@ -232,7 +233,7 @@ export async function createDocumentMetadataSuggestion(
   );
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw documentRequestError("生成文档元数据建议失败。", resp.status, envelope);
+    throw documentRequestError(t("k_573c9a4b"), resp.status, envelope);
   }
   return unwrapEnvelope<DocumentMetadataSuggestion>(await resp.json());
 }
@@ -251,7 +252,7 @@ export async function fetchDocumentMetadataSuggestions(
   );
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw documentRequestError("读取文档元数据建议失败。", resp.status, envelope);
+    throw documentRequestError(t("k_3bc8402f"), resp.status, envelope);
   }
   const payload = unwrapEnvelope<{ suggestions?: DocumentMetadataSuggestion[] }>(await resp.json());
   return Array.isArray(payload?.suggestions) ? payload.suggestions : [];
@@ -265,8 +266,8 @@ export async function applyDocumentMetadataSuggestion(
 ): Promise<{ suggestion: DocumentMetadataSuggestion; document: DocumentRecord }> {
   const normalizedDocumentId = `${documentId || ""}`.trim();
   const normalizedSuggestionId = `${suggestionId || ""}`.trim();
-  if (!normalizedDocumentId) throw new Error("缺少 document_id。");
-  if (!normalizedSuggestionId) throw new Error("缺少 suggestion_id。");
+  if (!normalizedDocumentId) throw new Error(t("k_fc3d5908"));
+  if (!normalizedSuggestionId) throw new Error(t("k_1727bf23"));
   const resp = await fetch(
     buildApiEndpoint(
       apiPrefix,
@@ -280,20 +281,20 @@ export async function applyDocumentMetadataSuggestion(
   );
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw documentRequestError("应用文档元数据建议失败。", resp.status, envelope);
+    throw documentRequestError(t("k_9247e3ba"), resp.status, envelope);
   }
   return unwrapEnvelope(await resp.json());
 }
 
 export async function deleteDocument(apiPrefix: string, documentId: string, { force = false }: { force?: boolean } = {}): Promise<any> {
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   const params = force ? "?force=true" : "";
   const resp = await fetch(buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}`) + params, { method: "DELETE", headers: buildApiHeaders() });
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
     // 保留结构化 error.code / error.details（收藏保护 409 靠它拿条数和清空路径）
-    throw documentRequestError("删除文档失败，请稍后重试。", resp.status, envelope);
+    throw documentRequestError(t("k_a51bd7f5"), resp.status, envelope);
   }
   return unwrapEnvelope(await resp.json());
 }
@@ -317,7 +318,7 @@ export async function clearFavorites(
   });
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw documentRequestError("清空收藏失败，请稍后重试。", resp.status, envelope);
+    throw documentRequestError(t("k_9cb8f0e9"), resp.status, envelope);
   }
   const payload: any = unwrapEnvelope(await resp.json());
   return Number(payload?.deleted_count) || 0;
@@ -329,7 +330,7 @@ export async function translateDocument(
   payload: Record<string, unknown> = {},
 ): Promise<DocumentJobSubmissionView> {
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   const resp = await fetch(buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}/translate`), {
     method: "POST",
     headers: { ...buildApiHeaders(), "Content-Type": "application/json" },
@@ -337,7 +338,7 @@ export async function translateDocument(
   });
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw documentRequestError("发起翻译失败，请稍后重试。", resp.status, envelope);
+    throw documentRequestError(t("k_08df2867"), resp.status, envelope);
   }
   return unwrapEnvelope<DocumentJobSubmissionView>(await resp.json());
 }
@@ -348,7 +349,7 @@ export async function ocrDocument(
   payload: Record<string, unknown> = {},
 ): Promise<any> {
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   const resp = await fetch(buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}/ocr`), {
     method: "POST",
     headers: { ...buildApiHeaders(), "Content-Type": "application/json" },
@@ -356,7 +357,7 @@ export async function ocrDocument(
   });
   if (!resp.ok) {
     const envelope: any = await resp.json().catch(() => null);
-    throw new Error(`${envelope?.message || "发起 OCR 失败，请稍后重试。"}(${resp.status})`);
+    throw new Error(`${envelope?.message || t("k_f3210dd9")}(${resp.status})`);
   }
   return unwrapEnvelope(await resp.json());
 }
@@ -387,7 +388,7 @@ export async function fetchDocumentJobs(
     `${buildApiEndpoint(apiPrefix, `documents/${encodeURIComponent(normalized)}/jobs`)}?${params.toString()}`,
     { headers: buildApiHeaders() },
   );
-  if (!resp.ok) throw new Error(`读取文档任务失败，请稍后重试。(${resp.status})`);
+  if (!resp.ok) throw new Error(t("k_4e55ab01", [resp.status]));
   const payload = unwrapEnvelope<DocumentJobsView>(await resp.json());
   return {
     ...payload,

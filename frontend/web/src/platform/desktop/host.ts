@@ -3,6 +3,7 @@ import type {
   DeveloperStoredConfig,
   RuntimeConfig,
 } from "@/platform/config/storage.js";
+import { t } from "@retainpdf/i18n";
 
 /** Payload passed to / returned from desktop config load/save. */
 export interface DesktopConfigPayload {
@@ -95,7 +96,7 @@ function resolveDesktopHost(): DesktopHost | null {
   return {
     invoke(command: string, args: DesktopInvokeArgs = {}) {
       if (!invokeAdapter) {
-        throw new Error("桌面接口不可用");
+        throw new Error(t("k_91970a5a"));
       }
       return invokeAdapter.invoke(command, args);
     },

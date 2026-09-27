@@ -8,6 +8,7 @@ import {
   bindMockDocumentActiveJob,
   getMockDocumentByJobId,
 } from "@/platform/mock/documents.js";
+import { t } from "@retainpdf/i18n";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -26,11 +27,11 @@ export async function fetchJobDiagnostics(jobId, apiPrefix) {
   }
   return {
     job_id: jobId,
-    summary: "任务失败，但这是前端 mock 场景。",
+    summary: t("k_8212215a"),
     category: "mock_render_failure",
     failed_stage: "render",
-    root_cause: "用于 UI 调试的模拟失败。",
-    suggestion: "切换 ?mock=succeeded 查看成功态。",
+    root_cause: t("k_38e68d51"),
+    suggestion: t("k_5fd79435"),
     detail: "",
     retryable: true,
     resume_available: true,
@@ -71,7 +72,7 @@ export async function cancelOcrJob(jobId, apiPrefix) {
 
 export async function resolveOcrAmbiguity(jobId, apiPrefix, request) {
   void apiPrefix;
-  const live = registerLiveMockJob({ title: "Mock OCR 恢复", pageCount: 12 });
+  const live = registerLiveMockJob({ title: t("k_8fcba90d"), pageCount: 12 });
   const snapshot = buildLiveMockJobPayload(live.jobId) || {};
   return {
     resolution: request?.resolution || "accept_duplicate_risk",
@@ -92,9 +93,9 @@ export async function fetchJobStageActions(jobId, apiPrefix) {
   return {
     job_id: jobId,
     stages: [
-      { stage: "ocr", label: "重新 OCR", can_retry: true, disabled_reason: "" },
-      { stage: "translation", label: "重新翻译", can_retry: true, disabled_reason: "" },
-      { stage: "render", label: "重新渲染", can_retry: true, disabled_reason: "" },
+      { stage: "ocr", label: t("k_a78a2466"), can_retry: true, disabled_reason: "" },
+      { stage: "translation", label: t("k_7cb45a33"), can_retry: true, disabled_reason: "" },
+      { stage: "render", label: t("k_f7a515b5"), can_retry: true, disabled_reason: "" },
     ],
   };
 }
@@ -103,7 +104,7 @@ export async function retryJobStage(jobId, apiPrefix, stage, payload = {}) {
   void apiPrefix;
   const normalizedStage = `${stage || ""}`.trim();
   if (!normalizedStage) {
-    throw new Error("阶段重试失败: 缺少 stage");
+    throw new Error(t("k_707893d5"));
   }
   // 后端对 overrides 的每个段做 serde_json::from_value,同样带 deny_unknown_fields
   // (stage_retry_overrides.rs)。mock 以前完全无视 overrides,于是「重新翻译」那条

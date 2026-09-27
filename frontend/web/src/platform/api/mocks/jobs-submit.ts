@@ -1,6 +1,7 @@
 import { buildJobsEndpoint } from "@retainpdf/api/http";
 import { submitJson, submitUploadRequest } from "./http.js";
 import { assertKnownJobPayloadFields } from "./job-payload-contract.js";
+import { t } from "@retainpdf/i18n";
 
 function isObject(value) {
   return value && typeof value === "object" && !Array.isArray(value);
@@ -8,10 +9,10 @@ function isObject(value) {
 
 function assertGroupedJobPayload(payload) {
   if (!isObject(payload)) {
-    throw new Error("提交失败: /api/v1/jobs 需要 JSON object 请求体。");
+    throw new Error(t("k_72310754"));
   }
   if (!payload.workflow || !isObject(payload.source)) {
-    throw new Error("提交失败: /api/v1/jobs 必须使用 grouped JSON，至少包含 workflow 和 source。");
+    throw new Error(t("k_f879f52c"));
   }
   const legacyTopLevelFields = [
     "upload_id",
@@ -111,7 +112,7 @@ function buildOcrFormData(payload) {
 export async function submitJobRequest(apiPrefix, payload) {
   if (isOcrWorkflowPayload(payload)) {
     if (!isObject(payload) || !isObject(payload.source)) {
-      throw new Error("提交失败: /api/v1/ocr/jobs 需要 grouped JSON，至少包含 workflow=ocr 和 source。");
+      throw new Error(t("k_59fa7bf5"));
     }
     const form = buildOcrFormData(payload);
     return submitUploadRequest(buildJobsEndpoint(apiPrefix, "ocr"), form, undefined);

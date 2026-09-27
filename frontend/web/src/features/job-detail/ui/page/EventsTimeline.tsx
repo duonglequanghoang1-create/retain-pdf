@@ -44,6 +44,7 @@ import {
   isJobTerminal,
 } from "@retainpdf/domain/job";
 import { buildJobDetailEventViewModel } from "@retainpdf/domain/job-status";
+import { t } from "@retainpdf/i18n";
 
 // —— 以下三个私有函数照搬旧 events.js,保证耗时/载荷文案逐字节一致 ——
 
@@ -157,7 +158,7 @@ function DetailModal({ modalId, titleId, title, subtitle, closeButtonId, open, o
 
 function StageHistoryItem({ entry, index, job }) {
   const enterAt = entry?.enter_at ? formatEventTimestamp(entry.enter_at) : "-";
-  const exitAt = entry?.exit_at ? formatEventTimestamp(entry.exit_at) : (isJobTerminal(job) ? "-" : "处理中");
+  const exitAt = entry?.exit_at ? formatEventTimestamp(entry.exit_at) : (isJobTerminal(job) ? "-" : t("k_fcb979ef"));
   const terminalText = entry?.terminal_status ? ` · ${entry.terminal_status}` : "";
   const display = stageHistoryDisplay(entry);
   return (
@@ -178,8 +179,8 @@ export function StageHistoryModal({ open, job, onClose }) {
     <DetailModal
       modalId="detail-stage-history-modal"
       titleId="detail-stage-history-modal-title"
-      title="阶段时间线"
-      subtitle="按阶段展示进入、退出与耗时。"
+      title={t("k_0a440184")}
+      subtitle={t("k_697a74b5")}
       closeButtonId="detail-close-stage-history-btn"
       open={open}
       onClose={onClose}
@@ -250,8 +251,8 @@ export function EventsModal({ open, eventsPayload, status, onClose }) {
     <DetailModal
       modalId="detail-events-modal"
       titleId="detail-events-modal-title"
-      title="事件流"
-      subtitle="只有打开时才会请求完整事件流，首次加载后会在当前页面缓存。"
+      title={t("k_9e6bc8d5")}
+      subtitle={t("k_8f9bda9e")}
       closeButtonId="detail-close-events-btn"
       open={open}
       onClose={onClose}

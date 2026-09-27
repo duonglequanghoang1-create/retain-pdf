@@ -8,6 +8,7 @@
 //   本模块不再接收并直接调用一串 React setState setter。
 // 网络语义、调用顺序、boot 文案与进度数字与拆分前逐行一致。
 
+import { t } from "@retainpdf/i18n";
 import { useEffect, useState } from "react";
 import type { ProtectedPdfFile } from "../../pdf/useProtectedPdfFile.js";
 import {
@@ -261,7 +262,7 @@ export function useSessionAssets(options: {
       clearPayload(sessionIdentity);
       const file = await downloadOnePdf({
         url,
-        label: "正在下载原文 PDF…",
+        label: t("k_a459b8ea"),
         percentStart: 30,
         percentEnd: 85,
         fence,
@@ -269,7 +270,7 @@ export function useSessionAssets(options: {
       });
       if (fence.isInactive()) return;
       if (!file) {
-        failBoot("源文件不可用：该文档没有可读取的源 PDF。", "源文件下载失败");
+        failBoot(t("k_fe7fe549"), t("k_e1efc0e5"));
         return;
       }
       setSourceFile(file);
@@ -389,7 +390,7 @@ export function useSessionAssets(options: {
       });
       if (result.status === "inactive") return;
       if (result.status === "incomplete") {
-        failBoot("PDF 下载失败，请重试", "PDF 下载失败");
+        failBoot(t("k_bfc6cc21"), t("k_e897a20b"));
         return;
       }
 

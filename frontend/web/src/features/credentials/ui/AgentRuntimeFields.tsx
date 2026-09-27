@@ -3,6 +3,7 @@ import type {
   AgentRuntimeMode,
 } from "@/platform/api/index.js";
 import { SecretInput } from "./SecretInput.js";
+import { t } from "@retainpdf/i18n";
 
 export interface AgentRuntimeFieldsProps {
   mode: AgentRuntimeMode;
@@ -46,7 +47,7 @@ export function AgentRuntimeFields({
       <label className="credential-agent-mode-field">
         <span className="developer-label">运行模式</span>
         <select
-          aria-label="AI Agent 运行模式"
+          aria-label={t("k_c8206b63")}
           value={mode}
           onChange={(event) => onModeChange(event.target.value as AgentRuntimeMode)}
           disabled={busy}
@@ -62,7 +63,7 @@ export function AgentRuntimeFields({
           <label className="credential-agent-url-field">
             <span className="developer-label">模型 API URL</span>
             <input
-              aria-label="模型 API URL"
+              aria-label={t("k_907fd02b")}
               type="url"
               value={baseUrl}
               onChange={(event) => onBaseUrlChange(event.target.value)}
@@ -72,7 +73,7 @@ export function AgentRuntimeFields({
           <label className="credential-agent-model-field">
             <span className="developer-label">模型</span>
             <input
-              aria-label="AI 模型"
+              aria-label={t("k_1b5fc091")}
               value={model}
               onChange={(event) => onModelChange(event.target.value)}
               disabled={busy}
@@ -81,11 +82,11 @@ export function AgentRuntimeFields({
           <label className="credential-agent-key-field">
             <span className="developer-label">模型 API Key</span>
             <SecretInput
-              aria-label="模型 API Key"
-              secretLabel="模型 API Key"
+              aria-label={t("k_8f79e857")}
+              secretLabel={t("k_8f79e857")}
               autoComplete="off"
               value={modelKey}
-              placeholder="模型 API Key"
+              placeholder={t("k_8f79e857")}
               onChange={(event) => onModelKeyChange(event.target.value)}
               disabled={busy}
             />
@@ -99,7 +100,7 @@ export function AgentRuntimeFields({
               aria-label="FX Gateway URL"
               type="url"
               value={fxGatewayBaseUrl}
-              placeholder="http://127.0.0.1:端口"
+              placeholder={t("k_2d809969")}
               onChange={(event) => onFxGatewayBaseUrlChange(event.target.value)}
               disabled={busy}
             />
@@ -110,9 +111,9 @@ export function AgentRuntimeFields({
           <label className="credential-agent-model-field">
             <span className="developer-label">FX 模型（可选）</span>
             <input
-              aria-label="FX 模型"
+              aria-label={t("k_75d6609d")}
               value={fxModel}
-              placeholder="使用 Gateway 默认模型"
+              placeholder={t("k_cd80ba06")}
               onChange={(event) => onFxModelChange(event.target.value)}
               disabled={busy}
             />

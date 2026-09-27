@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // buildProgressRenderModel 拷贝自 components/status/job-status-card-rendering.js
 // 第 45-164 行(蓝图 §1 components/status/ 判决,该文件整体死于 cutover——
 // js/components/ 是防回弹门禁禁区,只能拷贝纯函数,不能 import)。
@@ -65,10 +67,10 @@ function defaultTextForTerminalState(stageKey: string, status: string, fallbackT
   const fallback = `${fallbackText || ""}`.trim();
   const hasFallback = fallback !== "" && fallback !== "-";
   if (hasFallback) return fallback;
-  if (status === "failed" || stageKey === "failed") return "失败";
-  if (status === "succeeded" || stageKey === "done") return "完成";
-  if (stageKey === "queued" || status === "queued") return "排队中";
-  if (stageKey === "validating" || status === "validating") return "校验中";
+  if (status === "failed" || stageKey === "failed") return t("k_3e3c8068");
+  if (status === "succeeded" || stageKey === "done") return t("k_33246f6a");
+  if (stageKey === "queued" || status === "queued") return t("k_4dcbbcfa");
+  if (stageKey === "validating" || status === "validating") return t("k_f6437554");
   return fallbackText;
 }
 
@@ -121,7 +123,7 @@ export function buildProgressRenderModel({
 
   if (Number.isFinite(numericDisplayPercent)) {
     const safePercent = clampPercent(numericDisplayPercent);
-    const text = progressText || `进度 ${safePercent.toFixed(0)}%`;
+    const text = progressText || t("k_b5937f62", [safePercent.toFixed(0)]);
     return {
       visible: true,
       percent: safePercent,
@@ -135,7 +137,7 @@ export function buildProgressRenderModel({
   const hasNumbers = Number.isFinite(numericCurrent) && Number.isFinite(numericTotal) && numericTotal > 0;
   if (hasNumbers && normalizedProgressUnit === "percent") {
     const safePercent = clampPercent((numericCurrent / numericTotal) * 100);
-    const text = progressText || `进度 ${safePercent.toFixed(0)}%`;
+    const text = progressText || t("k_b5937f62", [safePercent.toFixed(0)]);
     return {
       visible: true,
       percent: safePercent,
@@ -161,7 +163,7 @@ export function buildProgressRenderModel({
 
   if (Number.isFinite(numericPercent)) {
     const safePercent = clampPercent(numericPercent);
-    const text = progressText || `进度 ${safePercent.toFixed(0)}%`;
+    const text = progressText || t("k_b5937f62", [safePercent.toFixed(0)]);
     return {
       visible: true,
       percent: safePercent,

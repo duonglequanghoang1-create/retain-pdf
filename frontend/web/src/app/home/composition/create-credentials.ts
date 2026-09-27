@@ -38,6 +38,7 @@ import type {
   UploadStatePort,
 } from "./types.js";
 import { createDialogStore, type DialogStore } from "@/platform/store/dialog-store.js";
+import { t } from "@retainpdf/i18n";
 
 type CreateCredentialsArgs = {
   features: HomeFeatures;
@@ -115,7 +116,7 @@ export function createCredentials({
       return validateMineruToken(resolvedApiPrefix, { mineru_token: resolvedToken });
     }
     if (providerId !== "paddle") {
-      return { ok: false, status: "unsupported", summary: "该 OCR 提供商暂不支持单独检测 Token" };
+      return { ok: false, status: "unsupported", summary: t("k_5d7f4c74") };
     }
     return validatePaddleToken(resolvedApiPrefix, {
       paddle_token: resolvedToken,

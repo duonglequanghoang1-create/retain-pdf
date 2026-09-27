@@ -3,6 +3,7 @@
 // degrades 409 conflicts into a settle-refresh. Owns only the action-key map
 // and never the polling store.
 
+import { t } from "@retainpdf/i18n";
 import { useCallback, useRef, type Dispatch, type MutableRefObject, type SetStateAction } from "react";
 import type { ReaderAgentOperation, ReaderAgentRuntimeConfig } from "../../../contracts/ai-operations.js";
 import { readerAgentOperationPort } from "../../../external.js";
@@ -43,7 +44,7 @@ export function useReaderAgentOperationPerform({
         ...current,
         [operationId]: {
           ...current[operationId],
-          error: "请先确认重复执行风险，再重新执行操作。",
+          error: t("k_c5c0c047"),
         },
       }));
       return;

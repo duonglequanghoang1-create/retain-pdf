@@ -6,6 +6,7 @@
 // 也能被 detail/reader 或测试独立挂载。
 
 import { createContext, useContext, type ReactNode } from "react";
+import { t } from "@retainpdf/i18n";
 
 export type CredentialsServices = {
   /** browser.ts 的 mount 返回值（保存/校验/打开弹窗等能力）。 */
@@ -35,7 +36,7 @@ export function CredentialsProvider({
 export function useCredentialsServices(): CredentialsServices {
   const value = useContext(CredentialsServicesContext);
   if (!value) {
-    throw new Error("credentials 功能的组件必须挂在 <CredentialsProvider> 之内");
+    throw new Error(t("k_1b22f63d"));
   }
   return value;
 }

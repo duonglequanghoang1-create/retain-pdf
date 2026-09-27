@@ -19,6 +19,7 @@ import {
   CREATE_JOB_SECTION_FIELDS,
   CREATE_JOB_TOP_LEVEL_FIELDS,
 } from "@retainpdf/contracts/create-job-fields";
+import { t } from "@retainpdf/i18n";
 
 export const JOB_PAYLOAD_TOP_LEVEL_FIELDS = CREATE_JOB_TOP_LEVEL_FIELDS;
 
@@ -33,7 +34,7 @@ export function assertKnownJobPayloadFields(payload, { label = "/api/v1/jobs" } 
   if (unknownTop.length > 0) {
     throw new Error(
       `提交失败: ${label} 不认识顶层字段 ${unknownTop.join(", ")}。`
-        + `真后端 CreateJobInput 带 deny_unknown_fields,会直接 400。`,
+        + t("k_4d813fa5"),
     );
   }
   for (const [section, allowed] of Object.entries(JOB_PAYLOAD_SECTION_FIELDS)) {
@@ -43,7 +44,7 @@ export function assertKnownJobPayloadFields(payload, { label = "/api/v1/jobs" } 
     if (unknown.length > 0) {
       throw new Error(
         `提交失败: ${label} 的 ${section} 段不认识字段 ${unknown.join(", ")}。`
-          + `真后端该段带 deny_unknown_fields,会直接 400。`,
+          + t("k_0f0032d8"),
       );
     }
   }
@@ -59,7 +60,7 @@ export function assertKnownStageOverrides(overrides, { label = "retry-stage" } =
     if (unknown.length > 0) {
       throw new Error(
         `重试失败: ${label} 的 overrides.${section} 不认识字段 ${unknown.join(", ")}。`
-          + `后端会以 invalid ${section} overrides 返回 400。`,
+          + t("k_52a191f0", [section]),
       );
     }
   }

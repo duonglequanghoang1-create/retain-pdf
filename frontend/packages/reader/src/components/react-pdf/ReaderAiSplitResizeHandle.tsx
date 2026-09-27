@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import {
   Group,
@@ -109,7 +110,7 @@ export function ReaderAiSplitResizeHandle() {
       <Separator
         id="reader-ai-split-separator"
         className="reader-ai-split-separator"
-        aria-label="调整文档与 AI 问答宽度"
+        aria-label={t("k_64c48935")}
       >
         <span aria-hidden="true" />
       </Separator>

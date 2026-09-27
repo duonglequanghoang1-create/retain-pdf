@@ -4,6 +4,7 @@ import {
   blockedFavoriteCount,
   isDeleteBlockedByFavorites,
 } from "./delete-blocked-favorites.js";
+import { t } from "@retainpdf/i18n";
 
 export type ErrorLike = {
   message?: string;
@@ -22,19 +23,19 @@ export function friendlyTranslateError(error: ErrorLike, { reusingOcr = false } 
     : "";
   const structured = `${errorCode} ${message}`;
   if (/OCR_PAGE_COVERAGE_MISMATCH/i.test(structured)) {
-    return "现有 OCR 未覆盖所选页码，未自动重新识别。请先为缺失页码执行 OCR。";
+    return t("k_7f9063cd");
   }
   if (/OCR_(?:JOB_NOT_FOUND|JOB_NOT_SUCCEEDED|ARTIFACT_MISSING|ARTIFACT_NOT_REUSABLE)/i.test(structured)) {
-    return "现有 OCR 产物暂时无法复用，未自动重新识别。请重新执行 OCR 后再试。";
+    return t("k_f971ccc0");
   }
   const credentialish = /(token|key|凭据|令牌|密钥|credential)/i.test(message);
   const missing = /(required|需要|缺|未配置|not configured|missing)/i.test(message);
   if (credentialish && missing) {
     return reusingOcr
-      ? "翻译需要先在「设置」里配置翻译 API 后再试。"
-      : "翻译需要先在「设置」里配置 OCR / 翻译凭据后再试。";
+      ? t("k_80c3c51f")
+      : t("k_f012efb5");
   }
-  return message || "发起翻译失败，请稍后重试。";
+  return message || t("k_08df2867");
 }
 
 export function friendlyDocumentDeleteError(error: ErrorLike): string {
@@ -45,8 +46,8 @@ export function friendlyDocumentDeleteError(error: ErrorLike): string {
     const structured = blockedFavoriteCount(error);
     const count = structured > 0 ? structured : Number(message.match(/\d+/)?.[0]);
     return Number.isFinite(count) && count > 0
-      ? `该文档有 ${count} 条收藏，请先删除收藏后再删除文档。`
-      : "该文档存在收藏引用，请先删除相关收藏后再删除文档。";
+      ? t("k_3b35b854", [count])
+      : t("k_fb86d2b0");
   }
-  return message || "删除文档失败";
+  return message || t("k_c69ac417");
 }

@@ -7,6 +7,7 @@ import {
 } from "../contract/job-stage-progress-record-normalizer.js";
 import type { JobLike, JobPayload } from "../../job/types.js";
 import type { EventsPayload, ProgressRecord } from "../types.js";
+import { t } from "@retainpdf/i18n";
 
 export type ProgressReplaceFn = (
   previous: ProgressRecord | null | undefined,
@@ -50,7 +51,7 @@ export function compositeRenderCompileProgress(record: ProgressRecord | null | u
   const compileRatio = hasProgress ? clampRatio(Number(record.current), Number(record.total)) : 0;
   const percent = 80 + Math.round(compileRatio * 20);
   const compileDone = hasProgress && Number(record.current) >= Number(record.total);
-  const compileText = compileDone ? "渲染完成" : "正在编译 PDF";
+  const compileText = compileDone ? t("k_5b1f964f") : t("k_47682e9e");
   const payload = (record.payload && typeof record.payload === "object")
     ? record.payload as Record<string, unknown>
     : {};
@@ -100,7 +101,7 @@ export function compositeRenderPrewarmProgress(record: ProgressRecord | null | u
   }
   const prewarmRatio = clampRatio(Number(record.current), Number(record.total));
   const percent = Math.round(prewarmRatio * 10);
-  const prewarmText = `预热 ${record.current}/${record.total}`;
+  const prewarmText = t("k_f2d0e055", [record.current, record.total]);
   const payload = (record.payload && typeof record.payload === "object")
     ? record.payload as Record<string, unknown>
     : {};
@@ -135,7 +136,7 @@ export function compositeRenderPrepareProgress(record: ProgressRecord | null | u
     total: 100,
     progressUnit: "percent",
     displayPercent: percent,
-    progressText: `准备 ${record.current}/${record.total}`,
+    progressText: t("k_603455c5", [record.current, record.total]),
     payload: {
       ...payload,
       progress_unit: "percent",

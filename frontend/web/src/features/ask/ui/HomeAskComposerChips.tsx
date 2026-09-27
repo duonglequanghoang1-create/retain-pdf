@@ -3,6 +3,7 @@
 import { BookOpen, FolderOpen, X } from "lucide-react";
 import type { HomeAskScope } from "../domain/types.js";
 import { scopeKey } from "../domain/types.js";
+import { t } from "@retainpdf/i18n";
 
 export type HomeAskComposerChipsProps = {
   scopes: HomeAskScope[];
@@ -18,7 +19,7 @@ export function HomeAskComposerChips({
   onScopesChange,
 }: HomeAskComposerChipsProps) {
   return (
-    <div className="home-ask-chips" aria-label="提问范围">
+    <div className="home-ask-chips" aria-label={t("k_5c51ba8e")}>
       {scopes.map((s) => (
         <span
           key={scopeKey(s)}
@@ -30,12 +31,12 @@ export function HomeAskComposerChips({
             <BookOpen size={12} strokeWidth={2.2} aria-hidden />
           )}
           <span className="home-ask-chip-label" title={s.title}>
-            {s.kind === "collection" ? `合集 · ${s.title}` : s.title}
+            {s.kind === "collection" ? t("k_f5179b39", [s.title]) : s.title}
           </span>
           <button
             type="button"
             className="home-ask-chip-remove"
-            aria-label={`移除 ${s.title}`}
+            aria-label={t("k_01183499", [s.title])}
             disabled={disabled || isRunning}
             onClick={() => onScopesChange(scopes.filter((x) => scopeKey(x) !== scopeKey(s)))}
           >

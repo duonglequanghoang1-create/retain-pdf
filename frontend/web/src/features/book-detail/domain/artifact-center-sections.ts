@@ -11,6 +11,7 @@ import type {
 } from "./artifact-center-types.js";
 import { GROUP_META, groupFor, kindFor, labelFor, previewable } from "./artifact-classification.js";
 import { artifactKey, jobAttempt, numberOrNull, text, workflowOf } from "./artifact-values.js";
+import { t } from "@retainpdf/i18n";
 
 function buildJob(job: DocumentJobSummary): ArtifactCenterJob | null {
   const jobId = text(job.job_id);
@@ -34,8 +35,8 @@ function sourceItem(input: BuildArtifactCenterInput): ArtifactCenterItem | null 
   return {
     id: `source:${input.documentId}`,
     group: "source",
-    label: "原始 PDF",
-    filename: text(source?.filename) || "原始 PDF",
+    label: t("k_87e9f577"),
+    filename: text(source?.filename) || t("k_87e9f577"),
     kind: "PDF",
     url,
     sizeBytes: numberOrNull(source?.sizeBytes),
@@ -96,7 +97,7 @@ export function buildArtifactCenterSections(input: BuildArtifactCenterInput): Ar
     items.push({
       id: `agent:${operationId}:${text(operation.candidate?.version_id) || status}`,
       group: "agent",
-      label: status === "committed" ? "已应用版本" : "候选 PDF",
+      label: status === "committed" ? t("k_f136707e") : t("k_dc40dd3d"),
       filename: `${text(operation.candidate?.version_id) || operationId}.pdf`,
       kind: "PDF",
       url,

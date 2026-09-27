@@ -10,6 +10,7 @@ import {
   phaseTimeline,
 } from "./live-jobs-timeline.js";
 import type { LiveMockFromStage, LiveMockJobMeta } from "./live-jobs-timeline.js";
+import { t } from "@retainpdf/i18n";
 
 const liveJobs = new Map<string, LiveMockJobMeta>();
 
@@ -106,7 +107,7 @@ export function buildLiveMockJobPayload(
 
   const detail = phase.detail({ current, total, percent });
   const pageCount = Number(meta.pageCount) || 12;
-  const title = `${meta.title || "Mock 翻译任务"}`.trim() || "Mock 翻译任务";
+  const title = `${meta.title || t("k_902fbe84")}`.trim() || t("k_902fbe84");
 
   // 历史：fromStage 之前的相位标为已完成；当前及之后按时间
   const history = timeline
@@ -154,7 +155,7 @@ export function buildLiveMockJobPayload(
     display_stage: isDone ? "done" : phase.displayStage,
     substage: !isDone && phase.key === "translate" ? "translation_batches" : undefined,
     lane: "main",
-    stage_detail: isDone ? "处理完成，可以对照阅读" : detail,
+    stage_detail: isDone ? t("k_6014880b") : detail,
     progress: {
       unit: isDone || phase.unit === "none" ? undefined : phase.unit,
       current: isDone ? pageCount : current,

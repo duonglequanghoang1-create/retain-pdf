@@ -8,6 +8,7 @@ import type { CSSProperties } from "react";
 import {
   buildSubstageViewModel,
 } from "@retainpdf/domain/job-status";
+import { t } from "@retainpdf/i18n";
 
 type SubstageFlowProps = {
   selectedStageKey?: string;
@@ -22,7 +23,7 @@ export function SubstageFlow({ selectedStageKey, selectedIsCurrent, snapshot, se
   return (
     <div
       className={`status-substage-flow${viewModel.hidden ? " hidden" : ""}`}
-      aria-label="任务子阶段"
+      aria-label={t("k_60610990")}
       style={{ ["--status-substage-count"]: `${viewModel.cssCount}` } as CSSProperties}
     >
       {viewModel.items.map((item) => (

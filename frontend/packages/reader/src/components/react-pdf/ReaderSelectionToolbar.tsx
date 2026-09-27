@@ -1,5 +1,6 @@
 // PDF 选择浮条：正文走原生选区，公式/表格/图片走 OCR 结构选择层。
 
+import { t } from "@retainpdf/i18n";
 import { useEffect, useState } from "react";
 import { Check, Copy, Image, Sigma, Sparkles, StickyNote, Table2, Type, X } from "lucide-react";
 import {
@@ -76,15 +77,15 @@ export function ReaderSelectionToolbar({
     : Math.min(vh - 12, selection.rect.top + selection.rect.height + 8);
   const place = preferAbove ? "above" : "below";
 
-  const paneLabel = selection.pane === "translated" ? "译文" : "原文";
+  const paneLabel = selection.pane === "translated" ? t("k_647e0016") : t("k_4d69dbdf");
   const kind = selection.selectionType === "text" ? "text" : selection.kind;
   const regionContent = selection.selectionType === "text"
     ? selection.quote
     : readerRegionContent(selection.region, selection.pane);
-  const kindLabel = kind === "formula" ? "公式"
-    : kind === "table" ? "表格"
-      : kind === "figure" ? "图片"
-        : kind === "text" ? "文字" : "区域";
+  const kindLabel = kind === "formula" ? t("k_3f27035a")
+    : kind === "table" ? t("k_150074c2")
+      : kind === "figure" ? t("k_be8da62e")
+        : kind === "text" ? t("k_f4d3dab8") : t("k_17fc93c9");
   const copyValue = kind === "formula"
     ? extractReaderFormulaLatex(regionContent)
     : regionContent;
@@ -97,7 +98,7 @@ export function ReaderSelectionToolbar({
       className={`reader-sel-pop reader-sel-pop--${place} reader-sel-pop--region`}
       style={{ left, top }}
       role="toolbar"
-      aria-label="选区操作"
+      aria-label={t("k_2bf5a755")}
       onPointerDown={(event) => {
         // 点击工具条不能先折叠 PDF.js 的原生文字选区，否则 selectionchange
         // 会在 click 之前卸载按钮，复制与问 AI 都无法触发。
@@ -130,7 +131,7 @@ export function ReaderSelectionToolbar({
               }}
             >
               {copied ? <Check size={15} strokeWidth={2.4} aria-hidden /> : <Copy size={15} strokeWidth={2.2} aria-hidden />}
-              <span>{copied ? "已复制" : kind === "formula" ? "复制 LaTeX" : "复制"}</span>
+              <span>{copied ? t("k_e381a576") : kind === "formula" ? t("k_f70cafe8") : t("k_4edd1d00")}</span>
             </button>
           ) : (
             <span className="reader-sel-pop-selection-hint">已选择图片</span>
@@ -159,8 +160,8 @@ export function ReaderSelectionToolbar({
             type="button"
             className="reader-sel-pop-btn reader-sel-pop-btn--ghost"
             onClick={onDismiss}
-            aria-label="取消选区"
-            title="取消"
+            aria-label={t("k_4a8759b2")}
+            title={t("k_4d0b4688")}
           >
             <X size={15} strokeWidth={2.5} aria-hidden />
           </button>

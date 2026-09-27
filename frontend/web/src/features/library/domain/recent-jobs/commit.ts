@@ -11,6 +11,7 @@ import type { HomeStatePort } from "@/platform/contracts/home-view-contract.js";
 import type { LibraryJobItem } from "./runtime-item.js";
 import type { RecentJobsRuntimePatches } from "./runtime-patches.js";
 import type { RecentJobsStatePort } from "./state.js";
+import { t } from "@retainpdf/i18n";
 
 export type RecentJobsInvocationSummary = Record<string, unknown> | null;
 
@@ -207,7 +208,7 @@ export function commitRecentJobsEmpty({
   recentJobsStatePort.setItems([]);
   recentJobsStatePort.setHasMore(false);
   homeStatePort.setRecentJobsLoadingState(RECENT_JOBS_LOADING_STATES.READY);
-  const message = `${query || ""}`.trim() ? "没有匹配的书籍" : "暂无最近任务";
+  const message = `${query || ""}`.trim() ? t("k_9065e089") : t("k_6e705816");
   if (!storeDrivenRendering) {
     viewPort.renderEmpty(message, invocationSummary);
   }
@@ -237,7 +238,7 @@ export function commitRecentJobsError({
   renderError: _renderError,
   viewPort,
 }: CommitRecentJobsErrorOptions = {}): { message: string } {
-  const message = error?.message || "读取最近任务失败";
+  const message = error?.message || t("k_b4728ff8");
   if (!reset) {
     recentJobsStatePort.setHasMore(false);
   }

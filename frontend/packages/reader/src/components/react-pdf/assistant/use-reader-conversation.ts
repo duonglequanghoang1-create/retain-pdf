@@ -9,6 +9,7 @@
 // surface. The split is mechanical: exports, persistence keys, and timing are
 // unchanged.
 
+import { t } from "@retainpdf/i18n";
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
   armReaderAiClickShield,
@@ -312,7 +313,7 @@ export function useReaderConversation(options: {
     } catch (error) {
       console.warn("[reader-ai] switch session failed", error);
       if (token === switchTokenRef.current) {
-        setSessionError("加载该对话失败，请检查网络后重试。");
+        setSessionError(t("k_cc738df5"));
         const saved = loadThreadBranchSnapshot(
           { jobId, documentId: documentId || documentIdRef.current },
           id,

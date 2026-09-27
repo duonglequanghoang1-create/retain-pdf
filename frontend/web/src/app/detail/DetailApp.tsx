@@ -50,10 +50,11 @@ import {
   showDownloadPreparing,
   updateDownloadProgress,
 } from "@/platform/utils/download-feedback.js";
+import { t as tr } from "@retainpdf/i18n";
 
 function eventsStatusText(payload) {
   const count = Array.isArray(payload?.items) ? payload.items.length : 0;
-  return count > 0 ? `全部事件 · ${count} 条` : "全部事件";
+  return count > 0 ? tr("k_a00c2a02", [count]) : tr("k_1e0e9810");
 }
 
 export function DetailApp({
@@ -72,8 +73,8 @@ export function DetailApp({
   const [stageHistoryOpen, setStageHistoryOpen] = useState(false);
   const [eventsOpen, setEventsOpen] = useState(false);
   const [eventsPayload, setEventsPayload] = useState(null);
-  const [eventsStatus, setEventsStatus] = useState("尚未加载");
-  const [openEventsText, setOpenEventsText] = useState("按需加载");
+  const [eventsStatus, setEventsStatus] = useState(tr("k_3e2e1ebf"));
+  const [openEventsText, setOpenEventsText] = useState(tr("k_cc101992"));
 
   // 旧 view.js setDetailText 语义:value ?? "-"
   const setText = useCallback((id, value) => {
@@ -110,7 +111,7 @@ export function DetailApp({
     (async () => {
       const jobId = getJobId();
       if (!jobId) {
-        setText("detail-head-note", "缺少 job_id，请通过 detail.html?job_id=... 打开。");
+        setText("detail-head-note", tr("k_90ad30b9"));
         return;
       }
       setText("detail-job-id", jobId);
@@ -203,10 +204,10 @@ export function DetailApp({
       return state.eventsPayload;
     }
     if (!state.job?.job_id) {
-      throw new Error("缺少 job_id，无法加载事件流。");
+      throw new Error(tr("k_f5212623"));
     }
     if (!state.eventsLoadingPromise) {
-      setEventsStatus("正在加载全部事件...");
+      setEventsStatus(tr("k_735d7168"));
       const loadHistory = () => fetchJobEventPages({
         fetchPage: dataPort.fetchJobEvents,
         jobId: state.job.job_id,
@@ -224,7 +225,7 @@ export function DetailApp({
           return payload;
         })
         .catch((error) => {
-          setEventsStatus(error.message || "读取事件流失败。");
+          setEventsStatus(error.message || tr("k_e71c04e8"));
           throw error;
         })
         .finally(() => {
@@ -240,7 +241,7 @@ export function DetailApp({
       const payload = await ensureEventsLoaded();
       setEventsPayload(payload);
       setEventsStatus(eventsStatusText(payload));
-      setOpenEventsText("查看");
+      setOpenEventsText(tr("k_f7acefd2"));
     } catch (_error) {
       // 失败文案已在 ensureEventsLoaded 中写入
     }
@@ -269,7 +270,7 @@ export function DetailApp({
         target: downloadTarget,
         onProgress: ({ filename, receivedBytes, totalBytes, percent, done }) => {
           if (done) {
-            setText("detail-head-note", `已开始保存 ${filename}`);
+            setText("detail-head-note", tr("k_f10e354e", [filename]));
             completeDownloadToast(filename);
             return;
           }
@@ -277,8 +278,8 @@ export function DetailApp({
         },
       });
     } catch (error) {
-      setText("detail-head-note", error.message || "下载失败");
-      failDownloadToast(error.message || "下载失败");
+      setText("detail-head-note", error.message || tr("k_e0dab22b"));
+      failDownloadToast(error.message || tr("k_e0dab22b"));
     }
   }, [dataPort, setText]);
 
@@ -287,25 +288,25 @@ export function DetailApp({
       <main className="detail-page">
         <DetailHeader t={t} links={links} onProtectedDownload={handleProtectedDownload} />
         <section className="detail-grid">
-          <JobSummaryCard title="运行信息">
-            <MetaRow label="当前阶段" id="detail-runtime-current-stage" value={t("detail-runtime-current-stage")} />
-            <MetaRow label="当前阶段耗时" id="detail-runtime-stage-elapsed" value={t("detail-runtime-stage-elapsed")} />
-            <MetaRow label="累计耗时" id="detail-runtime-total-elapsed" value={t("detail-runtime-total-elapsed")} />
-            <MetaRow label="重试次数" id="detail-runtime-retry-count" value={t("detail-runtime-retry-count")} />
-            <MetaRow label="最近切换" id="detail-runtime-last-transition" value={t("detail-runtime-last-transition")} />
-            <MetaRow label="终态原因" id="detail-runtime-terminal-reason" value={t("detail-runtime-terminal-reason")} />
-            <MetaRow label="输入协议" id="detail-runtime-input-protocol" value={t("detail-runtime-input-protocol")} />
-            <MetaRow label="阶段协议" id="detail-runtime-stage-spec-version" value={t("detail-runtime-stage-spec-version")} />
-            <MetaRow label="公式模式" id="detail-runtime-math-mode" value={t("detail-runtime-math-mode")} />
+          <JobSummaryCard title={tr("k_b73b67a2")}>
+            <MetaRow label={tr("k_0a2489f6")} id="detail-runtime-current-stage" value={t("detail-runtime-current-stage")} />
+            <MetaRow label={tr("k_39e9876f")} id="detail-runtime-stage-elapsed" value={t("detail-runtime-stage-elapsed")} />
+            <MetaRow label={tr("k_a6b32f42")} id="detail-runtime-total-elapsed" value={t("detail-runtime-total-elapsed")} />
+            <MetaRow label={tr("k_7a35a7d3")} id="detail-runtime-retry-count" value={t("detail-runtime-retry-count")} />
+            <MetaRow label={tr("k_0ca7ec8e")} id="detail-runtime-last-transition" value={t("detail-runtime-last-transition")} />
+            <MetaRow label={tr("k_9c096ac4")} id="detail-runtime-terminal-reason" value={t("detail-runtime-terminal-reason")} />
+            <MetaRow label={tr("k_1e8cc7c1")} id="detail-runtime-input-protocol" value={t("detail-runtime-input-protocol")} />
+            <MetaRow label={tr("k_07ce56bd")} id="detail-runtime-stage-spec-version" value={t("detail-runtime-stage-spec-version")} />
+            <MetaRow label={tr("k_be71c089")} id="detail-runtime-math-mode" value={t("detail-runtime-math-mode")} />
           </JobSummaryCard>
-          <JobSummaryCard title="失败诊断">
-            <MetaRow label="摘要" id="detail-failure-summary" value={t("detail-failure-summary")} />
-            <MetaRow label="分类" id="detail-failure-category" value={t("detail-failure-category")} />
-            <MetaRow label="阶段" id="detail-failure-stage" value={t("detail-failure-stage")} />
-            <MetaRow label="根因" id="detail-failure-root-cause" value={t("detail-failure-root-cause")} />
-            <MetaRow label="建议" id="detail-failure-suggestion" value={t("detail-failure-suggestion")} />
-            <MetaRow label="最近日志" id="detail-failure-last-log-line" value={t("detail-failure-last-log-line")} />
-            <MetaRow label="可重试" id="detail-failure-retryable" value={t("detail-failure-retryable")} />
+          <JobSummaryCard title={tr("k_df49633e")}>
+            <MetaRow label={tr("k_46d4c1b4")} id="detail-failure-summary" value={t("detail-failure-summary")} />
+            <MetaRow label={tr("k_435c5259")} id="detail-failure-category" value={t("detail-failure-category")} />
+            <MetaRow label={tr("k_4ca39faa")} id="detail-failure-stage" value={t("detail-failure-stage")} />
+            <MetaRow label={tr("k_4917290f")} id="detail-failure-root-cause" value={t("detail-failure-root-cause")} />
+            <MetaRow label={tr("k_c5134eb1")} id="detail-failure-suggestion" value={t("detail-failure-suggestion")} />
+            <MetaRow label={tr("k_70f1aab1")} id="detail-failure-last-log-line" value={t("detail-failure-last-log-line")} />
+            <MetaRow label={tr("k_5ffe0b99")} id="detail-failure-retryable" value={t("detail-failure-retryable")} />
           </JobSummaryCard>
           <ErrorNoticeCard t={t} />
           <ErrorDiagnostics />

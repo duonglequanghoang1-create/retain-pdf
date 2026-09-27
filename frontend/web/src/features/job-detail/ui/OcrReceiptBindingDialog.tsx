@@ -18,6 +18,7 @@ import type {
   OcrReceiptValues,
   OcrRecoveryOutcome,
 } from "../domain/ocr-ambiguity-recovery.js";
+import { t } from "@retainpdf/i18n";
 
 type OcrReceiptBindingDialogProps = {
   descriptor: OcrAmbiguityView;
@@ -30,10 +31,10 @@ type OcrReceiptBindingDialogProps = {
 };
 
 const OPERATION_LABELS: Record<string, string> = {
-  apply_upload_url: "上传批次",
-  create_extract_task: "解析任务",
-  submit_local_file: "本地文件任务",
-  submit_remote_url: "远程文件任务",
+  apply_upload_url: t("k_cb824199"),
+  create_extract_task: t("k_c8b9485c"),
+  submit_local_file: t("k_1dbf4777"),
+  submit_remote_url: t("k_235e3f49"),
 };
 
 export function OcrReceiptBindingDialog({
@@ -85,7 +86,7 @@ export function OcrReceiptBindingDialog({
                 const fieldId = `${id}-${field.name}`;
                 return (
                   <label key={field.name} htmlFor={fieldId}>
-                    <span>{field.label}{field.required ? " *" : "（可选）"}</span>
+                    <span>{field.label}{field.required ? " *" : t("k_96896a21")}</span>
                     <input
                       id={fieldId}
                       name={field.name}
@@ -112,7 +113,7 @@ export function OcrReceiptBindingDialog({
               取消
             </Button>
             <Button id={`${id}-submit`} type="button" disabled={pending} onClick={submit}>
-              {pending ? "绑定中…" : "绑定并恢复"}
+              {pending ? t("k_306f8cb6") : t("k_22b71321")}
             </Button>
           </DialogFooter>
         </DialogShell>

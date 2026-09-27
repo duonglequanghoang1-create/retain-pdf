@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   isStructuredReaderRegion,
   projectReaderRegion,
@@ -17,11 +18,11 @@ type ReaderStructureSelectionLayerProps = {
 };
 
 const KIND_LABEL = {
-  formula: "公式",
-  table: "表格",
-  figure: "图片",
-  text: "文字",
-  region: "区域",
+  formula: t("k_3f27035a"),
+  table: t("k_150074c2"),
+  figure: t("k_be8da62e"),
+  text: t("k_f4d3dab8"),
+  region: t("k_17fc93c9"),
 } as const;
 
 /**
@@ -45,7 +46,7 @@ export function ReaderStructureSelectionLayer({
   if (!targets.length) return null;
 
   return (
-    <div className="reader-structure-selection-layer" aria-label="PDF 结构选择层">
+    <div className="reader-structure-selection-layer" aria-label={t("k_3688cbc3")}>
       {targets.map(({ highlight, rect }) => {
         const region = highlight.region;
         const kind = readerRegionKindForRegion(region);
@@ -58,8 +59,8 @@ export function ReaderStructureSelectionLayer({
             data-reader-region-id={region.itemId}
             data-reader-region-kind={kind}
             style={rect}
-            aria-label={`${label}区域，点击选择`}
-            title={`${label} · 点击选择`}
+            aria-label={t("k_05b1d745", [label])}
+            title={t("k_2a0fa2fb", [label])}
             onClick={(event) => {
               event.stopPropagation();
               const viewportRect = event.currentTarget.getBoundingClientRect();

@@ -13,6 +13,7 @@ import type {
   ServerFavorite,
   ServerFavoriteRaw,
 } from "../types/types.js";
+import { t } from "@retainpdf/i18n";
 
 // 服务端收藏 → 阅读器视图记录:snake_case 转 camelCase,
 // page_idx 与 jumpToReaderAnchor 的 pageIdx 同为 0 基（面向人的 UI/导出再 +1 展示）。
@@ -99,10 +100,10 @@ export function createReaderServerFavoritesPort({
         translated_quote_text: `${(quote as any).translatedQuoteText || ""}`,
         kind: "sentence",
       });
-      console.info("收藏已同步到服务端", (favorite as any)?.favorite_id || "");
+      console.info(t("k_e5e470e8"), (favorite as any)?.favorite_id || "");
       return favorite;
     } catch (error) {
-      console.error("同步收藏到服务端失败", error);
+      console.error(t("k_b00c4d9d"), error);
       return null;
     }
   }
@@ -120,7 +121,7 @@ export function createReaderServerFavoritesPort({
         .map(normalizeServerFavorite)
         .filter(Boolean) as ServerFavorite[];
     } catch (error) {
-      console.warn("读取服务端收藏失败", error);
+      console.warn(t("k_d2ad92a3"), error);
       return [];
     }
   }
@@ -135,7 +136,7 @@ export function createReaderServerFavoritesPort({
       await removeFavorite(apiPrefix, normalized);
       return true;
     } catch (error) {
-      console.error("删除服务端收藏失败", error);
+      console.error(t("k_389a65eb"), error);
       return false;
     }
   }
@@ -159,7 +160,7 @@ export function createReaderServerFavoritesPort({
       await removeServerFavorite(annotation.favoriteId);
       return normalizeServerFavorite(created as any);
     } catch (error) {
-      console.error("更新批注笔记失败", error);
+      console.error(t("k_f643e159"), error);
       return null;
     }
   }

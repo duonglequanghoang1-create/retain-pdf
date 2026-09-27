@@ -10,6 +10,7 @@ import {
   summarizeStatus,
 } from "@retainpdf/domain/job";
 import { firstNonEmpty as firstNonEmptyText, summarizeMathMode as renderMathMode } from "@retainpdf/domain/job";
+import { t } from "@retainpdf/i18n";
 
 export { summarizeMathMode } from "@retainpdf/domain/job";
 
@@ -61,7 +62,7 @@ export function renderJobDetailFailureSummary({ job, setText }) {
   setText("detail-failure-root-cause", summarizeRuntimeField(failure.root_cause || failureDiagnostic.root_cause || failure.upstream_host));
   setText("detail-failure-suggestion", summarizeRuntimeField(failure.suggestion || failureDiagnostic.suggestion || failure.failure_code));
   setText("detail-failure-last-log-line", summarizeRuntimeField(failureLastLogLine));
-  setText("detail-failure-retryable", typeof retryable === "boolean" ? (retryable ? "是" : "否") : "-");
+  setText("detail-failure-retryable", typeof retryable === "boolean" ? (retryable ? t("k_30160a21") : t("k_8bf5c10a")) : "-");
 }
 
 export function renderJobDetailPublicError({ job, setText }) {

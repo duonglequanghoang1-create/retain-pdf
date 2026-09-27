@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 页码区间的纯计算：归一化、上下界约束、校验。
 //
 // 全部无副作用（不读写 store / DOM）。controller 只负责把这里的结果落到
@@ -102,19 +104,19 @@ export function validatePageRangeValues({
     (start && normalizePageNumberInput(start) === "") ||
     (end && normalizePageNumberInput(end) === "")
   ) {
-    return { ok: false, message: "页码必须为数字" };
+    return { ok: false, message: t("k_bd9985b3") };
   }
   if ((start && Number(start) < 1) || (end && Number(end) < 1)) {
-    return { ok: false, message: "页码必须从 1 开始" };
+    return { ok: false, message: t("k_3db63998") };
   }
   if ((start && maxPage && Number(start) > maxPage) || (end && maxPage && Number(end) > maxPage)) {
-    return { ok: false, message: `页码不能超过 ${maxPage}` };
+    return { ok: false, message: t("k_5cf025b3", [maxPage]) };
   }
   if (start && end && Number(start) > Number(end)) {
-    return { ok: false, message: "起始页不能大于结束页" };
+    return { ok: false, message: t("k_1ceef67e") };
   }
   if (maxPage && start && end && Number(end) - Number(start) + 1 > maxPage) {
-    return { ok: false, message: `页码区间不能超过 ${maxPage} 页` };
+    return { ok: false, message: t("k_119f359a", [maxPage]) };
   }
   return { ok: true };
 }

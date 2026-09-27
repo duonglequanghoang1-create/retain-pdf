@@ -3,6 +3,7 @@
 import type { ChangeEventHandler, MouseEventHandler, ReactNode, RefCallback } from "react";
 
 import type { UploadViewState } from "../../../domain/upload-store.js";
+import { t } from "@retainpdf/i18n";
 
 type UploadDropzoneProps = {
   upload: UploadViewState;
@@ -36,7 +37,7 @@ export function UploadDropzone({
         name="file"
         type="file"
         accept="application/pdf,.pdf"
-        aria-label="选择 PDF 文件"
+        aria-label={t("k_d4e8a1e4")}
         ref={fileInputRef}
         disabled={!upload.tileEnabled}
         onClick={onFileInputClick}

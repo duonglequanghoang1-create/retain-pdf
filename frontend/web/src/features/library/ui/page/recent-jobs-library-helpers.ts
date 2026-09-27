@@ -1,9 +1,15 @@
+import { t as tr } from "@retainpdf/i18n";
+
 // RecentJobsLibrary 的纯派生 helper(从组件抽出,行为不变)。
 
-export const VIEW_TEXT = Object.freeze({
-  loadMore: "更多",
-  loadMoreLoading: "加载中…",
-});
+// 做成函数而不是模块级常量：t() 读的是模块级当前语言，常量在 import 阶段
+// 就求值完，那一刻 initI18n 还没跑，按钮会永远停在中文，切换语言也不刷新。
+export function viewText() {
+  return Object.freeze({
+    loadMore: tr("k_9b0c6c78"),
+    loadMoreLoading: tr("k_300ee3de"),
+  });
+}
 
 // 客户端排序(只排已加载的这几页;/documents 无 sort 参数,和参考项目一样在前端排)。
 export function sortItems(items, sortMode) {

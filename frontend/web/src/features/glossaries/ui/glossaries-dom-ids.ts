@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // GlossariesDialog 的 id/选择器契约(蓝图 §3 + §0.1)。
 //
 // 拷贝自 src/js/components/dialogs/glossary-manager-dialog-dom-contract.js
@@ -28,13 +30,13 @@ export const GLOSSARY_DOM_IDS = Object.freeze({
 });
 
 export const ENTRY_LEVEL_OPTIONS = [
-  ["preserve", "保留原词"],
-  ["canonical", "固定译法"],
-  ["preferred", "优先译法"],
+  ["preserve", t("k_e161819f")],
+  ["canonical", t("k_e8748a93")],
+  ["preferred", t("k_27b5efcf")],
 ];
 
 export const MATCH_MODE_OPTIONS = [
-  ["case_insensitive", "忽略大小写"],
-  ["exact", "精确"],
-  ["regex", "正则"],
+  ["case_insensitive", t("k_e50a89d3")],
+  ["exact", t("k_be955bcc")],
+  ["regex", t("k_fd769f85")],
 ];

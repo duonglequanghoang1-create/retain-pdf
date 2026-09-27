@@ -1,6 +1,7 @@
 // AI 会话 CRUD mock 适配器：只保留 mock 分支（真实网络走 @retainpdf/api/conversations）。
 
 import { API_PREFIX } from "@/platform/config/api-constants.js";
+import { t as tr } from "@retainpdf/i18n";
 
 export type ConversationRecord = {
   conversation_id: string;
@@ -138,11 +139,11 @@ export async function appendConversationMessage(
 /** 去掉 fork-n- / 分支 · 前缀，得到原始对话名。 */
 export function baseConversationTitle(title: string): string {
   let t = `${title || ""}`.replace(/\s+/g, " ").trim();
-  if (!t) return "未命名对话";
+  if (!t) return tr("k_8200c3d5");
   const fork = t.match(/^fork-\d+-(.+)$/i);
   if (fork?.[1]) t = fork[1].trim();
   t = t.replace(/^分支\s*[·•\-—]\s*/, "").trim();
-  return t || "未命名对话";
+  return t || tr("k_8200c3d5");
 }
 
 /**
@@ -192,7 +193,7 @@ export async function forkConversationFromPath(
     throw new Error("fork path empty");
   }
   const firstUser = path.find((m) => m.role === "user");
-  const rawTitle = `${options.title || firstUser?.content || "未命名对话"}`.replace(/\s+/g, " ").trim();
+  const rawTitle = `${options.title || firstUser?.content || tr("k_8200c3d5")}`.replace(/\s+/g, " ").trim();
   const title = rawTitle.length > 80 ? `${rawTitle.slice(0, 79).trim()}…` : rawTitle;
 
   const idMap = new Map<string, string>();
@@ -241,7 +242,7 @@ export async function forkConversationFromPath(
 
   const mockConv: ConversationRecord = {
     conversation_id: `mock-conv-${Date.now().toString(36)}`,
-    title: title || "未命名对话",
+    title: title || tr("k_8200c3d5"),
     document_id: options.documentId || null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),

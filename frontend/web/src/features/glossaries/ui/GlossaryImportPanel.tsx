@@ -3,6 +3,7 @@
 // applyImport(内部走 js/api/glossaries.js:parseGlossaryCsv)。
 
 import { GLOSSARY_DOM_IDS } from "./glossaries-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 export function GlossaryImportPanel({ visible, csvText, onCsvTextChange, onApply, onCancel }) {
   return (
@@ -10,7 +11,7 @@ export function GlossaryImportPanel({ visible, csvText, onCsvTextChange, onApply
       <textarea
         id={GLOSSARY_DOM_IDS.csvText}
         rows={6}
-        placeholder="原词,译文,类型,匹配模式,备注"
+        placeholder={t("k_d5e5978e")}
         value={csvText}
         onChange={(event) => onCsvTextChange(event.target.value)}
       />

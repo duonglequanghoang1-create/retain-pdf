@@ -9,6 +9,7 @@
 
 import { memo } from "react";
 import { MetaRow } from "./JobSummaryCard.jsx";
+import { t } from "@retainpdf/i18n";
 
 export const ArtifactsSection = memo(function ArtifactsSection() {
   return (
@@ -38,13 +39,13 @@ export function MarkdownCard({ t }) {
     <article className="detail-card">
       <div className="detail-trigger-head">
         <h2>Markdown 预览</h2>
-        <span id="detail-markdown-status" className="detail-inline-note">{t("detail-markdown-status", "未请求")}</span>
+        <span id="detail-markdown-status" className="detail-inline-note">{t("detail-markdown-status", t("k_17a5e86b"))}</span>
       </div>
       <div className="detail-meta-list">
-        <MetaRow label="JSON 接口" id="detail-markdown-json-url" mono value={t("detail-markdown-json-url")} />
-        <MetaRow label="Raw 接口" id="detail-markdown-raw-url" mono value={t("detail-markdown-raw-url")} />
+        <MetaRow label={t("k_aa1fa781")} id="detail-markdown-json-url" mono value={t("detail-markdown-json-url")} />
+        <MetaRow label={t("k_c17ddbca")} id="detail-markdown-raw-url" mono value={t("detail-markdown-raw-url")} />
         <MetaRow label="Images Base URL" id="detail-markdown-images-base-url" mono value={t("detail-markdown-images-base-url")} />
-        <MetaRow label="图片引用数" id="detail-markdown-image-count" value={t("detail-markdown-image-count")} />
+        <MetaRow label={t("k_044d0d6f")} id="detail-markdown-image-count" value={t("detail-markdown-image-count")} />
       </div>
       <MarkdownImageIsland />
       <pre id="detail-markdown-preview" className="detail-log">{t("detail-markdown-preview")}</pre>

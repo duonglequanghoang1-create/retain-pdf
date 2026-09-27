@@ -1,10 +1,12 @@
+import { t } from "@retainpdf/i18n";
+
 export async function fetchGlossaries(apiPrefix) {
   void apiPrefix;
   return {
     items: [
       {
         glossary_id: "mock-glossary-quantum",
-        name: "Mock 量子化学术语",
+        name: t("k_f9d2676f"),
         entry_count: 2,
         created_at: "",
         updated_at: "",
@@ -16,12 +18,12 @@ export async function fetchGlossaries(apiPrefix) {
 export async function fetchGlossary(glossaryId, apiPrefix) {
   const normalizedGlossaryId = `${glossaryId || ""}`.trim();
   if (!normalizedGlossaryId) {
-    throw new Error("读取术语表失败: 缺少 glossary_id");
+    throw new Error(t("k_048670d4"));
   }
   void apiPrefix;
   return {
     glossary_id: normalizedGlossaryId,
-    name: normalizedGlossaryId === "mock-glossary-quantum" ? "Mock 量子化学术语" : "Mock 术语表",
+    name: normalizedGlossaryId === "mock-glossary-quantum" ? t("k_f9d2676f") : t("k_33d46ee9"),
     entry_count: 2,
     entries: [
       {
@@ -30,15 +32,15 @@ export async function fetchGlossary(glossaryId, apiPrefix) {
         level: "preserve",
         match_mode: "case_insensitive",
         context: "",
-        note: "保留英文",
+        note: t("k_25fe3395"),
       },
       {
         source: "density functional theory",
-        target: "密度泛函理论",
+        target: t("k_0a5136a3"),
         level: "canonical",
         match_mode: "case_insensitive",
         context: "",
-        note: "固定译法",
+        note: t("k_e8748a93"),
       },
     ],
   };
@@ -56,7 +58,7 @@ export async function createGlossary(apiPrefix, payload) {
 export async function updateGlossary(apiPrefix, glossaryId, payload) {
   const normalizedGlossaryId = `${glossaryId || ""}`.trim();
   if (!normalizedGlossaryId) {
-    throw new Error("保存术语表失败: 缺少 glossary_id");
+    throw new Error(t("k_3facc259"));
   }
   void apiPrefix;
   return {
@@ -69,7 +71,7 @@ export async function updateGlossary(apiPrefix, glossaryId, payload) {
 export async function deleteGlossary(apiPrefix, glossaryId) {
   const normalizedGlossaryId = `${glossaryId || ""}`.trim();
   if (!normalizedGlossaryId) {
-    throw new Error("删除术语表失败: 缺少 glossary_id");
+    throw new Error(t("k_00f5150c"));
   }
   void apiPrefix;
   return { glossary_id: normalizedGlossaryId, deleted: true };
@@ -78,10 +80,10 @@ export async function deleteGlossary(apiPrefix, glossaryId) {
 export async function exportGlossaryCsv(apiPrefix, glossaryId) {
   const normalizedGlossaryId = `${glossaryId || ""}`.trim();
   if (!normalizedGlossaryId) {
-    throw new Error("导出术语表失败: 缺少 glossary_id");
+    throw new Error(t("k_7bbecdd1"));
   }
   void apiPrefix;
-  return new Response("source,target,note,level,match_mode,context\nHartree-Fock,,保留英文,preserve,case_insensitive,\n", {
+  return new Response(t("k_39826277"), {
     headers: {
       "content-type": "text/csv; charset=utf-8",
       "content-disposition": `attachment; filename="${normalizedGlossaryId}.csv"`,

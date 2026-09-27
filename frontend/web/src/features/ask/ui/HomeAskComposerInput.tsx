@@ -4,6 +4,7 @@ import type {
   KeyboardEvent as ReactKeyboardEvent,
   RefObject,
 } from "react";
+import { t as tr } from "@retainpdf/i18n";
 
 export type HomeAskComposerInputProps = {
   textareaRef: RefObject<HTMLTextAreaElement | null>;
@@ -35,10 +36,10 @@ export function HomeAskComposerInput({
       disabled={inputDisabled}
       placeholder={
         scopeCount
-          ? "继续提问… @ 可再指定文章或合集"
+          ? tr("k_1daf01c2")
           : variant === "hero"
-            ? "用 AI 做任何事… 输入 @ 指定文章或合集"
-            : "继续提问… 输入 @ 指定文章或合集"
+            ? tr("k_d6610ec5")
+            : tr("k_dea30205")
       }
       onChange={(e) => {
         const value = e.target.value;

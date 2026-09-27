@@ -19,6 +19,7 @@ import type {
   MockDocumentListResult,
 } from "./documents.types.js";
 import type { JobSubmissionView } from "@/platform/contracts/library-payloads.js";
+import { t } from "@retainpdf/i18n";
 
 type HttpStatusError = Error & {
   status?: number;
@@ -68,12 +69,12 @@ export function deleteMockDocument(documentId: string): {
   const list = documents();
   const index = list.findIndex((item) => item.document_id === documentId);
   if (index < 0) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   const favoriteCount = countMockFavoritesForDocument(documentId);
   if (favoriteCount > 0) {
     const error: HttpStatusError = new Error(
-      `该文档有 ${favoriteCount} 条收藏，请先删除收藏后再删除文档。(409)`,
+      t("k_fab3cdda", [favoriteCount]),
     );
     error.status = 409;
     error.favoriteCount = favoriteCount;
@@ -92,11 +93,11 @@ export function deleteMockDocument(documentId: string): {
 export function translateMockDocument(documentId: string): JobSubmissionView {
   const found = documents().find((item) => item.document_id === documentId);
   if (!found) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   const existingId = trimId(found.active_job_id);
   if (existingId && isLiveMockJobActive(existingId)) {
-    throw new Error("该文档已在翻译流程中。(409)");
+    throw new Error(t("k_23095c66"));
   }
   const live = registerLiveMockJob({
     documentId: found.document_id,
@@ -113,14 +114,14 @@ export function translateMockDocument(documentId: string): JobSubmissionView {
     status: `${snapshot.status || "queued"}`,
     stage: `${snapshot.stage || "queued"}`,
     display_stage: `${snapshot.display_stage || "ocr"}`,
-    stage_detail: `${snapshot.stage_detail || "正在读取任务状态..."}`,
+    stage_detail: `${snapshot.stage_detail || t("k_eae4483c")}`,
   };
 }
 
 export function ocrMockDocument(documentId: string): JobSubmissionView {
   const found = documents().find((item) => item.document_id === documentId);
   if (!found) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   const previous = trimId(found.active_job_id);
   const jobId = `mock-ocr-${Date.now()}`;
@@ -141,7 +142,7 @@ export function ocrMockDocument(documentId: string): JobSubmissionView {
 export function getMockDocumentJobs(documentId: string) {
   const found = documents().find((item) => item.document_id === documentId);
   if (!found) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   const jobId = trimId(found.active_job_id);
   if (!jobId) return { items: [], invocation_summary: {} };
@@ -150,7 +151,7 @@ export function getMockDocumentJobs(documentId: string) {
   const status = `${live?.status || (isOcr ? "queued" : "succeeded")}`;
   const stage = `${live?.stage || (isOcr ? "queued" : "finished")}`;
   const displayStage = `${live?.display_stage || (isOcr ? "ocr" : "done")}`;
-  const stageDetail = `${live?.stage_detail || (isOcr ? "OCR 任务已排队" : "任务完成")}`;
+  const stageDetail = `${live?.stage_detail || (isOcr ? t("k_b2af9156") : t("k_765b7fbf"))}`;
   const liveProgress: any = live?.progress || {};
   return {
     items: [{

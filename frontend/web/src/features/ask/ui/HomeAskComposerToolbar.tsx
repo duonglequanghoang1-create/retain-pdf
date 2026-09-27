@@ -1,6 +1,7 @@
 // HomeAskComposer 底栏：范围提示 + 发送 / 停止
 
 import { ArrowUp, Square } from "lucide-react";
+import { t } from "@retainpdf/i18n";
 
 export type HomeAskComposerToolbarProps = {
   scopeHint: string;
@@ -24,8 +25,8 @@ export function HomeAskComposerToolbar({
         <button
           type="button"
           className="home-ask-send home-ask-send-stop"
-          aria-label="停止生成"
-          title="停止生成"
+          aria-label={t("k_76349aa6")}
+          title={t("k_76349aa6")}
           disabled={!onStop}
           onClick={() => onStop?.()}
         >
@@ -35,7 +36,7 @@ export function HomeAskComposerToolbar({
         <button
           type="button"
           className="home-ask-send"
-          aria-label="发送"
+          aria-label={t("k_1214d633")}
           disabled={!canSend}
           onClick={onSend}
         >

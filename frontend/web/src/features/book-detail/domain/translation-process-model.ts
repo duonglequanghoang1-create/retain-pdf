@@ -4,12 +4,13 @@
 import type { LibraryCardItem } from "@/features/library/domain.js";
 import { translationUsesReusedOcr } from "@/features/library/domain.js";
 import { percentFromProgress } from "./progress-value.js";
+import { t } from "@retainpdf/i18n";
 
 const PROCESS_STAGES = [
   { key: "ocr", label: "OCR" },
-  { key: "translate", label: "翻译" },
-  { key: "render", label: "渲染" },
-  { key: "done", label: "完成" },
+  { key: "translate", label: t("k_23141370") },
+  { key: "render", label: t("k_0d2759cb") },
+  { key: "done", label: t("k_33246f6a") },
 ] as const;
 
 type ProcessStageKey = typeof PROCESS_STAGES[number]["key"];

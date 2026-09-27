@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePageRange } from "./use-page-range.js";
+import { t } from "@retainpdf/i18n";
 
 export function useBookDetailOcr({
   open,
@@ -36,7 +37,7 @@ export function useBookDetailOcr({
         });
       }
     } catch (cause) {
-      setError(`${cause?.message || cause || "发起 OCR 失败"}`);
+      setError(`${cause?.message || cause || t("k_d03aa9ce")}`);
     } finally {
       setPending(false);
     }
@@ -52,7 +53,7 @@ export function useBookDetailOcr({
       await actions.cancelJob?.(id, "ocr");
       await onCancelled?.();
     } catch (cause) {
-      setError(`${cause?.message || cause || "取消 OCR 失败"}`);
+      setError(`${cause?.message || cause || t("k_021e4e4f")}`);
     } finally {
       setCancelling(false);
     }

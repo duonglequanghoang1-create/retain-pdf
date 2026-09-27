@@ -27,6 +27,7 @@ import type {
   WorkflowViewPortLike,
 } from "./contracts.js";
 import type { WorkflowDeveloperConfig } from "./payload.js";
+import { t } from "@retainpdf/i18n";
 
 export * from "./contracts.js";
 
@@ -87,7 +88,7 @@ export function mountWorkflowFeature({
   defaultPaddleToken,
   defaultOcrProvider,
   defaultModelApiKey,
-  defaultFileLabel = "选择 PDF",
+  defaultFileLabel = t("k_e3f092bd"),
   normalizeWorkflow,
   normalizeMathMode,
   constants,

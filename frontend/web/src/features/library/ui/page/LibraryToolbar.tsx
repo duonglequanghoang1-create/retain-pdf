@@ -2,12 +2,13 @@
 // 数量;右侧排序下拉 + 网格/列表切换(筛选按钮在后续阶段接)。
 
 import { cn } from "@retainpdf/ui/lib/utils";
+import { t } from "@retainpdf/i18n";
 
 const SORT_OPTIONS = [
-  { value: "updated", label: "最近更新" },
-  { value: "created", label: "最近上传" },
-  { value: "opened", label: "最近阅读" },
-  { value: "title", label: "标题" },
+  { value: "updated", label: t("k_80920cd6") },
+  { value: "created", label: t("k_89ff67ee") },
+  { value: "opened", label: t("k_acb9bd27") },
+  { value: "title", label: t("k_748d7dc7") },
 ];
 
 function IconGrid() {
@@ -52,7 +53,7 @@ export function LibraryToolbar({
           {onToggleBatchMode ? (
             <button
               type="button"
-              title="批量操作" aria-label="批量操作" aria-pressed={batchMode}
+              title={t("k_eae7c2c8")} aria-label={t("k_eae7c2c8")} aria-pressed={batchMode}
               onClick={() => onToggleBatchMode(!batchMode)}
               className={cn(
                 "inline-flex h-8 items-center gap-1.5 rounded-[var(--btn-radius)] px-3 text-xs transition active:scale-95",
@@ -68,7 +69,7 @@ export function LibraryToolbar({
             <select
               value={sortMode}
               onChange={(e) => setSortMode(e.target.value)}
-              aria-label="排序方式"
+              aria-label={t("k_3bf3689a")}
               className="h-full max-w-[7.5rem] cursor-pointer rounded-none border-0 bg-transparent py-0 pl-0 pr-5 text-xs text-foreground/90 outline-none"
             >
               {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -77,15 +78,15 @@ export function LibraryToolbar({
 
           <div className="hidden h-5 w-px bg-border/15 sm:block" aria-hidden />
 
-          <div className="inline-flex h-8 shrink-0 items-center rounded-[var(--btn-radius)] bg-muted/20 p-0.5" role="group" aria-label="视图">
+          <div className="inline-flex h-8 shrink-0 items-center rounded-[var(--btn-radius)] bg-muted/20 p-0.5" role="group" aria-label={t("k_cebbb470")}>
             <button
-              type="button" title="网格" aria-label="网格视图" aria-pressed={viewMode === "grid"}
+              type="button" title={t("k_cd1bbb12")} aria-label={t("k_63a3454e")} aria-pressed={viewMode === "grid"}
               onClick={() => setViewMode("grid")}
               className={cn("inline-flex h-7 w-7 items-center justify-center rounded-[var(--btn-radius)] transition active:scale-90",
                 viewMode === "grid" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground/45 hover:bg-background/60 hover:text-foreground")}
             ><IconGrid /></button>
             <button
-              type="button" title="列表" aria-label="列表视图" aria-pressed={viewMode === "list"}
+              type="button" title={t("k_d46f82fd")} aria-label={t("k_1fd2104d")} aria-pressed={viewMode === "list"}
               onClick={() => setViewMode("list")}
               className={cn("inline-flex h-7 w-7 items-center justify-center rounded-[var(--btn-radius)] transition active:scale-90",
                 viewMode === "list" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground/45 hover:bg-background/60 hover:text-foreground")}

@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import type { ReactElement } from "react";
 import type { ReactNode } from "react";
 import { PdfDocumentPane } from "../../pdf/PdfDocumentPane.js";
@@ -102,23 +103,23 @@ export function liveTranslationPendingCopy(state: LiveTranslationState | undefin
   if (!state) return "";
   if (state.connection === "terminal" && state.jobStatus === "failed") {
     return state.pagesByPage.size > 0
-      ? `翻译已暂停，已保留 ${state.pagesByPage.size} 页译文`
-      : "翻译已暂停，原始 PDF 仍可阅读";
+      ? t("k_a96783f6", [state.pagesByPage.size])
+      : t("k_beab589b");
   }
   if (state.connection === "terminal" && ["cancelled", "canceled"].includes(state.jobStatus)) {
     return state.pagesByPage.size > 0
-      ? `翻译已取消，已保留 ${state.pagesByPage.size} 页译文`
-      : "翻译已取消，原始 PDF 仍可阅读";
+      ? t("k_3c1fdc76", [state.pagesByPage.size])
+      : t("k_867e0eff");
   }
   if (state.pagesByPage.size > 0) return "";
   if (state.connection === "unavailable") {
-    return state.error || "实时译文暂不可用，原始 PDF 仍可阅读";
+    return state.error || t("k_08e004dd");
   }
   if (state.error) return state.error;
   if (state.layoutByPage.size === 0) {
-    return "正在完成 OCR，译文将在这里逐页出现";
+    return t("k_77174d66");
   }
-  return "版面已就绪，正在等待首个译文页面";
+  return t("k_81e3fb61");
 }
 
 export function ReaderCompareGrid(props: ReaderCompareGridProps): ReactElement {
@@ -198,8 +199,8 @@ export function ReaderCompareGrid(props: ReaderCompareGridProps): ReactElement {
             onMetrics={onMetrics}
             emptyLabel={
               sourceViewOnly
-                ? "源文件不可用：该文档没有可读取的源 PDF。"
-                : "暂无原文 PDF"
+                ? t("k_fe7fe549")
+                : t("k_25489672")
             }
             onNumPagesChange={onNumPagesChange}
             activeRegion={activeRegion}
@@ -220,7 +221,7 @@ export function ReaderCompareGrid(props: ReaderCompareGridProps): ReactElement {
                 <span
                   className="reader-source-overlay-badge"
                   data-source-overlay-badge="true"
-                  title="源栏正在叠加实时译文，右栏为最终译文 PDF"
+                  title={t("k_481ec305")}
                 >
                   原文+实时译文叠加
                 </span>
@@ -239,7 +240,7 @@ export function ReaderCompareGrid(props: ReaderCompareGridProps): ReactElement {
             pageWidthOverride={pageWidthBasis}
             rowHeights={presentation.compareMode ? rowHeights : undefined}
             onMetrics={onMetrics}
-            emptyLabel="暂无译文 PDF"
+            emptyLabel={t("k_23959526")}
             onNumPagesChange={onNumPagesChange}
             activeRegion={activeRegion}
             regions={regions}

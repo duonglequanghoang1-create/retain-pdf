@@ -26,7 +26,7 @@ export declare function readerDownloadNameState({ jobId, jobPayload, manifestPay
     currentJobManifestJobId: string;
     currentJobSnapshot: unknown;
 };
-export declare function disabledReason(action: string, urls: any): "下载地址暂不可用" | "原始 PDF 尚未生成或清单不可用" | "对照 PDF 需要原始 PDF 和译文 PDF 都可用" | "译文 PDF 尚未生成或清单不可用";
+export declare function disabledReason(action: string, urls: any): string;
 export interface ReaderDownloadResolverOptions {
     resolveSourcePdfDownloadName?: (state: any, fallbackName: string) => string;
     resolveTranslatedPdfDownloadName?: (state: any, fallbackName: string) => string;

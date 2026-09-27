@@ -17,6 +17,7 @@ import {
   pageNumberOf,
   routePathOf,
 } from "../domain/dialog/formatters.js";
+import { t } from "@retainpdf/i18n";
 
 function ItemDetailBody({ payload }) {
   const item = payload.item || {};
@@ -39,9 +40,9 @@ function ItemDetailBody({ payload }) {
         <InfoRow label="fallback_to" value={fallbackToOf(item) || "-"} />
         <InfoRow label="degradation_reason" value={degradationReasonOf(item) || "-"} />
       </div>
-      <TextBlock label="原文" value={item.source_text || ""} />
-      <TextBlock label="落盘翻译" value={item.translated_text || item.translation_unit_translated_text || item.group_translated_text || ""} />
-      <TextBlock label="保护后译文" value={item.protected_translated_text || item.translation_unit_protected_translated_text || item.group_protected_translated_text || ""} />
+      <TextBlock label={t("k_4d69dbdf")} value={item.source_text || ""} />
+      <TextBlock label={t("k_4276176b")} value={item.translated_text || item.translation_unit_translated_text || item.group_translated_text || ""} />
+      <TextBlock label={t("k_f279e865")} value={item.protected_translated_text || item.translation_unit_protected_translated_text || item.group_protected_translated_text || ""} />
       <TextBlock label="translation_diagnostics" value={diagnostics || {}} />
     </>
   );
@@ -64,9 +65,9 @@ export function TranslationItemDetailPanel({ translation, onReplay }) {
   const loading = translation.itemDetailLoading;
   const hasItem = Boolean(payload?.item);
   const emptyText = translation.itemErrorText
-    || (translation.selectedItemId ? "请选择左侧条目" : "没有可查看的条目");
+    || (translation.selectedItemId ? t("k_011c1cb4") : t("k_e6ab8756"));
   const meta = loading
-    ? "读取中..."
+    ? t("k_ebb36ae2")
     : hasItem
       ? `${payload.item_id || payload.item?.item_id || "-"} · 第 ${pageNumberOf(payload, pageNumberOf(payload.item))} 页`
       : "-";
@@ -75,9 +76,9 @@ export function TranslationItemDetailPanel({ translation, onReplay }) {
   const replay = translation.replay;
   const hasReplayResult = Boolean(replay?.payload);
   const replayStatus = translation.replayLoading
-    ? "重放中..."
+    ? t("k_b9ec1379")
     : hasReplayResult
-      ? (replay.payload.replay_error ? "重放返回错误" : "重放完成")
+      ? (replay.payload.replay_error ? t("k_e5261727") : t("k_0e031747"))
       : (translation.replayErrorText || "-");
 
   return (

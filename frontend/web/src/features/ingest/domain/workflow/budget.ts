@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 const DEEPSEEK_PAGE_PRICE_CNY = 0.015;
 const DEEPSEEK_BUDGET_BUFFER = 1.1;
 const DEEPSEEK_TOP_UP_URL = "https://platform.deepseek.com/top_up";
@@ -52,7 +54,7 @@ export function resolveTranslationBudgetState({
   const balance = Number(balanceCny);
   const hasBalance = balanceChecked && Number.isFinite(balance);
   const blocking = hasBalance && balance < estimatedCost;
-  const balanceLabel = hasBalance ? `余额 ¥${money(balance)}` : "余额未检测";
+  const balanceLabel = hasBalance ? t("k_2ead3361", [money(balance)]) : t("k_d6249251");
   return {
     visible: true,
     blocking,
@@ -61,7 +63,7 @@ export function resolveTranslationBudgetState({
     balanceCny: hasBalance ? balance : null,
     balanceChecked,
     tone: blocking ? "error" : hasBalance ? "valid" : "",
-    message: `预计 ¥${money(estimatedCost)} · ${pageCount} 页 · ${balanceLabel}`,
+    message: t("k_e5c0d9e2", [money(estimatedCost), pageCount, balanceLabel]),
     topUpUrl: DEEPSEEK_TOP_UP_URL,
   };
 }

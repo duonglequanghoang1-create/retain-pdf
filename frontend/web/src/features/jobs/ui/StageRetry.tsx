@@ -6,6 +6,7 @@ import { useStatusCardIds } from "./status-card-ids-context.js";
 import {
   APP_EVENTS,
 } from "@/platform/contracts/app-contract.js";
+import { t } from "@retainpdf/i18n";
 
 function dispatchRetryStage(stage) {
   if (globalThis.document?.dispatchEvent && typeof globalThis.CustomEvent === "function") {
@@ -31,7 +32,7 @@ export function StageRetry({ selectedStageKey = "", action = null }) {
   const disabled = !action.canRetry;
   const disabledReasonText = `${action.disabledReason || ""}`.trim();
   const title = disabled
-    ? (disabledReasonText || "当前阶段暂不可重试，请稍后刷新重试。")
+    ? (disabledReasonText || t("k_1c8af87c"))
     : (action.disabledReason || undefined);
   return (
     <div id={ids.stageRetry} className="status-stage-retry" aria-hidden="false">
@@ -47,7 +48,7 @@ export function StageRetry({ selectedStageKey = "", action = null }) {
           }
         }}
       >
-        {action.label || "重新执行"}
+        {action.label || t("k_ac1ba6c4")}
       </button>
     </div>
   );

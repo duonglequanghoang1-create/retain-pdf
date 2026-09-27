@@ -10,6 +10,7 @@ import {
   summarizeDeepSeekBalance,
 } from "./validation.js";
 import { defaultCredentialsStatePort } from "./default-state-port.js";
+import { t } from "@retainpdf/i18n";
 
 const DEEPSEEK_LOW_BALANCE_THRESHOLD = 2;
 
@@ -17,7 +18,7 @@ function translationApiLabel(baseUrl = "") {
   if (!`${baseUrl || ""}`.trim()) return "DeepSeek";
   const provider = inferTranslationProvider(baseUrl);
   return provider === "custom"
-    ? "翻译接口"
+    ? t("k_949803c6")
     : getTranslationProviderDefinition(provider).label;
 }
 
@@ -72,20 +73,20 @@ export async function handleBrowserDeepSeekValidate({
   const modelName = modelNameInput?.value?.trim() || "";
   // 空模型名时后端只能退回 /models 连通性探针。这仍是有用的检测，但覆盖面
   // 小于用户以为的"接口可用"，成功文案必须如实标注，不能给一个含糊的绿灯。
-  const modelScopeNote = modelName ? "" : "（未验证模型）";
+  const modelScopeNote = modelName ? "" : t("k_225e16c0");
   const providerLabel = translationApiLabel(baseUrl);
   credentialsStatePort.resetDeepSeekBalance?.();
   onBalanceChange?.();
   if (!modelApiKey) {
     if (!silent && storedCredentials.translationCredentialRef) {
-      viewPort.setValidationMessage("翻译 API 使用旧配置；请填写 Key 后检测", "");
+      viewPort.setValidationMessage(t("k_45544648"), "");
     }
     return { ok: false, status: "missing_key" };
   }
   viewPort.setTopUpVisible(false);
   if (!silent) {
     viewPort.setValidationMessage(
-      providerLabel === "DeepSeek" ? "正在检测 DeepSeek 和余额…" : "正在检测翻译接口…",
+      providerLabel === "DeepSeek" ? t("k_58806d79") : t("k_20ea7a20"),
       "pending",
     );
   }
@@ -103,7 +104,7 @@ export async function handleBrowserDeepSeekValidate({
       viewPort.setTopUpVisible(false);
       if (!silent) {
         viewPort.setValidationMessage(
-          `${providerLabel === "翻译接口" ? "翻译接口可用" : `${providerLabel} 可用`}${modelScopeNote}`,
+          `${providerLabel === "翻译接口" ? t("k_034aab4c") : t("k_5a79f4e8", [providerLabel])}${modelScopeNote}`,
           "valid",
         );
       }
@@ -117,13 +118,13 @@ export async function handleBrowserDeepSeekValidate({
     });
     if (balance.status === "unsupported_provider") {
       if (!silent) {
-        viewPort.setValidationMessage(`${providerLabel} 可用${modelScopeNote}`, "valid");
+        viewPort.setValidationMessage(t("k_6330501a", [providerLabel, modelScopeNote]), "valid");
       }
       return balance;
     }
     if (balance.status === "network_error") {
       if (!silent) {
-        viewPort.setValidationMessage(`${providerLabel} 可用${modelScopeNote}，余额查询失败`, "valid");
+        viewPort.setValidationMessage(t("k_481744d1", [providerLabel, modelScopeNote]), "valid");
       }
       return balance;
     }
@@ -140,7 +141,7 @@ export async function handleBrowserDeepSeekValidate({
     if (!silent) {
       viewPort.setTopUpVisible(shouldTopUp);
       viewPort.setValidationMessage(
-        `${providerLabel} 可用${modelScopeNote}，${balanceSummary}${shouldTopUp ? "，余额低于 2 元" : ""}`,
+        `${providerLabel} 可用${modelScopeNote}，${balanceSummary}${shouldTopUp ? t("k_47f178d2") : ""}`,
         balance.is_available ? "valid" : "error",
       );
     }

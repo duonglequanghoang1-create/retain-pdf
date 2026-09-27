@@ -6,6 +6,7 @@
 
 import { X } from "lucide-react";
 import { SOFT_READER_CLOSE_MESSAGE } from "../../shared/navigation/soft-reader.js";
+import { t } from "@retainpdf/i18n";
 
 function homeIndexUrl() {
   return new URL("./index.html", window.location.href).href;
@@ -78,8 +79,8 @@ export function ReaderCloseHome({ onBeforeClose }: { onBeforeClose?: () => void 
       id="reader-close-home-btn"
       type="button"
       className="reader-close-home-btn"
-      aria-label="返回主页"
-      title="返回主页"
+      aria-label={t("k_20b6e2fc")}
+      title={t("k_20b6e2fc")}
       onClick={close}
     >
       <X className="reader-close-home-icon" size={18} strokeWidth={2.25} aria-hidden />

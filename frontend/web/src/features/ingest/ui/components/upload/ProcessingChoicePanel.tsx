@@ -6,6 +6,7 @@
 import type { ReactNode } from "react";
 import { Languages, Loader2, ScanSearch, SlidersHorizontal } from "lucide-react";
 import { APP_EVENTS } from "@/platform/contracts/app-contract.js";
+import { t } from "@retainpdf/i18n";
 
 type ProcessingChoicePanelProps = {
   visible: boolean;
@@ -38,17 +39,17 @@ export function ProcessingChoicePanel({
   // 「缺文件」与「文件就绪但被凭据·预算·源任务拦住」两类。
   const blocked = submitDisabled && !submitBusy;
   const missingUpload = !uploadReady;
-  let submitTitle = ocrOnly ? "上传完成后开始 OCR" : "上传完成后开始翻译";
+  let submitTitle = ocrOnly ? t("k_eb813a84") : t("k_96537838");
   let hintText = "";
   let hintActionLabel = "";
   if (blocked && missingUpload) {
-    submitTitle = "请先选择 PDF 文件并等待上传完成";
-    hintText = "请先选择 PDF 文件并等待上传完成，再提交任务。";
-    hintActionLabel = "选择文件";
+    submitTitle = t("k_51065276");
+    hintText = t("k_62e05e4b");
+    hintActionLabel = t("k_21a6f5a8");
   } else if (blocked) {
-    submitTitle = "请先完成接口设置后再提交";
-    hintText = "文件已就绪，提交前请先完成接口设置，也可在选项中设置术语表。";
-    hintActionLabel = "打开设置";
+    submitTitle = t("k_74cb8aaa");
+    hintText = t("k_7016d2e9");
+    hintActionLabel = t("k_857329ea");
   }
 
   // hint 动作：把用户带到缺失项。缺文件 → 打开发布文件框；已就绪被拦 →
@@ -74,9 +75,9 @@ export function ProcessingChoicePanel({
           id="page-range-btn"
           type="button"
           className={`page-range-mini secondary${pageRangeButtonVisible && !ocrOnly ? "" : " hidden"}`}
-          aria-label="翻译选项"
+          aria-label={t("k_813235a2")}
           aria-expanded={pageRangeOpen}
-          title="设置页码范围和术语表"
+          title={t("k_b34365b8")}
           onClick={onToggleTranslationOptions}
         >
           <SlidersHorizontal aria-hidden="true" />
@@ -87,7 +88,7 @@ export function ProcessingChoicePanel({
           type="button"
           className={`secondary${uploadReady ? "" : " hidden"}`}
           disabled={!uploadReady || submitBusy}
-          title="只加入书架，稍后再处理"
+          title={t("k_69a8f3e3")}
           onClick={onStoreOnly}
         >
           仅收藏
@@ -107,7 +108,7 @@ export function ProcessingChoicePanel({
           ) : (
             <Languages aria-hidden="true" />
           )}
-          {submitBusy ? "提交中…" : ocrOnly ? "开始 OCR" : submitLabel || "直接翻译"}
+          {submitBusy ? t("k_17e519c5") : ocrOnly ? t("k_694e8fd2") : submitLabel || t("k_d8a65dd3")}
         </button>
       </div>
 

@@ -10,6 +10,7 @@ import type {
   MockDocumentWithMedia,
   MockReadingStatus,
 } from "./documents.types.js";
+import { t } from "@retainpdf/i18n";
 
 export const MOCK_DOCUMENT_ID = "doc-9f2a41c8e77b";
 
@@ -23,13 +24,13 @@ function buildMockDocuments(): MockDocument[] {
   return [
     {
       document_id: MOCK_DOCUMENT_ID,
-      title: "共轭在卤素-锂交换选择性中的作用",
+      title: t("k_60a2cb11"),
       source_filename: "halogen-lithium-exchange.pdf",
       page_count: 10,
       bytes: 2_621_440,
       active_job_id: MOCK_JOB_ID,
       reading_status: "reading",
-      tags: ["化学", "有机合成"],
+      tags: [t("k_80bfd8e5"), t("k_d0ed28b7")],
       added_at: "2026-06-01T10:00:00Z",
       updated_at: "2026-06-01T12:00:00Z",
     },
@@ -41,7 +42,7 @@ function buildMockDocuments(): MockDocument[] {
       bytes: 1_843_200,
       active_job_id: "20260520-att-001",
       reading_status: "done",
-      tags: ["机器学习"],
+      tags: [t("k_38484299")],
       added_at: "2026-05-20T08:00:00Z",
       updated_at: "2026-05-21T09:30:00Z",
     },
@@ -61,19 +62,19 @@ function buildMockDocuments(): MockDocument[] {
     // 阅读器要能只读原文,卡片要能"以后再翻"。
     {
       document_id: "doc-ref-6a1f2c",
-      title: "Reaxys Retrosynthesis 手册(仅存档)",
+      title: t("k_1d8b57f0"),
       source_filename: "reaxys-handbook.pdf",
       page_count: 42,
       bytes: 3_200_000,
       active_job_id: null,
       reading_status: "unread",
-      tags: ["工具书"],
+      tags: [t("k_6a262b10")],
       added_at: "2026-06-10T09:00:00Z",
       updated_at: "2026-06-10T09:00:00Z",
     },
     {
       document_id: "doc-ref-9b7e04",
-      title: "Group Theory Lecture Notes(仅存档)",
+      title: t("k_6cf2bd3d"),
       source_filename: "group-theory-notes.pdf",
       page_count: 88,
       bytes: 5_600_000,
@@ -114,7 +115,7 @@ export const MOCK_HISTORICAL_JOB_TO_DOCUMENT: Record<string, string> = {
 export function getMockDocument(documentId: string): MockDocumentWithMedia {
   const found = documents().find((item) => item.document_id === documentId);
   if (!found) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   return withMockDocumentMediaUrls(found);
 }
@@ -172,10 +173,10 @@ export function patchMockDocument(
 ): MockDocumentWithMedia {
   const found = documents().find((item) => item.document_id === documentId);
   if (!found) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   if (readingStatus !== undefined && !READING_STATUSES.includes(readingStatus as MockReadingStatus)) {
-    throw new Error("reading_status 仅支持 unread | reading | done。(400)");
+    throw new Error(t("k_392e3067"));
   }
   if (title !== undefined) {
     found.title = `${title}`;

@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   clearMockFavoritesForDocument,
   deleteMockDocument,
@@ -61,7 +62,7 @@ export async function fetchDocument(
   void apiPrefix;
   const normalized = `${documentId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 document_id。");
+    throw new Error(t("k_fc3d5908"));
   }
   return getMockDocument(normalized);
 }
@@ -75,7 +76,7 @@ export async function patchDocument(
   void apiPrefix;
   const normalized = `${documentId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 document_id。");
+    throw new Error(t("k_fc3d5908"));
   }
   return patchMockDocument(normalized, payload);
 }
@@ -87,7 +88,7 @@ export async function deleteDocument(apiPrefix, documentId, { force = false } = 
   void force;
   const normalized = `${documentId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 document_id。");
+    throw new Error(t("k_fc3d5908"));
   }
   return deleteMockDocument(normalized);
 }
@@ -115,7 +116,7 @@ export async function translateDocument(
   assertKnownJobPayloadFields(payload, { label: "/documents/:id/translate" });
   const normalized = `${documentId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 document_id。");
+    throw new Error(t("k_fc3d5908"));
   }
   return translateMockDocument(normalized);
 }
@@ -128,7 +129,7 @@ export async function ocrDocument(
   void apiPrefix;
   assertKnownJobPayloadFields(payload, { label: "/documents/:id/ocr" });
   const normalized = `${documentId || ""}`.trim();
-  if (!normalized) throw new Error("缺少 document_id。");
+  if (!normalized) throw new Error(t("k_fc3d5908"));
   return ocrMockDocument(normalized);
 }
 

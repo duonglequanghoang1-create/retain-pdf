@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, FileCode2, ListTree, Search } from "lucide-reac
 import { findMarkdownSearchTargets } from "../../shared/content/markdown-search.js";
 import { ReaderFloatShell } from "./ReaderFloatShell.js";
 import { useReaderMarkdownDocument } from "./useReaderMarkdownDocument.js";
+import { t } from "@retainpdf/i18n";
 
 export type { MarkdownOutlineItem } from "../../shared/content/markdown-outline.js";
 export { buildMarkdownOutline } from "../../shared/content/markdown-outline.js";
@@ -99,27 +100,27 @@ export function ReaderMarkdownPanel({
       id="reader-markdown-panel"
       open={open}
       title="Markdown"
-      subtitle={layout === "docked" ? "识别与翻译产出 · PDF / Markdown 分栏" : "识别与翻译产出 · 拖动可移动"}
+      subtitle={layout === "docked" ? t("k_0d0bb3d6") : t("k_c21d200b")}
       titleIcon={<FileCode2 size={14} strokeWidth={2.25} aria-hidden />}
       storageKey="retainpdf.reader.markdown-float.pos.v1"
-      ariaLabel="Markdown 预览"
+      ariaLabel={t("k_c712492f")}
       width={420}
       placement={layout === "workspace" ? "workspace" : layout === "docked" ? "dock-right" : "floating"}
       showHeader={layout !== "workspace"}
       className={layout === "workspace" ? `is-pane-${side}` : undefined}
       onClose={onClose}
       toolbar={(
-        <span className="reader-notes-count">{status || "已加载"}</span>
+        <span className="reader-notes-count">{status || t("k_b19bae5d")}</span>
       )}
     >
-      <div className="reader-markdown-nav" aria-label="Markdown 导航与搜索">
+      <div className="reader-markdown-nav" aria-label={t("k_23ca2df7")}>
         <label className="reader-markdown-search">
           <Search size={13} aria-hidden />
           <input
             type="search"
             value={searchQuery}
-            placeholder="搜索正文"
-            aria-label="搜索 Markdown 正文"
+            placeholder={t("k_24740e4e")}
+            aria-label={t("k_8095db41")}
             onChange={(event) => {
               const query = event.target.value;
               searchQueryRef.current = query;
@@ -139,7 +140,7 @@ export function ReaderMarkdownPanel({
           ) : null}
           <button
             type="button"
-            aria-label="上一个搜索结果"
+            aria-label={t("k_b9dbcb51")}
             disabled={searchMatchCount === 0}
             onClick={() => activateSearchMatch(activeSearchIndex - 1)}
           >
@@ -147,7 +148,7 @@ export function ReaderMarkdownPanel({
           </button>
           <button
             type="button"
-            aria-label="下一个搜索结果"
+            aria-label={t("k_f28ae565")}
             disabled={searchMatchCount === 0}
             onClick={() => activateSearchMatch(activeSearchIndex + 1)}
           >
@@ -180,7 +181,7 @@ export function ReaderMarkdownPanel({
         ) : null}
       </div>
       {outlineOpen && outline.length > 0 ? (
-        <nav className="reader-markdown-outline" aria-label="Markdown 目录">
+        <nav className="reader-markdown-outline" aria-label={t("k_f15eb0a3")}>
           {!outlineComplete ? (
             <p className="reader-markdown-outline-note">仅显示已加载内容，滚动可加载更多</p>
           ) : null}
@@ -200,7 +201,7 @@ export function ReaderMarkdownPanel({
                 pendingAnchorRef.current = item.id;
                 renderAllRef.current = true;
                 resumeCleanupRef.current?.();
-                setStatus("正在加载目标章节…");
+                setStatus(t("k_6cddd39b"));
               }}
             >
               {item.text}

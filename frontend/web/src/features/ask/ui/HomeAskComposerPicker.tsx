@@ -4,6 +4,7 @@ import { BookOpen, FolderOpen, Loader2 } from "lucide-react";
 import type { HomeAskScope } from "../domain/types.js";
 import { scopeKey } from "../domain/types.js";
 import { MAX_SCOPES } from "./use-home-ask-composer.js";
+import { t } from "@retainpdf/i18n";
 
 export type HomeAskComposerPickerProps = {
   listId: string;
@@ -27,7 +28,7 @@ export function HomeAskComposerPicker({
   onPick,
 }: HomeAskComposerPickerProps) {
   return (
-    <div className="home-ask-picker app-floating-surface" role="listbox" id={listId} aria-label="选择文档或合集">
+    <div className="home-ask-picker app-floating-surface" role="listbox" id={listId} aria-label={t("k_e8e4c281")}>
       {loadingOpts && !optionsLoaded ? (
         <div className="home-ask-picker-empty">
           <Loader2 className="home-ask-spin" size={14} aria-hidden />
@@ -35,7 +36,7 @@ export function HomeAskComposerPicker({
         </div>
       ) : filtered.length === 0 ? (
         <div className="home-ask-picker-empty">
-          {optionsLoaded ? "没有匹配的文章或合集" : "暂无数据"}
+          {optionsLoaded ? t("k_97daf1ce") : t("k_b246458f")}
         </div>
       ) : (
         filtered.map((item, index) => (
@@ -59,7 +60,7 @@ export function HomeAskComposerPicker({
             <span className="home-ask-picker-kind">
               {item.kind === "collection"
                 ? `合集${item.document_count != null ? ` · ${item.document_count}` : ""}`
-                : "文章"}
+                : t("k_ad3fd0f4")}
             </span>
           </button>
         ))

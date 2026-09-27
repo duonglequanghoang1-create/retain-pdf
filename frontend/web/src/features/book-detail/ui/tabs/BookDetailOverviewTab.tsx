@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { TitleMetaPanel } from "../panels/overview/TitleMetaPanel.jsx";
 import { formatZhDate, formatZhDateTime } from "@/platform/utils/datetime.js";
+import { t } from "@retainpdf/i18n";
 
 type OverviewStatus = {
   label: string;
@@ -85,19 +86,19 @@ function jobActivity(job: OverviewJob) {
   const workflow = `${job.workflow || job.job_type || ""}`.trim().toLowerCase();
   const status = `${job.status || ""}`.trim().toLowerCase();
   const title = workflow === "ocr"
-    ? "OCR 识别"
+    ? t("k_bb5acef1")
     : workflow === "render"
-      ? "生成阅读文件"
-      : "文档翻译";
+      ? t("k_3333ab3a")
+      : t("k_bae47314");
   const statusLabel = status === "succeeded"
-    ? "已完成"
+    ? t("k_e99b48a2")
     : status === "failed"
-      ? "失败"
+      ? t("k_3e3c8068")
       : ["queued", "pending", "running", "validating"].includes(status)
-        ? "处理中"
+        ? t("k_fcb979ef")
         : status === "cancelled" || status === "canceled"
-          ? "已取消"
-          : status || "已创建";
+          ? t("k_a5ffdc95")
+          : status || t("k_62cfc535");
   return {
     key: `${job.job_id || job.id || title}:${job.updated_at || job.created_at || ""}`,
     title,
@@ -123,8 +124,8 @@ export function BookDetailOverviewTab({
   addedAt,
   memberCollections = [],
   management,
-  ocrStatus = { label: "尚未执行", tone: "muted" },
-  translationStatus = { label: "尚未开始", tone: "muted" },
+  ocrStatus = { label: t("k_6da92c16"), tone: "muted" },
+  translationStatus = { label: t("k_434621d9"), tone: "muted" },
   jobs = [],
   onOpenProcessing,
   onOpenArtifacts,
@@ -140,8 +141,8 @@ export function BookDetailOverviewTab({
   if (activities.length < 2 && addedAt) {
     activities.push({
       key: `added:${addedAt}`,
-      title: "加入书库",
-      status: "原始 PDF 已保存",
+      title: t("k_3eebfafa"),
+      status: t("k_79fedc65"),
       tone: "done",
       kind: "file",
       time: activityTime(addedAt),
@@ -178,7 +179,7 @@ export function BookDetailOverviewTab({
         </div>
       </section>
 
-      <div className="book-detail-overview-stats" aria-label="文档信息">
+      <div className="book-detail-overview-stats" aria-label={t("k_a79a04b9")}>
         <article className="book-detail-overview-stat">
           <span className="book-detail-overview-stat-icon" aria-hidden="true"><HardDrive /></span>
           <div><span>大小</span><strong>{sizeText || "—"}</strong></div>
@@ -190,19 +191,19 @@ export function BookDetailOverviewTab({
         <article className="book-detail-overview-stat">
           <span className="book-detail-overview-stat-icon" aria-hidden="true"><FolderOpen /></span>
           <div><span>合集</span><strong title={memberCollections.join("、")}>
-              {memberCollections.length ? memberCollections.join("、") : "未加入"}
+              {memberCollections.length ? memberCollections.join("、") : t("k_8dabc5fb")}
           </strong></div>
         </article>
       </div>
 
       <div className="book-detail-overview-main-grid">
-        <section className="book-detail-overview-feature-card" aria-label="进度状态">
+        <section className="book-detail-overview-feature-card" aria-label={t("k_6ef36b70")}>
           <div className="book-detail-overview-card-heading">
             <div className="book-detail-overview-heading-title">
               <span aria-hidden="true"><FileStack /></span>
               <h3>进度</h3>
             </div>
-            <button type="button" className="book-detail-overview-icon-link" onClick={onOpenProcessing} aria-label="查看进度详情">
+            <button type="button" className="book-detail-overview-icon-link" onClick={onOpenProcessing} aria-label={t("k_b2800976")}>
               <ArrowRight aria-hidden="true" />
             </button>
           </div>
@@ -219,7 +220,7 @@ export function BookDetailOverviewTab({
         </section>
 
         {management ? (
-          <section className="book-detail-overview-management" aria-label="阅读与归档">
+          <section className="book-detail-overview-management" aria-label={t("k_24aa7a6c")}>
           <div className="book-detail-overview-section-heading">
             <span aria-hidden="true"><BookOpenCheck /></span>
             <h3>阅读</h3>
@@ -229,7 +230,7 @@ export function BookDetailOverviewTab({
         ) : null}
       </div>
 
-      <section className="book-detail-overview-activity" aria-label="最近活动">
+      <section className="book-detail-overview-activity" aria-label={t("k_8764fbcf")}>
           <div className="book-detail-overview-card-heading">
             <div className="book-detail-overview-heading-title">
               <span aria-hidden="true"><Clock3 /></span>

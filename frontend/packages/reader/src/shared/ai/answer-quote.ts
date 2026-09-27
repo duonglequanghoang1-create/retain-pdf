@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 选中回答里的一段话 → 引用进输入框的文本块。
 //
 // 放在 reader 包里是因为两侧都要用：阅读器的 AI 面板和主页问答。引用块的形状必须一致
@@ -22,7 +24,7 @@ export function buildQuoteBlock(raw: string): string {
   if (!text) return "";
 
   const clipped = text.length > MAX_QUOTE_CHARS
-    ? `${text.slice(0, MAX_QUOTE_CHARS).trimEnd()}…（已截断）`
+    ? t("k_d62dc130", [text.slice(0, MAX_QUOTE_CHARS).trimEnd()])
     : text;
 
   // 空行在引用块中间会把它断成两块，用 `>` 顶上去保持是同一块。

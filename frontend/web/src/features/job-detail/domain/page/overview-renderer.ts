@@ -10,6 +10,7 @@ import {
   renderJobDetailPublicError,
   renderJobDetailRuntimeSummary,
 } from "./summary.js";
+import { t } from "@retainpdf/i18n";
 
 export function renderJobDetailOverview({
   diagnosticsPayload = null,
@@ -51,7 +52,7 @@ export function renderJobDetailOverview({
   }
   setText("detail-rerun-status", summarizeResumePlan(resumePlan));
   renderJobDetailPublicError({ job, setText });
-  setEventsStatus("尚未加载");
+  setEventsStatus(t("k_3e2e1ebf"));
   renderJobDetailActionLinks({ actions, job, manifestPayload, setActionLink });
 
   return { actions, durations, statusViewModel };

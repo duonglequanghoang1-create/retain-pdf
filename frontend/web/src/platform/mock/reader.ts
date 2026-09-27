@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // ===== 阅读区域(锚点/选区取文 e2e 用) =====
 
 export function getMockReaderRegions() {
@@ -15,7 +17,7 @@ export function getMockReaderRegions() {
         translated: {
           page: 1,
           bbox: [57, 52, 540, 96],
-          text: "原始 PDF",
+          text: t("k_87e9f577"),
         },
       },
       {
@@ -30,7 +32,7 @@ export function getMockReaderRegions() {
         translated: {
           page: 1,
           bbox: [57, 100, 540, 150],
-          text: "RetainPDF 联调预览",
+          text: t("k_68a67a70"),
         },
       },
     ],

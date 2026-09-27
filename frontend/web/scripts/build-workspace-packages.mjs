@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 const repoRoot = fileURLToPath(new URL("../../..", import.meta.url));
 const buildOrder = [
   "@retainpdf/contracts",
+  // i18n phải build trước mọi package khác: chúng import t() trong runtime.
+  "@retainpdf/i18n",
   "@retainpdf/domain",
   "@retainpdf/ui",
   "@retainpdf/api",

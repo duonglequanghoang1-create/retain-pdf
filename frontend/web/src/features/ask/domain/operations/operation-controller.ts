@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   agentOperationErrorMessage,
   agentOperationErrorStatus,
@@ -104,7 +105,7 @@ export function createAgentOperationController(
       dispatch({
         type: "action-error",
         operationId,
-        message: "请先确认重复执行风险，再重新执行操作。",
+        message: t("k_c5c0c047"),
       });
       return;
     }
@@ -136,7 +137,7 @@ export function createAgentOperationController(
           : common);
       }
       const next = asOperation(response);
-      if (!next?.operation_id) throw new Error("操作服务返回了无效状态。");
+      if (!next?.operation_id) throw new Error(t("k_9425ee5e"));
       clearAgentOperationActionKey(operationId, action, actionKeys, idempotencyOptions);
       dispatch({ type: "action-finish", operation: next });
     } catch (error) {
@@ -147,13 +148,13 @@ export function createAgentOperationController(
         clearAgentOperationActionKey(operationId, action, actionKeys, idempotencyOptions);
         try {
           const current = asOperation(await api.get(operationId));
-          if (!current?.operation_id) throw new Error("操作服务返回了无效状态。");
+          if (!current?.operation_id) throw new Error(t("k_9425ee5e"));
           dispatch({ type: "action-finish", operation: current });
         } catch {
           dispatch({
             type: "action-error",
             operationId,
-            message: "操作状态已发生变化，但刷新失败，请稍后重试。",
+            message: t("k_420e23b0"),
           });
         }
       } else {
@@ -178,15 +179,15 @@ export function operationStatusLabel(
 ): string {
   switch (status) {
     case "draft":
-    case "awaiting_confirmation": return confirmationMode === "green_light" ? "等待自动执行" : "等待确认";
-    case "queued": return "等待执行";
-    case "running": return "正在执行";
-    case "validating": return "正在验证候选文件";
-    case "result_ready": return confirmationMode === "green_light" ? "等待自动应用" : "候选文件已就绪";
-    case "committed": return confirmationMode === "green_light" ? "AI 已直接应用" : "已应用";
-    case "failed": return "执行失败";
-    case "cancelled": return "已取消";
-    case "ambiguous": return "执行结果不确定";
+    case "awaiting_confirmation": return confirmationMode === "green_light" ? t("k_abd26d76") : t("k_25a45621");
+    case "queued": return t("k_d0de7734");
+    case "running": return t("k_0a7f07c3");
+    case "validating": return t("k_6f0f9ee0");
+    case "result_ready": return confirmationMode === "green_light" ? t("k_1e174064") : t("k_d13e8f20");
+    case "committed": return confirmationMode === "green_light" ? t("k_39aa2266") : t("k_c99c6952");
+    case "failed": return t("k_9746cfc7");
+    case "cancelled": return t("k_a5ffdc95");
+    case "ambiguous": return t("k_7395a4ef");
     default: return status;
   }
 }

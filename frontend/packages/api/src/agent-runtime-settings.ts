@@ -4,6 +4,7 @@ import {
   buildApiUrl,
   unwrapEnvelope,
 } from "./internal/runtime.js";
+import { t } from "@retainpdf/i18n";
 
 export type AgentRuntimeMode = "python" | "openai" | "fx";
 export type AgentConfirmationMode = "explicit" | "green_light";
@@ -48,7 +49,7 @@ export interface AgentRuntimeConfigUpdate {
 }
 
 async function responseError(response: Response): Promise<Error> {
-  let message = "AI Agent 配置请求失败";
+  let message = t("k_9e14e636");
   try {
     const payload = await response.json();
     message = `${payload?.detail || payload?.message || message}`;
@@ -66,7 +67,7 @@ function parseRuntimeConfig(payload: unknown): AgentRuntimeConfigView {
     ? unwrapped
     : unwrapped?.data;
   if (view?.schema !== "retainpdf_ai_runtime_config_view_v1") {
-    throw new Error("AI Agent 配置返回格式不正确");
+    throw new Error(t("k_669745e5"));
   }
   return view as AgentRuntimeConfigView;
 }

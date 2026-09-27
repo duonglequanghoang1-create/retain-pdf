@@ -1,5 +1,6 @@
 // 正文里的 [n] 角标：点击跳页（原有行为），悬停出预览卡（新增）。
 
+import { t } from "@retainpdf/i18n";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
   resolveCitationPageNumber,
@@ -67,7 +68,7 @@ export function CitationRef({ citation, label, jobId, onJump }: CitationRefProps
         data-page={pageNumber ?? undefined}
         aria-describedby={open ? cardId : undefined}
         aria-expanded={hoverable ? open : undefined}
-        title={pageNumber ? `跳到第 ${pageNumber} 页` : "定位来源"}
+        title={pageNumber ? t("k_73826adf", [pageNumber]) : t("k_81b00d3e")}
         onClick={(event) => {
           event.preventDefault();
           event.stopPropagation();

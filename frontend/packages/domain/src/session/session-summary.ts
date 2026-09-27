@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 会话记录 → 侧栏摘要（标题兜底、message_count 归一），web 与 reader 共用。
 
 export type SessionSummaryRecord = {
@@ -33,7 +35,7 @@ export function toSessionSummary(
   const id = `${source.conversation_id || ""}`.trim();
   const summary: SessionSummary = {
     id,
-    title: `${source.title || ""}`.trim() || "未命名对话",
+    title: `${source.title || ""}`.trim() || t("k_8200c3d5"),
     updatedAt: `${source.updated_at || source.created_at || ""}`,
     messageCount: Number(source.message_count) || 0,
   };

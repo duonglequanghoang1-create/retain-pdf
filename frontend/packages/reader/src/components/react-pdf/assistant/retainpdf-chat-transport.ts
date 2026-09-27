@@ -10,6 +10,7 @@ import { describeToolEvent } from "../../../shared/ai/tool-labels.js";
 import type { ReaderAgentRuntimeConfig } from "../../../contracts/ai-operations.js";
 import type { ReaderChatRequest, ReaderAnswerer, ReaderAssistantMode } from "../../../contracts/ai-chat.js";
 import type { ReaderAgentOperationSignal } from "./use-reader-agent-operations.js";
+import { t } from "@retainpdf/i18n";
 
 export type ReaderChatMetadata = {
   citations?: AiCitationLike[];
@@ -87,7 +88,7 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
   }: Parameters<ChatTransport<ReaderChatMessage>["sendMessages"]>[0]): Promise<ReadableStream<UIMessageChunk>> {
     const request = (body || {}) as ReaderChatRequest;
     const question = questionForRequest(messages, request);
-    if (!question) throw new Error("请输入问题。");
+    if (!question) throw new Error(t("k_c0af56b0"));
 
     // Freeze routing semantics synchronously, before ensureLoaded or any other
     // await. A user can change the visible mode/selection while loading; that
@@ -106,7 +107,7 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
     const localAnswerer = this.options.getLocalAnswerer?.() || null;
 
     if (!remoteAnswerer && !localAnswerer) {
-      throw new Error("问答暂不可用：请确认已打开任务阅读器。");
+      throw new Error(t("k_f59bd7f4"));
     }
 
     // `closed` 由两侧置位:我们自己收尾时，以及**消费者取消这条流时**。
@@ -124,7 +125,7 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
         let streamedAnswer = "";
         let metadata: ReaderChatMetadata = {
           citations: [],
-          progress: trigger === "regenerate-message" ? "正在重新生成…" : "正在检索文档…",
+          progress: trigger === "regenerate-message" ? t("k_f7adee6c") : t("k_b24a7869"),
           status: "running",
         };
 
@@ -213,7 +214,7 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
                 onCompress: (event: unknown) => {
                   if (streamedAnswer || abortSignal?.aborted) return;
                   const dropped = Number((event as { dropped_turns?: number })?.dropped_turns) || 0;
-                  if (dropped) updateMetadata({ progress: `已压缩 ${dropped} 轮早期对话` });
+                  if (dropped) updateMetadata({ progress: t("k_a92a7217", [dropped]) });
                 },
                 signal: abortSignal,
               });
@@ -226,7 +227,7 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
                 || !shouldFallbackToLocal(error)
               ) throw error;
               usedFallback = true;
-              updateMetadata({ progress: "在线服务暂不可用，改用本地检索…" });
+              updateMetadata({ progress: t("k_d3f86976") });
               await localAnswerer.ensureLoaded?.(this.options.jobId);
               if (abortSignal?.aborted) throw new Error("aborted");
               answerer = localAnswerer;
@@ -240,7 +241,7 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
             }
 
             if (abortSignal?.aborted) {
-              updateMetadata({ progress: "", status: "cancelled", statusText: "已取消" });
+              updateMetadata({ progress: "", status: "cancelled", statusText: t("k_a5ffdc95") });
               enqueue({ type: "abort", reason: "cancelled" });
               return;
             }
@@ -269,14 +270,14 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
 
             const citations = normalizeAiCitations(result?.citations);
             let finalAnswer = sanitizeAssistantAnswer(
-              `${result?.answer || streamedAnswer || ""}`.trim() || "没有找到可用回答。",
+              `${result?.answer || streamedAnswer || ""}`.trim() || t("k_e1a73897"),
               citations,
             );
             if (usedFallback) {
-              finalAnswer += "\n\n_在线服务暂不可用，以上来自本地文档检索。_";
+              finalAnswer += t("k_dc882b3a");
             }
             if (result?.persisted === false) {
-              finalAnswer += "\n\n_⚠️ 本轮回答未能写入历史记录（存储暂时不可用），刷新后可能丢失。_";
+              finalAnswer += t("k_affaf14a");
             }
 
             // AI SDK 6 is the newest line compatible with the repository's
@@ -302,12 +303,12 @@ export class RetainPdfChatTransport implements ChatTransport<ReaderChatMessage> 
             enqueue({ type: "finish", finishReason: "stop", messageMetadata: metadata });
           } catch (error) {
             if (abortSignal?.aborted) {
-              updateMetadata({ progress: "", status: "cancelled", statusText: "已取消" });
+              updateMetadata({ progress: "", status: "cancelled", statusText: t("k_a5ffdc95") });
               enqueue({ type: "abort", reason: "cancelled" });
             } else {
               const errorText = error instanceof Error && error.message
                 ? error.message
-                : "生成回答失败，请重试。";
+                : t("k_dbb9ca66");
               // 文案同时进 metadata。AI SDK 的 error chunk 不会往消息里加文本片段,
               // 而流还没开始就失败时（例如后端 409）消息里本来就没有任何片段——
               // 只发 error chunk 的话，用户看到的是一个空气泡加三个按钮。

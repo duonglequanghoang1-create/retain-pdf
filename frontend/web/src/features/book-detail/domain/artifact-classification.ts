@@ -4,13 +4,14 @@
 import type { DocumentJobSummary } from "@/features/library/domain.js";
 import type { ArtifactCenterGroupId, ArtifactManifestItem } from "./artifact-center-types.js";
 import { artifactKey, text, workflowOf } from "./artifact-values.js";
+import { t } from "@retainpdf/i18n";
 
 export const GROUP_META: Record<ArtifactCenterGroupId, { label: string; description: string }> = {
-  source: { label: "原始文件", description: "入库时保存的 PDF" },
-  ocr: { label: "OCR 与结构化", description: "识别正文、Markdown、表格与结构化数据" },
-  translation: { label: "翻译与阅读", description: "译文、对照文件与任务包" },
-  diagnostics: { label: "诊断与报告", description: "后端实际生成的处理报告" },
-  agent: { label: "Agent 版本", description: "候选文件与已应用版本" },
+  source: { label: t("k_97d9441a"), description: t("k_a9ac4aab") },
+  ocr: { label: t("k_4b5b3373"), description: t("k_0aa924d9") },
+  translation: { label: t("k_0050b54c"), description: t("k_15f3351a") },
+  diagnostics: { label: t("k_ef067b4a"), description: t("k_36f56fc8") },
+  agent: { label: t("k_042ae5d5"), description: t("k_da28b1ca") },
 };
 
 export function isDiagnosticArtifact(item: ArtifactManifestItem): boolean {
@@ -26,23 +27,23 @@ export function groupFor(job: DocumentJobSummary, item: ArtifactManifestItem): A
 
 export function labelFor(item: ArtifactManifestItem): string {
   const key = `${artifactKey(item)} ${text(item.file_name || item.filename).toLowerCase()}`;
-  if (/layout.docx|\.docx$/.test(key)) return "Word 排版稿";
-  if (/side.by.side|comparison|bilingual/.test(key)) return "对照 PDF";
-  if (/translated.pdf|output.pdf|result.pdf|^pdf$/.test(key)) return "译文 PDF";
-  if (/normalized.document|document\.v1/.test(key)) return "结构化文档";
-  if (/normalization.report/.test(key)) return "识别报告";
-  if (/markdown.*bundle|bundle.*markdown/.test(key)) return "Markdown 任务包";
-  if (/bundle|archive|zip/.test(key)) return "完整任务包";
-  if (/translation.manifest/.test(key)) return "翻译清单";
-  if (/layout\.json/.test(key)) return "版式数据";
-  if (/events\.json/.test(key)) return "事件记录";
-  if (/paddle_result|paddle_raw/.test(key)) return "识别原始数据";
-  if (/request.journal/.test(key)) return "翻译请求记录";
+  if (/layout.docx|\.docx$/.test(key)) return t("k_548e8795");
+  if (/side.by.side|comparison|bilingual/.test(key)) return t("k_cfe9fa15");
+  if (/translated.pdf|output.pdf|result.pdf|^pdf$/.test(key)) return t("k_d93c8aae");
+  if (/normalized.document|document\.v1/.test(key)) return t("k_9c135b47");
+  if (/normalization.report/.test(key)) return t("k_20b7db03");
+  if (/markdown.*bundle|bundle.*markdown/.test(key)) return t("k_af104434");
+  if (/bundle|archive|zip/.test(key)) return t("k_32244800");
+  if (/translation.manifest/.test(key)) return t("k_ffe5c690");
+  if (/layout\.json/.test(key)) return t("k_b7fa8b71");
+  if (/events\.json/.test(key)) return t("k_babe0c0d");
+  if (/paddle_result|paddle_raw/.test(key)) return t("k_f66088ed");
+  if (/request.journal/.test(key)) return t("k_108a2a83");
   if (/markdown/.test(key)) return "Markdown";
-  if (/diagnostic/.test(key)) return "诊断报告";
-  if (/report/.test(key)) return "处理报告";
-  if (/summary/.test(key)) return "处理摘要";
-  return text(item.file_name || item.filename) || text(item.artifact_key) || "任务产物";
+  if (/diagnostic/.test(key)) return t("k_284aa394");
+  if (/report/.test(key)) return t("k_43b647c8");
+  if (/summary/.test(key)) return t("k_e5da99e4");
+  return text(item.file_name || item.filename) || text(item.artifact_key) || t("k_683c9d7f");
 }
 
 export function kindFor(item: ArtifactManifestItem): string {

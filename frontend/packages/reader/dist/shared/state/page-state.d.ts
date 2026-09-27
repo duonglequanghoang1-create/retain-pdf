@@ -1,11 +1,11 @@
 export declare const READER_PROGRESS_COPY: Readonly<{
-    boot: "正在准备对照阅读…";
-    metadata: "正在读取任务信息…";
-    both: "正在加载原始 PDF 和译文 PDF…";
-    sourceOnly: "原始 PDF 已加载，正在加载译文 PDF…";
-    translatedOnly: "译文 PDF 已加载，正在加载原始 PDF…";
-    ready: "对照阅读已就绪";
-    failed: "对照阅读加载失败";
+    boot: string;
+    metadata: string;
+    both: string;
+    sourceOnly: string;
+    translatedOnly: string;
+    ready: string;
+    failed: string;
 }>;
 export declare function createReaderPageState(): {
     reader: {

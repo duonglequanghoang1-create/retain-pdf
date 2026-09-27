@@ -1,21 +1,22 @@
-import { a as ee, b as te, d as re, e as ae, c as ne, f as se, g as ie, h as oe, j as ce, k as de, i as ue, l as le, m as fe, n as Ae, o as me, p as pe, q as ge, t as he, u as ye, r as ve, v as $e, w as Ie, x as Se, y as we, s as Ce, z as Ee } from "../answer-enhance-D8zK9znw.js";
-import { M as ke, b as Me, c as _e, a as Ne, l as Re, m as Te, s as xe, d as He, t as Fe, v as Le } from "../answer-quote-Div0HO_p.js";
-import { b as De, c as Oe, a as ze, d as Ue, l as Xe, s as Be } from "../ask-answerer-GNQdzitl.js";
-import { C as Ke, M as qe, h as je, n as Qe, a as We, b as Je, r as Ve, s as Ye } from "../config-CgaWliJ_.js";
-import { Marked as T } from "marked";
-import { p as x } from "../markdown-math-XkF5urpn.js";
+import { a as re, b as ae, d as ne, e as se, c as ie, f as oe, g as ce, h as de, j as ue, k as le, i as fe, l as me, m as Ae, n as pe, o as ge, p as he, q as ye, t as ve, u as $e, r as Ie, v as Se, w as we, x as Ce, y as Ee, s as be, z as ke } from "../answer-enhance-HajrqUpu.js";
+import { M as Me, b as Ne, c as Re, a as Te, l as xe, m as He, s as Fe, d as Le, t as Pe, v as De } from "../answer-quote-C6V12zVh.js";
+import { b as ze, c as Ue, a as Xe, d as Be, l as Ge, s as Ke } from "../ask-answerer--8DnuY26.js";
+import { t as T } from "../i18n-Bsr2eycf.js";
+import { C as je, M as Qe, h as We, n as Je, a as Ve, b as Ye, r as Ze, s as et } from "../config-CMSbavVs.js";
+import { Marked as x } from "marked";
+import { p as H } from "../markdown-math-CgnL-C9d.js";
 const w = "CITE_", C = "";
 function v(t) {
   return `${t}`.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 }
-function H(t) {
+function F(t) {
   const a = [];
   return { text: `${t ?? ""}`.replace(/\[(\d+)\]/g, (n, o) => {
     const d = `${w}${a.length}${C}`;
     return a.push(o), d;
   }), refs: a };
 }
-function F(t, a) {
+function L(t, a) {
   return a.length ? `${t ?? ""}`.replace(
     new RegExp(`${w}(\\d+)${C}`, "g"),
     (r, n) => {
@@ -24,23 +25,23 @@ function F(t, a) {
     }
   ) : t;
 }
-function Q(t) {
+function J(t) {
   return v(t || "").replace(/`([^`\n]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br />");
 }
-function L(t) {
+function P(t) {
   if (typeof t == "string") return t;
   const a = t;
   return `${(a == null ? void 0 : a.raw) ?? (a == null ? void 0 : a.text) ?? ""}`;
 }
-const $ = new T();
+const $ = new x();
 $.setOptions({ gfm: !0, breaks: !0 });
 $.use({
   renderer: {
-    html: (t) => v(L(t))
+    html: (t) => v(P(t))
   }
 });
-const P = /^\s*(?:javascript|vbscript|data:text\/html)/i;
-function D(t) {
+const D = /^\s*(?:javascript|vbscript|data:text\/html)/i;
+function O(t) {
   const a = globalThis.document;
   if (!a)
     return v(t);
@@ -54,7 +55,7 @@ function D(t) {
         o.removeAttribute(d.name);
         continue;
       }
-      if ((i === "href" || i === "src" || i === "xlink:href") && P.test(d.value)) {
+      if ((i === "href" || i === "src" || i === "xlink:href") && D.test(d.value)) {
         o.removeAttribute(d.name);
         continue;
       }
@@ -62,37 +63,37 @@ function D(t) {
     }
   }), r.innerHTML;
 }
-const f = /* @__PURE__ */ new Map(), O = 48;
-function W(t) {
+const f = /* @__PURE__ */ new Map(), z = 48;
+function V(t) {
   const a = `${t || ""}`.trim();
   return a ? f.get(a) ?? null : null;
 }
-function z(t, a) {
+function U(t, a) {
   const r = `${t || ""}`.trim();
   if (r)
-    for (f.has(r) && f.delete(r), f.set(r, a); f.size > O; ) {
+    for (f.has(r) && f.delete(r), f.set(r, a); f.size > z; ) {
       const n = f.keys().next().value;
       if (n == null) break;
       f.delete(n);
     }
 }
-async function J(t) {
+async function Y(t) {
   const a = `${t || ""}`;
   if (!a.trim()) return "";
   const r = f.get(a);
   if (r != null) return r;
-  const { text: n, refs: o } = H(a), d = await x(n, (l) => {
+  const { text: n, refs: o } = F(a), d = await H(n, (l) => {
     const p = String($.parse(l, { async: !1 }));
-    return D(p);
-  }), i = F(d, o);
-  return z(a, i), i;
+    return O(p);
+  }), i = L(d, o);
+  return U(a, i), i;
 }
-const U = 20, I = 18;
-function X(t = {}) {
+const X = 20, I = 18;
+function B(t = {}) {
   const r = (Array.isArray(t == null ? void 0 : t.messages) ? t.messages : []).find(
     (o) => (o == null ? void 0 : o.role) === "user" && `${(o == null ? void 0 : o.text) || ""}`.trim()
   ), n = `${(r == null ? void 0 : r.text) || (t == null ? void 0 : t.title) || ""}`.replace(/\s+/g, " ").trim();
-  return n ? n.length > I ? `${n.slice(0, I).trim()}…` : n : "新对话";
+  return n ? n.length > I ? `${n.slice(0, I).trim()}…` : n : T("k_1b7abf96");
 }
 function S({
   sessions: t = [],
@@ -100,13 +101,13 @@ function S({
 } = {}) {
   return (Array.isArray(t) ? t : []).map((r) => ({
     id: `${(r == null ? void 0 : r.id) || ""}`,
-    title: X(r),
+    title: B(r),
     updatedAt: Number(r == null ? void 0 : r.updatedAt) || 0,
     messageCount: Array.isArray(r == null ? void 0 : r.messages) ? r.messages.length : 0,
     active: `${(r == null ? void 0 : r.id) || ""}` == `${a}`
   })).filter((r) => r.id).sort((r, n) => n.updatedAt - r.updatedAt);
 }
-function B({ sessions: t = [], activeId: a = "" } = {}, r = U) {
+function G({ sessions: t = [], activeId: a = "" } = {}, r = X) {
   const n = Array.isArray(t) ? [...t] : [];
   if (n.length <= r)
     return n;
@@ -119,11 +120,11 @@ function B({ sessions: t = [], activeId: a = "" } = {}, r = U) {
   }
   return d;
 }
-const G = "retainpdf-ai-chat-v1:";
-function K(t) {
-  return `${G}${`${t || ""}`.trim()}`;
+const K = "retainpdf-ai-chat-v1:";
+function q(t) {
+  return `${K}${`${t || ""}`.trim()}`;
 }
-function A() {
+function m() {
   try {
     return Date.now();
   } catch {
@@ -133,14 +134,14 @@ function A() {
 function h(t, a) {
   return { id: t, title: "", createdAt: a, updatedAt: a, messages: [], history: [] };
 }
-function V({
+function Z({
   jobId: t = "",
   storage: a = globalThis.localStorage || null
 } = {}) {
-  const r = K(t), n = !!(`${t || ""}`.trim() && a);
+  const r = q(t), n = !!(`${t || ""}`.trim() && a);
   let o = 0;
   function d() {
-    return o += 1, `s-${A().toString(36)}-${o}`;
+    return o += 1, `s-${m().toString(36)}-${o}`;
   }
   function i() {
     var u;
@@ -161,12 +162,12 @@ function V({
       return { activeId: c.some((g) => `${g.id}` == `${e.activeId}`) ? `${e.activeId}` : `${((u = c[0]) == null ? void 0 : u.id) || ""}`, sessions: c };
     }
     if (Array.isArray(e.messages) || Array.isArray(e.history)) {
-      const c = A(), m = {
+      const c = m(), A = {
         ...h(d(), c),
         messages: Array.isArray(e.messages) ? e.messages : [],
         history: Array.isArray(e.history) ? e.history : []
       };
-      return { activeId: m.id, sessions: [m] };
+      return { activeId: A.id, sessions: [A] };
     }
     return s;
   }
@@ -174,14 +175,14 @@ function V({
     var e;
     if (n)
       try {
-        const u = B(s), c = u.some((m) => `${m.id}` == `${s.activeId}`) ? s.activeId : `${((e = u[0]) == null ? void 0 : e.id) || ""}`;
+        const u = G(s), c = u.some((A) => `${A.id}` == `${s.activeId}`) ? s.activeId : `${((e = u[0]) == null ? void 0 : e.id) || ""}`;
         a.setItem(r, JSON.stringify({ v: 2, activeId: c, sessions: u }));
       } catch {
       }
   }
   function p(s) {
     let e = s.sessions.find((u) => `${u.id}` == `${s.activeId}`);
-    return e || (e = h(d(), A()), s.sessions.push(e), s.activeId = e.id), e;
+    return e || (e = h(d(), m()), s.sessions.push(e), s.activeId = e.id), e;
   }
   function y() {
     if (!n)
@@ -196,24 +197,24 @@ function V({
     if (!n)
       return;
     const u = i(), c = p(u);
-    c.messages = s.slice(-40), c.history = e.slice(-40), c.updatedAt = A(), l(u);
+    c.messages = s.slice(-40), c.history = e.slice(-40), c.updatedAt = m(), l(u);
   }
   function b() {
     if (!n)
       return;
     const s = i(), e = p(s);
-    e.messages = [], e.history = [], e.title = "", e.updatedAt = A(), l(s);
+    e.messages = [], e.history = [], e.title = "", e.updatedAt = m(), l(s);
   }
   function k() {
     return n ? S(i()) : [];
   }
-  function M() {
+  function _() {
     return n ? `${i().activeId || ""}` : "";
   }
-  function _() {
+  function M() {
     if (!n)
       return "";
-    const s = i(), e = h(d(), A());
+    const s = i(), e = h(d(), m());
     return s.sessions.push(e), s.activeId = e.id, l(s), e.id;
   }
   function N(s) {
@@ -231,7 +232,7 @@ function V({
       e.activeId = c ? c.id : "";
     }
     if (!e.sessions.length) {
-      const c = h(d(), A());
+      const c = h(d(), m());
       e.sessions.push(c), e.activeId = c.id;
     }
     return l(e), y();
@@ -242,72 +243,72 @@ function V({
     clear: b,
     enabled: n,
     listSessions: k,
-    activeSessionId: M,
-    newSession: _,
+    activeSessionId: _,
+    newSession: M,
     switchSession: N,
     deleteSession: R
   };
 }
 export {
-  Ke as CREDENTIALS_CHANGED_EVENT,
-  ke as MAX_QUOTE_CHARS,
-  U as MAX_SESSIONS,
-  qe as MISSING_MODEL_API_KEY_MESSAGE,
-  ee as answerDocumentIds,
-  te as armReaderAiClickShield,
-  re as buildMarkdownImageApiUrl,
-  ae as buildPagePreviewUrl,
-  Me as buildQuoteBlock,
-  De as buildScopedQuestion,
-  ne as clearReaderAiNavigationLock,
-  Oe as clearStoredConversationId,
-  _e as clearThreadBranchSnapshot,
-  se as clipSnippet,
-  ze as conversationStorageKey,
-  V as createReaderAiHistoryStore,
-  Ue as createReaderAskAnswerer,
-  Ne as createReaderMarkdownAnswerer,
-  ie as decorateCitationMarkdown,
-  X as deriveSessionTitle,
-  oe as findCitationForAnswerImage,
-  je as hasModelApiKey,
-  ce as hydrateProtectedImages,
-  de as injectCitationMarkers,
-  ue as installReaderWindowOpenGuard,
-  le as isAgenticCitation,
-  fe as isReaderAiNavigationLocked,
-  Xe as loadStoredConversationId,
-  Re as loadThreadBranchSnapshot,
-  Ae as lockReaderAiNavigation,
-  Te as mergeQuoteIntoDraft,
-  me as mountAnswerHtml,
-  pe as neutralizeMarkdownAnchors,
-  ge as normalizeAiCitations,
-  Qe as notifyCredentialsChanged,
-  W as peekFinalAnswerHtmlCache,
-  he as pickCitationsForAnswer,
-  H as protectNumericCitations,
-  We as readSettingsModelApiKey,
-  ye as renderCitationFooter,
-  J as renderFinalAnswerHtml,
-  Q as renderStreamingPreviewHtml,
-  ve as resetAnswerEnhanceAdapters,
-  Je as resetReaderAiConfigAdapters,
-  $e as resolveAnswerImageUrl,
-  Ie as resolveCitationPageIdx,
-  Se as resolveCitationPageNumber,
-  Ve as resolveReaderAiConfig,
-  F as restoreNumericCitations,
-  we as revokeHydratedImageUrls,
-  xe as sanitizeAssistantAnswer,
-  Be as saveStoredConversationId,
-  He as saveThreadBranchSnapshot,
-  Ce as setAnswerEnhanceAdapters,
-  Ye as setReaderAiConfigAdapters,
-  Ee as shouldIgnoreReaderAiNavEvent,
+  je as CREDENTIALS_CHANGED_EVENT,
+  Me as MAX_QUOTE_CHARS,
+  X as MAX_SESSIONS,
+  Qe as MISSING_MODEL_API_KEY_MESSAGE,
+  re as answerDocumentIds,
+  ae as armReaderAiClickShield,
+  ne as buildMarkdownImageApiUrl,
+  se as buildPagePreviewUrl,
+  Ne as buildQuoteBlock,
+  ze as buildScopedQuestion,
+  ie as clearReaderAiNavigationLock,
+  Ue as clearStoredConversationId,
+  Re as clearThreadBranchSnapshot,
+  oe as clipSnippet,
+  Xe as conversationStorageKey,
+  Z as createReaderAiHistoryStore,
+  Be as createReaderAskAnswerer,
+  Te as createReaderMarkdownAnswerer,
+  ce as decorateCitationMarkdown,
+  B as deriveSessionTitle,
+  de as findCitationForAnswerImage,
+  We as hasModelApiKey,
+  ue as hydrateProtectedImages,
+  le as injectCitationMarkers,
+  fe as installReaderWindowOpenGuard,
+  me as isAgenticCitation,
+  Ae as isReaderAiNavigationLocked,
+  Ge as loadStoredConversationId,
+  xe as loadThreadBranchSnapshot,
+  pe as lockReaderAiNavigation,
+  He as mergeQuoteIntoDraft,
+  ge as mountAnswerHtml,
+  he as neutralizeMarkdownAnchors,
+  ye as normalizeAiCitations,
+  Je as notifyCredentialsChanged,
+  V as peekFinalAnswerHtmlCache,
+  ve as pickCitationsForAnswer,
+  F as protectNumericCitations,
+  Ve as readSettingsModelApiKey,
+  $e as renderCitationFooter,
+  Y as renderFinalAnswerHtml,
+  J as renderStreamingPreviewHtml,
+  Ie as resetAnswerEnhanceAdapters,
+  Ye as resetReaderAiConfigAdapters,
+  Se as resolveAnswerImageUrl,
+  we as resolveCitationPageIdx,
+  Ce as resolveCitationPageNumber,
+  Ze as resolveReaderAiConfig,
+  L as restoreNumericCitations,
+  Ee as revokeHydratedImageUrls,
+  Fe as sanitizeAssistantAnswer,
+  Ke as saveStoredConversationId,
+  Le as saveThreadBranchSnapshot,
+  be as setAnswerEnhanceAdapters,
+  et as setReaderAiConfigAdapters,
+  ke as shouldIgnoreReaderAiNavEvent,
   S as summarizeSessions,
-  Fe as threadBranchStorageKey,
-  B as trimSessions,
-  Le as visiblePathFromSnapshot
+  Pe as threadBranchStorageKey,
+  G as trimSessions,
+  De as visiblePathFromSnapshot
 };
 //# sourceMappingURL=ai.js.map

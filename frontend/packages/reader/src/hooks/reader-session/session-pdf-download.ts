@@ -6,6 +6,7 @@
 // - Promise.all 首个失败直接抛给调用方，调用方先 markFailed 再发布终态，
 //   迟到的兄弟下载随后因 isInactive() 返回 null，不再覆盖终态。
 
+import { t } from "@retainpdf/i18n";
 import {
   loadProtectedPdfFile,
   type ProtectedPdfFile,
@@ -88,7 +89,7 @@ export async function downloadJobPdfs(options: {
   setBoot: BootSetter;
 }): Promise<JobPdfDownloadResult> {
   const { sourceFinal, translatedFinal, fence, setBoot } = options;
-  setBootProgress(setBoot, 25, "正在下载 PDF…", "download");
+  setBootProgress(setBoot, 25, t("k_328c9cd3"), "download");
   const tasks: Promise<void>[] = [];
   let sourceBytes: ProtectedPdfFile | null = null;
   let translatedBytes: ProtectedPdfFile | null = null;
@@ -97,7 +98,7 @@ export async function downloadJobPdfs(options: {
     tasks.push(
       downloadOnePdf({
         url: sourceFinal,
-        label: "正在下载原文 PDF…",
+        label: t("k_a459b8ea"),
         percentStart: 30,
         percentEnd: 55,
         fence,
@@ -111,7 +112,7 @@ export async function downloadJobPdfs(options: {
     tasks.push(
       downloadOnePdf({
         url: translatedFinal,
-        label: "正在下载译文 PDF…",
+        label: t("k_ff535e9e"),
         percentStart: 55,
         percentEnd: 85,
         fence,

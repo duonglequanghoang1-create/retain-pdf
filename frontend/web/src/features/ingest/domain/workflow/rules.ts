@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 export function positiveInteger(value, fallback) {
   const fallbackNumber = Number(fallback);
   const normalizedFallback = Number.isFinite(fallbackNumber) && fallbackNumber > 0
@@ -55,21 +57,21 @@ export function workflowSubmitLabel(workflow, constants) {
   // UI 文案：上传弹窗主按钮「直接翻译」；render 仍用「开始渲染」
   switch (workflow) {
     case constants.WORKFLOW_RENDER:
-      return "开始渲染";
+      return t("k_402660c4");
     case constants.WORKFLOW_TRANSLATE:
-      return "直接翻译";
+      return t("k_d8a65dd3");
     case constants.WORKFLOW_BOOK:
-      return "直接翻译";
+      return t("k_d8a65dd3");
     default:
-      return "直接翻译";
+      return t("k_d8a65dd3");
   }
 }
 
 export function workflowHeadline(workflow, constants) {
   switch (workflow) {
     case constants.WORKFLOW_RENDER:
-      return "当前工作流会复用已有任务产物重新生成 PDF。";
+      return t("k_bd27d7e5");
     default:
-      return "选择 PDF 后，可选择仅收藏、仅 OCR 或翻译。";
+      return t("k_5ebf87f6");
   }
 }

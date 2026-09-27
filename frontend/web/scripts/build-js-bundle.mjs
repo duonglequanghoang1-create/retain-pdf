@@ -154,6 +154,9 @@ function bundleOptions({ entry, out }) {
       ".html": "text",
       ".ts": "ts",
       ".tsx": "tsx",
+      // i18n 的消息表是 JSON。没有这个 loader 时 import 会被当成未知扩展名
+      // 静默丢弃，构建能过、运行时 t() 却查不到任何 key。
+      ".json": "json",
     },
     minify: !watchMode,
     sourcemap: watchMode ? "inline" : false,

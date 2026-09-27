@@ -1,6 +1,7 @@
 // 合集网格视图:新建按钮 + loading/error/empty/文件夹卡片网格。
 import { EmptyState } from "@/ui/icons/EmptyState.jsx";
 import { FolderCoverStack } from "./FolderCoverStack.jsx";
+import { t } from "@retainpdf/i18n";
 
 type CollectionsGridViewProps = {
   collections: any[];
@@ -24,7 +25,7 @@ export function CollectionsGridView({
   onManage,
 }: CollectionsGridViewProps) {
   return (
-    <section id="categories-view" className="library-view categories-view collections-view" aria-label="合集" data-collections-view="true">
+    <section id="categories-view" className="library-view categories-view collections-view" aria-label={t("k_01dc4d09")} data-collections-view="true">
       <div className="categories-head collections-head">
         <button
           id="categories-create-btn"
@@ -53,8 +54,8 @@ export function CollectionsGridView({
         <EmptyState
           id="categories-empty"
           instrument="telescope"
-            title="暂无合集"
-          hint="把 PDF 按主题分组成书架，之后更好找。"
+            title={t("k_c632090f")}
+          hint={t("k_a740ac96")}
         >
           <button
             type="button"
@@ -80,8 +81,8 @@ export function CollectionsGridView({
               <button
                 type="button"
                 className="category-card-manage"
-                aria-label={`管理合集 ${collection.name}`}
-                title="管理"
+                aria-label={t("k_f4d2b302", [collection.name])}
+                title={t("k_4989b5cf")}
                 onClick={(event) => {
                   event.stopPropagation();
                   onManage(collection);

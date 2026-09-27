@@ -1,6 +1,7 @@
 // 主页 AI 单轮问答的运行态：abort 控制、流式回调落地、错误/停止收尾。
 // 纯编排；消息 patch 与状态 setter 由 runtime 组合层注入。
 
+import { t } from "@retainpdf/i18n";
 import {
   useCallback,
   useEffect,
@@ -134,7 +135,7 @@ export function useHomeAskTurn({
     const userId = parentUser ? parentUser.id : makeId("u");
     const assistantId = makeId("a");
     const displayUser = scopes.length
-      ? `${question}\n\n${scopes.map((s) => (s.kind === "collection" ? `@合集:${s.title}` : `@${s.title}`)).join(" ")}`
+      ? `${question}\n\n${scopes.map((s) => (s.kind === "collection" ? t("k_a9eb69f3", [s.title]) : `@${s.title}`)).join(" ")}`
       : question;
 
     // 新请求前中止上一轮
@@ -154,8 +155,8 @@ export function useHomeAskTurn({
       role: "assistant",
       content: "",
       progress: regenerating
-        ? "正在重新生成…"
-        : (scopes.some((s) => s.kind === "collection") ? "正在解析合集…" : "正在准备…"),
+        ? t("k_f7adee6c")
+        : (scopes.some((s) => s.kind === "collection") ? t("k_c67a49bc") : t("k_572335f8")),
       status: "streaming",
       parentId: userId,
     };
@@ -201,7 +202,7 @@ export function useHomeAskTurn({
           document_id: primaryDoc?.id || "",
         });
         requestConversationId = `${created?.conversation_id || ""}`.trim();
-        if (!requestConversationId) throw new Error("创建 AI 会话失败，请重试。");
+        if (!requestConversationId) throw new Error(t("k_a9181940"));
         setConversationId(requestConversationId);
         conversationIdRef.current = requestConversationId;
         saveConversationId(requestConversationId);
@@ -279,7 +280,7 @@ export function useHomeAskTurn({
         ? result.citations
         : []) as HomeAskCitation[];
       const answer = sanitizeAssistantAnswer(
-        `${result?.answer || ""}`.trim() || "没有找到可用回答。",
+        `${result?.answer || ""}`.trim() || t("k_e1a73897"),
         citations,
       );
       const nextConv = `${result?.conversationId || ""}`.trim();

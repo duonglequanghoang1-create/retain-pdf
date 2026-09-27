@@ -2,14 +2,15 @@ import type { ReactElement } from "react";
 import { Columns2, FileText, Languages, Radio } from "lucide-react";
 import type { LiveTranslationState } from "../../shared/data/live-translation-state.js";
 import { useReaderContext } from "./reader-context.js";
+import { t } from "@retainpdf/i18n";
 
 export type ReaderWorkspaceView = "reading" | "compare" | "markdown" | "ai";
 export type ReaderWorkspaceMode = "source" | "compare" | "translated";
 
 const WORKSPACES = [
-  { id: "source", label: "源文件", Icon: FileText },
-  { id: "compare", label: "对照", Icon: Columns2 },
-  { id: "translated", label: "翻译文件", Icon: Languages },
+  { id: "source", label: t("k_be43b936"), Icon: FileText },
+  { id: "compare", label: t("k_d36792e9"), Icon: Columns2 },
+  { id: "translated", label: t("k_83ca9fe3"), Icon: Languages },
 ] as const;
 
 export type ReaderWorkspaceTabsProps = {
@@ -29,16 +30,16 @@ export type ReaderWorkspaceTabsProps = {
 };
 
 export function liveTranslationStatusCopy(state: LiveTranslationState): string {
-  if (state.connection === "live") return `实时译文 · ${state.pagesByPage.size} 页`;
-  if (state.connection === "reconnecting") return "实时译文 · 重连中";
-  if (state.connection === "unavailable") return "实时译文 · 不可用";
+  if (state.connection === "live") return t("k_4d5106b4", [state.pagesByPage.size]);
+  if (state.connection === "reconnecting") return t("k_612314c3");
+  if (state.connection === "unavailable") return t("k_ef363ec6");
   if (state.connection === "terminal") {
-    if (state.jobStatus === "failed") return "实时译文 · 已暂停";
-    if (state.jobStatus === "cancelled" || state.jobStatus === "canceled") return "实时译文 · 已取消";
-    if (state.jobStatus === "succeeded") return "实时译文 · 已完成";
-    return "实时译文 · 已结束";
+    if (state.jobStatus === "failed") return t("k_05b7117c");
+    if (state.jobStatus === "cancelled" || state.jobStatus === "canceled") return t("k_80a389c5");
+    if (state.jobStatus === "succeeded") return t("k_9f9b048b");
+    return t("k_7584faa0");
   }
-  return state.error || "实时译文 · 连接中";
+  return state.error || t("k_c24c8401");
 }
 
 export function isReaderWorkspaceDisabled(input: {
@@ -72,7 +73,7 @@ export function ReaderWorkspaceTabs(props: ReaderWorkspaceTabsProps): ReactEleme
           type="button"
           className={`reader-live-translation-toggle is-${liveTranslation.state.connection}${liveTranslation.visible ? " is-active" : ""}`}
           aria-pressed={liveTranslation.visible}
-          aria-label={liveTranslation.visible ? "隐藏实时译文" : "显示实时译文"}
+          aria-label={liveTranslation.visible ? t("k_5a95b341") : t("k_148c107b")}
           title={liveTranslation.state.error || liveCopy}
           onClick={liveTranslation.onToggle}
         >
@@ -80,7 +81,7 @@ export function ReaderWorkspaceTabs(props: ReaderWorkspaceTabsProps): ReactEleme
           <span className="reader-live-translation-toggle-label">{liveCopy}</span>
         </button>
       ) : null}
-      <div className="reader-workspace-tabs" role="tablist" aria-label="阅读工作区">
+      <div className="reader-workspace-tabs" role="tablist" aria-label={t("k_33e8f7e9")}>
         {WORKSPACES.map(({ id, label, Icon }) => {
           const active = mode === id;
           const disabled = isReaderWorkspaceDisabled({
@@ -97,7 +98,7 @@ export function ReaderWorkspaceTabs(props: ReaderWorkspaceTabsProps): ReactEleme
               role="tab"
               aria-selected={active}
               aria-label={label}
-              title={disabled ? `${label} 需要文档任务` : label}
+              title={disabled ? t("k_0fb4778a", [label]) : label}
               disabled={disabled}
               onClick={() => onModeChange(id)}
             >

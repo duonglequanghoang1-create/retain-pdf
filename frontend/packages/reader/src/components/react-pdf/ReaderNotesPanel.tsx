@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { StickyNote } from "lucide-react";
 import type { ReaderNote } from "../../annotations/types.js";
 import { ReaderFloatShell } from "./ReaderFloatShell.js";
+import { t } from "@retainpdf/i18n";
 
 export type ReaderNotesPanelProps = {
   open: boolean;
@@ -40,7 +41,7 @@ function NoteItem({
     <article className="reader-notes-item">
       <div className="reader-notes-item-top">
         <span className="reader-notes-kind">
-          {note.pane === "translated" ? "译文" : "原文"}
+          {note.pane === "translated" ? t("k_647e0016") : t("k_4d69dbdf")}
         </span>
         <div className="reader-notes-item-actions">
           <button type="button" className="reader-notes-link" onClick={() => onJump(note)}>
@@ -57,7 +58,7 @@ function NoteItem({
           <textarea
             className="reader-notes-textarea"
             value={draft}
-            placeholder="写点想法…"
+            placeholder={t("k_5818db9d")}
             rows={3}
             onChange={(e) => setDraft(e.target.value)}
           />
@@ -82,7 +83,7 @@ function NoteItem({
           type="button"
           className="reader-notes-note"
           onClick={() => setEditing(true)}
-          title="点击编辑"
+          title={t("k_e49002b0")}
         >
           {note.note}
         </button>
@@ -111,11 +112,11 @@ export function ReaderNotesPanel({
     <ReaderFloatShell
       id="reader-notes-panel"
       open={open}
-      title="批注"
-      subtitle="选中 PDF 文字后可添加 · 本地保存"
+      title={t("k_290d5385")}
+      subtitle={t("k_eb6db838")}
       titleIcon={<StickyNote size={14} strokeWidth={2.25} aria-hidden />}
       storageKey="retainpdf.reader.notes-float.pos.v1"
-      ariaLabel="批注"
+      ariaLabel={t("k_290d5385")}
       onClose={onClose}
       toolbar={(
         <>
@@ -132,7 +133,7 @@ export function ReaderNotesPanel({
               }
             }}
           >
-            {copied ? "已复制" : "导出 Markdown"}
+            {copied ? t("k_e381a576") : t("k_2ece443b")}
           </button>
         </>
       )}

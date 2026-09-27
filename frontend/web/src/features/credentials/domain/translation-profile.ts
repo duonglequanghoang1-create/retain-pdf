@@ -3,6 +3,7 @@
 import {
   getTranslationProviderDefinition,
 } from "@/platform/config/providers.js";
+import { t } from "@retainpdf/i18n";
 
 export type TranslationProfile = {
   apiKey: string;
@@ -13,19 +14,19 @@ export type TranslationProfile = {
 
 export function translationConfigError(baseUrl = "", model = "") {
   const normalizedBaseUrl = `${baseUrl || ""}`.trim();
-  if (!normalizedBaseUrl) return "请填写翻译 API URL";
+  if (!normalizedBaseUrl) return t("k_eca9c972");
   try {
     const parsed = new URL(normalizedBaseUrl);
     if (!["http:", "https:"].includes(parsed.protocol) || !parsed.host) {
-      return "翻译 API URL 必须是有效的 http(s) 地址";
+      return t("k_3f81e5fa");
     }
     if (parsed.username || parsed.password) {
-      return "翻译 API URL 不能包含用户名或密码";
+      return t("k_93c576ec");
     }
   } catch {
-    return "翻译 API URL 必须是有效的 http(s) 地址";
+    return t("k_3f81e5fa");
   }
-  if (!`${model || ""}`.trim()) return "请填写翻译模型名称";
+  if (!`${model || ""}`.trim()) return t("k_12c5d83b");
   return "";
 }
 
@@ -34,7 +35,7 @@ export function translationWorkersError(value: unknown, providerId = "custom") {
   const definition = getTranslationProviderDefinition(providerId);
   const maxWorkers = Number(definition.maxWorkers) || 100;
   if (!Number.isInteger(workers) || workers < 1 || workers > maxWorkers) {
-    return `翻译并发数请输入 1–${maxWorkers} 的整数`;
+    return t("k_68488514", [maxWorkers]);
   }
   return "";
 }

@@ -2,6 +2,7 @@ import { resolveRecoverableJobId } from "./active-job-recovery.js";
 import { createRecentJobsRuntimePort } from "./job-runtime-port.js";
 import { createRecentJobsReaderPort } from "./reader-port.js";
 import { createRecentJobsNavigationPort } from "./navigation-port.js";
+import { t } from "@retainpdf/i18n";
 
 export function createRecentJobActions({
   apiPrefix,
@@ -34,7 +35,7 @@ export function createRecentJobActions({
   function selectJob(jobId) {
     const normalizedJobId = `${jobId || ""}`.trim();
     if (!normalizedJobId) {
-      renderRecentJobsError("该任务缺少 job_id，无法打开。", { reset: false });
+      renderRecentJobsError(t("k_a2310d1d"), { reset: false });
       return;
     }
     navigationPort.openJob(normalizedJobId);
@@ -50,10 +51,10 @@ export function createRecentJobActions({
         ? structured
         : message.match(/\d+/)?.[0];
       return count
-        ? `该文档有 ${count} 条收藏，请先删除收藏后再删除文档。`
-        : "该文档存在收藏引用，请先删除相关收藏后再删除文档。";
+        ? t("k_3b35b854", [count])
+        : t("k_fb86d2b0");
     }
-    return message || "删除失败";
+    return message || t("k_72250c59");
   }
 
   async function deleteJob(jobId) {
@@ -70,7 +71,7 @@ export function createRecentJobActions({
     statePort.removeJobFamily(normalizedJobId);
     const nextItems = statePort.getSnapshot().items;
     if (nextItems.length === 0) {
-      renderRecentJobsEmpty("暂无最近任务");
+      renderRecentJobsEmpty(t("k_6e705816"));
       return;
     }
     renderCurrentRecentJobs({ reset: true });
@@ -79,7 +80,7 @@ export function createRecentJobActions({
   function openJobReader(jobId, documentId = "") {
     const normalizedJobId = `${jobId || ""}`.trim();
     if (!normalizedJobId) {
-      renderRecentJobsError("该任务缺少 job_id，无法打开对照阅读。", { reset: false });
+      renderRecentJobsError(t("k_1c5642fe"), { reset: false });
       return;
     }
     navigationPort.openReader(normalizedJobId, `${documentId || ""}`.trim());

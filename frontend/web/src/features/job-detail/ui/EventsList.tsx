@@ -14,6 +14,7 @@ import {
 import {
   normalizedStageEventRecord,
 } from "@retainpdf/domain/job-status";
+import { t } from "@retainpdf/i18n";
 
 function eventBadgeTone(item) {
   if (item.level === "error" || item.event === "failure_classified" || item.event === "job_terminal") {
@@ -89,5 +90,5 @@ export function EventsList({ eventsPayload }) {
 
 export function eventsStatusText(eventsPayload) {
   const items = Array.isArray(eventsPayload?.items) ? eventsPayload.items : [];
-  return items.length > 0 ? `最近 ${items.length} 条` : "暂无事件";
+  return items.length > 0 ? t("k_ab91732c", [items.length]) : t("k_fad64b34");
 }

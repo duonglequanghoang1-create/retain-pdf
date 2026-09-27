@@ -4,13 +4,14 @@
 
 import { useState } from "react";
 import { STATUS_DETAIL_DIALOG_IDS } from "../domain/status-detail-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 const FINAL_STATUS_OPTIONS = [
-  { value: "", label: "全部" },
-  { value: "translated", label: "已翻译" },
-  { value: "partially_translated", label: "部分翻译" },
-  { value: "kept_origin", label: "保留原文" },
-  { value: "failed", label: "失败" },
+  { value: "", label: t("k_778fc8f9") },
+  { value: "translated", label: t("k_6b1aa462") },
+  { value: "partially_translated", label: t("k_89351c86") },
+  { value: "kept_origin", label: t("k_a80b7cd4") },
+  { value: "failed", label: t("k_3e3c8068") },
 ];
 
 export function TranslationFilterPanel({ query, onApply }) {
@@ -42,7 +43,7 @@ export function TranslationFilterPanel({ query, onApply }) {
           <input
             id={ids.filterQuery}
             type="search"
-            placeholder="输入条目 ID、路由、原文片段"
+            placeholder={t("k_8b989f94")}
             value={q}
             onChange={(event) => setQ(event.target.value)}
             onKeyDown={(event) => {

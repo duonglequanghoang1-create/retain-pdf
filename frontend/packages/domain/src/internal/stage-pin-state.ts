@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // Vendored from frontend/web/src/js/features/job-runtime/stage-pin-state.ts — pure stage pin logic
 export function currentDisplayedStagePin(state: unknown) {
   const s = state as Record<string, unknown> | null | undefined;
@@ -47,15 +49,15 @@ export function keepDisplayedStageForward({
 export function pinnedStagePresentation(stageKey = "") {
   switch (stageKey) {
     case "done":
-      return { label: "完成", detail: "翻译 PDF 已生成" };
+      return { label: t("k_33246f6a"), detail: t("k_aefbc670") };
     case "render":
-      return { label: "第 3/4 步 · 渲染", detail: "正在生成翻译后的 PDF" };
+      return { label: t("k_2c5dc51e"), detail: t("k_7c939ac7") };
     case "translate":
-      return { label: "第 2/4 步 · 翻译", detail: "正在翻译正文内容" };
+      return { label: t("k_2bd00473"), detail: t("k_576f69cb") };
     case "ocr":
-      return { label: "第 1/4 步 · OCR 解析", detail: "正在识别 PDF 内容" };
+      return { label: t("k_20bbd095"), detail: t("k_d0689981") };
     default:
-      return { label: "等待中", detail: "准备中" };
+      return { label: t("k_bd3488d0"), detail: t("k_4f1f8aa3") };
   }
 }
 

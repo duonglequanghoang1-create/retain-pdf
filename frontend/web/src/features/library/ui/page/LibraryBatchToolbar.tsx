@@ -7,6 +7,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/ui/lib/utils";
+import { t } from "@retainpdf/i18n";
 
 function IconTrash(props) {
   return (
@@ -59,7 +60,7 @@ export function LibraryBatchToolbar({
   const hasSelection = count > 0;
 
   return (
-    <div className="library-search-dock" aria-label="批量操作工具栏">
+    <div className="library-search-dock" aria-label={t("k_8734e5ff")}>
       <div className="flex min-h-[52px] flex-wrap items-center gap-2 rounded-full border border-[color-mix(in_srgb,color-mix(in_srgb,var(--line)_85%,var(--muted))_82%,transparent)] bg-paper/82 p-2 pl-4 shadow-[0_18px_46px_color-mix(in_srgb,var(--shadow-color)_12%,transparent)] backdrop-blur-[18px]">
         <button
           type="button"
@@ -76,7 +77,7 @@ export function LibraryBatchToolbar({
           className="shrink-0 rounded-[var(--btn-radius)] border border-border px-3 py-1.5 text-xs transition active:scale-95 hover:bg-muted/30 disabled:pointer-events-none disabled:opacity-50"
           disabled={busy || !totalSelectable}
           onClick={onSelectAll}
-        >{allSelected ? "取消全选" : `全选已加载${Number.isFinite(totalSelectable) ? `(${totalSelectable})` : ""}`}</button>
+        >{allSelected ? t("k_78fe5b03") : `全选已加载${Number.isFinite(totalSelectable) ? `(${totalSelectable})` : ""}`}</button>
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
           <div className="relative" ref={ref}>
@@ -97,7 +98,7 @@ export function LibraryBatchToolbar({
                 id="library-batch-collections-menu"
                 className="app-floating-surface absolute bottom-full right-0 z-30 mb-2 max-h-64 w-48 origin-bottom-right overflow-y-auto p-1.5"
                 role="menu"
-                aria-label="选择合集"
+                aria-label={t("k_fae83bc0")}
               >
                 {collections.map((c) => (
                   <button

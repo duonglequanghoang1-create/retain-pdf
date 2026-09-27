@@ -3,6 +3,7 @@
 // guards. Every callback preserves the original dependency list and timing
 // (deferred switch tokens, click shields, snapshot bookkeeping).
 
+import { t } from "@retainpdf/i18n";
 import { useCallback, type Dispatch, type MutableRefObject, type SetStateAction } from "react";
 import {
   armReaderAiClickShield,
@@ -113,7 +114,7 @@ export function useReaderSessionCommands(params: {
       if (docId) await refreshSessions(docId, token);
     } catch (error) {
       console.warn("[reader-ai] new session failed", error);
-      setSessionError("无法创建新对话，请重试。");
+      setSessionError(t("k_54817755"));
     } finally {
       if (token === switchTokenRef.current) setSessionBusy(false);
     }
@@ -129,23 +130,23 @@ export function useReaderSessionCommands(params: {
     const forkId = `${assistantMessageId || ""}`.trim();
     // 允许在 busy 时排队失败要有提示；生成中也可 fork（先停本地 running）
     if (!forkId) {
-      setSessionError("无法分支：消息 id 无效。");
+      setSessionError(t("k_91a359b9"));
       return false;
     }
     if (sessionBusy) {
-      setSessionError("请稍候，当前有会话操作进行中。");
+      setSessionError(t("k_ee7e0de3"));
       return false;
     }
     await streamRef.current.stopStream();
 
     const path = pathForBranch(itemsRef.current, forkId, headIdRef.current);
     if (!path.length) {
-      setSessionError("无法分支：找不到到此答案的对话路径。");
+      setSessionError(t("k_0642d685"));
       return false;
     }
     const last = path[path.length - 1];
     if (last.message.role !== "assistant") {
-      setSessionError("只能从助手答案处开新对话。");
+      setSessionError(t("k_7022e061"));
       return false;
     }
 
@@ -174,7 +175,7 @@ export function useReaderSessionCommands(params: {
         }
       }
       if (!docId) {
-        setSessionError("无法分支：文档未就绪，请稍后重试。");
+        setSessionError(t("k_3cb7084f"));
         return false;
       }
 
@@ -197,7 +198,7 @@ export function useReaderSessionCommands(params: {
       const sourceTitle =
         `${currentRow?.title || ""}`.trim()
         || `${firstUser?.content || ""}`.replace(/\s+/g, " ").trim()
-        || "未命名对话";
+        || t("k_8200c3d5");
       const existingTitles = (sessions || []).map((s) => s.title || "");
       const branchTitle = nextForkConversationTitle(sourceTitle, existingTitles);
 
@@ -252,7 +253,7 @@ export function useReaderSessionCommands(params: {
     } catch (error) {
       console.warn("[reader-ai] branch from answer failed", error);
       if (token === switchTokenRef.current) {
-        setSessionError("分支失败：未能复制上文到新对话。请检查网络后重试。");
+        setSessionError(t("k_1690169d"));
       }
       return false;
     } finally {
@@ -327,7 +328,7 @@ export function useReaderSessionCommands(params: {
       }
     } catch (error) {
       console.warn("[reader-ai] delete session failed", error);
-      setSessionError("删除对话失败，请重试。");
+      setSessionError(t("k_f60f2148"));
     } finally {
       if (token === switchTokenRef.current) setSessionBusy(false);
     }
@@ -354,7 +355,7 @@ export function useReaderSessionCommands(params: {
       if (docId) await refreshSessions(docId, token);
     } catch (error) {
       console.warn("[reader-ai] rename session failed", error);
-      setSessionError("重命名失败，请重试。");
+      setSessionError(t("k_e48280fa"));
     } finally {
       if (token === switchTokenRef.current) setSessionBusy(false);
     }

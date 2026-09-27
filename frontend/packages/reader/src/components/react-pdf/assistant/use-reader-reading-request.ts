@@ -6,6 +6,7 @@
 // stream aborts only the model request; durable operations keep their own
 // lifecycle elsewhere and are deliberately untouched.
 
+import { t } from "@retainpdf/i18n";
 import { useCallback, useEffect, useRef } from "react";
 import { createReaderMessageId } from "../../../contracts/ai-chat.js";
 import {
@@ -137,7 +138,7 @@ export function useReaderReadingRequest(options: {
       userId,
       assistantId,
       question,
-      progress: snapshot.assistantMode === "operations" ? "正在规划 PDF 操作…" : "正在理解文档…",
+      progress: snapshot.assistantMode === "operations" ? t("k_1f3fe5d6") : t("k_5a60e8d7"),
     });
     await liveChat.sendUserMessage(
       { id: userId, role: "user", parts: [{ type: "text", text: question }] },

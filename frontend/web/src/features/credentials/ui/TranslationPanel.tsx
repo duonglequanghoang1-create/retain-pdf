@@ -9,6 +9,7 @@ import { validationIcon } from "../domain/validation-icon.js";
 import { Check, ChevronDown, Code2, ExternalLink, Languages, PlugZap, TriangleAlert } from "lucide-react";
 import { Select as SelectPrimitive } from "radix-ui";
 import { SecretInput } from "./SecretInput.js";
+import { t } from "@retainpdf/i18n";
 
 const { browser: BROWSER_IDS } = CREDENTIAL_DOM_IDS;
 
@@ -67,7 +68,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
             <SelectPrimitive.Trigger
               id={BROWSER_IDS.translationProvider}
               className="credential-translation-provider-trigger"
-              aria-label="翻译 API 服务商"
+              aria-label={t("k_0c9b5e34")}
             >
               <span className="credential-translation-provider-value">
                 <TranslationProviderMark provider={providerDefinition} compact />
@@ -118,7 +119,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
             defaultValue=""
             readOnly={fixedBaseUrl}
             aria-readonly={fixedBaseUrl}
-            title={fixedBaseUrl ? `${providerDefinition.label} 官方地址，由服务商选项管理` : "自定义 OpenAI 兼容 API 地址"}
+            title={fixedBaseUrl ? t("k_a8e0b8e5", [providerDefinition.label]) : t("k_348c9c67")}
             ref={(node) => { elementsRef.modelBaseUrlInput = node || null; }}
             onInput={() => handlers?.resetDeepSeekValidation?.()}
           />
@@ -129,7 +130,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
             id={BROWSER_IDS.modelName}
             type="text"
             autoComplete="off"
-            placeholder="模型名称"
+            placeholder={t("k_38719c99")}
             defaultValue=""
             ref={(node) => { elementsRef.modelNameInput = node || null; }}
             onInput={() => handlers?.resetDeepSeekValidation?.()}
@@ -139,7 +140,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
           <span className="developer-label">API Key</span>
           <SecretInput
             id={BROWSER_IDS.apiKey}
-            secretLabel="翻译 API Key"
+            secretLabel={t("k_1ebe1281")}
             autoComplete="off"
             placeholder={TRANSLATION_PROVIDER_DEFINITION.keyPlaceholder}
             defaultValue=""
@@ -158,8 +159,8 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
             step="1"
             autoComplete="off"
             placeholder={`${providerDefinition.defaultWorkers || 5}`}
-            title={`${providerDefinition.label} 同时发送的翻译请求数（1–${providerDefinition.maxWorkers || 100}）`}
-            aria-label="翻译并发数"
+            title={t("k_b302ab9e", [providerDefinition.label, providerDefinition.maxWorkers || 100])}
+            aria-label={t("k_011d1d43")}
             defaultValue=""
             ref={(node) => { elementsRef.translationWorkersInput = node || null; }}
           />

@@ -14,6 +14,7 @@
 
 import { createStore } from "@/platform/store/store.js";
 import type { Store } from "@/platform/store/store.js";
+import { t } from "@retainpdf/i18n";
 
 /** 事件处理函数表（viewPort.bindEvents 写入 handlersRef） */
 export type HandlersBag = {
@@ -173,7 +174,7 @@ export function readEditorPayload(draft: GlossaryDraft = { name: "", entries: []
     });
   }
   return {
-    name: `${draft.name || ""}`.trim() || "未命名术语表",
+    name: `${draft.name || ""}`.trim() || t("k_839a79a2"),
     entries,
     skippedMissingTarget,
   };

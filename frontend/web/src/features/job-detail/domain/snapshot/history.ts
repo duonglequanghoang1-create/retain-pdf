@@ -9,13 +9,14 @@ import {
   resolveStageHistoryDuration,
   stageHistoryDisplay,
 } from "@retainpdf/domain/job";
+import { t } from "@retainpdf/i18n";
 
 export function buildStageHistoryPresentation(job, durationOptions = {}) {
   const history = resolveStageHistory(job);
   const markup = history.map((entry, index) => {
     const duration = resolveStageHistoryDuration(entry, job, durationOptions);
     const enterAt = entry?.enter_at ? formatEventTimestamp(entry.enter_at) : "-";
-    const exitAt = entry?.exit_at ? formatEventTimestamp(entry.exit_at) : (isJobTerminal(job) ? "-" : "处理中");
+    const exitAt = entry?.exit_at ? formatEventTimestamp(entry.exit_at) : (isJobTerminal(job) ? "-" : t("k_fcb979ef"));
     const stageDisplay = stageHistoryDisplay(entry);
     const terminalText = entry?.terminal_status ? ` · ${entry.terminal_status}` : "";
     return `
@@ -34,7 +35,7 @@ export function buildStageHistoryPresentation(job, durationOptions = {}) {
   }).join("");
   return {
     markup,
-    emptyText: "暂无阶段记录",
+    emptyText: t("k_1363c17e"),
     hasItems: history.length > 0,
   };
 }

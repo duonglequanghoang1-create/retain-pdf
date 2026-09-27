@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 export type LibraryPageMode = "list" | "loading" | "error" | "empty";
 
 export type DeriveLibraryPageStateInput = {
@@ -17,8 +19,8 @@ export type LibraryPageState = {
   emptyMessage: string;
 };
 
-const EMPTY_MESSAGE = "暂无最近任务";
-const EMPTY_SEARCH_MESSAGE = "没有匹配的书籍";
+const EMPTY_MESSAGE = t("k_6e705816");
+const EMPTY_SEARCH_MESSAGE = t("k_9065e089");
 
 /** 空态 CTA 推导：有搜索词 → 「清搜索」；新库（无搜索词）→ 「去上传」。 */
 export type LibraryEmptyAction = "upload" | "clear-search";

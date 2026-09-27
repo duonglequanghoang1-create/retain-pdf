@@ -2,6 +2,7 @@
 // 纯 Markdown 切段检索，无宿主依赖
 
 import { normalizeMarkdownPayload } from "../data/markdown-payload.js";
+import { t } from "@retainpdf/i18n";
 
 function markdownContent(payload: any = null): string {
   return normalizeMarkdownPayload(payload).content.trim();
@@ -26,7 +27,7 @@ function tokenize(text = ""): string[] {
 
 function splitMarkdownSections(markdown = ""): Array<{ title: string; text: string }> {
   const sections: Array<{ title: string; text: string }> = [];
-  let currentTitle = "文档开头";
+  let currentTitle = t("k_13ade251");
   let current: string[] = [];
   for (const line of `${markdown}`.split(/\r?\n/)) {
     const heading = line.match(/^(#{1,4})\s+(.+?)\s*$/);
@@ -66,13 +67,13 @@ function excerpt(text = "", maxLength = 420): string {
 
 function buildAnswer(question: string, sections: Array<{ title: string; text: string }>): string {
   if (!sections.length) {
-    return "我没有在当前 Markdown 里找到足够相关的片段。可以换一个更具体的问题，或确认这个任务已经生成 Markdown。";
+    return t("k_5edf2f76");
   }
   const lines = [
-    "我先基于当前 Markdown 找到这些相关片段：",
+    t("k_6ec6da9b"),
     ...sections.map((section, index) => `${index + 1}. ${section.title}：${excerpt(section.text)}`),
     "",
-    `问题：${question}`,
+    t("k_064ec7c3", [question]),
   ];
   return lines.join("\n");
 }
@@ -96,9 +97,9 @@ export function createReaderMarkdownAnswerer({
   async function answer({ jobId = "", question = "", scope = "document", context = null }: any = {}): Promise<any> {
     const source = await ensureLoaded(jobId);
     if (!source) {
-      throw new Error("当前任务还没有可用于问答的 Markdown。");
+      throw new Error(t("k_17e34910"));
     }
-    const tokens = tokenize(`${question} ${context?.page ? `第 ${context.page} 页` : ""}`);
+    const tokens = tokenize(`${question} ${context?.page ? t("k_62866db3", [context.page]) : ""}`);
     const sections = splitMarkdownSections(source)
       .map((section) => ({
         ...section,

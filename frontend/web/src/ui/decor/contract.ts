@@ -10,6 +10,7 @@
 // 设计文档：docs/core/frontend/theme-system/DECOR_PACKS.md
 
 import { getDecorSlot, isDecorSlotId, type DecorSlotId } from "./slots.js";
+import { t } from "@retainpdf/i18n";
 
 export const DECOR_MANIFEST_VERSION = 1;
 
@@ -98,7 +99,7 @@ function isSafeRelativePath(v: unknown): v is string {
 function checkClipName(v: unknown, label: string, errors: string[]) {
   if (v === undefined) return;
   if (typeof v !== "string" || !v.trim()) {
-    errors.push(`${label} 必须是非空字符串（glb 内 AnimationClip 名）`);
+    errors.push(t("k_a86cb5a0", [label]));
   }
 }
 
@@ -109,23 +110,23 @@ function checkClipName(v: unknown, label: string, errors: string[]) {
 export function validateDecorManifest(input: unknown): DecorManifestValidation {
   const errors: string[] = [];
   if (!isPlainObject(input)) {
-    return { ok: false, manifest: null, errors: ["manifest 必须是 JSON 对象"] };
+    return { ok: false, manifest: null, errors: [t("k_e07d79d8")] };
   }
 
   if (input.version !== DECOR_MANIFEST_VERSION) {
-    errors.push(`version 必须为 ${DECOR_MANIFEST_VERSION}，收到 ${JSON.stringify(input.version)}`);
+    errors.push(t("k_b2875529", [DECOR_MANIFEST_VERSION, JSON.stringify(input.version)]));
   }
   if (typeof input.id !== "string" || !PACK_ID_RE.test(input.id)) {
-    errors.push(`id 必须是 kebab-case 包名，收到 ${JSON.stringify(input.id)}`);
+    errors.push(t("k_4da60cec", [JSON.stringify(input.id)]));
   }
 
   const layers = input.layers;
   if (!Array.isArray(layers) || layers.length === 0) {
-    errors.push("layers 必须是非空数组");
+    errors.push(t("k_2f401762"));
     return { ok: false, manifest: null, errors };
   }
   if (layers.length > MAX_LAYERS) {
-    errors.push(`layers 数量 ${layers.length} 超过上限 ${MAX_LAYERS}`);
+    errors.push(t("k_0cc839be", [layers.length, MAX_LAYERS]));
   }
 
   const usedSlots = new Set<string>();
@@ -134,87 +135,87 @@ export function validateDecorManifest(input: unknown): DecorManifestValidation {
   layers.forEach((raw, i) => {
     const at = `layers[${i}]`;
     if (!isPlainObject(raw)) {
-      errors.push(`${at} 必须是对象`);
+      errors.push(t("k_24dd5a68", [at]));
       return;
     }
     const { type, slot } = raw;
 
     if (type !== "image" && type !== "model") {
-      errors.push(`${at}.type 必须是 "image" | "model"，收到 ${JSON.stringify(type)}`);
+      errors.push(t("k_41f980f6", [at, JSON.stringify(type)]));
       return;
     }
     if (!isDecorSlotId(slot)) {
-      errors.push(`${at}.slot ${JSON.stringify(slot)} 不在 slots.ts 注册表中`);
+      errors.push(t("k_0abafb51", [at, JSON.stringify(slot)]));
       return;
     }
     // 一个 slot 只挂一层：要堆叠就去 slots.ts 开新锚点，别在 manifest 里叠罗汉
     if (usedSlots.has(slot)) {
-      errors.push(`${at}.slot "${slot}" 被重复占用（一个 slot 只挂一层）`);
+      errors.push(t("k_3c2556d4", [at, slot]));
     }
     usedSlots.add(slot);
 
     if (!isSafeRelativePath(raw.src)) {
-      errors.push(`${at}.src 必须是包内相对路径（禁止绝对路径/协议/..）`);
+      errors.push(t("k_0477fe2c", [at]));
     }
 
     if (raw.parallax !== undefined) {
       const p = raw.parallax;
       if (typeof p !== "number" || !(p >= 0 && p <= 0.2)) {
-        errors.push(`${at}.parallax 必须在 [0, 0.2]，收到 ${JSON.stringify(p)}`);
+        errors.push(t("k_1fa2ea8e", [at, JSON.stringify(p)]));
       }
     }
 
     if (type === "image") {
       if (typeof raw.src === "string" && !IMAGE_EXT_RE.test(raw.src)) {
-        errors.push(`${at}.src 图片仅接受 webp/png/svg/avif`);
+        errors.push(t("k_384ff7a9", [at]));
       }
       if (raw.opacity !== undefined) {
         const o = raw.opacity;
         if (typeof o !== "number" || !(o > 0 && o <= 1)) {
-          errors.push(`${at}.opacity 必须在 (0, 1]`);
+          errors.push(t("k_0cb9cfe5", [at]));
         }
       }
       if (raw.clickQuote !== undefined) {
         if (typeof raw.clickQuote !== "string" || !raw.clickQuote.trim()) {
-          errors.push(`${at}.clickQuote 必须是非空字符串（多句用 \\n\\n 分隔）`);
+          errors.push(t("k_0baf3821", [at]));
         }
       }
     } else {
       modelCount += 1;
       if (typeof raw.src === "string" && !MODEL_EXT_RE.test(raw.src)) {
-        errors.push(`${at}.src 模型仅接受 .glb`);
+        errors.push(t("k_03504674", [at]));
       }
       if (!isSafeRelativePath(raw.fallback) || !IMAGE_EXT_RE.test(String(raw.fallback))) {
-        errors.push(`${at}.fallback 必填且必须是包内图片路径（模型的静态降级）`);
+        errors.push(t("k_5f789f59", [at]));
       }
       checkClipName(raw.idleClip, `${at}.idleClip`, errors);
       checkClipName(raw.clickClip, `${at}.clickClip`, errors);
       const slotDef = getDecorSlot(slot);
       if (slotDef?.id === "backdrop") {
-        errors.push(`${at} 背景 slot 禁止挂 3D 模型（性能红线，用 image + parallax）`);
+        errors.push(t("k_398879c6", [at]));
       }
     }
   });
 
   if (modelCount > MAX_MODEL_LAYERS) {
-    errors.push(`3D 图层 ${modelCount} 个，超过上限 ${MAX_MODEL_LAYERS}（多余的请烘焙成图片层）`);
+    errors.push(t("k_bfd71911", [modelCount, MAX_MODEL_LAYERS]));
   }
 
   const quote = input.quote;
   if (quote !== undefined) {
     if (!isPlainObject(quote)) {
-      errors.push("quote 必须是对象");
+      errors.push(t("k_bc4e9290"));
     } else {
       if (!isDecorSlotId(quote.slot)) {
-        errors.push(`quote.slot ${JSON.stringify(quote.slot)} 不在注册表中`);
+        errors.push(t("k_fffad7fd", [JSON.stringify(quote.slot)]));
       } else if (!getDecorSlot(quote.slot)?.textCapable) {
-        errors.push(`quote.slot "${quote.slot}" 不支持文字（需 textCapable 锚点）`);
+        errors.push(t("k_1712019d", [quote.slot]));
       }
       if (typeof quote.text !== "string" || !quote.text.trim()) {
-        errors.push("quote.text 必须是非空字符串");
+        errors.push(t("k_6dcaa540"));
       }
       if (quote.writingMode !== undefined && quote.writingMode !== "vertical" && quote.writingMode !== "horizontal") {
-        errors.push('quote.writingMode 必须是 "vertical" | "horizontal"');
+        errors.push(t("k_722f1209"));
       }
     }
   }

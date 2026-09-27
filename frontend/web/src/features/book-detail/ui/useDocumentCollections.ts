@@ -2,6 +2,7 @@
 // 由 useBookDetailDocument 门面组合。
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { t } from "@retainpdf/i18n";
 
 function createPLimit(concurrency: number) {
   let active = 0;
@@ -148,7 +149,7 @@ export function useDocumentCollections({
       m.set(collectionId, nextMember);
       collectionsReload?.actions.bump();
     } catch (err: any) {
-      setError(err?.message || "更新合集失败");
+      setError(err?.message || t("k_b941d673"));
     } finally {
       setCollectionsBusy("");
     }

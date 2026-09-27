@@ -19,6 +19,7 @@ import {
   workflowOf,
 } from "../domain/document-jobs-model.js";
 import { useDocumentJobRuntimeOwner } from "./use-document-job-runtime-owner.js";
+import { t } from "@retainpdf/i18n";
 
 // 保持既有 import 路径可用：纯模型/选择器转发自 domain。
 export {
@@ -113,7 +114,7 @@ export function useDocumentJobs({
       return next;
     } catch (cause) {
       if (generation === generationRef.current) {
-        setError(`${cause?.message || cause || "读取任务状态失败"}`);
+        setError(`${cause?.message || cause || t("k_460d1ab6")}`);
         setLoadedDocumentId(documentId);
       }
       return [];

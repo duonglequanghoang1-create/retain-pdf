@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // Markdown 图片加载：受保护图片走带凭据的 blob 获取 + 视口懒加载，公开图片用原生 lazy。
 
 export type MarkdownImageProgress = {
@@ -76,7 +78,7 @@ export function startMarkdownImageLoading(
     } else if (isSafeDirectImageUrl(src, documentBaseUrl)) {
       img.src = src;
     } else {
-      replaceWithFailure(img, "[图片地址不可用]");
+      replaceWithFailure(img, t("k_d351ae0c"));
     }
   }
 
@@ -103,7 +105,7 @@ export function startMarkdownImageLoading(
         .catch(() => {
           if (stopped || !img.isConnected) return;
           failed += 1;
-          replaceWithFailure(img, "[图片暂不可用]");
+          replaceWithFailure(img, t("k_52a529fa"));
         })
         .finally(() => {
           active -= 1;

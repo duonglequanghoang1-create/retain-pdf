@@ -1,4 +1,5 @@
 import { API_PREFIX } from "@/platform/config/api-constants.js";
+import { t } from "@retainpdf/i18n";
 
 // 图书馆 AI 问答(POST /api/v1/ai/ask,SSE 流式)。mock-only 适配器:
 // 只保留 readAiAskStream 解析器与 buildMockAskStream 端到端 mock 流。
@@ -115,7 +116,7 @@ async function readAiAskStream(body, {
   onCompress = null,
 } = {}) {
   if (!body || typeof body.getReader !== "function") {
-    throw new AiAskError("AI 服务响应格式异常,请重试。");
+    throw new AiAskError(t("k_6e4e5038"));
   }
   const reader = body.getReader();
   const decoder = new TextDecoder();
@@ -209,7 +210,7 @@ async function readAiAskStream(body, {
       return;
     }
     if (event.type === "error" || event.type === "cancelled") {
-      throw new AiAskError(`${event.message || (event.type === "cancelled" ? "AI 请求已取消。" : "AI 服务返回错误。")}`);
+      throw new AiAskError(`${event.message || (event.type === "cancelled" ? t("k_babb1651") : t("k_27163ee8"))}`);
     }
     if (event.type === "compress") {
       onCompress?.(event);
@@ -242,7 +243,7 @@ async function readAiAskStream(body, {
     reader.releaseLock?.();
   }
   if (!result) {
-    throw new AiAskError("AI 服务响应中断,请重试。");
+    throw new AiAskError(t("k_cb7733b9"));
   }
   return result;
 }
@@ -252,11 +253,11 @@ async function readAiAskStream(body, {
 function buildMockAskStream(question = "") {
   const encoder = new TextEncoder();
   const answer = [
-    `关于「${question}」,检索到以下要点:\n\n`,
-    "- **卤素-锂交换**在共轭体系中表现出显著选择性 [1]\n",
-    "- 该效应源于锂原子与芳环的有效共轭 [1]\n\n",
-    "### 结论\n\n",
-    "四重卤素交换未表现出配位倾向,量子化学计算支持这一解释。原始 HTML 如 <img src=x> 会以文本显示。\n",
+    t("k_ecd384ca", [question]),
+    t("k_15a608c4"),
+    t("k_78ce911b"),
+    t("k_36f7d0e0"),
+    t("k_986705f4"),
   ];
   const events = [
     { type: "tool", round: 1, tool: "search_fulltext", arguments: { query: question } },
@@ -272,7 +273,7 @@ function buildMockAskStream(question = "") {
           job_id: "mock-job-20260415",
           page_idx: 0,
           block_id: "b-intro-3",
-          snippet: "现代有机合成已达到极高的精密水平",
+          snippet: t("k_80a1fca0"),
         },
       ],
       tool_trace: [{ round: 1, tool: "search_fulltext" }],
@@ -339,7 +340,7 @@ export async function askLibraryAi({
   void assistantMode;
   const trimmed = `${question}`.trim();
   if (!trimmed) {
-    throw new AiAskError("请输入问题。", 400);
+    throw new AiAskError(t("k_c0af56b0"), 400);
   }
   // 忠实模拟真实 SSE 流:tool 事件 → answer_delta 逐块 → done 带引用,
   // 让 markdown 渲染 / 流式 / 引用跳转三条链路都能在 mock 下端到端复现。

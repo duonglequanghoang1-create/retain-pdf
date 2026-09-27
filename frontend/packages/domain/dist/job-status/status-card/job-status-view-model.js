@@ -4,6 +4,7 @@ import { buildStatusCardResultActions } from "./status-card-result-actions-view-
 import { buildStatusCardRetryActions } from "./status-card-retry-actions-view-model.js";
 import { buildStatusCardTaskActions } from "./status-card-task-actions-view-model.js";
 import { resolveSafeStatusCardStagePresentation, } from "./status-card-stage-presentation.js";
+import { t } from "@retainpdf/i18n";
 export function buildJobStatusViewModel({ state, job, jobId, events, manifest, stageActions, publicErrorText, stagePresentation = null, finishedAtFallback = "", }) {
     const resolvedStagePresentation = resolveSafeStatusCardStagePresentation({
         state,
@@ -20,7 +21,7 @@ export function buildJobStatusViewModel({ state, job, jobId, events, manifest, s
         status: job?.status || "idle",
         stagePresentation: resolvedStagePresentation,
         label: resolvedStagePresentation.label,
-        value: resolvedStagePresentation.detail || "准备中",
+        value: resolvedStagePresentation.detail || t("k_4f1f8aa3"),
         detail: "",
         stageKey: resolvedStagePresentation.stageKey,
         visualStageKey: resolvedStagePresentation.visualStageKey,

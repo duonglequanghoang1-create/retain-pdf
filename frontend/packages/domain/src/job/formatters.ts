@@ -2,6 +2,7 @@ import {
   firstNonEmpty,
   isJobTerminal,
 } from "./core.js";
+import { t } from "@retainpdf/i18n";
 
 function formatDurationMs(ms) {
   const num = Number(ms);
@@ -13,12 +14,12 @@ function formatDurationMs(ms) {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   if (hours > 0) {
-    return `${hours}小时 ${minutes}分 ${seconds}秒`;
+    return t("k_2ea1eabc", [hours, minutes, seconds]);
   }
   if (minutes > 0) {
-    return `${minutes}分 ${seconds}秒`;
+    return t("k_0176c759", [minutes, seconds]);
   }
-  return `${seconds}秒`;
+  return t("k_dfe637b5", [seconds]);
 }
 
 export function summarizeRuntimeField(value) {
@@ -95,12 +96,12 @@ export function formatJobDuration(payload) {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   if (hours > 0) {
-    return `${hours}小时 ${minutes}分 ${seconds}秒`;
+    return t("k_2ea1eabc", [hours, minutes, seconds]);
   }
   if (minutes > 0) {
-    return `${minutes}分 ${seconds}秒`;
+    return t("k_0176c759", [minutes, seconds]);
   }
-  return `${seconds}秒`;
+  return t("k_dfe637b5", [seconds]);
 }
 
 export function summarizeInvocationProtocol(payload) {

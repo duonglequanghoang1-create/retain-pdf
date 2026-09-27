@@ -13,12 +13,13 @@ import {
   ThreadMessageList,
 } from "./reader-assistant-primitives.js";
 import { AnswerSelectionToolbar } from "./AnswerSelectionToolbar.js";
+import { t } from "@retainpdf/i18n";
 
 const READING_SUGGESTIONS = [
-  { prompt: "用几句话总结这篇文献的核心内容。", label: "总结本文", icon: BookOpen },
-  { prompt: "这篇文献的主要结论是什么？", label: "提炼主要结论", icon: ListTree },
-  { prompt: "作者用了什么方法或模型？", label: "梳理方法与模型", icon: FlaskConical },
-  { prompt: "解释文中的关键公式。", label: "解释关键公式", icon: Sigma },
+  { prompt: t("k_0ed2b98b"), label: t("k_b4242ae0"), icon: BookOpen },
+  { prompt: t("k_7c4b9acb"), label: t("k_c663ef97"), icon: ListTree },
+  { prompt: t("k_fc1d35fd"), label: t("k_5471130d"), icon: FlaskConical },
+  { prompt: t("k_a9440fe8"), label: t("k_55f0c6fc"), icon: Sigma },
 ] as const;
 
 export type ReaderReadingViewProps = {
@@ -69,7 +70,7 @@ export function ReaderReadingView({
           </div>
           <h2 className="aui-empty-title">一起读懂这篇文档</h2>
           <p className="aui-empty-sub">总结、解释、检索与计算，不修改 PDF</p>
-          <div className="aui-suggestions" role="group" aria-label="推荐问题">
+          <div className="aui-suggestions" role="group" aria-label={t("k_402274e3")}>
             {READING_SUGGESTIONS.map((item) => {
               const Icon = item.icon;
               return (
@@ -106,7 +107,7 @@ export function ReaderReadingView({
         {!empty && !branchBusy ? (
           <ThreadPrimitive.ScrollToBottom
             className="aui-scroll-bottom-btn aui-scroll-bottom"
-            aria-label="滚到最新"
+            aria-label={t("k_f2936d26")}
           >
             <ArrowDown size={16} strokeWidth={2.25} aria-hidden />
           </ThreadPrimitive.ScrollToBottom>

@@ -9,6 +9,7 @@ import {
   ocrTokenFromDialogValues,
   readCredentialDialogValues,
 } from "./dialog-values.js";
+import { t } from "@retainpdf/i18n";
 
 type CredentialAccess = {
   readCurrentCredentials: () => any;
@@ -103,7 +104,7 @@ export function createCredentialValidationFlow({
     );
     if (!token && access.readCurrentCredentials().ocrCredentialRef) {
       viewPort.setOcrValidationMessage(
-        `${getOcrProviderDefinition(provider).label} 使用旧配置；请填写 Token 后检测`,
+        t("k_29ebf89b", [getOcrProviderDefinition(provider).label]),
         "",
         provider,
       );

@@ -14,6 +14,7 @@ import {
   useHomeWorkflowViewStore,
 } from "@/ui/context/home-services-context.js";
 import type { UploadViewStore } from "../../domain/upload-store.js";
+import { t } from "@retainpdf/i18n";
 
 export function TranslationOptionsPanel() {
   const uploadViewStore = useHomeUploadViewStore();
@@ -57,7 +58,7 @@ export function TranslationOptionsPanel() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="收起翻译选项"
+          aria-label={t("k_716fc131")}
           onClick={() => (uploadViewStore as unknown as UploadViewStore).actions.closeTranslationOptions()}
         >
           <X aria-hidden="true" />
@@ -95,7 +96,7 @@ export function TranslationOptionsPanel() {
               step="1"
               inputMode="numeric"
               autoComplete="off"
-              placeholder={upload.pageRangeMax > 0 ? `${upload.pageRangeMax}` : "总页数"}
+              placeholder={upload.pageRangeMax > 0 ? `${upload.pageRangeMax}` : t("k_3e19f7db")}
               {...maxAttr}
               value={upload.pageRangeEnd}
               onInput={(event) => handlePageInput("end", event)}
@@ -121,7 +122,7 @@ export function TranslationOptionsPanel() {
               </option>
             ))}
             {!hasSelected ? (
-              <option value={selectedId}>{`已删除或不可用: ${selectedId}`}</option>
+              <option value={selectedId}>{t("k_fb016575", [selectedId])}</option>
             ) : null}
           </select>
         </label>

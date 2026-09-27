@@ -8,6 +8,7 @@
 import type { CSSProperties } from "react";
 import { buildProgressRenderModel, type ProgressRenderModelInput } from "../domain/progress-model.js";
 import { useStatusCardIds } from "./status-card-ids-context.js";
+import { t } from "@retainpdf/i18n";
 
 function roundPercent(percent: number): number | null {
   const numeric = Number(percent);
@@ -53,8 +54,8 @@ export function ProgressBlock({ renderOptions }: ProgressBlockProps) {
   const ringText = indeterminate ? "..." : percentLabel;
   const ringMetaText = (componentText && componentText !== "-")
     ? componentText
-    : (indeterminate ? "处理中" : percentLabel);
-  const footPercentText = indeterminate ? "处理中" : percentLabel;
+    : (indeterminate ? t("k_fcb979ef") : percentLabel);
+  const footPercentText = indeterminate ? t("k_fcb979ef") : percentLabel;
 
   return (
     <>
@@ -63,10 +64,10 @@ export function ProgressBlock({ renderOptions }: ProgressBlockProps) {
           id={ids.progressBar}
           className={`status-progress-bar${indeterminate ? " is-indeterminate" : ""}`}
           role="progressbar"
-          aria-label="任务进度"
+          aria-label={t("k_01eaf9f5")}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuetext={indeterminate ? "处理中" : percentLabel}
+          aria-valuetext={indeterminate ? t("k_fcb979ef") : percentLabel}
           {...valueProps}
           style={{ ["--status-progress-percent"]: `${visible ? barPercent : 0}%` } as CSSProperties}
         >

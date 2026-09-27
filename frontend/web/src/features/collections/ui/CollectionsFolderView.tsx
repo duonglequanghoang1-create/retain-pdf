@@ -2,6 +2,7 @@
 import { EmptyState } from "@/ui/icons/EmptyState.jsx";
 import { BookCard, buildDefaultBookCardActions } from "@/features/library/index.js";
 import type { CollectionsLibraryActions } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 type CollectionsFolderViewProps = {
   folder: { collection_id?: string; name?: string };
@@ -23,7 +24,7 @@ export function CollectionsFolderView({
   libraryActions,
 }: CollectionsFolderViewProps) {
   return (
-    <section id="categories-folder-view" className="library-view categories-view collections-view" aria-label={`合集:${folder.name}`} data-collections-view="true">
+    <section id="categories-folder-view" className="library-view categories-view collections-view" aria-label={t("k_b60fcad7", [folder.name])} data-collections-view="true">
       <div className="categories-folder-head collections-folder-head">
         <button
           id="categories-back-btn"
@@ -52,8 +53,8 @@ export function CollectionsFolderView({
       ) : items.length === 0 ? (
         <EmptyState
           instrument="balance"
-          title="这个合集暂无书"
-          hint="点合集卡片上的「管理」，从书库勾选 PDF 放进来。"
+          title={t("k_24dfc179")}
+          hint={t("k_a44949d2")}
         />
       ) : (
         <div className="recent-jobs-list library-grid">

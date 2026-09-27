@@ -15,6 +15,7 @@ import { DialogFooter } from "@/ui/components/dialog.js";
 import { FormStatusLine } from "@/ui/components/form-status-line.js";
 import { Check, Save, ScanText } from "lucide-react";
 import { OCR_PROVIDER_DEFINITIONS } from "@/platform/config/providers.js";
+import { t } from "@retainpdf/i18n";
 
 // Button.size 在未注解源文件里被推断为必填;unstyled 路径运行时不用 size。
 const Button = ButtonBase as any;
@@ -54,10 +55,10 @@ export function CredentialsWorkbench() {
   }, [status.tone, status.message]);
 
   const saveLabel = saving
-    ? "正在保存…"
+    ? t("k_9ca32f98")
     : savedPulse
-      ? "已保存"
-      : setupMode ? "保存并启动" : "保存接口";
+      ? t("k_cdfab96f")
+      : setupMode ? t("k_bffb6379") : t("k_2e68be63");
 
   const saveAction = (
     <DialogFooter className="credential-dialog-actions credential-document-actions">
@@ -91,7 +92,7 @@ export function CredentialsWorkbench() {
                 <select
                   id={BROWSER_IDS.ocrProviderSelect}
                   className="credential-ocr-provider-select"
-                  aria-label="OCR 提供商"
+                  aria-label={t("k_b248428f")}
                   value={credentials.ocrProvider}
                   disabled={saving}
                   onChange={(event) => handlers?.changeProvider?.(event)}

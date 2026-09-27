@@ -22,6 +22,7 @@ import {
   DialogTitle,
 } from "@/ui/components/dialog.js";
 import { Button as ButtonBase } from "@/ui/Button.jsx";
+import { t } from "@retainpdf/i18n";
 
 // Button.size 在未注解源文件里被推断为必填;unstyled 路径运行时不用 size。
 const Button = ButtonBase as any;
@@ -86,7 +87,7 @@ export function CollectionDialog({
         if (cancelled) {
           return;
         }
-        setError(err?.message || "加载书目失败，请稍后重试。");
+        setError(err?.message || t("k_cb240c1e"));
       })
       .finally(() => {
         if (cancelled) {
@@ -118,7 +119,7 @@ export function CollectionDialog({
   async function handleSave() {
     const trimmed = name.trim();
     if (!trimmed) {
-      setError("请输入合集名称。");
+      setError(t("k_3dfea34e"));
       return;
     }
     setSaving(true);
@@ -144,7 +145,7 @@ export function CollectionDialog({
       reloadSignal.actions.bump();
       dialogStore.close();
     } catch (err) {
-      setError(err?.message || (isCreate ? "新建合集失败，请稍后重试。" : "保存失败，请稍后重试。"));
+      setError(err?.message || (isCreate ? t("k_e66e5a72") : t("k_1aae87e6")));
     } finally {
       setSaving(false);
     }
@@ -158,7 +159,7 @@ export function CollectionDialog({
       reloadSignal.actions.bump();
       dialogStore.close();
     } catch (err) {
-      setError(err?.message || "删除合集失败，请稍后重试。");
+      setError(err?.message || t("k_fce1d8bc"));
       setSaving(false);
     } finally {
       setConfirmDeleteOpen(false);
@@ -176,7 +177,7 @@ export function CollectionDialog({
           <DialogShell className="desktop-shell">
             <DialogHeader className="desktop-head">
               <DialogTitle asChild>
-                <h2>{isCreate ? "新建合集" : "管理合集"}</h2>
+                <h2>{isCreate ? t("k_5a21456c") : t("k_941ff076")}</h2>
               </DialogTitle>
               <DialogCloseButton id="collection-manage-close-btn" />
             </DialogHeader>
@@ -188,7 +189,7 @@ export function CollectionDialog({
                   type="text"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  placeholder="例如：化学"
+                  placeholder={t("k_1ff6f468")}
                   autoFocus
                 />
               </label>
@@ -234,14 +235,14 @@ export function CollectionDialog({
                 disabled={saving || loading}
                 onClick={handleSave}
               >
-                {saving ? "保存中…" : "保存"}
+                {saving ? t("k_6644f061") : t("k_fadf24db")}
               </Button>
             </div>
             <ConfirmDialog
               id="collection-delete-confirm"
-              title="删除合集"
-              description={editing?.name ? `确定删除合集「${editing.name}」吗？其中的书不会被删除。` : "确定删除该合集吗？其中的书不会被删除。"}
-              confirmLabel="删除"
+              title={t("k_485aa434")}
+              description={editing?.name ? t("k_b1daeac1", [editing.name]) : t("k_a29b7d63")}
+              confirmLabel={t("k_3755f56f")}
               tone="danger"
               level="nested"
               open={confirmDeleteOpen}

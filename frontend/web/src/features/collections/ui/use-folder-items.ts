@@ -1,6 +1,7 @@
 // 文件夹内容加载:openFolderId 变化或手动重试时拉取,瞬时失败自动重试一次。
 import { useCallback, useEffect, useState } from "react";
 import type { CollectionsController } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 type UseFolderItemsArgs = {
   controller: CollectionsController;
@@ -48,7 +49,7 @@ export function useFolderItems({ controller, openFolderId }: UseFolderItemsArgs)
             }, 1500);
             return;
           }
-          setFolderError(err?.message || "读取合集内容失败，请稍后重试。");
+          setFolderError(err?.message || t("k_58ca3129"));
           setFolderLoading(false);
         });
     void loadFolder();

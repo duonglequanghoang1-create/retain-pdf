@@ -1,5 +1,6 @@
 // 底栏：页码（可点跳转）+ 缩放 +/- / 模式默认重置。
 
+import { t } from "@retainpdf/i18n";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   READER_ZOOM_DEFAULT,
@@ -40,7 +41,7 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
   const canZoomOut = userZoom > READER_ZOOM_MIN + 0.001;
   const canZoomIn = userZoom < READER_ZOOM_MAX - 0.001;
   const resetZoom = defaultZoomForMode(mode);
-  const resetLabel = "50%（半屏，对照铺满）";
+  const resetLabel = t("k_b6028958");
 
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(`${currentPage}`);
@@ -63,7 +64,7 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
   return (
     <div className="reader-react-hud" data-reader-hud="true">
       {modeControls ? <div className="reader-react-hud-group reader-react-hud-modes">{modeControls}</div> : null}
-      <div className="reader-react-hud-group" aria-label="页码">
+      <div className="reader-react-hud-group" aria-label={t("k_7b0930e2")}>
         {editing ? (
           <form
             className="reader-react-hud-page-form"
@@ -77,7 +78,7 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
-              aria-label="跳转到页码"
+              aria-label={t("k_8e74907f")}
               value={draft}
               autoFocus
               onChange={(event) => setDraft(event.target.value.replace(/[^\d]/g, ""))}
@@ -96,8 +97,8 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
           <button
             type="button"
             className="reader-react-hud-page reader-react-hud-page-btn"
-            aria-label={numPages > 0 ? `跳转页码，当前第 ${currentPage} 页，共 ${numPages} 页` : "页码"}
-            title={numPages > 0 ? "点击输入页码跳转" : undefined}
+            aria-label={numPages > 0 ? t("k_ee96acf0", [currentPage, numPages]) : t("k_7b0930e2")}
+            title={numPages > 0 ? t("k_37c06fc1") : undefined}
             disabled={!onGoToPage || numPages <= 0}
             onClick={() => {
               if (!onGoToPage || numPages <= 0) return;
@@ -111,11 +112,11 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
           </button>
         )}
       </div>
-      <div className="reader-react-hud-group" aria-label="缩放">
+      <div className="reader-react-hud-group" aria-label={t("k_12e2ed4d")}>
         <button
           type="button"
           className="reader-react-hud-btn"
-          aria-label="缩小"
+          aria-label={t("k_11f8516f")}
           disabled={!canZoomOut}
           onClick={() => onZoomChange(stepReaderZoom(userZoom, -1))}
         >
@@ -124,7 +125,7 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
         <button
           type="button"
           className="reader-react-hud-btn reader-react-hud-zoom-label"
-          aria-label={`重置为${resetLabel}`}
+          aria-label={t("k_cf99c3ca", [resetLabel])}
           title={resetLabel}
           onClick={() => onZoomChange(resetZoom)}
         >
@@ -133,14 +134,14 @@ export function ReaderZoomHud(props: ReaderZoomHudProps) {
         <button
           type="button"
           className="reader-react-hud-btn"
-          aria-label="放大"
+          aria-label={t("k_d7f48a05")}
           disabled={!canZoomIn}
           onClick={() => onZoomChange(stepReaderZoom(userZoom, 1))}
         >
           +
         </button>
       </div>
-      <div className="reader-react-hud-group reader-react-hud-help" aria-label="帮助">
+      <div className="reader-react-hud-group reader-react-hud-help" aria-label={t("k_adf465eb")}>
         <ReaderShortcutsHelp />
       </div>
     </div>

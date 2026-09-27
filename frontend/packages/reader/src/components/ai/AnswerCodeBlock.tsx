@@ -8,6 +8,7 @@
 // 引 shiki/prism 是一次依赖决定，不该顺手塞进来。
 
 import { useCallback, useState } from "react";
+import { t } from "@retainpdf/i18n";
 
 const COPIED_MS = 1600;
 
@@ -73,9 +74,9 @@ export function AnswerCodeBlock({
           type="button"
           className="reader-answer-code-copy"
           onClick={copy}
-          title="复制代码"
+          title={t("k_3b1fde4d")}
         >
-          {copied ? "已复制" : "复制"}
+          {copied ? t("k_e381a576") : t("k_4edd1d00")}
         </button>
       </div>
       {children}

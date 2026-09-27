@@ -11,6 +11,7 @@ import type {
   MockCollectionPatch,
   MockCollectionWithCount,
 } from "./documents.types.js";
+import { t } from "@retainpdf/i18n";
 
 let mockCollections: MockCollection[] | null = null;
 let mockCollectionMembership: Map<string, Set<string>> | null = null;
@@ -19,8 +20,8 @@ let collectionSeq = 0;
 function seedMockCollections(): void {
   collectionSeq = 2;
   mockCollections = [
-    { collection_id: "col-001", name: "化学", parent_id: null, sort_order: 0, created_at: "2026-06-01T10:30:00Z" },
-    { collection_id: "col-002", name: "机器学习", parent_id: null, sort_order: 1, created_at: "2026-06-08T15:00:00Z" },
+    { collection_id: "col-001", name: t("k_80bfd8e5"), parent_id: null, sort_order: 0, created_at: "2026-06-01T10:30:00Z" },
+    { collection_id: "col-002", name: t("k_38484299"), parent_id: null, sort_order: 1, created_at: "2026-06-08T15:00:00Z" },
   ];
   // mock 的"最近任务"列表(js/mock/index.js#getMockJobList)目前只有 MOCK_JOB_ID
   // 这一条真实数据,doc-1b8c52d9a304/doc-77e0fa3c1d55 的 active_job_id 在
@@ -95,7 +96,7 @@ export function patchMockCollection(
 ): MockCollectionWithCount {
   const found = collectionsList().find((item) => item.collection_id === collectionId);
   if (!found) {
-    throw new Error("未找到该分类。(404)");
+    throw new Error(t("k_52ce46cd"));
   }
   if (name !== undefined) {
     const trimmed = `${name}`.trim();
@@ -114,7 +115,7 @@ export function deleteMockCollection(collectionId: string): { deleted: boolean }
   const list = collectionsList();
   const index = list.findIndex((item) => item.collection_id === collectionId);
   if (index < 0) {
-    throw new Error("未找到该分类。(404)");
+    throw new Error(t("k_52ce46cd"));
   }
   list.splice(index, 1);
   if (mockCollectionMembership) {
@@ -129,7 +130,7 @@ export function addMockCollectionDocuments(
 ): MockCollectionWithCount {
   const found = collectionsList().find((item) => item.collection_id === collectionId);
   if (!found) {
-    throw new Error("未找到该分类。(404)");
+    throw new Error(t("k_52ce46cd"));
   }
   const members = collectionMembership(collectionId);
   for (const documentId of documentIds) {
@@ -138,7 +139,7 @@ export function addMockCollectionDocuments(
       continue;
     }
     if (!documents().some((item) => item.document_id === normalized)) {
-      throw new Error(`未找到该文档: ${normalized}(404)`);
+      throw new Error(t("k_f3bd56f6", [normalized]));
     }
     members.add(normalized);
   }
@@ -152,7 +153,7 @@ export function removeMockCollectionDocument(
   const members = collectionMembership(collectionId);
   const normalized = trimId(documentId);
   if (!members.has(normalized)) {
-    throw new Error("该文档不在此分类中。(404)");
+    throw new Error(t("k_530447d4"));
   }
   members.delete(normalized);
   return { removed: true };

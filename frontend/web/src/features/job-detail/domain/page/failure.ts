@@ -1,5 +1,6 @@
 import { summarizeRuntimeField, firstDefinedValue, stringifyDebugValue } from "@retainpdf/domain/job";
 import { escapeHtml } from "@/platform/utils/html-formatting.js";
+import { t } from "@retainpdf/i18n";
 
 export { firstDefinedValue, stringifyDebugValue };
 
@@ -12,7 +13,7 @@ export function applyDiagnostics(diagnostics, job, setText) {
   setText("detail-failure-stage", summarizeRuntimeField(diagnostics.failed_stage || diagnostics.stage || diagnostics.failed_substage));
   setText("detail-failure-root-cause", summarizeRuntimeField(diagnostics.root_cause || diagnostics.detail || diagnostics.raw_excerpt));
   setText("detail-failure-suggestion", summarizeRuntimeField(diagnostics.suggestion));
-  setText("detail-failure-retryable", typeof diagnostics.retryable === "boolean" ? (diagnostics.retryable ? "是" : "否") : "-");
+  setText("detail-failure-retryable", typeof diagnostics.retryable === "boolean" ? (diagnostics.retryable ? t("k_30160a21") : t("k_8bf5c10a")) : "-");
 }
 
 export function renderFailureDebugContext(job) {
@@ -44,7 +45,7 @@ export function renderFailureDebugContext(job) {
     .filter(([, value]) => value);
 
   if (!rows.length) {
-    container.innerHTML = '<div class="detail-empty">暂无结构化失败上下文</div>';
+    container.innerHTML = t("k_fafe1f85");
     return;
   }
   container.innerHTML = rows.map(([label, value]) => `

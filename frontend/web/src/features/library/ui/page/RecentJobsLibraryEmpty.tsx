@@ -1,4 +1,5 @@
 import { EmptyState } from "@/ui/icons/EmptyState.jsx";
+import { t } from "@retainpdf/i18n";
 
 // 图书馆空态/加载态/错误态(从 RecentJobsLibrary 抽出,保持同一 DOM 契约)。
 export function RecentJobsLibraryEmpty({ mode, errorMessage, emptyMessage, onUpload }) {
@@ -11,8 +12,8 @@ export function RecentJobsLibraryEmpty({ mode, errorMessage, emptyMessage, onUpl
       ) : (
         <EmptyState
           instrument="microscope"
-          title={emptyMessage || "暂无最近任务"}
-          hint="上传 PDF 后会出现在这里，处理完成即可阅读。"
+          title={emptyMessage || t("k_6e705816")}
+          hint={t("k_a3291124")}
         >
           <button
             type="button"

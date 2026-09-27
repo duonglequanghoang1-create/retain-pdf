@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 一轮问答「没能正常走到 done」时的归类：用户中止 / 真错误。
 //
 // 从 use-home-ask-turn.ts 的 catch 里拆出来——那边是编排（改哪条消息、要不要摘节点），
@@ -19,8 +21,8 @@ export type HomeAskTurnFailure =
   | { kind: "cancelled" }
   | { kind: "error"; message: string };
 
-const FALLBACK_MESSAGE = "生成回答失败，请重试。";
-const NETWORK_MESSAGE = "网络连接中断，请检查网络后重试。";
+const FALLBACK_MESSAGE = t("k_dbb9ca66");
+const NETWORK_MESSAGE = t("k_4eaf7550");
 
 /**
  * 中止异常。

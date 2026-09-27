@@ -4,6 +4,7 @@
 // +/- 缩放 · 0 重置模式默认缩放 · 1/2/3 源文件/对照/翻译文件
 
 import type { ReaderMode } from "./use-reader-session.js";
+import { t } from "@retainpdf/i18n";
 
 export type ReaderKeyAction =
   | "next-page"
@@ -54,28 +55,28 @@ export type ReaderShortcutHelpGroup = {
 
 export const READER_SHORTCUT_HELP: readonly ReaderShortcutHelpGroup[] = [
   {
-    title: "翻页",
+    title: t("k_cfd0fb44"),
     items: [
-      { actions: ["next-page"], keys: "J · ↓ · PgDn", desc: "下一页" },
-      { actions: ["prev-page"], keys: "K · ↑ · PgUp", desc: "上一页" },
-      { actions: ["first-page", "last-page"], keys: "Home / End", desc: "首页 / 末页" },
-      { actions: [], keys: "点底栏页码", desc: "输入页码跳转" },
+      { actions: ["next-page"], keys: "J · ↓ · PgDn", desc: t("k_67a246a3") },
+      { actions: ["prev-page"], keys: "K · ↑ · PgUp", desc: t("k_b41561d8") },
+      { actions: ["first-page", "last-page"], keys: "Home / End", desc: t("k_965935cd") },
+      { actions: [], keys: t("k_233266d7"), desc: t("k_ca426134") },
     ],
   },
   {
-    title: "缩放",
+    title: t("k_12e2ed4d"),
     items: [
-      { actions: ["zoom-in", "zoom-out"], keys: "+ / −", desc: "放大 / 缩小" },
-      { actions: ["zoom-reset"], keys: "0", desc: "重置为模式默认" },
-      { actions: [], keys: "点百分比", desc: "重置为模式默认" },
+      { actions: ["zoom-in", "zoom-out"], keys: "+ / −", desc: t("k_5a1e4ac3") },
+      { actions: ["zoom-reset"], keys: "0", desc: t("k_bde63db0") },
+      { actions: [], keys: t("k_7c0e2ef8"), desc: t("k_bde63db0") },
     ],
   },
   {
-    title: "模式",
+    title: t("k_ed0eea8f"),
     items: [
-      { actions: ["mode-source"], keys: "1", desc: "源文件" },
-      { actions: ["mode-compare"], keys: "2", desc: "对照" },
-      { actions: ["mode-translated"], keys: "3", desc: "翻译文件" },
+      { actions: ["mode-source"], keys: "1", desc: t("k_be43b936") },
+      { actions: ["mode-compare"], keys: "2", desc: t("k_d36792e9") },
+      { actions: ["mode-translated"], keys: "3", desc: t("k_83ca9fe3") },
     ],
   },
 ];

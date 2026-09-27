@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 /** Reader-owned contracts for durable document operations. */
 
 export type ReaderAgentOperationStatus =
@@ -130,5 +132,5 @@ export function readerOperationErrorStatus(error: unknown): number {
 export function readerOperationErrorMessage(error: unknown): string {
   return error instanceof Error && error.message.trim()
     ? error.message.trim()
-    : "操作请求失败，请重试。";
+    : t("k_b4e4dc6c");
 }

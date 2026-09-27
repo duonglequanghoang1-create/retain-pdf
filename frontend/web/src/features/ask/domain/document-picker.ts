@@ -1,5 +1,6 @@
 // @ 选择器：文档 + 合集，本地过滤
 
+import { t } from "@retainpdf/i18n";
 import { API_PREFIX } from "@/platform/config/api-constants.js";
 import {
   listCollections,
@@ -11,7 +12,7 @@ import { scopeKey } from "./types.js";
 
 export function documentToScope(doc: DocumentRecord | Record<string, unknown>): HomeAskDocScope {
   const d = doc as DocumentRecord;
-  const title = `${d.title || d.source_filename || d.document_id || "未命名"}`.trim();
+  const title = `${d.title || d.source_filename || d.document_id || t("k_35563060")}`.trim();
   const jobId = `${d.active_job_id || ""}`.trim();
   return {
     kind: "document",
@@ -48,7 +49,7 @@ export async function loadCollectionPickerOptions(): Promise<HomeAskCollectionSc
     .map((c) => ({
       kind: "collection" as const,
       id: `${c.collection_id || ""}`.trim(),
-      title: `${c.name || c.collection_id || "未命名合集"}`.trim(),
+      title: `${c.name || c.collection_id || t("k_2c63f71f")}`.trim(),
       document_count: Number(c.document_count) || 0,
     }))
     .filter((c) => c.id);
@@ -75,7 +76,7 @@ export function filterDocumentOptions(
     .filter((opt) => {
       if (!q) return true;
       if (opt.kind === "collection") {
-        const hay = `合集 ${opt.title} ${opt.id}`.toLowerCase();
+        const hay = t("k_9c2c0669", [opt.title, opt.id]).toLowerCase();
         return hay.includes(q);
       }
       const hay = `${opt.title} ${opt.source_filename || ""} ${opt.id}`.toLowerCase();

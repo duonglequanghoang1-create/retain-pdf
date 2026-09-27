@@ -9,6 +9,7 @@ import {
   blockedFavoriteCount,
   isDeleteBlockedByFavorites,
 } from "@/features/library/domain.js";
+import { t as tr } from "@retainpdf/i18n";
 
 export type DeleteBlockedState = {
   favoriteCount: number;
@@ -136,7 +137,7 @@ export function useDocumentMeta({
       await withBusy(
         "reading",
         () => actions.updateDocument(documentId, { reading_status: value }),
-        "更新阅读状态失败",
+        tr("k_1a4b562c"),
       );
     } catch {
       setReadingStatus(previous);
@@ -167,7 +168,7 @@ export function useDocumentMeta({
           setTags(nextTags);
           setEditing(false);
         },
-        "保存失败",
+        tr("k_40525a73"),
       );
     } catch {
       // 失败原因已由 withBusy -> setError 展示；这里吞掉避免事件回调产生未处理拒绝。
@@ -195,7 +196,7 @@ export function useDocumentMeta({
           return;
         }
       }
-      setError(err?.message || "删除失败");
+      setError(err?.message || tr("k_72250c59"));
     } finally {
       setBusy("");
     }
@@ -219,11 +220,11 @@ export function useDocumentMeta({
         const clearFavoritesPath = blockedClearFavoritesPath(err);
         if (favoriteCount > 0 && clearFavoritesPath) {
           setDeleteBlocked({ favoriteCount, clearFavoritesPath });
-          setError("收藏已被重新添加，请重试。");
+          setError(tr("k_e6363eb9"));
           return;
         }
       }
-      setError(err?.message || "删除失败");
+      setError(err?.message || tr("k_72250c59"));
     } finally {
       setBusy("");
     }

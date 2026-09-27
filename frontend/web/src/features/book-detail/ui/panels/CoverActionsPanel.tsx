@@ -6,6 +6,7 @@ import { btn, IconCompare, IconEye } from "./ui.jsx";
 import { BookCardProcessingOverlay } from "@/features/library/index.js";
 import { BookMarked, Check, Copy, Hash, UserRound } from "lucide-react";
 import { useState, type ReactNode } from "react";
+import { t } from "@retainpdf/i18n";
 
 /**
  * @param {object} props
@@ -33,7 +34,7 @@ export function CoverActionsPanel({
   pageCount = 0,
   readingStatus = "unread",
   readerAvailable,
-  readerActionLabel = "对照阅读",
+  readerActionLabel = t("k_5ca75802"),
   documentId,
   jobId = "",
   busy,
@@ -43,7 +44,7 @@ export function CoverActionsPanel({
   quickDownloadsSlot,
 }) {
   const compareReading = readerActionLabel === "对照阅读";
-  const authorText = authors.length ? authors.join("、") : "未知作者";
+  const authorText = authors.length ? authors.join("、") : t("k_9c5bde2a");
   const displayJobId = `${jobId || documentId || ""}`.trim();
   const [jobIdCopied, setJobIdCopied] = useState(false);
   const handleCopyJobId = async () => {
@@ -86,23 +87,23 @@ export function CoverActionsPanel({
       <div className="book-detail-cover-identity">
         <h3 title={title}>
           <BookMarked aria-hidden="true" />
-          <span>{title || "未命名文档"}</span>
+          <span>{title || t("k_20f952be")}</span>
         </h3>
         <p title={`${authorText}${year ? ` · ${year}` : ""}`}>
           <UserRound aria-hidden="true" />
           <span>{authorText}{year ? ` · ${year}` : ""}</span>
         </p>
-        <p title={displayJobId ? `任务 ID：${displayJobId}` : "任务 ID 读取中"}>
+        <p title={displayJobId ? t("k_c3da7c8e", [displayJobId]) : t("k_62858870")}>
           <Hash aria-hidden="true" />
-          <span>{displayJobId || "任务 ID 读取中"}</span>
+          <span>{displayJobId || t("k_62858870")}</span>
           {displayJobId ? (
             <button
               id="book-detail-job-id-copy"
               type="button"
               className="ml-auto inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               onClick={() => void handleCopyJobId()}
-              title={jobIdCopied ? "已复制" : "复制任务 ID"}
-              aria-label={jobIdCopied ? "已复制" : "复制任务 ID"}
+              title={jobIdCopied ? t("k_e381a576") : t("k_222ddfc6")}
+              aria-label={jobIdCopied ? t("k_e381a576") : t("k_222ddfc6")}
             >
               {jobIdCopied
                 ? <Check aria-hidden="true" className="h-3 w-3" />

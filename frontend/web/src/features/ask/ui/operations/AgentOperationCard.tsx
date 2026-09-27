@@ -12,18 +12,19 @@ import type {
   AgentOperationPerformOptions,
   AgentOperationView,
 } from "../../domain/operations/types.js";
+import { t } from "@retainpdf/i18n";
 
 function compactPages(pages: number[] = []): string {
   const visible = pages.slice(0, 12).join("、");
-  return pages.length > 12 ? `${visible} 等 ${pages.length} 页` : visible;
+  return pages.length > 12 ? t("k_efe02e4e", [visible, pages.length]) : visible;
 }
 
 function describePlan(operation: AgentOperationView): string[] {
   return (operation.plan_steps || []).map((step) => {
     const pages = compactPages(step.pages || []);
-    if (step.op === "select_pages") return `按 ${pages} 页的顺序生成候选文件`;
-    if (step.op === "rotate_pages") return `将第 ${pages} 页旋转 ${step.degrees || 0}°`;
-    return `处理第 ${pages} 页`;
+    if (step.op === "select_pages") return t("k_d02a4bff", [pages]);
+    if (step.op === "rotate_pages") return t("k_5981f972", [pages, step.degrees || 0]);
+    return t("k_d3c56b5c", [pages]);
   });
 }
 
@@ -66,7 +67,7 @@ export function AgentOperationCard({
         <span className="home-ask-operation-icon" aria-hidden><Bot size={16} /></span>
         <div>
           <span className="home-ask-operation-kicker">Agent 操作</span>
-          <h3>{operation.intent_summary || "PDF 操作"}</h3>
+          <h3>{operation.intent_summary || t("k_8d364eb8")}</h3>
         </div>
         <span className="home-ask-operation-status">
           {operationStatusLabel(operation.status, confirmationMode)}
@@ -75,7 +76,7 @@ export function AgentOperationCard({
 
       {operation.plan_summary ? <p className="home-ask-operation-plan">{operation.plan_summary}</p> : null}
       {plan.length ? (
-        <ol className="home-ask-operation-plan-steps" aria-label="操作计划">
+        <ol className="home-ask-operation-plan-steps" aria-label={t("k_47fb2127")}>
           {plan.map((label, index) => <li key={`${index}:${label}`}>{label}</li>)}
         </ol>
       ) : null}
@@ -87,7 +88,7 @@ export function AgentOperationCard({
         <div className="home-ask-operation-details">
           <button type="button" onClick={() => setDetailsOpen((value) => !value)}>
             {detailsOpen ? <ChevronUp size={13} aria-hidden /> : <ChevronDown size={13} aria-hidden />}
-            {detailsOpen ? "收起执行步骤" : `查看执行步骤（${events.length}）`}
+            {detailsOpen ? t("k_b07e9500") : t("k_9431174a", [events.length])}
           </button>
           {detailsOpen ? <AgentOperationTimeline events={events} /> : null}
         </div>
@@ -108,9 +109,9 @@ export function AgentOperationCard({
         id={`agent-operation-risk-${operation.operation_id}`}
         open={Boolean(riskAction)}
         onOpenChange={(open) => { if (!open) setRiskAction(null); }}
-        title="确认重复执行风险"
-        description="上一次执行可能已经产生结果，但服务未收到明确回执。继续重试可能重复执行同一操作。"
-        confirmLabel="接受风险并重试"
+        title={t("k_875120ef")}
+        description={t("k_727e0ac1")}
+        confirmLabel={t("k_5ded2022")}
         tone="danger"
         pending={pendingAction === "retry"}
         onConfirm={async () => {

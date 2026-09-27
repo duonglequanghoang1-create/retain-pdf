@@ -1,5 +1,6 @@
 // 摘录悬浮窗：当前文档的服务端收藏列表（对齐 legacy 云端区）
 
+import { t } from "@retainpdf/i18n";
 import { useCallback, useEffect, useState } from "react";
 import { Bookmark } from "lucide-react";
 import {
@@ -22,10 +23,10 @@ export type ReaderFavoritesPanelProps = {
 
 function kindLabel(kind: string) {
   const k = `${kind || ""}`.trim();
-  if (k === "figure") return "图表";
-  if (k === "data") return "数据";
-  if (k === "sentence") return "摘录";
-  return k || "摘录";
+  if (k === "figure") return t("k_a66b71e2");
+  if (k === "data") return t("k_54b8a90b");
+  if (k === "sentence") return t("k_046a3be9");
+  return k || t("k_046a3be9");
 }
 
 export function ReaderFavoritesPanel({
@@ -42,7 +43,7 @@ export function ReaderFavoritesPanel({
   const reload = useCallback(async () => {
     if (!jobId && !documentId) {
       setItems([]);
-      setError("当前没有可关联的文档");
+      setError(t("k_ee5b9d4d"));
       return;
     }
     setLoading(true);
@@ -60,7 +61,7 @@ export function ReaderFavoritesPanel({
       }
       setItems(list);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "读取摘录失败");
+      setError(err instanceof Error ? err.message : t("k_16750732"));
       setItems([]);
     } finally {
       setLoading(false);
@@ -76,16 +77,16 @@ export function ReaderFavoritesPanel({
     <ReaderFloatShell
       id="reader-favorites-panel"
       open={open}
-      title="摘录"
-      subtitle="本书云端摘录 · 服务端保存"
+      title={t("k_046a3be9")}
+      subtitle={t("k_fa4049c0")}
       titleIcon={<Bookmark size={14} strokeWidth={2.25} aria-hidden />}
       storageKey="retainpdf.reader.favorites-float.pos.v1"
-      ariaLabel="摘录"
+      ariaLabel={t("k_046a3be9")}
       onClose={onClose}
       toolbar={(
         <>
           <span className="reader-notes-count">
-            {loading ? "加载中…" : `${items.length} 条`}
+            {loading ? t("k_300ee3de") : t("k_24a27aec", [items.length])}
           </span>
           <button
             type="button"

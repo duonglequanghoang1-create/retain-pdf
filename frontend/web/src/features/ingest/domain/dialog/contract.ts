@@ -1,4 +1,5 @@
 import { APP_DIALOG_IDS } from "@/platform/contracts/app-contract.js";
+import { t } from "@retainpdf/i18n";
 
 export const TRANSLATION_WORKFLOW_MODES = Object.freeze({
   UPLOAD: "upload",
@@ -25,8 +26,8 @@ export const TRANSLATION_WORKFLOW_DIALOG = {
     uploadMode: "is-upload-mode",
   },
   copy: {
-    statusTitle: "任务进度",
-    uploadTitle: "添加 PDF",
-    uploadDescription: "上传后可直接翻译，或只收藏到书架。",
+    statusTitle: t("k_01eaf9f5"),
+    uploadTitle: t("k_34be0e84"),
+    uploadDescription: t("k_2897cfa9"),
   },
 };

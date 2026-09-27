@@ -2,6 +2,7 @@ import { cn } from "@/ui/lib/utils";
 import type { DocumentJobSummary } from "@/features/library/domain.js";
 import { documentJobPresentation } from "../../use-document-jobs.js";
 import { countFromProgress, percentFromProgress } from "../../../domain/progress-value.js";
+import { t } from "@retainpdf/i18n";
 
 function progressOf(job?: DocumentJobSummary | null) {
   const progress: any = job?.stage_snapshot?.progress || job?.progress || {};
@@ -38,9 +39,9 @@ function formatElapsed(ms: number) {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
-  if (hours > 0) return `${hours}小时${minutes}分${seconds}秒`;
-  if (minutes > 0) return `${minutes}分${seconds}秒`;
-  return `${seconds}秒`;
+  if (hours > 0) return t("k_20bcd67f", [hours, minutes, seconds]);
+  if (minutes > 0) return t("k_219d54f0", [minutes, seconds]);
+  return t("k_dfe637b5", [seconds]);
 }
 
 /** 状态行已展示页码时，去掉 stage_detail 里重复的“第 51/88 页”。 */

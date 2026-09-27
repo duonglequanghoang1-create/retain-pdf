@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { readerPdfPort } from "../external.js";
+import { t } from "@retainpdf/i18n";
 
 export type ProtectedPdfFile = { data: Uint8Array };
 
@@ -74,7 +75,7 @@ export async function loadProtectedPdfFile(
   }
   const response = await fetchResource(normalized, { signal: options.signal } as RequestInit);
   if (!response.ok) {
-    const err = new Error(`读取 PDF 失败 (${response.status})`) as Error & { status?: number };
+    const err = new Error(t("k_de0fb59f", [response.status])) as Error & { status?: number };
     err.status = response.status;
     throw err;
   }

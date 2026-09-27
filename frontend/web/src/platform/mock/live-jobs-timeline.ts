@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 可推进 mock 任务的时间线定义：相位表、fromStage 归一、按速度缩放的时间线。
 // 纯数据/纯函数，不持有任何 job 注册状态。
 
@@ -45,7 +47,7 @@ const PHASES: PhaseDef[] = [
     durationMs: 1_500,
     unit: "none",
     total: 1,
-    detail: () => "正在读取文档并排队…",
+    detail: () => t("k_2467ad7e"),
   },
   {
     key: "ocr",
@@ -56,7 +58,7 @@ const PHASES: PhaseDef[] = [
     durationMs: 4_000,
     unit: "page",
     total: 12,
-    detail: ({ current, total }) => `正在执行 OCR，第 ${current}/${total} 页`,
+    detail: ({ current, total }) => t("k_3decf855", [current, total]),
   },
   {
     key: "translate",
@@ -67,7 +69,7 @@ const PHASES: PhaseDef[] = [
     durationMs: 7_000,
     unit: "batch",
     total: 40,
-    detail: ({ current, total }) => `正在翻译正文，第 ${current}/${total} 批`,
+    detail: ({ current, total }) => t("k_b7dddba1", [current, total]),
   },
   {
     key: "render",
@@ -78,7 +80,7 @@ const PHASES: PhaseDef[] = [
     durationMs: 3_000,
     unit: "page",
     total: 12,
-    detail: ({ current, total }) => `正在渲染第 ${current}/${total} 页`,
+    detail: ({ current, total }) => t("k_d52a041f", [current, total]),
   },
   {
     key: "done",
@@ -89,7 +91,7 @@ const PHASES: PhaseDef[] = [
     durationMs: 0,
     unit: "none",
     total: 1,
-    detail: () => "处理完成，可以对照阅读",
+    detail: () => t("k_6014880b"),
   },
 ];
 

@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 阶段恢复动作：把后端 stage-actions 原样翻成前端模型。
 //
 // 这里刻意不认识任何**失败分类**。后端 job_failure_catalogue 是「分类 → 怎么
@@ -79,11 +81,11 @@ export function stageActionFor(stageActions: unknown, stage: string): UnknownRec
 
 export function preservationTextOf(artifacts: string[]): string {
   if (!artifacts.includes("source_pdf")) {
-    return "重试不会覆盖当前任务记录；请保留原 PDF，便于安全恢复。";
+    return t("k_25a71e54");
   }
   return artifacts.length > 1
     ? `原 PDF 会保留；恢复时将复用 ${artifacts.join("、")}。`
-    : "原 PDF 会保留并用于重新 OCR。";
+    : t("k_7a342d03");
 }
 
 export function buildRetryAction(
@@ -120,11 +122,11 @@ function noteTextOf(
   recommended: boolean,
 ): string {
   if (!action.available) {
-    return action.reason || "后端未提供该阶段的恢复动作。";
+    return action.reason || t("k_74b8de6f");
   }
   const rerunText = willRerun.length ? `将重跑：${willRerun.join("、")}。` : "";
-  const riskText = action.requiresDuplicateRisk ? "需先确认重复执行风险。" : "";
-  return `${recommended ? "推荐：" : ""}${preservationText}${rerunText}${riskText}`;
+  const riskText = action.requiresDuplicateRisk ? t("k_95ba82ff") : "";
+  return `${recommended ? t("k_0b25f415") : ""}${preservationText}${rerunText}${riskText}`;
 }
 
 export function buildStageRecoveries(
@@ -143,7 +145,7 @@ export function buildStageRecoveries(
       const recommended = Boolean(resumeFrom) && stage === resumeFrom;
       return {
         stage,
-        label: firstText(record.label) || `重试 ${stage}`,
+        label: firstText(record.label) || t("k_ada19c91", [stage]),
         action,
         willReuse,
         willRerun,

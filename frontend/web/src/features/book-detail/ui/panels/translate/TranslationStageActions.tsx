@@ -6,10 +6,11 @@ import type {
   JobStageRetryActionView,
 } from "@/platform/api/index.js";
 import { btn } from "../ui.jsx";
+import { t } from "@retainpdf/i18n";
 
 function labelOf(action: JobStageRetryActionView) {
-  if (action.stage === "translation") return "重新翻译";
-  if (action.stage === "render") return "重新渲染";
+  if (action.stage === "translation") return t("k_7cb45a33");
+  if (action.stage === "render") return t("k_f7a515b5");
   return action.label;
 }
 
@@ -22,15 +23,15 @@ function StageIcon({ stage }: { stage: JobRetryStage }) {
 const LOADING_ACTIONS: JobStageRetryActionView[] = [
   {
     stage: "translation",
-    label: "重新翻译",
+    label: t("k_7cb45a33"),
     can_retry: false,
-    disabled_reason: "正在确认可用性",
+    disabled_reason: t("k_143c5311"),
   },
   {
     stage: "render",
-    label: "重新渲染",
+    label: t("k_f7a515b5"),
     can_retry: false,
-    disabled_reason: "正在确认可用性",
+    disabled_reason: t("k_143c5311"),
   },
 ];
 
@@ -61,7 +62,7 @@ export function TranslationStageActions({
 
   function describeRetryError(cause: unknown): string {
     const message = `${(cause as Error)?.message || cause || ""}`.trim();
-    return message || "重新处理失败，请稍后重试。";
+    return message || t("k_3dbd49c6");
   }
 
   async function runRetry(
@@ -119,7 +120,7 @@ export function TranslationStageActions({
               {checking
                 ? <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
                 : <StageIcon stage={action.stage} />}
-              <span className="ml-1.5">{pending ? "提交中…" : labelOf(action)}</span>
+              <span className="ml-1.5">{pending ? t("k_17e519c5") : labelOf(action)}</span>
             </button>
           );
         })}
@@ -131,9 +132,9 @@ export function TranslationStageActions({
         onOpenChange={(next) => {
           if (!next) setConfirmAction(null);
         }}
-        title="确认重新翻译"
-        description="将先尝试断点恢复：服务端按恢复计划自动续跑（渲染阶段原地同任务，其余新建任务）。仍需显式重跑时，确认后将复用现有 OCR，重新执行翻译与渲染，可能重复调用翻译接口并产生费用。"
-        confirmLabel="接受风险并重新翻译"
+        title={t("k_e4262ea4")}
+        description={t("k_8d68e7a0")}
+        confirmLabel={t("k_8fd5d453")}
         tone="default"
         pending={pendingStage === "translation"}
         onConfirm={confirmRisk}

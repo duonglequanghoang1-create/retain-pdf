@@ -36,6 +36,7 @@ import { canStartTranslation, useBookDetailCover } from "./use-book-detail-cover
 import { useBookDetailTab } from "./use-book-detail-tab.js";
 import { useBookDetailArtifactCenter } from "./use-book-detail-artifact-center.js";
 import { useStoreSnapshot } from "@/ui/hooks/use-store.js";
+import { t } from "@retainpdf/i18n";
 
 export function BookDetailDialog() {
   const { dialogStore } = useHomeBookDetail();
@@ -118,9 +119,9 @@ export function BookDetailDialog() {
     onCancelled: () => documentJobs.refresh(),
   });
   const latestTranslation: any = documentJobs.latestTranslation;
-  const overviewOcrStatus = documentJobPresentation(documentJobs.ocrStatusJob, "尚未执行");
+  const overviewOcrStatus = documentJobPresentation(documentJobs.ocrStatusJob, t("k_6da92c16"));
   const translationActive = isDocumentJobActive(latestTranslation);
-  const translationStatus = documentJobPresentation(latestTranslation, "尚未翻译");
+  const translationStatus = documentJobPresentation(latestTranslation, t("k_0494f3dc"));
   const translationSucceeded = `${latestTranslation?.status || ""}`.toLowerCase() === "succeeded";
   const translationItem = latestTranslation
     ? { ...item, ...latestTranslation, library_only: false }
@@ -173,7 +174,7 @@ export function BookDetailDialog() {
       open={open}
       onOpenChange={handleOpenChange}
       onCloseAutoFocus={onCloseAutoFocus}
-      title={`${docState.doc?.title || item.title || "文档"}`}
+      title={`${docState.doc?.title || item.title || t("k_10691272")}`}
       left={(
         <CoverActionsPanel
           coverUrl={coverUrl}

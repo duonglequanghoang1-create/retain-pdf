@@ -12,6 +12,7 @@ import { startMarkdownImageLoading } from "../../shared/content/markdown-images.
 import { loadMarked, mountRenderedMarkdown } from "../../shared/content/markdown-render.js";
 import { normalizeMarkdownPayload } from "../../shared/data/markdown-payload.js";
 import { takeCompleteMarkdownChunk } from "../../shared/content/markdown-windowing.js";
+import { t } from "@retainpdf/i18n";
 
 export type UseReaderMarkdownDocumentOptions = {
   open: boolean;
@@ -31,7 +32,7 @@ export function useReaderMarkdownDocument({
   reapplySearchRef,
 }: UseReaderMarkdownDocumentOptions) {
   const contentRef = useRef<HTMLElement | null>(null);
-  const [status, setStatus] = useState("尚未加载");
+  const [status, setStatus] = useState(t("k_3e2e1ebf"));
   const objectUrlsRef = useRef<string[]>([]);
   const imageLoaderCleanupRef = useRef<(() => void) | null>(null);
   // 递增式渲染：目录 id 去重表、每块图片加载清理、滚动续渲染的监听清理。
@@ -122,7 +123,7 @@ export function useReaderMarkdownDocument({
       const isSynthetic = jobId.startsWith("doc:");
       if (!jobId || isSynthetic) {
         // OCR 吸怪：馆藏合成 job(doc:*) 仍提示源文档无 Markdown；但 OCR-only 已通过 active_job_id 落真实 job_id（非合成），此分支不再误拦
-        const msg = !jobId && sourceOnly ? "源文档阅读不提供 Markdown 产物" : "该任务暂无 Markdown 产物";
+        const msg = !jobId && sourceOnly ? t("k_3af528a7") : t("k_b0888891");
         setStatus(msg);
         if (contentRef.current) {
           contentRef.current.replaceChildren();
@@ -130,7 +131,7 @@ export function useReaderMarkdownDocument({
         }
         return;
       }
-      setStatus("正在加载 Markdown…");
+      setStatus(t("k_8e8b89f5"));
       contentRef.current?.replaceChildren();
       contentRef.current?.classList.add("hidden");
 
@@ -156,7 +157,7 @@ export function useReaderMarkdownDocument({
         if (cancelled) return;
         const { content, imagesBaseUrl } = normalizeMarkdownPayload(payload);
         if (!content.trim()) {
-          setStatus("该任务暂无 Markdown 产物");
+          setStatus(t("k_b0888891"));
           contentRef.current?.replaceChildren();
           contentRef.current?.classList.add("hidden");
           return;
@@ -173,7 +174,7 @@ export function useReaderMarkdownDocument({
         });
         setOutline(buildMarkdownOutline(contentRef.current));
         reapplySearchRef.current?.();
-        setStatus(slots.length > 0 ? `正文已显示 · 正在渲染 ${slots.length} 个公式…` : "");
+        setStatus(slots.length > 0 ? t("k_62194f56", [slots.length]) : "");
 
         const html = slots.length > 0
           ? await materializeMarkdownMathHtml(parsedHtml, slots)
@@ -195,12 +196,12 @@ export function useReaderMarkdownDocument({
           signal: controller.signal,
           onObjectUrl: (url) => objectUrlsRef.current.push(url),
           onProgress: ({ failed }) => {
-            if (!cancelled && failed > 0) setStatus(`正文已加载 · ${failed} 张图片不可用`);
+            if (!cancelled && failed > 0) setStatus(t("k_9ade161f", [failed]));
           },
         });
       } catch (err) {
         if (cancelled) return;
-        setStatus(err instanceof Error ? err.message : "Markdown 加载失败");
+        setStatus(err instanceof Error ? err.message : t("k_77108e78"));
       }
     }
 
@@ -264,7 +265,7 @@ export function useReaderMarkdownDocument({
           signal: controller.signal,
           onObjectUrl: (url) => objectUrlsRef.current.push(url),
           onProgress: ({ failed }) => {
-            if (!cancelled && failed > 0) setStatus(`正文已加载 · ${failed} 张图片不可用`);
+            if (!cancelled && failed > 0) setStatus(t("k_9ade161f", [failed]));
           },
         });
         chunkImageCleanupsRef.current.push(cleanup);
@@ -277,7 +278,7 @@ export function useReaderMarkdownDocument({
         if (renderAllRef.current || !scrollRoot || cancelled) return;
         if (container.scrollHeight <= scrollRoot.clientHeight * 2) return;
         setPendingResume(true);
-        setStatus("已加载部分 · 滚动或点击继续加载");
+        setStatus(t("k_996cfb02"));
         await new Promise<void>((resolve) => {
           let settled = false;
           let timer: ReturnType<typeof setTimeout> | null = null;
@@ -323,7 +324,7 @@ export function useReaderMarkdownDocument({
           );
           if (cancelled) return;
           if (res.status === 404) {
-            setStatus("该任务暂无 Markdown 产物");
+            setStatus(t("k_b0888891"));
             container.replaceChildren();
             container.classList.add("hidden");
             return;
@@ -355,7 +356,7 @@ export function useReaderMarkdownDocument({
             pending += decoder.decode(res.bytes, { stream: !atEof });
             cursor = next;
           } else {
-            throw new Error(`读取 Markdown 失败，请稍后重试。(${res.status})`);
+            throw new Error(t("k_5a4bde5c", [res.status]));
           }
 
           let chunk = takeCompleteMarkdownChunk(pending, { minChars: MIN_CHUNK });
@@ -383,7 +384,7 @@ export function useReaderMarkdownDocument({
         }
       } catch (err) {
         if (cancelled || controller.signal.aborted) return;
-        setStatus(err instanceof Error ? err.message : "Markdown 加载失败");
+        setStatus(err instanceof Error ? err.message : t("k_77108e78"));
       }
     }
 

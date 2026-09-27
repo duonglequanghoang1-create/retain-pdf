@@ -9,6 +9,7 @@
 // surface keeps its exact on-disk sessionStorage format.
 
 import type { AgentConfirmationMode } from "./agent-runtime-settings.js";
+import { t } from "@retainpdf/i18n";
 
 /**
  * Minimal structural view of an operation snapshot. Both the public
@@ -152,5 +153,5 @@ export function agentOperationErrorStatus(error: unknown): number {
 export function agentOperationErrorMessage(error: unknown): string {
   return error instanceof Error && error.message.trim()
     ? error.message.trim()
-    : "操作请求失败，请重试。";
+    : t("k_b4e4dc6c");
 }

@@ -16,6 +16,7 @@ import {
   resolveDownloadActionTarget,
 } from "./download-actions.js";
 import { createArtifactDownloadsRuntimePort } from "./runtime-port.js";
+import { t } from "@retainpdf/i18n";
 
 export function mountArtifactDownloadsFeature({
   state,
@@ -30,9 +31,9 @@ export function mountArtifactDownloadsFeature({
     if (Number.isFinite(totalBytes) && totalBytes > 0) {
       const totalText = formatTransferSize(totalBytes);
       const safePercent = Math.max(0, Math.min(100, Number(percent) || 0));
-      return `正在下载 ${receivedText} / ${totalText} (${safePercent.toFixed(0)}%)`;
+      return t("k_c08be5cc", [receivedText, totalText, safePercent.toFixed(0)]);
     }
-    return receivedText ? `正在下载 ${receivedText}` : "正在下载...";
+    return receivedText ? t("k_e4c14873", [receivedText]) : t("k_1dce1b57");
   }
 
   async function handleProtectedArtifactClick(event, matchedLink = null) {
@@ -65,7 +66,7 @@ export function mountArtifactDownloadsFeature({
     const downloadTarget = () => prepareDownloadTarget(preferredName);
 
     try {
-      viewPort.setLinkBusy(link, true, "下载中...");
+      viewPort.setLinkBusy(link, true, t("k_a0ef0da2"));
       showDownloadPreparing(preferredName);
       await downloadProtectedResponse({
         fetchResponse: () => fetchProtected(url),
@@ -75,8 +76,8 @@ export function mountArtifactDownloadsFeature({
         target: downloadTarget,
         onProgress: ({ filename, receivedBytes, totalBytes, percent, done }) => {
           if (done) {
-            setText("error-box", `已开始保存 ${filename}`);
-            viewPort.setLinkBusy(link, true, "已完成");
+            setText("error-box", t("k_f10e354e", [filename]));
+            viewPort.setLinkBusy(link, true, t("k_e99b48a2"));
             completeDownloadToast(filename);
             return;
           }
@@ -84,7 +85,7 @@ export function mountArtifactDownloadsFeature({
           viewPort.setLinkBusy(
             link,
             true,
-            Number.isFinite(percent) ? `${Math.max(0, Math.min(100, Number(percent) || 0)).toFixed(0)}%` : "下载中...",
+            Number.isFinite(percent) ? `${Math.max(0, Math.min(100, Number(percent) || 0)).toFixed(0)}%` : t("k_a0ef0da2"),
           );
           updateDownloadProgress({
             filename,
@@ -96,7 +97,7 @@ export function mountArtifactDownloadsFeature({
       });
     } catch (err) {
       setText("error-box", buildErrorDiagnostic(err, {
-        operation: "下载任务产物",
+        operation: t("k_4ae24771"),
         url,
         jobId,
         details: {
@@ -104,7 +105,7 @@ export function mountArtifactDownloadsFeature({
           filename: preferredName,
         },
       }));
-      failDownloadToast(err.message || "下载失败");
+      failDownloadToast(err.message || t("k_e0dab22b"));
     } finally {
       viewPort.setLinkBusy(link, false);
     }

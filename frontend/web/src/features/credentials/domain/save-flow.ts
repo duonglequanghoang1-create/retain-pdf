@@ -23,6 +23,7 @@ import {
 import {
   persistDesktopCredentialsFromDialog as persistDesktopCredentials,
 } from "./persistence.js";
+import { t } from "@retainpdf/i18n";
 
 /** HH:MM:SS。刻意不走 toLocaleTimeString——它随环境 locale 变，测试会飘。 */
 function formatClockTime(date: Date): string {
@@ -136,7 +137,7 @@ export function createBrowserCredentialSaveFlow({
         viewPort.setDeepSeekValidationMessage(translationError || workersError, "error");
       }
       viewPort.setDialogStatus(
-        translationError || workersError || "请填写尚未保存的 OCR Token 或翻译 API Key",
+        translationError || workersError || t("k_1161b234"),
         "error",
       );
       return;
@@ -218,7 +219,7 @@ export function createBrowserCredentialSaveFlow({
     // 带上时刻：否则连续保存的状态是"已保存"→"已保存"，屏幕零变化，
     // 用户无法判断这次到底存没存，只能反复点。时刻也让 UI 能识别出
     // "这是一次新的保存"，从而重新播放成功反馈。
-    viewPort.setDialogStatus(`已保存 ${formatClockTime(now())}`, "valid");
+    viewPort.setDialogStatus(t("k_5e88c9b7", [formatClockTime(now())]), "valid");
     // 首次配置弹窗保存后关闭；设置中心内嵌时保持打开以便继续改任务选项
     if (setupModePort.currentSetupMode?.()) {
       viewPort.closeDialog();
@@ -228,7 +229,7 @@ export function createBrowserCredentialSaveFlow({
   async function handleSave() {
     if (credentialSaveInFlight) return;
     credentialSaveInFlight = true;
-    viewPort.setDialogStatus("正在保存…", "pending");
+    viewPort.setDialogStatus(t("k_9ca32f98"), "pending");
     try {
       await performSave();
     } finally {

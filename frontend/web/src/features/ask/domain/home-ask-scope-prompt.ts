@@ -4,13 +4,14 @@
 
 import { resolveCollectionDocuments } from "./document-picker.js";
 import type { HomeAskDocScope, HomeAskScope } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 function labelScope(s: HomeAskScope): string {
   if (s.kind === "collection") {
-    const n = s.document_count != null ? `（${s.document_count} 篇）` : "";
-    return `合集「${s.title}」${n}`;
+    const n = s.document_count != null ? t("k_252a75f7", [s.document_count]) : "";
+    return t("k_01a919ad", [s.title, n]);
   }
-  return `文档「${s.title}」`;
+  return t("k_375f4140", [s.title]);
 }
 
 export function buildScopedQuestion(
@@ -24,7 +25,7 @@ export function buildScopedQuestion(
 
   const hasCollection = scopes.some((s) => s.kind === "collection");
   if (!hasCollection && scopes.length === 1 && scopes[0].kind === "document") {
-    return `（范围：文档「${scopes[0].title}」）${q}`;
+    return t("k_6c75b51c", [scopes[0].title, q]);
   }
 
   const scopeLines = scopes.map((s, i) => `${i + 1}. ${labelScope(s)}`).join("\n");
@@ -33,15 +34,15 @@ export function buildScopedQuestion(
       .slice(0, 40)
       .map((d, i) => `  ${i + 1}. ${d.title} (document_id=${d.id})`)
       .join("\n");
-    const more = resolvedDocs.length > 40 ? `\n  …共 ${resolvedDocs.length} 篇` : "";
+    const more = resolvedDocs.length > 40 ? t("k_d1e6219d", [resolvedDocs.length]) : "";
     return (
-      `请仅在下列范围内检索与回答（不要使用范围外的文献）：\n`
-      + `范围选择：\n${scopeLines}\n`
-      + `包含文档：\n${docLines}${more}\n\n`
-      + `问题：${q}`
+      t("k_b5933228")
+      + t("k_c1111e4d", [scopeLines])
+      + t("k_e8ce1245", [docLines, more])
+      + t("k_064ec7c3", [q])
     );
   }
-  return `请在以下范围内检索并回答：\n${scopeLines}\n\n问题：${q}`;
+  return t("k_0559f1e5", [scopeLines, q]);
 }
 
 /** 展开 scopes → 文档列表；单文档硬 scope 时返回 primary */

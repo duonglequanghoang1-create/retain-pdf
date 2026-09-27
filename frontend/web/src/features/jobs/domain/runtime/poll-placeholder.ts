@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 /**
  * 轮询帧的纯辅助函数：占位首帧构造与书架发布键/发布判定。
  * 无副作用，可直接 import 单测。
@@ -21,7 +23,7 @@ export function buildPlaceholderJob(jobId: string, startedAt: string, seed: any)
         display_stage: "ocr",
         lane: "main",
         current_stage: "queued",
-        stage_detail: "正在读取任务状态...",
+        stage_detail: t("k_eae4483c"),
         created_at: startedAt,
         started_at: startedAt,
       };

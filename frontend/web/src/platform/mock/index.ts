@@ -13,6 +13,7 @@ import { MOCK_DOCUMENT_ID, getMockDocumentByJobId } from "./documents.js";
 import { matchesAnyText } from "./mock-utils.js";
 import type { JobLike } from "@retainpdf/domain/job";
 import type { LibraryCardItem } from "@/platform/contracts/library-payloads.js";
+import { t } from "@retainpdf/i18n";
 export { getMockJobMarkdown } from "./markdown.js";
 export { fetchMockProtected } from "./responses.js";
 export {
@@ -71,7 +72,7 @@ export function getMockJobPayload(jobId = ""): JobLike {
     job_id: id,
     status: "succeeded",
     stage: "finished",
-    stage_detail: book.stage_detail || "任务完成",
+    stage_detail: book.stage_detail || t("k_765b7fbf"),
   } as JobLike;
 }
 
@@ -91,7 +92,7 @@ export function getMockJobArtifactsManifest() {
 // 优先从 mock 文档表取真书名/封面，禁止再用 job_id.pdf 当标题（空封面根因之一）。
 function synthesizeMockBook(jobId: string): LibraryCardItem {
   const doc = getMockDocumentByJobId(jobId);
-  const title = doc?.title || doc?.source_filename || "已翻译文档";
+  const title = doc?.title || doc?.source_filename || t("k_e4121999");
   return {
     id: jobId,
     job_id: jobId,
@@ -104,7 +105,7 @@ function synthesizeMockBook(jobId: string): LibraryCardItem {
     thumbnail_url: doc?.thumbnail_url,
     status: "succeeded",
     stage: "finished",
-    stage_detail: "任务完成",
+    stage_detail: t("k_765b7fbf"),
     progress: { current: 12, total: 12, percent: 100, unit: "none" },
     output_pdf_ready: true,
     markdown_ready: true,
@@ -163,7 +164,7 @@ export function getMockJobList({ jobIds = [], q = "", limit = 20, offset = 0 }: 
 export function submitMockJob(): JobLike {
   // 上传流「开始翻译」也走 live 任务，才能在状态区看到推进动画
   const live = registerLiveMockJob({
-    title: "Mock 上传翻译",
+    title: t("k_8be7625f"),
     pageCount: 12,
   });
   return buildLiveMockJobPayload(live.jobId) || buildMockJobPayload();

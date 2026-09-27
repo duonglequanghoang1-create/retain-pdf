@@ -2,6 +2,7 @@
 // Mirrors frontend/web/src/js/api/http.ts but pure: uses internal/runtime for apiBase/header/envelope.
 
 import { apiBase, buildApiHeaders, buildApiUrl, frontendApiKey, unwrapEnvelope } from "./internal/runtime.js";
+import { t } from "@retainpdf/i18n";
 
 export { apiBase, buildApiHeaders, buildApiUrl, frontendApiKey, unwrapEnvelope };
 export { API_PREFIX } from "./internal/runtime.js";
@@ -77,7 +78,7 @@ export async function submitJson(
   } catch (err) {
     if (controller?.signal.aborted) {
       const error = new Error(
-        options.timeoutMessage || `请求超时（${Math.round(timeoutMs / 1000)}s）`,
+        options.timeoutMessage || t("k_5dada8d7", [Math.round(timeoutMs / 1000)]),
       ) as HttpError;
       error.url = url;
       error.timedOut = true;
@@ -92,13 +93,13 @@ export async function submitJson(
     const contentType = resp.headers.get("content-type") || "";
     if (contentType.includes("application/json")) {
       const errorPayload: any = await resp.json();
-      const error = new Error(`提交失败: ${resp.status} ${errorPayload.message || JSON.stringify(errorPayload)}${requestContext}`) as HttpError;
+      const error = new Error(t("k_e8a7182c", [resp.status, errorPayload.message || JSON.stringify(errorPayload), requestContext])) as HttpError;
       error.status = resp.status;
       error.url = url;
       throw error;
     }
     const text = await resp.text();
-    const error = new Error(`提交失败: ${resp.status} ${text}${requestContext}`) as HttpError;
+    const error = new Error(t("k_e8a7182c", [resp.status, text, requestContext])) as HttpError;
     error.status = resp.status;
     error.url = url;
     throw error;
@@ -131,14 +132,14 @@ export function submitUploadRequest(url: string, form: FormData, onProgress?: (l
         return;
       }
       const message = typeof xhr.response === "object" && xhr.response ? ((xhr.response as any).message || JSON.stringify(xhr.response)) : ((xhr as any).responseText || "");
-      const error = new Error(`提交失败: ${xhr.status} ${message}`) as HttpError;
+      const error = new Error(t("k_4251a7b1", [xhr.status, message])) as HttpError;
       error.status = xhr.status;
       error.url = url;
       reject(error);
     });
 
     xhr.addEventListener("error", () => {
-      const error = new Error(`提交失败: 网络错误。当前 API Base 为 ${apiBase()}，上传地址为 ${url}。请确认本地服务已经启动。`) as HttpError;
+      const error = new Error(t("k_6cd6b7c0", [apiBase(), url])) as HttpError;
       error.url = url;
       reject(error);
     });

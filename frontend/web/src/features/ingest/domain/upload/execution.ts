@@ -6,6 +6,7 @@ import { withTimeout } from "@/platform/utils/async-timeout.js";
 import { buildErrorDiagnostic } from "@/platform/utils/error-diagnostics.js";
 import type { UploadPayload, UploadState, UploadStatePort } from "./state.js";
 import type { UploadConfigPortLike, UploadResponsePayload, UploadViewPort } from "./ports.js";
+import { t } from "@retainpdf/i18n";
 
 const BALANCE_CHECK_TIMEOUT_MS = 12000;
 
@@ -42,7 +43,7 @@ export interface FileUploadHandlerDeps {
 
 function formatByteLimit(bytes: unknown): string {
   const mb = Number(bytes) / (1024 * 1024);
-  return Number.isFinite(mb) && mb > 0 ? `${Math.round(mb)}MB` : "当前";
+  return Number.isFinite(mb) && mb > 0 ? `${Math.round(mb)}MB` : t("k_25e74dce");
 }
 
 export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
@@ -84,42 +85,42 @@ export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
       return;
     }
     if (file.size > frontMaxBytes) {
-      setText("error-box", `当前前端限制为 ${formatByteLimit(frontMaxBytes)} 以内 PDF`);
-      viewPort.showUploadStatus("文件超出大小限制");
+      setText("error-box", t("k_e9741cf5", [formatByteLimit(frontMaxBytes)]));
+      viewPort.showUploadStatus(t("k_f9c82d72"));
       return;
     }
     if (frontMaxPageCount && countPdfPages) {
-      viewPort.showUploadStatus("正在校验页数…");
+      viewPort.showUploadStatus(t("k_08138d5e"));
       try {
         const localPageCount = await countPdfPages(file);
         if (!Number.isFinite(localPageCount) || localPageCount <= 0) {
-          setText("error-box", "PDF 解析失败，请检查文件是否损坏或可访问性异常。");
-          viewPort.showUploadStatus("文件校验失败");
+          setText("error-box", t("k_b368abfa"));
+          viewPort.showUploadStatus(t("k_87a79315"));
           clearFileInputValue?.();
           return;
         }
         if (localPageCount > frontMaxPageCount) {
-          setText("error-box", `PDF 页数超过限制：最多 ${frontMaxPageCount} 页`);
-          viewPort.showUploadStatus("文件超出页数限制");
+          setText("error-box", t("k_884de361", [frontMaxPageCount]));
+          viewPort.showUploadStatus(t("k_4a863adb"));
           clearFileInputValue?.();
           return;
         }
       } catch (err) {
         setText("error-box", buildErrorDiagnostic(err, {
-          operation: "校验 PDF 文件",
+          operation: t("k_7a58b04c"),
           details: {
             file_name: file.name,
             file_size: file.size,
             max_pages: frontMaxPageCount,
           },
         }));
-        viewPort.showUploadStatus("文件校验失败");
+        viewPort.showUploadStatus(t("k_87a79315"));
         clearFileInputValue?.();
         return;
       }
     }
     setText("error-box", "-");
-    viewPort.showUploadStatus("正在上传…");
+    viewPort.showUploadStatus(t("k_c5624ed9"));
 
     const uploadUrl = configPort.buildUploadUrl(apiPrefix);
     try {
@@ -130,8 +131,8 @@ export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
       );
       const uploadedPageCount = Number(payload.page_count || 0);
       if (frontMaxPageCount > 0 && uploadedPageCount > frontMaxPageCount) {
-        setText("error-box", `PDF 页数超过限制：最多 ${frontMaxPageCount} 页`);
-        viewPort.showUploadStatus("文件超出页数限制");
+        setText("error-box", t("k_884de361", [frontMaxPageCount]));
+        viewPort.showUploadStatus(t("k_4a863adb"));
         clearFileInputValue?.();
         resetUploadedFile?.();
         return;
@@ -151,7 +152,7 @@ export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
       viewPort.markUploadReady(!!snapshot.uploadId);
       // 成功态只落一条稳定文案：余额检查全程静默，只在失败/缺失时追加一句，
       // 不再覆盖成功态（曾在 800ms 内连刷三条状态造成闪烁）。
-      const uploadDoneStatus = "上传完成：请选择仅收藏、仅 OCR 或翻译。";
+      const uploadDoneStatus = t("k_29e5ffad");
       viewPort.showUploadStatus(uploadDoneStatus);
       clearFileInputValue?.();
       renderPageRangeSummary();
@@ -160,16 +161,16 @@ export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
         void withTimeout(
           refreshDeepSeekBalance({ silent: true }),
           BALANCE_CHECK_TIMEOUT_MS,
-          "DeepSeek 余额检测超时",
+          t("k_2e709003"),
         )
           .then((result) => {
             const status = `${(result as { status?: string } | null | undefined)?.status || ""}`;
             if (status === "network_error" || status === "missing_key") {
-              viewPort.showUploadStatus(`${uploadDoneStatus}翻译接口状态未确认，提交前会再次检查。`);
+              viewPort.showUploadStatus(t("k_ff2c0e0c", [uploadDoneStatus]));
             }
           })
           .catch(() => {
-            viewPort.showUploadStatus(`${uploadDoneStatus}翻译接口状态未确认，提交前会再次检查。`);
+            viewPort.showUploadStatus(t("k_ff2c0e0c", [uploadDoneStatus]));
           })
           .finally(() => {
             refreshSubmitControls();
@@ -179,7 +180,7 @@ export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
       resetUploadedFile?.();
       clearFileInputValue?.();
       setText("error-box", buildErrorDiagnostic(err, {
-        operation: "上传 PDF 文件",
+        operation: t("k_4b7553c2"),
         url: uploadUrl,
         details: {
           file_name: file.name,
@@ -187,7 +188,7 @@ export function createFileUploadHandler(deps: FileUploadHandlerDeps) {
           max_pages: frontMaxPageCount,
         },
       }));
-      viewPort.showUploadStatus("上传失败");
+      viewPort.showUploadStatus(t("k_a6f80569"));
       applyWorkflowMode();
     }
   }

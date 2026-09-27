@@ -4,6 +4,7 @@
 // （同包 AnswerChart.tsx 手写 SVG 也是这个理由）。这里只要固定定位 + 边缘翻转，
 // 定位算术已经抽到 shared/ai/hover-card-position.ts。
 
+import { t } from "@retainpdf/i18n";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -170,7 +171,7 @@ export function CitationHoverCard({
         <div className="reader-ai-citation-card-figure" data-state={imageState}>
           <img
             ref={imageRef}
-            alt={pageNumber ? `第 ${pageNumber} 页预览` : "来源页预览"}
+            alt={pageNumber ? t("k_0112fdff", [pageNumber]) : t("k_8e24d720")}
             className="reader-ai-citation-card-thumb"
             decoding="async"
             width={PREVIEW_WIDTH}
@@ -182,7 +183,7 @@ export function CitationHoverCard({
       ) : null}
       <div className="reader-ai-citation-card-text">
         <div className="reader-ai-citation-card-head">
-          {pageNumber ? `第 ${pageNumber} 页` : "来源"}
+          {pageNumber ? t("k_62866db3", [pageNumber]) : t("k_c63f79e6")}
         </div>
         {snippet ? (
           <p className="reader-ai-citation-card-snippet">{snippet}</p>

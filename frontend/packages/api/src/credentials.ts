@@ -1,5 +1,6 @@
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildApiEndpoint } from "./http.js";
+import { t } from "@retainpdf/i18n";
 
 export type CredentialKind = "translation_api_key" | "ocr_provider_token" | string;
 
@@ -68,7 +69,7 @@ async function credentialRequest<T>(
   const envelope: any = await response.json().catch(() => null);
   if (!response.ok) {
     const error = new Error(
-      `${envelope?.message || envelope?.error?.message || "凭据操作失败"}(${response.status})`,
+      `${envelope?.message || envelope?.error?.message || t("k_02da2344")}(${response.status})`,
     ) as CredentialRequestError;
     error.status = response.status;
     error.code = `${envelope?.code || envelope?.error_code || envelope?.error?.code || envelope?.details?.code || ""}`.trim();

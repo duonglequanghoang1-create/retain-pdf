@@ -2,6 +2,7 @@
 // Reading and operations views compose these; neither view owns runtime or
 // backend state.
 
+import { t } from "@retainpdf/i18n";
 import {
   ActionBarPrimitive,
   ComposerPrimitive,
@@ -46,7 +47,7 @@ export function ThinkingRow({ label }: { label: string }) {
   return (
     <div className="aui-thinking" role="status" aria-live="polite">
       <Loader2 className="aui-spin" size={14} strokeWidth={2.4} aria-hidden />
-      <span>{label || "思考中…"}</span>
+      <span>{label || t("k_29653ff3")}</span>
     </div>
   );
 }
@@ -90,7 +91,7 @@ export function AssistantMessageRow({
     <MessagePrimitive.Root className="aui-msg aui-msg-assistant" data-role="assistant">
       <div className="aui-msg-stack">
         {streaming && progress ? <ThinkingRow label={progress} /> : null}
-        {streaming && !progress && !content ? <ThinkingRow label="思考中…" /> : null}
+        {streaming && !progress && !content ? <ThinkingRow label={t("k_29653ff3")} /> : null}
         {/* 轮次预算用尽、模型被强制收尾。它写出来的话语气照常,不标出来就看不出。
             阅读模式的预算(3)比主页(6)更紧,这一侧其实更容易撞上。
             只认识的原因才渲染——将来契约多一种值时,宁可不显示也别瞎解释一句。 */}
@@ -120,15 +121,15 @@ export function AssistantMessageRow({
           hideWhenRunning
           autohide="not-last"
         >
-          <ActionBarPrimitive.Copy className="aui-action-btn" aria-label="复制答案" title="复制答案">
+          <ActionBarPrimitive.Copy className="aui-action-btn" aria-label={t("k_b2dcbbf3")} title={t("k_b2dcbbf3")}>
             <Copy size={14} strokeWidth={2.1} aria-hidden />
           </ActionBarPrimitive.Copy>
           {onBranchFromAnswer ? (
             <button
               type="button"
               className="aui-action-btn aui-action-btn-branch"
-              aria-label="从这里开新对话"
-              title="从这里开新对话"
+              aria-label={t("k_ccce11aa")}
+              title={t("k_ccce11aa")}
               disabled={branchBusy}
               onClick={async () => {
                 armReaderAiClickShield(1200, { overlayDelayMs: 0 });
@@ -139,7 +140,7 @@ export function AssistantMessageRow({
               <GitBranch size={14} strokeWidth={2.2} aria-hidden />
             </button>
           ) : null}
-          <ActionBarPrimitive.Reload className="aui-action-btn" aria-label="重新生成" title="重新生成">
+          <ActionBarPrimitive.Reload className="aui-action-btn" aria-label={t("k_2e190570")} title={t("k_2e190570")}>
             <RefreshCw size={14} strokeWidth={2.2} aria-hidden />
           </ActionBarPrimitive.Reload>
         </ActionBarPrimitive.Root>
@@ -206,7 +207,7 @@ export function ModeSwitch({
   onChange?: (mode: ReaderAssistantMode) => void;
 }) {
   return (
-    <div className="aui-assistant-mode" role="group" aria-label="AI 模式">
+    <div className="aui-assistant-mode" role="group" aria-label={t("k_39633dce")}>
       <button
         type="button"
         className={mode !== "operations" ? "is-active" : ""}
@@ -243,10 +244,10 @@ export function SelectionBanner({
   const text = selectionContext.selectionType === "text"
     ? selectionContext.quote
     : readerRegionContent(selectionContext.region, selectionContext.pane);
-  const label = kind === "formula" ? "公式"
-    : kind === "table" ? "表格"
-      : kind === "figure" ? "图片"
-        : "文字";
+  const label = kind === "formula" ? t("k_3f27035a")
+    : kind === "table" ? t("k_150074c2")
+      : kind === "figure" ? t("k_be8da62e")
+        : t("k_f4d3dab8");
   const SelectionIcon = kind === "formula" ? Sigma
     : kind === "table" ? Table2
       : kind === "figure" ? Image : Type;
@@ -254,14 +255,14 @@ export function SelectionBanner({
     <div className="aui-selection-context" data-reader-ai-selection-context="">
       <SelectionIcon size={14} strokeWidth={2.1} aria-hidden />
       <span className="aui-selection-context-meta">
-        {selectionContext.pane === "translated" ? "译文" : "原文"} · {selectionContext.page} 页 · {label}
+        {selectionContext.pane === "translated" ? t("k_647e0016") : t("k_4d69dbdf")} · {selectionContext.page} 页 · {label}
       </span>
-      <span className="aui-selection-context-text">{text || "已选择此区域"}</span>
+      <span className="aui-selection-context-text">{text || t("k_3ec18a8b")}</span>
       <button
         type="button"
         className="aui-selection-context-remove"
-        aria-label="移除选区上下文"
-        title="移除选区"
+        aria-label={t("k_5a1c32a3")}
+        title={t("k_674f24d9")}
         onClick={onClear}
       >
         <X size={13} strokeWidth={2.4} aria-hidden />
@@ -294,8 +295,8 @@ export function AssistantComposer({
         <ComposerPrimitive.Input
           className="aui-input"
           rows={1}
-          placeholder={mode === "operations" ? "描述要执行的 PDF 操作…" : "询问当前文档…"}
-          aria-label={mode === "operations" ? "描述 PDF 操作" : "向文档 AI 提问"}
+          placeholder={mode === "operations" ? t("k_1b634612") : t("k_139abb6f")}
+          aria-label={mode === "operations" ? t("k_add94cc5") : t("k_5cc2cdd4")}
           autoFocus
           enterKeyHint="send"
           disabled={branchBusy}
@@ -305,11 +306,11 @@ export function AssistantComposer({
           <ModeSwitch mode={mode} disabled={isRunning || branchBusy} onChange={onModeChange} />
           <div className="aui-composer-actions">
             {isRunning ? (
-              <ComposerPrimitive.Cancel className="aui-send aui-send-stop" aria-label="停止生成">
+              <ComposerPrimitive.Cancel className="aui-send aui-send-stop" aria-label={t("k_76349aa6")}>
                 <Square size={12} strokeWidth={2.6} aria-hidden />
               </ComposerPrimitive.Cancel>
             ) : (
-              <ComposerPrimitive.Send className="aui-send" aria-label="发送">
+              <ComposerPrimitive.Send className="aui-send" aria-label={t("k_1214d633")}>
                 <ArrowUp size={16} strokeWidth={2.5} aria-hidden />
               </ComposerPrimitive.Send>
             )}

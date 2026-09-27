@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 共享真值（原 frontend/web/src/js/reader/annotations/view-model.ts），已抽离为 standalone 纯函数
 // 不直接 import frontend/web 私有路径或 types；仅依赖最小内联类型，宿主可按需收窄
 //
@@ -9,9 +11,9 @@
 
 // kind 到展示文案的映射:冻结防止展示层意外改写
 export const ANNOTATION_KIND_META = Object.freeze({
-  sentence: { label: "句子" },
-  data: { label: "数据" },
-  figure: { label: "图表" },
+  sentence: { label: t("k_8cfcfc34") },
+  data: { label: t("k_54b8a90b") },
+  figure: { label: t("k_a66b71e2") },
 });
 
 export type AnnotationKind = keyof typeof ANNOTATION_KIND_META;
@@ -103,15 +105,15 @@ export function buildAnnotationsMarkdown({
   title?: string;
   annotations?: unknown;
 } = {}): string {
-  const heading = title ? `# ${title} 批注` : "# 批注";
+  const heading = title ? t("k_b0ea3e83", [title]) : t("k_570e6941");
   const groups = groupAnnotationsByPage(annotations);
   if (groups.length === 0) {
-    return `${heading}\n\n(暂无批注)\n`;
+    return t("k_304fd801", [heading]);
   }
   const lines: string[] = [heading, ""];
   for (const group of groups) {
     // pageIdx 是 0 基,展示给人看要转成 1 基页码
-    lines.push(`## 第 ${group.pageIdx + 1} 页`, "");
+    lines.push(t("k_cfc3c647", [group.pageIdx + 1]), "");
     for (const annotation of group.items) {
       lines.push(...toQuoteBlockLines(annotation?.quoteText));
       if (annotation?.translatedQuoteText) {
@@ -119,7 +121,7 @@ export function buildAnnotationsMarkdown({
         lines.push(...toQuoteBlockLines(`—— ${annotation.translatedQuoteText}`));
       }
       if (annotation?.note) {
-        lines.push("", `笔记:${annotation.note}`);
+        lines.push("", t("k_9981949b", [annotation.note]));
       }
       // 每条批注后留空行,末尾的 "" 也保证整篇以换行结尾
       lines.push("");

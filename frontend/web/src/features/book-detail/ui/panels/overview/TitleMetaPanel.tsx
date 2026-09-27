@@ -2,6 +2,7 @@
 
 import { btn } from "../ui.jsx";
 import { Check, Pencil, X } from "lucide-react";
+import { t as tr } from "@retainpdf/i18n";
 
 /**
  * @param {object} props
@@ -53,7 +54,7 @@ export function TitleMetaPanel({
                 id="book-detail-tags-input"
                 type="text"
                 value={tagsText}
-                placeholder="例如：化学、综述"
+                placeholder={tr("k_304976bd")}
                 onChange={(e) => onTagsTextChange(e.target.value)}
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
               />
@@ -69,7 +70,7 @@ export function TitleMetaPanel({
                 onClick={onSave}
               >
                 <Check className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
-                {busy === "meta" ? "保存中…" : "保存"}
+                {busy === "meta" ? tr("k_6644f061") : tr("k_fadf24db")}
               </button>
             </div>
           </div>
@@ -82,7 +83,7 @@ export function TitleMetaPanel({
               {displayTitle || "-"}
             </h1>
             <p className="mt-0.5 text-sm text-muted-foreground">
-              {authors.length ? authors.join("、") : "未知作者"}
+              {authors.length ? authors.join("、") : tr("k_9c5bde2a")}
               {year ? ` · ${year}` : ""}
             </p>
             {tags.length ? (

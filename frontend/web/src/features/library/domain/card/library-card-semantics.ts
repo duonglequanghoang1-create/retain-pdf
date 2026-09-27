@@ -1,4 +1,5 @@
 import type { LibraryCardItem } from "../types.js";
+import { t } from "@retainpdf/i18n";
 
 export type LibraryReadTarget = "job" | "source" | "none";
 
@@ -25,14 +26,14 @@ export function resolveLibraryReadPresentation(
 
   if (succeeded && jobId) {
     return {
-      label: isOcrOnlyItem(item) ? "查看 OCR" : "对照阅读",
+      label: isOcrOnlyItem(item) ? t("k_e810d9c0") : t("k_5ca75802"),
       target: "job",
       jobId,
       documentId,
     };
   }
   if (documentId) {
-    return { label: "读原文", target: "source", jobId, documentId };
+    return { label: t("k_8e2baed4"), target: "source", jobId, documentId };
   }
-  return { label: "读原文", target: "none", jobId, documentId };
+  return { label: t("k_8e2baed4"), target: "none", jobId, documentId };
 }

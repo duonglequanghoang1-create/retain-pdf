@@ -19,6 +19,7 @@ import type {
   HomeFeatures,
   UploadStatePort,
 } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 type WorkflowViewPort = {
   setSubmitBusy: (busy: boolean) => void;
@@ -85,7 +86,7 @@ export function createAppActions({
       uploadStatePort.reset({ includePageRange: false });
       workflowView.setSubmitDisabled(true);
       uploadView.resetUploadedFileView();
-      setText("error-box", "当前上传文件已失效，请重新上传 PDF 后再提交。");
+      setText("error-box", t("k_9dd3bb40"));
     },
   };
 

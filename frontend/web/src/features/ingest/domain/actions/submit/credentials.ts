@@ -1,4 +1,5 @@
 import type { EnsureOcrCredentialsForSubmitOptions } from "./contracts.js";
+import { t } from "@retainpdf/i18n";
 
 export async function ensureOcrCredentialsForSubmit({
   workflow,
@@ -13,13 +14,13 @@ export async function ensureOcrCredentialsForSubmit({
   }
   return Boolean(await ensureOcrCredentialsReady?.({
     onMissingToken: () => {
-      setText("error-box", "请先填写当前 OCR Provider 凭证。");
+      setText("error-box", t("k_7f6141aa"));
       if (!desktopMode) {
         openBrowserCredentialsDialog?.();
       }
     },
     onInvalidToken: (result) => {
-      setText("error-box", result.summary || "OCR Provider 凭证校验未通过。");
+      setText("error-box", result.summary || t("k_8b539dcb"));
       if (!desktopMode) {
         openBrowserCredentialsDialog?.();
       }

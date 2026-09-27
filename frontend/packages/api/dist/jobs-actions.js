@@ -1,12 +1,13 @@
 // jobs-actions — pure (no mock)
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildJobDetailEndpoint, submitJson } from "./http.js";
+import { t } from "@retainpdf/i18n";
 export async function fetchJobDiagnostics(jobId, apiPrefix) {
     const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/diagnostics`, { headers: buildApiHeaders() });
     if (!resp.ok) {
         if (resp.status === 404)
             return null;
-        throw new Error(`读取失败诊断失败，请稍后重试。(${resp.status})`);
+        throw new Error(t("k_88acd1e5", [resp.status]));
     }
     return unwrapEnvelope(await resp.json());
 }
@@ -15,7 +16,7 @@ export async function fetchResumePlan(jobId, apiPrefix) {
     if (!resp.ok) {
         if (resp.status === 404)
             return null;
-        throw new Error(`读取恢复计划失败，请稍后重试。(${resp.status})`);
+        throw new Error(t("k_34d8f2d5", [resp.status]));
     }
     return unwrapEnvelope(await resp.json());
 }
@@ -37,14 +38,14 @@ export async function fetchJobStageActions(jobId, apiPrefix) {
     if (!resp.ok) {
         if (resp.status === 404)
             return null;
-        throw new Error(`读取阶段操作失败，请稍后重试。(${resp.status})`);
+        throw new Error(t("k_f72b24f7", [resp.status]));
     }
     return unwrapEnvelope(await resp.json());
 }
 export async function retryJobStage(jobId, apiPrefix, stage, payload = {}) {
     const normalizedStage = `${stage || ""}`.trim();
     if (!normalizedStage)
-        throw new Error("阶段重试失败: 缺少 stage");
+        throw new Error(t("k_707893d5"));
     const result = await submitJson(`${buildJobDetailEndpoint(jobId, apiPrefix)}/retry-stage`, { stage: normalizedStage, ...payload });
     const bookMeta = payload && typeof payload === "object" ? payload : {};
     const nextJobId = `${result?.job_id || result?.id || jobId}`.trim();

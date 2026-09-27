@@ -1,6 +1,7 @@
 // 合集列表加载：请求序号防竞态 + 版本信号触发软/硬刷新 + 失败静默自动重试一次。
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CollectionsController } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 type UseCollectionsListArgs = {
   controller: CollectionsController;
@@ -59,7 +60,7 @@ export function useCollectionsList({ controller, version, setOpenFolder }: UseCo
           return;
         }
         listLoadedRef.current = true;
-        setListError(err?.message || "读取合集失败，请稍后重试。");
+        setListError(err?.message || t("k_4ec6ee29"));
         setListLoading(false);
       });
   }, [controller, setOpenFolder]);

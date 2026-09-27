@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 共享真值（原 frontend/web/src/js/reader/ai/config.ts），已抽离为可注入依赖
 // 不直接 import frontend/web 的 runtime/persisted-config/credentials，改为参数注入，默认用空实现
 
@@ -97,4 +99,4 @@ export function notifyCredentialsChanged(): void {
 }
 
 export const MISSING_MODEL_API_KEY_MESSAGE =
-  "缺少模型 API Key：请到设置 → API 设置填写 DeepSeek 等模型 Key（不是后端 X-API-Key）。";
+  t("k_15ba2065");

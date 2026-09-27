@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Keyboard } from "lucide-react";
 import { READER_SHORTCUT_HELP } from "../../hooks/reader-keyboard-map.js";
+import { t } from "@retainpdf/i18n";
 
 function isEditableTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false;
@@ -64,10 +65,10 @@ export function ReaderShortcutsHelp() {
       <button
         type="button"
         className={`reader-react-hud-btn reader-react-shortcuts-btn${open ? " is-active" : ""}`}
-        aria-label="快捷键说明"
+        aria-label={t("k_d15328af")}
         aria-expanded={open}
         aria-controls={panelId}
-        title="快捷键（H 或 ?）"
+        title={t("k_33f10794")}
         onClick={() => setOpen((v) => !v)}
       >
         <Keyboard className="reader-react-shortcuts-icon" size={16} strokeWidth={2.25} aria-hidden />
@@ -77,14 +78,14 @@ export function ReaderShortcutsHelp() {
           id={panelId}
           className="reader-react-shortcuts-panel reader-floating-surface"
           role="dialog"
-          aria-label="阅读器快捷键"
+          aria-label={t("k_e9476de3")}
         >
           <div className="reader-react-shortcuts-head">
             <strong>快捷键</strong>
             <button
               type="button"
               className="reader-react-shortcuts-close reader-floating-close"
-              aria-label="关闭"
+              aria-label={t("k_6c14bd7f")}
               onClick={() => setOpen(false)}
             >
               ×

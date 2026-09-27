@@ -9,6 +9,7 @@ import { useState } from "react";
 import { ConfirmDialog } from "@/ui/components/confirm-dialog.js";
 import type { FailureRecoveryStage } from "../../domain/dialog/failure-recovery.js";
 import { STATUS_DETAIL_DIALOG_IDS } from "../../domain/status-detail-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 type FailureStageActionsProps = {
   hint: string;
@@ -35,7 +36,7 @@ export function FailureStageActions({ hint, stages, retryStage }: FailureStageAc
       return;
     }
     setPendingStage(stage);
-    setFeedback("正在创建恢复任务…");
+    setFeedback(t("k_d0759c6a"));
     try {
       await retryStage?.(stage, options);
     } catch (error) {
@@ -67,7 +68,7 @@ export function FailureStageActions({ hint, stages, retryStage }: FailureStageAc
               onClick={() => void runStage(item.stage)}
             >
               <RefreshCw className="h-4 w-4" aria-hidden="true" />
-              {pendingStage === item.stage ? "正在重试…" : item.label}
+              {pendingStage === item.stage ? t("k_46fbe12e") : item.label}
             </button>
             <span id={`failure-stage-note-${item.stage}`} className="status-panel-note">
               {item.noteText}
@@ -81,9 +82,9 @@ export function FailureStageActions({ hint, stages, retryStage }: FailureStageAc
         open={Boolean(riskStage)}
         onOpenChange={(open: boolean) => { if (!open) setRiskStage(""); }}
         pending={Boolean(pendingStage)}
-        title="确认重新执行该阶段"
-        description="上游可能已经收到上一次请求。继续会重新执行该阶段，可能造成重复处理或计费。"
-        confirmLabel="确认重试"
+        title={t("k_1c1a9587")}
+        description={t("k_50bd6e6e")}
+        confirmLabel={t("k_f25369d9")}
         tone="danger"
         onConfirm={() => {
           const stage = riskStage;

@@ -8,6 +8,7 @@ import {
   rerunJob,
 } from "@/platform/api/index.js";
 import { resolveJobActions } from "@retainpdf/domain/job";
+import { t } from "@retainpdf/i18n";
 
 export const TASK_CENTER_PAGE_LIMIT = 50;
 export const TASK_CENTER_MAX_ITEMS = 2000;
@@ -132,7 +133,7 @@ export async function cancelTaskCenterJob(
   dependencies: Pick<TaskCenterApiDependencies, "cancelTranslation" | "cancelOcr"> = DEFAULT_DEPENDENCIES,
 ): Promise<unknown> {
   const jobId = `${job?.job_id || ""}`.trim();
-  if (!jobId) throw new Error("任务缺少 job_id，无法取消。");
+  if (!jobId) throw new Error(t("k_ff68f74a"));
   return `${job.workflow || ""}`.trim().toLowerCase() === "ocr"
     ? dependencies.cancelOcr(jobId, API_PREFIX)
     : dependencies.cancelTranslation(jobId, API_PREFIX);
@@ -143,12 +144,12 @@ export async function retryTaskCenterJob(
   dependencies: Pick<TaskCenterApiDependencies, "fetchDetail" | "rerun" | "resolveActions"> = DEFAULT_DEPENDENCIES,
 ): Promise<unknown> {
   const normalizedJobId = `${jobId || ""}`.trim();
-  if (!normalizedJobId) throw new Error("任务缺少 job_id，无法重试。");
+  if (!normalizedJobId) throw new Error(t("k_fc3738be"));
   const detail = await dependencies.fetchDetail(normalizedJobId, { apiPrefix: API_PREFIX });
   const actions = dependencies.resolveActions(detail || {});
   const actionUrl = `${actions?.rerun || ""}`.trim();
   if (!actions?.rerunEnabled || !actionUrl) {
-    throw new Error("后端未提供可用的重试操作，请打开详情查看恢复建议。");
+    throw new Error(t("k_5455e49f"));
   }
   return dependencies.rerun(actionUrl);
 }

@@ -2,6 +2,7 @@
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildJobDetailEndpoint } from "./http.js";
 import type { JobEventListView, ListJobEventsQuery } from "@retainpdf/contracts/job-events";
+import { t } from "@retainpdf/i18n";
 
 export type JobEventsQuery = ListJobEventsQuery & { signal?: AbortSignal };
 
@@ -20,7 +21,7 @@ export function validateJobEventsPage(payload: unknown): JobEventListView {
     || page.limit < 1 || page.limit > 500 || page.items.length > page.limit
     || page.items.some(item => !item || typeof item.event_id !== "string" || !item.event_id
       || !Number.isSafeInteger(item.seq) || item.seq < 1)) {
-    throw new JobEventsError("事件流协议不匹配，请更新客户端与后端。", 0, "EVENT_PROTOCOL_MISMATCH");
+    throw new JobEventsError(t("k_b8060209"), 0, "EVENT_PROTOCOL_MISMATCH");
   }
   return page;
 }
@@ -47,7 +48,7 @@ export async function fetchJobEvents(
 ): Promise<JobEventListView> {
   if (typeof query !== "object" || query === null || "offset" in query
     || (query.cursor !== undefined && query.start !== undefined)) {
-    throw new JobEventsError("事件流使用 start 或 cursor，不支持 offset。", 400, "INVALID_QUERY");
+    throw new JobEventsError(t("k_a4034baa"), 400, "INVALID_QUERY");
   }
   const params = new URLSearchParams({ limit: `${query.limit ?? 500}` });
   if (query.cursor !== undefined) params.set("cursor", query.cursor);
@@ -62,7 +63,7 @@ export async function fetchJobEvents(
   if (!response.ok) {
     const error = await response.json().catch(() => null);
     throw new JobEventsError(
-      error?.message || `读取事件流失败，请稍后重试。(${response.status})`,
+      error?.message || t("k_56de639f", [response.status]),
       response.status,
       error?.error?.code || "EVENT_REQUEST_FAILED",
     );
@@ -93,7 +94,7 @@ export async function fetchJobEventPages({
     items.push(...page.items);
     if (!page.has_more) return mergeJobEventPages(null, { ...page, items });
     if (page.next_cursor === nextQuery.cursor) {
-      throw new JobEventsError("事件游标没有前进。", 0, "EVENT_PROTOCOL_MISMATCH");
+      throw new JobEventsError(t("k_b2abaccc"), 0, "EVENT_PROTOCOL_MISMATCH");
     }
     nextQuery = { limit: query.limit ?? 500, cursor: page.next_cursor, signal: query.signal };
   }

@@ -1,6 +1,7 @@
 // 单栏 PDF：栏不滚动；纵向由共享 scroll shell 负责。
 // 对照等高由父级 usePageRowSync 完成，不做 display:contents。
 
+import { t } from "@retainpdf/i18n";
 import {
   forwardRef,
   memo,
@@ -110,7 +111,7 @@ const PdfDocumentPaneInner = forwardRef<HTMLElement, PdfDocumentPaneProps>(
       preloadedFile = null,
       userZoom = 1,
       visible = true,
-      emptyLabel = "暂无 PDF",
+      emptyLabel = t("k_87235a49"),
       scrollRoot = null,
       pageWidthOverride = null,
       rowHeights,
@@ -366,7 +367,7 @@ const PdfDocumentPaneInner = forwardRef<HTMLElement, PdfDocumentPaneProps>(
     const handleLoadError = useCallback(
       (err: Error) => {
         if (activeDocumentIdentityRef.current !== documentIdentity) return;
-        const message = err?.message || "PDF 解析失败";
+        const message = err?.message || t("k_57f1aee5");
         setDocError(message);
         setNumPages(0);
         onNumPagesChange?.(0, pane);
@@ -435,7 +436,7 @@ const PdfDocumentPaneInner = forwardRef<HTMLElement, PdfDocumentPaneProps>(
         data-reader-visible={visible ? "true" : "false"}
         data-live-translation-status={liveTranslation?.jobStatus || undefined}
         aria-hidden={visible ? undefined : true}
-        aria-label={pane === "source" ? "原文 PDF" : "译文 PDF"}
+        aria-label={pane === "source" ? t("k_be4c6a23") : t("k_d93c8aae")}
       >
         {paneAction ? (
           <div className="reader-react-pdf-pane-action">{paneAction}</div>

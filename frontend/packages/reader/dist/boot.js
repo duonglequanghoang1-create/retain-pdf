@@ -1,12 +1,15 @@
-import { jsx as f } from "react/jsx-runtime";
-import { createRoot as s } from "react-dom/client";
-import { R as p } from "./ReaderApp-C3YFiy6i.js";
-import { i as m, c as u } from "./answer-enhance-D8zK9znw.js";
-const a = "retainpdf.theme", o = "classic", n = [
+import { jsx as s } from "react/jsx-runtime";
+import { createRoot as p } from "react-dom/client";
+import { R as m } from "./ReaderApp-DztBjLD_.js";
+import { t } from "./i18n-Bsr2eycf.js";
+import { i as l, c as u } from "./answer-enhance-HajrqUpu.js";
+const i = "retainpdf.theme", d = "classic";
+t("k_5f83e7f6"), t("k_c7b92cb5");
+const a = [
   {
     id: "classic",
-    label: "经典",
-    description: "黑白灰克制，默认观感",
+    label: t("k_c0ca4b88"),
+    description: t("k_e4dc7895"),
     group: "light",
     order: 10,
     preview: {
@@ -19,8 +22,8 @@ const a = "retainpdf.theme", o = "classic", n = [
   },
   {
     id: "jiangnan",
-    label: "素纸",
-    description: "冷石灰底 · 冷青绿强调（去土黄）",
+    label: t("k_f9e9f1e1"),
+    description: t("k_4669df82"),
     group: "accent",
     order: 20,
     decorPack: "jiangnan",
@@ -34,8 +37,8 @@ const a = "retainpdf.theme", o = "classic", n = [
   },
   {
     id: "mojia",
-    label: "墨家",
-    description: "素绢暖底 · 青铜机关",
+    label: t("k_1cdcb142"),
+    description: t("k_27332e10"),
     group: "accent",
     order: 25,
     decorPack: "mojia",
@@ -50,8 +53,8 @@ const a = "retainpdf.theme", o = "classic", n = [
   },
   {
     id: "seacliff",
-    label: "雾青",
-    description: "冷灰蓝底 · 青灰强调",
+    label: t("k_d6f2f07e"),
+    description: t("k_7b37dcc7"),
     group: "accent",
     order: 30,
     preview: {
@@ -64,8 +67,8 @@ const a = "retainpdf.theme", o = "classic", n = [
   },
   {
     id: "night",
-    label: "黛瓦夜色",
-    description: "深底阅读 · 黛瓦墨黑",
+    label: t("k_6f9b112e"),
+    description: t("k_815ccfe6"),
     group: "dark",
     order: 40,
     preview: {
@@ -77,39 +80,40 @@ const a = "retainpdf.theme", o = "classic", n = [
     }
   }
 ];
-function i() {
-  return [...n].sort((e, r) => e.order - r.order || e.id.localeCompare(r.id));
+t("k_80ec9e2b"), t("k_30b2c979"), t("k_63a59798");
+function c() {
+  return [...a].sort((e, r) => e.order - r.order || e.id.localeCompare(r.id));
 }
-function l(e) {
-  return n.find((r) => r.id === e);
+function b(e) {
+  return a.find((r) => r.id === e);
 }
-function c(e) {
-  return typeof e == "string" && n.some((r) => r.id === e);
+function f(e) {
+  return typeof e == "string" && a.some((r) => r.id === e);
 }
-i().map((e) => e.id);
+c().map((e) => e.id);
 Object.fromEntries(
-  i().map((e) => [e.id, { id: e.id, label: e.label, description: e.description }])
+  c().map((e) => [e.id, { id: e.id, label: e.label, description: e.description }])
 );
 const g = "retainpdf:theme-change";
-function b() {
-  if (typeof localStorage > "u") return o;
+function k() {
+  if (typeof localStorage > "u") return d;
   try {
-    const e = `${localStorage.getItem(a) || ""}`.trim();
-    if (c(e)) return e;
+    const e = `${localStorage.getItem(i) || ""}`.trim();
+    if (f(e)) return e;
   } catch {
   }
-  return o;
+  return d;
 }
 function h(e) {
-  const r = c(e) ? e : o;
+  const r = f(e) ? e : d;
   try {
-    localStorage.setItem(a, r);
+    localStorage.setItem(i, r);
   } catch {
   }
   if (typeof document < "u") {
     document.documentElement.dataset.theme = r;
-    const t = l(r);
-    document.documentElement.dataset.themeGroup = (t == null ? void 0 : t.group) || "light", document.documentElement.classList.toggle("theme-dark", (t == null ? void 0 : t.group) === "dark");
+    const o = b(r);
+    document.documentElement.dataset.themeGroup = (o == null ? void 0 : o.group) || "light", document.documentElement.classList.toggle("theme-dark", (o == null ? void 0 : o.group) === "dark");
   }
   if (typeof window < "u")
     try {
@@ -121,30 +125,30 @@ function h(e) {
   return r;
 }
 function E() {
-  return h(b());
+  return h(k());
 }
-function y(e = document.body) {
+function _(e = document.body) {
   e.classList.add("reader-body", "reader-mode-compare"), globalThis.window && window.self !== window.top && e.classList.add("reader-embedded");
 }
-function w(e = document.body, r) {
-  Array.from(e.children).forEach((t) => {
-    t.tagName !== "SCRIPT" && t.id !== "reader-root" && t !== r && t.remove();
+function y(e = document.body, r) {
+  Array.from(e.children).forEach((o) => {
+    o.tagName !== "SCRIPT" && o.id !== "reader-root" && o !== r && o.remove();
   });
 }
-function T(e = document.body) {
+function w(e = document.body) {
   let r = document.getElementById("reader-root");
   return r || (r = document.createElement("div"), r.id = "reader-root", e.appendChild(r)), r;
 }
-function I(e = {}) {
-  const r = e.body ?? document.body, t = e.root ?? T(r);
-  E(), u(), m(), y(r), e.purgeLegacyMarkup !== !1 && w(r, t);
-  const d = s(t);
-  return d.render(/* @__PURE__ */ f(p, {})), d;
+function L(e = {}) {
+  const r = e.body ?? document.body, o = e.root ?? w(r);
+  E(), u(), l(), _(r), e.purgeLegacyMarkup !== !1 && y(r, o);
+  const n = p(o);
+  return n.render(/* @__PURE__ */ s(m, {})), n;
 }
 export {
-  I as bootReader,
-  w as purgeLegacyMarkup,
-  T as resolveReaderRoot,
-  y as syncReaderBodyClasses
+  L as bootReader,
+  y as purgeLegacyMarkup,
+  w as resolveReaderRoot,
+  _ as syncReaderBodyClasses
 };
 //# sourceMappingURL=boot.js.map

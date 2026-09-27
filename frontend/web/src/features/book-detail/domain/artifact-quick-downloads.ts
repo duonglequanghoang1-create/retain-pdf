@@ -6,6 +6,7 @@ import type {
   ArtifactCenterSection,
   ArtifactQuickDownloads,
 } from "./artifact-center-types.js";
+import { t } from "@retainpdf/i18n";
 
 function latestArtifact(items: ArtifactCenterItem[]): ArtifactCenterItem | null {
   if (!items.length) return null;
@@ -25,8 +26,8 @@ export function selectArtifactQuickDownloads(
   return {
     source: latestArtifact(items.filter((item) => item.group === "source" && item.kind === "PDF")),
     markdown: byLabel("Markdown") || latestArtifact(items.filter((item) => item.label.startsWith("Markdown"))),
-    translated: byLabel("译文 PDF"),
-    comparison: byLabel("对照 PDF"),
-    word: byLabel("Word 排版稿"),
+    translated: byLabel(t("k_d93c8aae")),
+    comparison: byLabel(t("k_cfe9fa15")),
+    word: byLabel(t("k_548e8795")),
   };
 }

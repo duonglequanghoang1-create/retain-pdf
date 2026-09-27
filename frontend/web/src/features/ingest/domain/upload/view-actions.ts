@@ -10,6 +10,7 @@ import type {
   UploadTileTextOptions,
   UploadViewState,
 } from "./view-state.js";
+import { t } from "@retainpdf/i18n";
 
 export type UploadViewActions = {
   setTileLocked(
@@ -99,7 +100,7 @@ function setTileReady(currentState: UploadViewState, ready = false) {
     ready: isReady,
     uploading: false,
     ...(isReady
-      ? { progressVisible: false, progressPercent: 0, progressText: "上传中" }
+      ? { progressVisible: false, progressPercent: 0, progressText: t("k_6818eb17") }
       : {}),
   };
 }
@@ -115,7 +116,7 @@ function setProgress(
   payload: { percent?: number; text?: string } = {},
 ) {
   const percent = Number(payload.percent ?? 0);
-  const text = `${payload.text ?? "上传中"}`;
+  const text = `${payload.text ?? t("k_6818eb17")}`;
   return {
     ...currentState,
     progressVisible: true,
@@ -134,7 +135,7 @@ function resetProgress(currentState: UploadViewState) {
     progressVisible: false,
     uploading: false,
     progressPercent: 0,
-    progressText: "上传中",
+    progressText: t("k_6818eb17"),
   };
 }
 
@@ -146,9 +147,9 @@ function resetUploadedFileView(currentState: UploadViewState) {
     uploading: false,
     ready: false,
     progressPercent: 0,
-    progressText: "上传中",
+    progressText: t("k_6818eb17"),
     actionSlotVisible: false,
-    status: "未上传文件",
+    status: t("k_f9189c74"),
     statusVisible: false,
     label: DEFAULT_FILE_LABEL,
     labelTitle: "",

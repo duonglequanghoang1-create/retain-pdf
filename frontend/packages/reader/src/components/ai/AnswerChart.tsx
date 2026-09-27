@@ -4,6 +4,7 @@
 // 应用的主题色接进去。手写的直接用 currentColor 和 CSS 变量，跟着主题走，reader 包
 // 也不用多一个依赖。
 
+import { t } from "@retainpdf/i18n";
 import { useId } from "react";
 import {
   categoryLabels,
@@ -239,7 +240,7 @@ export function AnswerChart({ spec }: { spec: ChartSpec }) {
   const { min, max } = valueDomain(spec);
   const labels = categoryLabels(spec);
   const caption = spec.title
-    || `${spec.series.length} 个系列的${spec.kind === "pie" ? "占比" : "对比"}图`;
+    || `${spec.series.length} 个系列的${spec.kind === "pie" ? t("k_380a2fed") : t("k_ef765015")}图`;
 
   return (
     <figure className="reader-answer-chart">

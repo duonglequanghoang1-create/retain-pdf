@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import type { DeleteBlockedDocument } from "../../domain/types.js";
 import { libraryItemDocumentId } from "./recent-jobs-library-helpers.js";
+import { t } from "@retainpdf/i18n";
 
 // 批量选择/删除状态机(#31)。从 RecentJobsLibrary 抽出,行为与回调和
 // 上报通道(onBatchModeChange)保持不变。
@@ -89,9 +90,9 @@ export function useRecentJobsBatchSelection({
   }
 
   function reportBatchDeleteResult(confirmed, failed) {
-    if (failed === 0) toast.success(`已删除 ${confirmed} 篇`);
-    else if (confirmed > 0) toast.warning(`已删除 ${confirmed} 篇，${failed} 篇失败`);
-    else toast.error("删除失败，请稍后重试");
+    if (failed === 0) toast.success(t("k_25292d39", [confirmed]));
+    else if (confirmed > 0) toast.warning(t("k_9b1fc61d", [confirmed, failed]));
+    else toast.error(t("k_b037aaef"));
   }
 
   async function confirmBatchDelete() {
@@ -105,7 +106,7 @@ export function useRecentJobsBatchSelection({
       const blocked = result?.blocked || [];
       if (blocked.length > 0) {
         // 已删除的报告完，剩下的被收藏挡住：弹第二步让用户决定是否清空收藏。
-        if (confirmed > 0) toast.success(`已删除 ${confirmed} 篇`);
+        if (confirmed > 0) toast.success(t("k_25292d39", [confirmed]));
         setPendingDeleteIds(null);
         setPendingBlockedDelete(blocked);
         return;
@@ -114,7 +115,7 @@ export function useRecentJobsBatchSelection({
       setBatchMode(false);
       setPendingDeleteIds(null);
     } catch (err) {
-      toast.error(err?.message || "删除失败，请稍后重试");
+      toast.error(err?.message || t("k_b037aaef"));
       setPendingDeleteIds(null);
     } finally {
       setBatchBusy(false);
@@ -150,7 +151,7 @@ export function useRecentJobsBatchSelection({
       setPendingBlockedDelete(null);
       setBatchMode(false);
     } catch (err) {
-      toast.error(err?.message || "删除失败，请稍后重试");
+      toast.error(err?.message || t("k_b037aaef"));
       setPendingBlockedDelete(null);
     } finally {
       setBatchBusy(false);
@@ -163,10 +164,10 @@ export function useRecentJobsBatchSelection({
     setBatchBusy(true);
     try {
       await collectionsController.addDocuments(collectionId, ids);
-      toast.success(`已加入合集，共 ${ids.length} 篇`);
+      toast.success(t("k_bf29e6c3", [ids.length]));
       setBatchMode(false);
     } catch (err) {
-      toast.error(err?.message || "加入合集失败，请稍后重试");
+      toast.error(err?.message || t("k_45dd940d"));
     } finally {
       setBatchBusy(false);
     }

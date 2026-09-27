@@ -6,6 +6,7 @@ import {
   isReaderAiNavigationLocked,
   shouldIgnoreReaderAiNavEvent,
 } from "./ui-interaction-lock.js";
+import { t as tr } from "@retainpdf/i18n";
 
 type FetchImpl = typeof fetch;
 
@@ -381,7 +382,7 @@ export function mountAnswerHtml(
       fallback.className = "aui-image-blocked";
       fallback.textContent = img.getAttribute("alt")?.trim()
         ? `[图片不可用：${img.getAttribute("alt")!.trim()}]`
-        : "[图片不可用]";
+        : tr("k_7c94c106");
       img.replaceWith(fallback);
       return;
     }
@@ -434,7 +435,7 @@ export function neutralizeMarkdownAnchors(
       span.dataset.href = href;
       span.setAttribute("role", "link");
       span.tabIndex = 0;
-      span.title = `打开链接：${href}`;
+      span.title = tr("k_3a4ee024", [href]);
       const tryOpen = (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -528,7 +529,7 @@ export function injectCitationMarkers(
         const pageNo = resolveCitationPageNumber(citation);
         button.title = pageNo
           ? `跳到第 ${pageNo} 页 · ${clipSnippet((citation as any).snippet || "", 60)}`
-          : clipSnippet((citation as any).snippet || "相关片段", 60);
+          : clipSnippet((citation as any).snippet || tr("k_86c3d752"), 60);
         if (pageNo != null) (button as any).dataset.page = `${pageNo}`;
         button.addEventListener("click", (event) => {
           event.preventDefault();
@@ -622,7 +623,7 @@ export async function hydrateProtectedImages(
     } catch {
       if (signal?.aborted || !el.isConnected) return;
       el.classList.add("is-missing");
-      el.alt = el.alt || "图片暂不可用";
+      el.alt = el.alt || tr("k_997b964d");
     }
   }));
 }
@@ -652,11 +653,11 @@ export function renderCitationFooter(
 
   const footer = documentRef.createElement("div");
   footer.className = "reader-ai-citations";
-  footer.setAttribute("aria-label", "引用来源");
+  footer.setAttribute("aria-label", tr("k_97f7f837"));
 
   const head = documentRef.createElement("div");
   head.className = "reader-ai-citations-head";
-  head.textContent = "来源";
+  head.textContent = tr("k_c63f79e6");
   footer.appendChild(head);
 
   const list = documentRef.createElement("div");
@@ -669,7 +670,7 @@ export function renderCitationFooter(
     row.type = "button";
     row.className = "reader-ai-citation-item";
     if (pageNo != null) (row as any).dataset.page = `${pageNo}`;
-    row.title = pageNo != null ? `跳到第 ${pageNo} 页` : "定位来源";
+    row.title = pageNo != null ? tr("k_73826adf", [pageNo]) : tr("k_81b00d3e");
     row.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -686,7 +687,7 @@ export function renderCitationFooter(
 
     const copy = documentRef.createElement("span");
     copy.className = "reader-ai-citation-copy";
-    copy.textContent = clipSnippet((citation as any).snippet || "相关片段", 64);
+    copy.textContent = clipSnippet((citation as any).snippet || tr("k_86c3d752"), 64);
 
     row.append(refEl, meta, copy);
     list.appendChild(row);

@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   Archive,
   Bot,
@@ -38,11 +39,11 @@ function jobMeta(section: ArtifactCenterSection): string {
   const job = section.jobs[0];
   if (!job) return "";
   const status = job.status === "succeeded"
-    ? "已完成"
+    ? t("k_e99b48a2")
     : job.status === "failed"
-      ? "失败"
+      ? t("k_3e3c8068")
       : job.status === "canceled" || job.status === "cancelled"
-        ? "已取消"
+        ? t("k_a5ffdc95")
         : job.status;
   return [
     status,
@@ -75,7 +76,7 @@ function ArtifactRow({
           <span>{item.kind}</span>
         </div>
         <p title={item.filename}>
-          {detail.join(" · ") || "可下载"}
+          {detail.join(" · ") || t("k_269cd52e")}
         </p>
       </div>
       <div className="book-detail-artifact-actions">
@@ -94,11 +95,11 @@ function ArtifactRow({
           type="button"
           className={btn("outline", "book-detail-artifact-action")}
           disabled={downloading}
-          aria-label={`下载${item.label}`}
+          aria-label={t("k_a7f76548", [item.label])}
           onClick={() => onDownload(item)}
         >
           <Download aria-hidden="true" />
-          <small>{downloading ? "下载中" : "下载"}</small>
+          <small>{downloading ? t("k_327d59b5") : t("k_2b9d0131")}</small>
         </button>
       </div>
     </li>

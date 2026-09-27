@@ -34,6 +34,7 @@ import { APP_UPDATE_IDS } from "./app-update-contract.js";
 import { useAppUpdateDialogOpen } from "./useAppUpdateDialogOpen.js";
 import type { AppUpdateReadOnlyStore, HandlersBag } from "../domain/app-update-store.js";
 import { Button as ButtonBase } from "@/ui/Button.jsx";
+import { t } from "@retainpdf/i18n";
 
 // Button.size 在未注解源文件里被推断为必填;unstyled 路径运行时不用 size。
 const Button = ButtonBase as any;
@@ -78,10 +79,10 @@ export function AppUpdateBanner({ view, handlersRef }: AppUpdateBannerProps) {
 
   const hasUpdate = Boolean(state.hasUpdate);
   const panel = state.panel;
-  const notesText = formatReleaseNotes(panel.body) || "暂无更新说明。";
+  const notesText = formatReleaseNotes(panel.body) || t("k_a12f6d6d");
   const versionText = panel.latestVersion
-    ? `当前 ${panel.currentVersion} · 最新 ${panel.latestVersion}`
-    : `当前 ${panel.currentVersion}`;
+    ? t("k_914090db", [panel.currentVersion, panel.latestVersion])
+    : t("k_7f4106c0", [panel.currentVersion]);
   const statusText = `${state.statusText || ""}`;
 
   return (
@@ -89,7 +90,7 @@ export function AppUpdateBanner({ view, handlersRef }: AppUpdateBannerProps) {
       <Button
         id={APP_UPDATE_IDS.button}
         className={`app-settings-action app-update-btn${hasUpdate ? " has-update" : ""}`}
-        aria-label="检查更新"
+        aria-label={t("k_a6df3858")}
         title={state.buttonTitle}
         data-update-state={state.buttonState}
         onClick={() => setDialogOpen(true)}

@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { useEffect, useState } from "react";
 import {
   fetchAgentRuntimeConfig,
@@ -69,13 +70,13 @@ export function AgentRuntimeSettingsCard() {
         setGatewayKey(next.fx_gateway_api_key || "");
         if (runtimeRestartPending(next)) {
           setRestarting(true);
-          setMessage("正在重启 Agent…");
+          setMessage(t("k_e18cf40e"));
           void waitForRuntime(next.configured_runtime);
         }
       })
       .catch((error) => {
         if (!active) return;
-        setMessage(error?.message || "无法读取 AI Agent 配置");
+        setMessage(error?.message || t("k_1c98ea80"));
         setTone("error");
       })
       .finally(() => {
@@ -96,7 +97,7 @@ export function AgentRuntimeSettingsCard() {
             activeMode(next.active_runtime) === expected
             && !runtimeRestartPending(next)
           ) {
-            setMessage(`${modeLabel(expected)}已启用，配置已保存在本机。`);
+            setMessage(t("k_5d6b5ed7", [modeLabel(expected)]));
             setTone("valid");
             announceRuntimeConfigChanged();
             return;
@@ -105,7 +106,7 @@ export function AgentRuntimeSettingsCard() {
           // Expected while the supervised AI child is restarting.
         }
       }
-      setMessage("配置已保存，AI 服务仍在重启；稍后重新打开设置即可确认。");
+      setMessage(t("k_d670113a"));
       setTone("");
       announceRuntimeConfigChanged();
     } finally {
@@ -115,7 +116,7 @@ export function AgentRuntimeSettingsCard() {
 
   async function save() {
     if (mode !== "fx" && !modelKey.trim() && !config?.llm_api_key_configured) {
-      setMessage(`${modeLabel(mode)}模式需要模型 API Key。`);
+      setMessage(t("k_8c098121", [modeLabel(mode)]));
       setTone("error");
       return;
     }
@@ -124,12 +125,12 @@ export function AgentRuntimeSettingsCard() {
       && !gatewayKey.trim()
       && !config?.fx_gateway_api_key_configured
     ) {
-      setMessage("FX Agent 模式需要 Gateway Key。");
+      setMessage(t("k_d961069b"));
       setTone("error");
       return;
     }
     setSaving(true);
-    setMessage("正在保存并检查运行环境…");
+    setMessage(t("k_0151b21c"));
     setTone("");
     try {
       const next = await updateAgentRuntimeConfig({
@@ -151,21 +152,21 @@ export function AgentRuntimeSettingsCard() {
       announceRuntimeConfigChanged();
       if (runtimeRestartPending(next)) {
         setRestarting(true);
-        setMessage("已保存，正在重启 Agent…");
+        setMessage(t("k_e40bb867"));
         void waitForRuntime(mode);
       } else {
-        setMessage("已保存在本机，可直接查看和修改 Key。");
+        setMessage(t("k_09ab9512"));
         setTone("valid");
       }
     } catch (error) {
-      const errorMessage = (error as Error)?.message || "保存失败";
+      const errorMessage = (error as Error)?.message || t("k_40525a73");
       if (errorMessage.includes("(409)")) {
         try {
           await load({ syncForm: false });
         } catch {
           // Keep the user's draft even when refreshing the revision fails.
         }
-        setMessage("配置已在其他窗口更新。当前输入已保留，请确认后重新保存。");
+        setMessage(t("k_23e25512"));
       } else {
         setMessage(errorMessage);
       }
@@ -186,7 +187,7 @@ export function AgentRuntimeSettingsCard() {
         <div className="credential-card-copy">
           <h3 className="credential-agent-title">
             AI Agent
-            <span className="credential-agent-beta" title="测试阶段">
+            <span className="credential-agent-beta" title={t("k_76141d19")}>
               <FlaskConical aria-hidden="true" />
               Beta
             </span>
@@ -194,11 +195,11 @@ export function AgentRuntimeSettingsCard() {
         </div>
         <span
           className="credential-agent-runtime-badge"
-          title={currentMode ? `当前运行：${modeLabel(currentMode)}` : "当前运行状态不可用"}
+          title={currentMode ? t("k_621d7fa1", [modeLabel(currentMode)]) : t("k_9b31c38f")}
           aria-live="polite"
         >
           <span className="credential-agent-runtime-dot" aria-hidden="true" />
-          {loading ? "读取中" : restarting ? "切换中" : modeShortLabel(currentMode)}
+          {loading ? t("k_b21b631c") : restarting ? t("k_72421ad9") : modeShortLabel(currentMode)}
         </span>
       </div>
 
@@ -236,7 +237,7 @@ export function AgentRuntimeSettingsCard() {
           disabled={busy}
         >
           <Save aria-hidden="true" />
-          {saving ? "正在保存…" : restarting ? "重启中…" : "保存设置"}
+          {saving ? t("k_9ca32f98") : restarting ? t("k_ce2d2904") : t("k_bb79ec7c")}
         </button>
       </DialogFooter>
     </section>

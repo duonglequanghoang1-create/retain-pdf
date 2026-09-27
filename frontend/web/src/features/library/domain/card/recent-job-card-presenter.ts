@@ -5,20 +5,21 @@ import {
   normalizeRuntimeDisplayStage,
 } from "../recent-jobs/runtime-value-helpers.js";
 import { escapeAttribute, truncateDisplayName } from "@/platform/utils/html-formatting.js";
+import { t } from "@retainpdf/i18n";
 
 export function recentJobStatusLabel(status) {
   switch (`${status || ""}`.trim()) {
     case "queued":
-      return "排队中";
+      return t("k_4dcbbcfa");
     case "running":
-      return "处理中";
+      return t("k_fcb979ef");
     case "succeeded":
-      return "已完成";
+      return t("k_e99b48a2");
     case "failed":
-      return "失败";
+      return t("k_3e3c8068");
     case "canceled":
     case "cancelled":
-      return "已取消";
+      return t("k_a5ffdc95");
     default:
       return status || "-";
   }
@@ -69,21 +70,21 @@ export function stageKeyForRecentJobLabel(item: any = {}) {
 export function recentJobStageLabel(item) {
   switch (stageKeyForRecentJobLabel(item)) {
     case "ocr":
-      return "OCR 中";
+      return t("k_52b60c8d");
     case "translate":
-      return "翻译中";
+      return t("k_45235e0f");
     case "render":
-      return "渲染中";
+      return t("k_7b5027df");
     case "done":
-      return "已完成";
+      return t("k_e99b48a2");
     case "queued":
-      return "排队中";
+      return t("k_4dcbbcfa");
     case "failed":
-      return "失败";
+      return t("k_3e3c8068");
     case "canceled":
-      return "已取消";
+      return t("k_a5ffdc95");
     default:
-      return `${item?.status || ""}`.trim() === "queued" ? "排队中" : "处理中";
+      return `${item?.status || ""}`.trim() === "queued" ? t("k_4dcbbcfa") : t("k_fcb979ef");
   }
 }
 

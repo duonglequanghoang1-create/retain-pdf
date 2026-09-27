@@ -1,12 +1,14 @@
+import { t } from "@retainpdf/i18n";
+
 // 共享真值（原 frontend/web/src/js/reader/page-state.ts），纯常量 + 纯函数，无外部依赖
 export const READER_PROGRESS_COPY = Object.freeze({
-  boot: "正在准备对照阅读…",
-  metadata: "正在读取任务信息…",
-  both: "正在加载原始 PDF 和译文 PDF…",
-  sourceOnly: "原始 PDF 已加载，正在加载译文 PDF…",
-  translatedOnly: "译文 PDF 已加载，正在加载原始 PDF…",
-  ready: "对照阅读已就绪",
-  failed: "对照阅读加载失败",
+  boot: t("k_4268c4a0"),
+  metadata: t("k_9f2b6df7"),
+  both: t("k_2a3a255d"),
+  sourceOnly: t("k_16baf569"),
+  translatedOnly: t("k_49013855"),
+  ready: t("k_ed712d1e"),
+  failed: t("k_239dbe09"),
 });
 
 export function createReaderPageState() {

@@ -18,6 +18,7 @@ import type { WorkflowViewPortLike } from "./contracts.js";
 import type { WorkflowDeveloperConfig } from "./payload.js";
 import type { WorkflowConfigPortLike } from "./contracts.js";
 import type { WorkflowConstants } from "./contracts.js";
+import { t } from "@retainpdf/i18n";
 
 export interface CreateWorkflowModeControllerOptions {
   constants: WorkflowConstants;
@@ -87,7 +88,7 @@ export function createWorkflowModeController({
   }
 
   function workflowSubmitLabel(workflow = currentWorkflow()) {
-    if (isOcrOnlyMode()) return "仅做 OCR";
+    if (isOcrOnlyMode()) return t("k_31587c01");
     return resolveWorkflowSubmitLabel(workflow, constants);
   }
 

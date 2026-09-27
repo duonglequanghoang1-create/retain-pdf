@@ -32,6 +32,6 @@ export declare function hasModelApiKey(browserConfig?: any): boolean;
 /** 凭据保存后派发，供 AI 输入门禁立刻刷新。 */
 export declare const CREDENTIALS_CHANGED_EVENT = "retainpdf:credentials-changed";
 export declare function notifyCredentialsChanged(): void;
-export declare const MISSING_MODEL_API_KEY_MESSAGE = "\u7F3A\u5C11\u6A21\u578B API Key\uFF1A\u8BF7\u5230\u8BBE\u7F6E \u2192 API \u8BBE\u7F6E\u586B\u5199 DeepSeek \u7B49\u6A21\u578B Key\uFF08\u4E0D\u662F\u540E\u7AEF X-API-Key\uFF09\u3002";
+export declare const MISSING_MODEL_API_KEY_MESSAGE: string;
 export {};
 //# sourceMappingURL=config.d.ts.map

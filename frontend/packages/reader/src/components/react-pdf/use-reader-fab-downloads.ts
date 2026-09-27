@@ -10,6 +10,7 @@ import {
   resolveReaderDownloadUrls,
   trimReaderDownloadString,
 } from "../../external.js";
+import { t } from "@retainpdf/i18n";
 
 export const FAB_DOWNLOAD_ORDER = ["source", "sideBySide", "translated"] as const;
 export type FabDownloadAction = (typeof FAB_DOWNLOAD_ORDER)[number];
@@ -74,7 +75,7 @@ export function useReaderFabDownloads(download: ReaderDownloadContext | undefine
         }),
       );
     } catch (err) {
-      const message = err instanceof Error ? err.message : "下载失败";
+      const message = err instanceof Error ? err.message : t("k_e0dab22b");
       failDownloadToast(message);
       setBusyActions((prev) => {
         const next = new Set(prev);

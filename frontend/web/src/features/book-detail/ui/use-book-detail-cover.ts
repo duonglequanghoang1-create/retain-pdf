@@ -13,17 +13,18 @@ import {
   recentJobStageLabel,
   recentJobStatusLabel,
 } from "@/features/library/domain.js";
+import { t } from "@retainpdf/i18n";
 
 function statusOf(item: any) {
-  if (isLibraryOnlyItem(item)) return { label: "未翻译", tone: "muted" };
+  if (isLibraryOnlyItem(item)) return { label: t("k_b99ebee4"), tone: "muted" };
   if (isRecentJobActive(item)) return { label: recentJobStageLabel(item), tone: "active" };
   const status = `${item.status || ""}`.trim();
   if (status === "succeeded") {
     return isOcrOnlyItem(item)
-      ? { label: "OCR 完成", tone: "done" }
-      : { label: "已完成", tone: "done" };
+      ? { label: t("k_5f973658"), tone: "done" }
+      : { label: t("k_e99b48a2"), tone: "done" };
   }
-  if (status === "failed") return { label: "失败", tone: "failed" };
+  if (status === "failed") return { label: t("k_3e3c8068"), tone: "failed" };
   return { label: recentJobStatusLabel(status), tone: "muted" };
 }
 

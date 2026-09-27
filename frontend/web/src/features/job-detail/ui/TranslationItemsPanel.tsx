@@ -14,12 +14,13 @@ import {
   pageNumberOf,
   previewText,
 } from "../domain/dialog/formatters.js";
+import { t } from "@retainpdf/i18n";
 
 function TranslationItemCard({ item, active, onSelect }) {
   const finalStatus = finalStatusOf(item);
   const errorTypes = errorTypesOf(item);
   const metaBits = [
-    `第 ${pageNumberOf(item)} 页`,
+    t("k_62866db3", [pageNumberOf(item)]),
     item.block_type || "",
     item.classification_label || "",
   ].filter(Boolean).join(" · ");
@@ -52,11 +53,11 @@ export function TranslationItemsPanel({ translation, onSelect, onChangePage }) {
   const totalPages = total > 0 ? Math.ceil(total / Math.max(limit, 1)) : 0;
   const currentPage = total > 0 ? Math.floor(offset / Math.max(limit, 1)) + 1 : 0;
   const meta = loading
-    ? "读取中..."
-    : `共 ${total} 条，本页 ${list.length} 条，offset ${offset}，limit ${limit}`;
+    ? t("k_ebb36ae2")
+    : t("k_07107e89", [total, list.length, offset, limit]);
   const pageLabel = loading
-    ? "读取中..."
-    : total > 0 ? `第 ${currentPage} / ${totalPages} 页` : "第 0 / 0 页";
+    ? t("k_ebb36ae2")
+    : total > 0 ? t("k_46c93c38", [currentPage, totalPages]) : t("k_421c0763");
   const canPrev = offset > 0;
   const canNext = offset + list.length < total;
   const hasItems = list.length > 0;
@@ -68,7 +69,7 @@ export function TranslationItemsPanel({ translation, onSelect, onChangePage }) {
       <div className="translation-panel-body">
         <div id={ids.itemsLoading} className={loading ? "events-empty" : "events-empty hidden"}>正在读取翻译条目...</div>
         <div id={ids.itemsEmpty} className={!loading && !hasItems ? "events-empty" : "events-empty hidden"}>
-          {translation.itemsErrorText || "没有匹配的翻译条目"}
+          {translation.itemsErrorText || t("k_d27c16e2")}
         </div>
         <div id={ids.itemsList} className={!loading && hasItems ? "translation-items-list" : "translation-items-list hidden"}>
           {list.map((item) => (

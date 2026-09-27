@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 共享真值（原 frontend/web/src/js/reader/markdown-math.ts），已抽离为 standalone
 // 不直接 import frontend/web 私有路径；MathJax 通过动态 import 加载，支持注入自定义 loader 便于单测
 // 对外保持与原实现一致的 pure + injectable 边界：parseMarkdown 由调用方注入（marked 等）
@@ -120,7 +122,7 @@ export function revealProtectedTokens(source: string): { text: string; count: nu
     // 不能只是转义或加反引号:两条下游路径对 HTML 的处理方式不同（Markdown 走
     // marked，叠层走 escapeHtml），任何带尖括号的形式都会在其中一条里被解析掉或
     // 显示成二次转义的乱码。换成完全不含尖括号的写法，哪条路都原样可见。
-    return `[未还原 token ${body}]`;
+    return t("k_53c91548", [body]);
   });
   return { text, count };
 }
@@ -135,7 +137,7 @@ export function extractMarkdownMath(
     mathFailureStats.protectedTokens += revealed.count;
     if (mathFailureStats.protectedTokens <= 5) {
       console.warn(
-        `[markdown-math] 译文里有 ${revealed.count} 个未还原的保护 token，已原样显示`,
+        t("k_77d0475c", [revealed.count]),
       );
     }
   }
@@ -207,7 +209,7 @@ function pickExport<T>(namespace: unknown, name: string): T {
   if (fallback !== undefined) {
     return fallback as T;
   }
-  throw new Error(`mathjax-full 未导出 ${name}（CJS/ESM 互操作问题）`);
+  throw new Error(t("k_4194e969", [name]));
 }
 
 async function loadDefaultMathJaxEngine(): Promise<MathJaxEngine> {
@@ -302,7 +304,7 @@ function reportMathFailure(kind: "engine-load" | "convert", error: unknown, tex 
   mathFailureStats.lastReason = reason;
   if (kind === "engine-load") {
     mathFailureStats.engineLoad += 1;
-    console.warn("[markdown-math] MathJax 引擎加载失败，公式将退回纯文本：", reason);
+    console.warn(t("k_abdfccea"), reason);
     return;
   }
   mathFailureStats.convert += 1;
@@ -312,7 +314,7 @@ function reportMathFailure(kind: "engine-load" | "convert", error: unknown, tex 
   }
   // 逐条刷屏没有意义,前几条足够定位是哪一类写法。
   if (mathFailureStats.convert <= 5) {
-    console.warn(`[markdown-math] 公式渲染失败（第 ${mathFailureStats.convert} 条）：`, tex, reason);
+    console.warn(t("k_c645e5f8", [mathFailureStats.convert]), tex, reason);
   }
 }
 
@@ -328,7 +330,7 @@ function loadMathJaxEngine(): Promise<MathJaxEngine> {
 }
 
 export function renderMathFallbackHtml(tex: string, display: boolean): string {
-  const body = `<code class="reader-md-math-error" title="公式渲染失败">${escapeHtml(tex)}</code>`;
+  const body = t("k_e53f20ff", [escapeHtml(tex)]);
   if (display) {
     return `<div class="reader-md-math reader-md-math-display reader-md-math-failed">${body}</div>`;
   }

@@ -6,6 +6,7 @@ import { buildStatusCardTaskActions } from "./status-card-task-actions-view-mode
 import {
   resolveSafeStatusCardStagePresentation,
 } from "./status-card-stage-presentation.js";
+import { t } from "@retainpdf/i18n";
 
 export function buildJobStatusViewModel({
   state,
@@ -33,7 +34,7 @@ export function buildJobStatusViewModel({
     status: job?.status || "idle",
     stagePresentation: resolvedStagePresentation,
     label: resolvedStagePresentation.label,
-    value: resolvedStagePresentation.detail || "准备中",
+    value: resolvedStagePresentation.detail || t("k_4f1f8aa3"),
     detail: "",
     stageKey: resolvedStagePresentation.stageKey,
     visualStageKey: resolvedStagePresentation.visualStageKey,

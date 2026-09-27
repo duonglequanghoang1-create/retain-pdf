@@ -3,6 +3,7 @@ import { APP_EVENTS } from "@/platform/contracts/app-contract.js";
 import { RECENT_JOBS_IDS } from "../recent-jobs-dom-contract.js";
 import { fetchDocumentList, patchDocument } from "@/platform/api/index.js";
 import { searchLibrary } from "@/platform/api/index.js";
+import { t } from "@retainpdf/i18n";
 
 /** Anchor payload used to open the reader from a search hit / document row. */
 export interface LibrarySearchAnchor {
@@ -110,7 +111,7 @@ class LibrarySearchIsland extends HTMLElement {
         .catch((error) => {
           this.appPromise = null;
           // node 测试环境无法解析 JSX,这里静默降级;浏览器构建产物已内联该模块
-          console.error("library-search island 加载失败", error);
+          console.error(t("k_6dde3489"), error);
           return null;
         });
     }

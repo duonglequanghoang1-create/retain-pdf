@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactElement } from "react";
+import { t } from "@retainpdf/i18n";
 
 export type ReaderErrorNoticeProps = {
   /** 译文区域（regions）加载失败；可选产物，不阻塞正文阅读。 */
@@ -30,8 +31,8 @@ export function ReaderErrorNotice({
   }
 
   const failedParts = [
-    regionsFailed ? "译文区域" : "",
-    metadataFailed ? "阅读元数据" : "",
+    regionsFailed ? t("k_6774d92e") : "",
+    metadataFailed ? t("k_4528bbfc") : "",
   ].filter(Boolean);
 
   return (
@@ -42,7 +43,7 @@ export function ReaderErrorNotice({
       <button
         type="button"
         className="reader-error-notice-dismiss"
-        aria-label="关闭提示"
+        aria-label={t("k_c620893e")}
         onClick={() => setDismissed(true)}
       >
         ×

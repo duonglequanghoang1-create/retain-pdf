@@ -22,6 +22,7 @@ import {
 } from "./recent-job-card-presenter.js";
 import { isOcrOnlyItem } from "./library-card-semantics.js";
 import { isCanceledStatus, isFailedStatus } from "@/platform/contracts/job-status.js";
+import { t } from "@retainpdf/i18n";
 
 /**
  * @returns 终态/馆藏徽标；进行中返回 null（用中央 loading 代替，见上表）。
@@ -30,7 +31,7 @@ import { isCanceledStatus, isFailedStatus } from "@/platform/contracts/job-statu
 export function libraryCardBadge(item: LibraryCardItem = {}): LibraryCardBadge | null {
   if (isLibraryOnlyItem(item)) {
     return {
-      label: "存档",
+      label: t("k_40e191bd"),
       icon: "archive",
       cls: "border border-border bg-white/95 text-muted-foreground",
     };
@@ -38,7 +39,7 @@ export function libraryCardBadge(item: LibraryCardItem = {}): LibraryCardBadge |
 
   if (!item.status && (item.runtime_pending || item.runtime_unavailable)) {
     return {
-      label: item.runtime_pending ? "读取状态…" : "状态待刷新",
+      label: item.runtime_pending ? t("k_a50fd86f") : t("k_e3687aa0"),
       icon: "clock",
       cls: "bg-muted text-muted-foreground",
     };
@@ -49,14 +50,14 @@ export function libraryCardBadge(item: LibraryCardItem = {}): LibraryCardBadge |
 
   if (isFailedStatus(status) || stageKey === "failed") {
     return {
-      label: "失败",
+      label: t("k_3e3c8068"),
       icon: "alert",
       cls: "bg-destructive/12 text-destructive",
     };
   }
   if (isCanceledStatus(status) || stageKey === "canceled") {
     return {
-      label: "已取消",
+      label: t("k_a5ffdc95"),
       icon: "clock",
       cls: "bg-muted text-muted-foreground",
     };
@@ -71,13 +72,13 @@ export function libraryCardBadge(item: LibraryCardItem = {}): LibraryCardBadge |
   if (status === "succeeded" || stageKey === "done") {
     if (isOcrOnlyItem(item)) {
       return {
-        label: "OCR 完成",
+        label: t("k_5f973658"),
         icon: "scan-text",
         cls: "bg-secondary text-secondary-foreground",
       };
     }
     return {
-      label: "已翻译",
+      label: t("k_6b1aa462"),
       icon: "languages",
       cls: "bg-primary text-primary-foreground",
     };
@@ -92,13 +93,13 @@ export function libraryCardBadge(item: LibraryCardItem = {}): LibraryCardBadge |
   if (stageKey === "done") {
     if (isOcrOnlyItem(item)) {
       return {
-        label: "OCR 完成",
+        label: t("k_5f973658"),
         icon: "scan-text",
         cls: "bg-secondary text-secondary-foreground",
       };
     }
     return {
-      label: "已翻译",
+      label: t("k_6b1aa462"),
       icon: "languages",
       cls: "bg-primary text-primary-foreground",
     };

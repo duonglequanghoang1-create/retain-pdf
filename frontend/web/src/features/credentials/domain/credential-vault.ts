@@ -8,6 +8,7 @@ import {
 } from "@/platform/config/providers.js";
 import { savePersistedBrowserStoredConfig } from "@/platform/config/persisted-config.js";
 import type { CredentialsStatePort } from "./state.js";
+import { t } from "@retainpdf/i18n";
 
 type RuntimeEnvPort = { isDesktopMode?: () => boolean };
 
@@ -117,7 +118,7 @@ export function createCredentialVault({
     const normalizedSecret = `${secret || ""}`.trim();
     const normalizedProvider = normalizeOcrProvider(provider);
     if (!createCredential || !updateCredential || !listCredentials) {
-      throw new Error("当前前端未接入安全凭据服务，请刷新后重试");
+      throw new Error(t("k_aeb66fab"));
     }
     if (credentialVaultRevision === undefined) {
       await refreshCredentialReferences({ persist: false });
@@ -125,7 +126,7 @@ export function createCredentialVault({
     const existingCredential = ocrCredentials[normalizedProvider];
     const existingRef = `${existingCredential?.credential_ref || ""}`.trim();
     if (!normalizedSecret) {
-      if (!existingRef) throw new Error(`未找到 ${getOcrProviderDefinition(normalizedProvider).label} 凭据，请重新填写 Token`);
+      if (!existingRef) throw new Error(t("k_7eb118cf", [getOcrProviderDefinition(normalizedProvider).label]));
       return existingRef;
     }
     ++referenceRequest;
@@ -163,7 +164,7 @@ export function createCredentialVault({
     let existingRef = `${readCurrentCredentials()?.translationCredentialRef || ""}`.trim();
     if (!normalizedSecret) return existingRef;
     if (!createCredential || !updateCredential || !listCredentials) {
-      throw new Error("当前前端未接入安全凭据服务，请刷新后重试");
+      throw new Error(t("k_aeb66fab"));
     }
     if (credentialVaultRevision === undefined) {
       await refreshCredentialReferences({ persist: false });
@@ -172,7 +173,7 @@ export function createCredentialVault({
     const payload = {
       kind: "translation_api_key",
       provider: translationProvider(baseUrl),
-      label: "翻译 API",
+      label: t("k_9656be5f"),
       secret: normalizedSecret,
       ...(credentialVaultRevision === undefined
         ? {}

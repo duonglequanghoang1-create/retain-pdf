@@ -1,6 +1,7 @@
 // frontend/packages/api/src/fonts.ts — font discovery + upload (GET /api/v1/fonts)
 import { API_PREFIX, buildApiHeaders, buildApiUrl, unwrapEnvelope } from "./internal/runtime.js";
 import { buildApiEndpoint } from "./http.js";
+import { t } from "@retainpdf/i18n";
 
 export type FontInfo = {
   family: string;
@@ -11,7 +12,7 @@ export type FontInfo = {
 export async function listFonts(apiPrefix: string = API_PREFIX): Promise<FontInfo[]> {
   const endpoint = buildApiEndpoint(apiPrefix, "fonts");
   const resp = await fetch(endpoint, { headers: buildApiHeaders() });
-  if (!resp.ok) throw new Error(`读取字体列表失败，请稍后重试。(${resp.status})`);
+  if (!resp.ok) throw new Error(t("k_1190bd52", [resp.status]));
   const data = unwrapEnvelope<any>(await resp.json());
   if (Array.isArray(data)) return data as FontInfo[];
   if (data && Array.isArray((data as any).fonts)) return (data as any).fonts as FontInfo[];
@@ -39,7 +40,7 @@ export async function uploadFont(apiPrefix: string = API_PREFIX, file: File | Bl
       const parsed = JSON.parse(text);
       message = (parsed as any)?.message || text;
     } catch {}
-    throw new Error(`上传字体失败: ${resp.status} ${message}`);
+    throw new Error(t("k_3d8fdd2f", [resp.status, message]));
   }
   const json = await resp.json();
   return unwrapEnvelope<FontInfo>(json);

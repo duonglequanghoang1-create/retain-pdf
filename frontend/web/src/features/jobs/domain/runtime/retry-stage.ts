@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 /**
  * 阶段重试：解析当前任务快照里的书目元数据，调用重试接口，
  * 成功后以 seedPayload 静默重启轮询（详情 Tab 内重试），否则回拉一次当前任务。
@@ -57,7 +59,7 @@ export function createRetryStage({
       || ""
     }`.trim();
     if (!jobId || !normalizedStage) {
-      setText("error-box", "当前没有可重新执行的阶段");
+      setText("error-box", t("k_d6b20c9a"));
       return;
     }
     try {

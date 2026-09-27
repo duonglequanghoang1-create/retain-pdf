@@ -1,5 +1,6 @@
 // HomeAskComposer 的输入 / @ 选择器 / 范围状态与交互逻辑（纯逻辑，不含渲染）
 
+import { t } from "@retainpdf/i18n";
 import {
   useCallback,
   useEffect,
@@ -219,13 +220,13 @@ export function useHomeAskComposer({
   const scopeHint = (() => {
     // 缺凭据的提示归横幅管——横幅就在上面几十像素处，而且带「打开设置」按钮。
     // 这里再说一遍等于同一句话在同一屏出现两次，还是不带动作的那一遍。
-    if (!scopes.length) return "全库 · @ 文章或合集";
+    if (!scopes.length) return t("k_b2504dfb");
     const cols = scopes.filter((s) => s.kind === "collection").length;
     const docs = scopes.filter((s) => s.kind === "document").length;
     const parts: string[] = [];
-    if (cols) parts.push(`${cols} 合集`);
-    if (docs) parts.push(`${docs} 篇`);
-    return parts.join(" · ") || "已限定";
+    if (cols) parts.push(t("k_4c429976", [cols]));
+    if (docs) parts.push(t("k_a4014ba3", [docs]));
+    return parts.join(" · ") || t("k_b22562bc");
   })();
 
   return {

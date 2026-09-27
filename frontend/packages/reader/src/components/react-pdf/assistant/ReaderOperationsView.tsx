@@ -11,10 +11,11 @@ import {
   LockedComposer,
   ThreadMessageList,
 } from "./reader-assistant-primitives.js";
+import { t } from "@retainpdf/i18n";
 
 const OPERATION_SUGGESTIONS = [
-  { prompt: "把第 1 页旋转 90 度。", label: "旋转页面", icon: FileText },
-  { prompt: "删除最后一页。", label: "删除页面", icon: FileText },
+  { prompt: t("k_704807bb"), label: t("k_2670123f"), icon: FileText },
+  { prompt: t("k_980317b7"), label: t("k_661cc5df"), icon: FileText },
 ] as const;
 
 export type ReaderOperationsViewProps = {
@@ -62,7 +63,7 @@ export function ReaderOperationsView({
           </div>
           <h2 className="aui-empty-title">想怎样处理 PDF？</h2>
           <p className="aui-empty-sub">创建候选版本后由你预览和确认</p>
-          <div className="aui-suggestions" role="group" aria-label="推荐问题">
+          <div className="aui-suggestions" role="group" aria-label={t("k_402274e3")}>
             {OPERATION_SUGGESTIONS.map((item) => {
               const Icon = item.icon;
               return (
@@ -98,7 +99,7 @@ export function ReaderOperationsView({
         {!empty && !branchBusy ? (
           <ThreadPrimitive.ScrollToBottom
             className="aui-scroll-bottom-btn aui-scroll-bottom"
-            aria-label="滚到最新"
+            aria-label={t("k_f2936d26")}
           >
             <ArrowDown size={16} strokeWidth={2.25} aria-hidden />
           </ThreadPrimitive.ScrollToBottom>

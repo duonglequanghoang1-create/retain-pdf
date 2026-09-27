@@ -9,6 +9,7 @@ import {
 } from "../documents/document-card-item.js";
 import { isOcrOnlyItem } from "../card/library-card-semantics.js";
 import { isRetryableTerminalStatus } from "@/platform/contracts/job-status.js";
+import { t } from "@retainpdf/i18n";
 
 export const BOOK_CARD_ACTION_TRANSLATE = "translate";
 
@@ -38,7 +39,7 @@ export function buildTranslateBookCardAction(
 
   return [{
     id: BOOK_CARD_ACTION_TRANSLATE,
-    label: "翻译",
+    label: t("k_23141370"),
     icon: "languages",
     className: "book-card-action book-card-action-translate",
     onClick: (_event, current) => {

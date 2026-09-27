@@ -14,6 +14,7 @@ import type {
   FailureRecoveryStage,
   UnknownRecord,
 } from "./failure-recovery-stages.js";
+import { t } from "@retainpdf/i18n";
 
 export type { FailureRecoveryAction, FailureRecoveryStage };
 
@@ -198,19 +199,19 @@ export function buildFailureRecoveryModel({
   }
 
   const attemptText = attempt !== null && maxAttempts !== null
-    ? `（第 ${attempt}/${maxAttempts} 次）`
+    ? t("k_189d9699", [attempt, maxAttempts])
     : "";
   // 队列繁忙的文案带重试次数，是 hint 给不出来的信息，所以这一支不让位给 hint；
   // 其余情况一律优先用后端的 recovery_hint——前端不再自己编分类文案。
   const statusText = isQueueFull
     ? retryTiming.retryAtMs !== null
-      ? `OCR 服务队列繁忙，等待自动重试${attemptText}`
-      : `OCR 服务队列繁忙，等待服务自动重试；也可立即重试${attemptText}`
+      ? t("k_a51499ac", [attemptText])
+      : t("k_9dd1e358", [attemptText])
     : isAmbiguous
-      ? recoveryHint || "OCR 请求结果不明确，需要先确认重复执行风险。"
+      ? recoveryHint || t("k_112f6670")
       : recoveryHint || (stages.length
-        ? "后端提供了以下恢复方式，请选择一个继续。"
-        : "当前没有可识别的专门恢复状态。");
+        ? t("k_8f42c264")
+        : t("k_a0cb1bd6"));
   const preservationText = preservationTextOf(checkpointArtifacts);
 
   return {
@@ -240,7 +241,7 @@ export function retryCountdownSeconds(model: FailureRecoveryModel, nowMs = Date.
 }
 
 export function queueFullTitle(model: FailureRecoveryModel): string {
-  return model.provider === "paddle" ? "Paddle OCR 队列繁忙" : "OCR 服务队列繁忙";
+  return model.provider === "paddle" ? t("k_d03fbc2c") : t("k_b9d0772f");
 }
 
 export function createFailureRecoveryController({
@@ -268,12 +269,12 @@ export function createFailureRecoveryController({
     const token = normalizedToken(stage);
     const action = actionOf(model, token);
     if (!action || !action.available || !action.enabled) {
-      throw new Error(action?.reason || "后端当前未开放安全的重试操作。");
+      throw new Error(action?.reason || t("k_9a29c390"));
     }
     if (action.requiresDuplicateRisk && !options.acceptDuplicateRisk) {
-      throw new Error("该请求可能重复执行，请使用重复风险确认流程。");
+      throw new Error(t("k_fa0bc472"));
     }
-    if (!retryStage) throw new Error("阶段重试服务不可用。");
+    if (!retryStage) throw new Error(t("k_979760ca"));
     const body = { ...recordOf(action.body) };
     if (action.requiresDuplicateRisk && options.acceptDuplicateRisk) {
       body.ambiguous_request_policy = "accept_duplicate_risk";
@@ -290,8 +291,8 @@ export function createFailureRecoveryController({
   }
 
   async function copyTraceId(model: FailureRecoveryModel) {
-    if (!model.traceId) throw new Error("后端未返回 Trace ID。");
-    if (!copyTrace) throw new Error("当前浏览器不支持复制 Trace ID。");
+    if (!model.traceId) throw new Error(t("k_3744ec9a"));
+    if (!copyTrace) throw new Error(t("k_10d5d0b4"));
     await copyTrace(model.traceId);
     return model.traceId;
   }

@@ -3,6 +3,7 @@ import type {
   AgentOperationAction,
   AgentOperationStatus,
 } from "../../domain/operations/types.js";
+import { t } from "@retainpdf/i18n";
 
 export type AgentOperationActionItem = {
   action: AgentOperationAction;
@@ -19,30 +20,30 @@ export function actionsForStatus(
     case "draft":
     case "awaiting_confirmation":
       return [
-        { action: "cancel", label: "拒绝" },
+        { action: "cancel", label: t("k_03e210a6") },
         {
           action: "run",
-          label: confirmationMode === "green_light" ? "立即执行" : "确认执行",
+          label: confirmationMode === "green_light" ? t("k_9a42843d") : t("k_ae1109f3"),
           tone: "primary",
         },
       ];
     case "queued":
     case "running":
     case "validating":
-      return [{ action: "cancel", label: "取消操作", tone: "danger" }];
+      return [{ action: "cancel", label: t("k_b5b37c24"), tone: "danger" }];
     case "result_ready":
       return [
-        { action: "cancel", label: "拒绝候选" },
+        { action: "cancel", label: t("k_12a73a13") },
         {
           action: "commit",
-          label: confirmationMode === "green_light" ? "立即应用" : "接受并应用",
+          label: confirmationMode === "green_light" ? t("k_d4c9d863") : t("k_9bfb5d92"),
           tone: "primary",
         },
       ];
     case "failed":
-      return [{ action: "retry", label: "重试", tone: "primary" }];
+      return [{ action: "retry", label: t("k_e2d53a6d"), tone: "primary" }];
     case "ambiguous":
-      return [{ action: "retry", label: "确认风险并重试", tone: "danger", needsRiskConfirmation: true }];
+      return [{ action: "retry", label: t("k_cb916333"), tone: "danger", needsRiskConfirmation: true }];
     default:
       return [];
   }
@@ -71,7 +72,7 @@ export function AgentOperationActions({
           disabled={Boolean(pending)}
           onClick={() => onAction(item)}
         >
-          {pending === item.action ? "处理中…" : item.label}
+          {pending === item.action ? t("k_1cac8ac7") : item.label}
         </button>
       ))}
     </div>

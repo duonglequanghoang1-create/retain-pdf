@@ -16,6 +16,7 @@ import {
   copyText,
 } from "@/platform/utils/clipboard.js";
 import { STATUS_DETAIL_DIALOG_IDS } from "../domain/status-detail-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 type FailureLogDialogProps = {
   open: boolean;
@@ -39,7 +40,7 @@ export function FailureLogDialog({
 
   async function handleCopy() {
     try {
-      await copyText(logText || "暂无可复制的错误日志。");
+      await copyText(logText || t("k_aa261a2a"));
       setCopyState("copied");
     } catch {
       setCopyState("failed");
@@ -63,23 +64,23 @@ export function FailureLogDialog({
               </span>
               <div>
                 <DialogTitle>错误日志</DialogTitle>
-                <DialogDescription>{jobId && jobId !== "-" ? `任务 ${jobId}` : "当前任务"}</DialogDescription>
+                <DialogDescription>{jobId && jobId !== "-" ? t("k_2d29c0fa", [jobId]) : t("k_e94d4252")}</DialogDescription>
               </div>
             </div>
             <DialogCloseButton />
           </DialogHeader>
           <DialogBody className="status-detail-log-body">
             <pre id={ids.logContent} className="status-detail-log-content" tabIndex={0}>
-              {logText || "暂无可复制的错误日志。"}
+              {logText || t("k_aa261a2a")}
             </pre>
           </DialogBody>
           <DialogFooter className="status-detail-log-footer">
             <span id={ids.copyLogStatus} className="status-panel-note" role="status">
-              {copyState === "copied" ? "已复制，可直接粘贴给开发人员。" : copyState === "failed" ? "复制失败，请手动选择日志。" : "日志已自动隐藏可能的密钥。"}
+              {copyState === "copied" ? t("k_c1416059") : copyState === "failed" ? t("k_114fa461") : t("k_cae0853a")}
             </span>
             <Button id={ids.copyLogButton} type="button" onClick={handleCopy}>
               {copyState === "copied" ? <ClipboardCheck /> : <Copy />}
-              {copyState === "copied" ? "已复制" : "复制日志"}
+              {copyState === "copied" ? t("k_e381a576") : t("k_c4a79c3a")}
             </Button>
           </DialogFooter>
         </DialogShell>

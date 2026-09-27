@@ -14,6 +14,7 @@ import {
   useHomeAskComposerOutsideClose,
 } from "./use-home-ask-composer-effects.js";
 import type { HomeAskScope } from "../domain/types.js";
+import { t } from "@retainpdf/i18n";
 
 export type HomeAskComposerProps = {
   disabled?: boolean;
@@ -35,7 +36,7 @@ export function HomeAskComposer({
   disabled = false,
   isRunning = false,
   credentialBlocked = false,
-  credentialMessage = "请先完成 AI Agent 配置",
+  credentialMessage = t("k_22bd8200"),
   scopes,
   onScopesChange,
   onSend,

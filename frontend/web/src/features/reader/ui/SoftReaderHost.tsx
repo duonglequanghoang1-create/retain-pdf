@@ -9,6 +9,7 @@ import {
   closeSoftReaderOnHost,
   isSoftReaderHistoryState,
 } from "@/platform/navigation/soft-reader.js";
+import { t } from "@retainpdf/i18n";
 
 export function SoftReaderHost() {
   const [frame, setFrame] = useState<{ url: string; nonce: number } | null>(null);
@@ -80,14 +81,14 @@ export function SoftReaderHost() {
       className="soft-reader-host"
       role="dialog"
       aria-modal="true"
-      aria-label="阅读器"
+      aria-label={t("k_1d3e8e0a")}
       data-soft-reader-url={frame.url}
     >
       <iframe
         id="soft-reader-frame"
         key={`${frame.nonce}:${frame.url}`}
         className="soft-reader-frame"
-        title="阅读器"
+        title={t("k_1d3e8e0a")}
         src={frame.url}
         // 允许同源脚本；阅读器在 iframe 内跑自己的 bundle
       />

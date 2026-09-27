@@ -17,6 +17,7 @@ import type { StatusCardFallbackItem } from "../domain/merge-snapshot-with-fallb
 import type {
   StatusCardSnapshot,
 } from "../domain/status-card-store.js";
+import { t } from "@retainpdf/i18n";
 
 function resolvePercent(
   renderOptions: ProgressRenderModelInput | null | undefined,
@@ -46,14 +47,14 @@ function isRedundantDoneDetail(detail: string, value: string, title: string) {
   if (!d) return true;
   const compact = d.replace(/\s+/g, "");
   const redundant = new Set([
-    "渲染完成",
-    "任务完成",
-    "处理完成",
-    "已完成",
-    "完成",
-    "翻译PDF已生成",
-    "可以对照阅读",
-    "处理完成，可以对照阅读",
+    t("k_5b1f964f"),
+    t("k_765b7fbf"),
+    t("k_9e593295"),
+    t("k_e99b48a2"),
+    t("k_33246f6a"),
+    t("k_bb325d1e"),
+    t("k_6fff01db"),
+    t("k_6014880b"),
   ]);
   if (redundant.has(compact)) return true;
   if (compact === `${value || ""}`.trim().replace(/\s+/g, "")) return true;
@@ -105,7 +106,7 @@ export function StatusCardEmbedded({
   const status = `${snapshot?.status || ""}`.trim().toLowerCase();
   const percent = resolvePercent(renderOptions, snapshot);
   const valueText = `${snapshot?.value || ""}`.trim()
-    || (status === "succeeded" ? "翻译 PDF 已生成" : "准备中");
+    || (status === "succeeded" ? t("k_aefbc670") : t("k_4f1f8aa3"));
   const rawDetail = `${display?.detailText || snapshot?.detail || ""}`.trim();
   const failed = status === "failed";
   const succeeded = status === "succeeded";
@@ -153,7 +154,7 @@ export function StatusCardEmbedded({
               id={ids.cancelButton}
               type="button"
               className="bd-job-status-btn bd-job-status-btn-cancel"
-              aria-label="取消任务"
+              aria-label={t("k_d258a63c")}
               title={cancel.title}
               disabled={!cancelEnabled || cancelDisabled}
               onClick={() => cancelCurrentJob?.()}
@@ -175,7 +176,7 @@ export function StatusCardEmbedded({
               id={ids.detailButton}
               type="button"
               className="bd-job-status-btn bd-job-status-btn-primary"
-              aria-label="任务详情"
+              aria-label={t("k_b19fb2fe")}
               onClick={openDetail}
             >
               详情

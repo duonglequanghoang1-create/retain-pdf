@@ -8,6 +8,7 @@ import { getOcrProviderDefinition, normalizeOcrProvider } from "@/platform/confi
 import { syncCredentialDialogFields } from "./dialog-sync.js";
 import { ocrTokenFromCredentials } from "./state-selectors.js";
 import type { UpdateCredentialGateViewOptions } from "./view-contracts.js";
+import { t } from "@retainpdf/i18n";
 
 
 type UpdateCredentialGateOptions = {
@@ -111,7 +112,7 @@ export function createCredentialDialogFlow({
     const credentials = access.readCurrentCredentials();
     const definition = getOcrProviderDefinition(credentials.ocrProvider);
     viewPort.setOcrValidationMessage(
-      ocrTokenFromCredentials(credentials) ? `${definition.label} Token 已保存在本机` : "",
+      ocrTokenFromCredentials(credentials) ? t("k_4a6b7200", [definition.label]) : "",
       ocrTokenFromCredentials(credentials) ? "valid" : "",
       definition.id,
     );
@@ -138,7 +139,7 @@ export function createCredentialDialogFlow({
     syncOcrCredentialFeedback();
     viewPort.setDeepSeekValidationMessage("", "");
     if (profile.apiKey) {
-      viewPort.setDeepSeekValidationMessage("翻译 API Key 已保存在本机", "valid");
+      viewPort.setDeepSeekValidationMessage(t("k_e1e9f2de"), "valid");
     }
     viewPort.setDeepSeekTopUpVisible(false);
     balanceState.resetDeepSeekBalance();

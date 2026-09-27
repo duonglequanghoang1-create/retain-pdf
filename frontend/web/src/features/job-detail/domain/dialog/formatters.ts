@@ -1,4 +1,5 @@
 import { escapeHtml } from "@/platform/utils/html-formatting.js";
+import { t } from "@retainpdf/i18n";
 
 export { escapeHtml };
 
@@ -110,15 +111,15 @@ export function errorTypesOf(value) {
 export function finalStatusLabel(value) {
   switch (`${value || ""}`.trim()) {
     case "translated":
-      return "已翻译";
+      return t("k_6b1aa462");
     case "partially_translated":
-      return "部分翻译";
+      return t("k_89351c86");
     case "kept_origin":
-      return "保留原文";
+      return t("k_a80b7cd4");
     case "failed":
-      return "失败";
+      return t("k_3e3c8068");
     case "skipped":
-      return "已跳过";
+      return t("k_9f38afd4");
     default:
       return `${value || "-"}`;
   }
@@ -143,9 +144,9 @@ export function finalStatusClass(value) {
 
 export function summarizeTranslationFilter(query: any = {}) {
   const finalStatus = `${query.finalStatus || ""}`.trim();
-  const statusText = finalStatus ? finalStatusLabel(finalStatus) : "全部";
+  const statusText = finalStatus ? finalStatusLabel(finalStatus) : t("k_778fc8f9");
   const search = `${query.q || ""}`.trim();
-  return `状态 ${statusText}，检索 ${search || "无"}`;
+  return `状态 ${statusText}，检索 ${search || t("k_72077749")}`;
 }
 
 export function renderField(label, value) {

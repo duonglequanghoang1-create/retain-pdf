@@ -6,6 +6,7 @@ import {
   inclusivePageNumbers,
   reusableOcrJobId,
 } from "@/features/library/domain.js";
+import { t } from "@retainpdf/i18n";
 
 /**
  * @param {object} options
@@ -91,7 +92,7 @@ export function useBookDetailTranslate({
         }
         onTranslateStarted?.();
       },
-      "发起翻译失败",
+      t("k_8acdd06f"),
     );
   }
 

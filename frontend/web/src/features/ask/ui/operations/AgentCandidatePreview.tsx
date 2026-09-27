@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink, FileText } from "lucide-react";
 import type { AgentOperationView } from "../../domain/operations/types.js";
+import { t } from "@retainpdf/i18n";
 
 export function AgentCandidatePreview({
   operation,
@@ -26,7 +27,7 @@ export function AgentCandidatePreview({
         setObjectUrl(nextUrl);
       })
       .catch(() => {
-        if (!cancelled) setError("候选 PDF 加载失败，请重试。");
+        if (!cancelled) setError(t("k_729d4268"));
       });
     return () => {
       cancelled = true;
@@ -43,7 +44,7 @@ export function AgentCandidatePreview({
         <span><FileText size={14} aria-hidden />候选 PDF</span>
         <div>
           <button type="button" disabled={!objectUrl} onClick={() => setExpanded((value) => !value)}>
-            {!objectUrl ? "加载中…" : expanded ? "收起预览" : "预览"}
+            {!objectUrl ? t("k_300ee3de") : expanded ? t("k_f629e49d") : t("k_de61aa8e")}
           </button>
           <button
             type="button"
@@ -56,7 +57,7 @@ export function AgentCandidatePreview({
       </div>
       {error ? <p className="home-ask-operation-error" role="alert">{error}</p> : null}
       {expanded ? (
-        <iframe className="home-ask-operation-candidate-frame" src={objectUrl} title="Agent 候选 PDF 预览" />
+        <iframe className="home-ask-operation-candidate-frame" src={objectUrl} title={t("k_37dd8b94")} />
       ) : null}
     </div>
   );

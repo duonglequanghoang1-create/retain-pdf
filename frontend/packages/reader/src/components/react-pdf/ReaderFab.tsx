@@ -21,6 +21,7 @@ import {
   ReaderFabMenuHeader,
   ReaderFabToolRow,
 } from "./ReaderFabMenu.js";
+import { t } from "@retainpdf/i18n";
 
 /** FAB 菜单里的工具 id：除注册表工具外，批注由 FAB 直接开合本地面板。 */
 export type ReaderFabToolId = ReaderToolId | "notes";
@@ -78,7 +79,7 @@ export function ReaderFab(props: ReaderFabProps): ReactElement {
           id={menuId}
           className="reader-fab-menu reader-floating-surface"
           role="menu"
-          aria-label="阅读工具"
+          aria-label={t("k_b0dfdeac")}
         >
           <ReaderFabMenuHeader onClose={closeMenu} />
 
@@ -99,7 +100,7 @@ export function ReaderFab(props: ReaderFabProps): ReactElement {
                 <span className="reader-fab-row-copy">
                   <span className="reader-fab-row-title">批注</span>
                   <span className="reader-fab-row-sub">
-                    {notesActive ? "关闭悬浮窗" : "本地批注 · 导出"}
+                    {notesActive ? t("k_803658e0") : t("k_e1428aac")}
                   </span>
                 </span>
                 {noteCount > 0 ? (
@@ -115,7 +116,7 @@ export function ReaderFab(props: ReaderFabProps): ReactElement {
             const disabled = tool.needsJob && sourceOnly;
             let sub = isActive ? tool.subOpen : tool.subIdle;
             if (disabled) {
-              sub = "需打开任务阅读";
+              sub = t("k_6a2341b2");
             }
             return (
               <ReaderFabToolRow
@@ -143,7 +144,7 @@ export function ReaderFab(props: ReaderFabProps): ReactElement {
       <button
         type="button"
         className={`reader-fab-trigger${open ? " is-open" : ""}${activeTool ? " has-active-tool" : ""}`}
-        aria-label={open ? "收起工具菜单" : "打开工具菜单"}
+        aria-label={open ? t("k_d7752e4c") : t("k_f1184183")}
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
         aria-haspopup="menu"

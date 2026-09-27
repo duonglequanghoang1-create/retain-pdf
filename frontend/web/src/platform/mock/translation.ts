@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 const ROUTES = {
   direct: "translate/direct_typst/deepseek",
   fallback: "translate/direct_typst/deepseek→placeholder",
@@ -45,19 +47,19 @@ const MOCK_TRANSLATION_ITEMS = [
     index: 1, page: 1, blockType: "paragraph", label: "body",
     finalStatus: "translated",
     source: "Transformer architectures rely entirely on attention mechanisms to draw global dependencies between input and output.",
-    translated: "Transformer 架构完全依赖注意力机制来建立输入与输出之间的全局依赖关系。",
+    translated: t("k_52399233"),
   }),
   buildItem({
     index: 2, page: 1, blockType: "heading", label: "title",
     finalStatus: "translated",
     source: "2. Background and Related Work",
-    translated: "2. 背景与相关工作",
+    translated: t("k_f673e8f9"),
   }),
   buildItem({
     index: 3, page: 2, blockType: "paragraph", label: "body",
     finalStatus: "translated",
     source: "We evaluate our method on three benchmark datasets and observe consistent improvements over strong baselines.",
-    translated: "我们在三个基准数据集上评估了该方法，并观察到相对强基线的一致提升。",
+    translated: t("k_d65c1bbb"),
   }),
   buildItem({
     index: 4, page: 2, blockType: "formula", label: "display_math",
@@ -70,7 +72,7 @@ const MOCK_TRANSLATION_ITEMS = [
     index: 5, page: 3, blockType: "paragraph", label: "body",
     finalStatus: "translated",
     source: "Ablation studies show that positional encodings contribute significantly to final accuracy.",
-    translated: "消融实验表明位置编码对最终精度有显著贡献。",
+    translated: t("k_e266b6b6"),
     fallbackTo: "placeholder",
     errorTypes: ["schema_mismatch"],
     degradationReason: "retry_with_placeholder",
@@ -85,7 +87,7 @@ const MOCK_TRANSLATION_ITEMS = [
     index: 9, page: 4, blockType: "paragraph", label: "body",
     finalStatus: "partially_translated",
     source: "The proposed method achieves state-of-the-art results while remaining computationally efficient (see Appendix C for proofs).",
-    translated: "所提方法在保持计算高效的同时达到了 state-of-the-art 结果(证明见 Appendix C)。",
+    translated: t("k_35e9ed73"),
     degradationReason: "terminology_partially_preserved",
   }),
   buildItem({
@@ -105,7 +107,7 @@ const MOCK_TRANSLATION_ITEMS = [
     index: 8, page: 4, blockType: "paragraph", label: "body",
     finalStatus: "translated",
     source: "Finally, we discuss limitations and outline directions for future research.",
-    translated: "最后，我们讨论了局限性并展望了后续研究方向。",
+    translated: t("k_2890e290"),
   }),
 ];
 
@@ -166,7 +168,7 @@ export function getMockTranslationItems(jobId, {
 export function getMockTranslationItem(jobId, itemId) {
   const item = MOCK_TRANSLATION_ITEMS.find((entry) => entry.item_id === itemId);
   if (!item) {
-    throw new Error("未找到该翻译 item，请确认 item_id 是否正确。");
+    throw new Error(t("k_a7086aaf"));
   }
   return {
     job_id: jobId,

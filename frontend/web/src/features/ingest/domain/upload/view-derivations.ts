@@ -4,6 +4,7 @@
 // 逻辑独立出来，便于直接单测。
 
 import type { UploadFileLabelSource } from "./view-state.js";
+import { t } from "@retainpdf/i18n";
 
 /** 上传进度：有合法 loaded/total 算出百分比文案，否则给不确定态 18%。 */
 export function resolveUploadProgress(
@@ -16,7 +17,7 @@ export function resolveUploadProgress(
     : 18;
   return {
     percent,
-    text: hasNumbers ? `上传中 ${percent.toFixed(0)}%` : "上传中",
+    text: hasNumbers ? t("k_4c2c2f3b", [percent.toFixed(0)]) : t("k_6818eb17"),
   };
 }
 

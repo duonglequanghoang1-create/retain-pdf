@@ -10,7 +10,7 @@ declare function stageFlowForKey(stageKey: any): {
 };
 declare function normalizedStageText(payload: any): string;
 declare function detailForPayload(payload: any, fallback: any): any;
-declare function successDetailForWorkflow(payload: any): "OCR/文档解析已完成" | "翻译 PDF 已生成";
+declare function successDetailForWorkflow(payload: any): string;
 declare function userStageFor(payload: any): {
     key: string;
     label: string;

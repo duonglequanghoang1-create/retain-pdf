@@ -9,6 +9,7 @@ import {
   trimReaderDownloadString,
 } from "../../external.js";
 import type { FabDownloadAction, FabDownloadUrls } from "./use-reader-fab-downloads.js";
+import { t } from "@retainpdf/i18n";
 
 type FabIcon = typeof FileText;
 
@@ -19,9 +20,9 @@ const DOWNLOAD_ICONS: Record<FabDownloadAction, FabIcon> = {
 };
 
 const DOWNLOAD_SHORT: Record<FabDownloadAction, string> = {
-  source: "原文",
-  sideBySide: "对照",
-  translated: "译文",
+  source: t("k_4d69dbdf"),
+  sideBySide: t("k_d36792e9"),
+  translated: t("k_647e0016"),
 };
 
 export type ReaderFabMenuHeaderProps = {
@@ -38,7 +39,7 @@ export function ReaderFabMenuHeader({ onClose }: ReaderFabMenuHeaderProps): Reac
       <button
         type="button"
         className="reader-fab-menu-close reader-floating-close"
-        aria-label="关闭菜单"
+        aria-label={t("k_82baef56")}
         onClick={onClose}
       >
         <X size={14} strokeWidth={2.5} aria-hidden />
@@ -101,7 +102,7 @@ export function ReaderFabDownloadSection({
   onDownload,
 }: ReaderFabDownloadSectionProps): ReactElement {
   return (
-    <div className="reader-fab-section" role="group" aria-label="下载">
+    <div className="reader-fab-section" role="group" aria-label={t("k_2b9d0131")}>
       <div className="reader-fab-section-head">
         <Download size={12} strokeWidth={2.5} aria-hidden />
         <span>下载 PDF</span>
@@ -122,7 +123,7 @@ export function ReaderFabDownloadSection({
               id={`reader-fab-download-${action}`}
               className={`reader-fab-chip${busy ? " is-busy" : ""}${enabled ? "" : " is-disabled"}`}
               disabled={!enabled}
-              title={enabled ? `下载${meta.label}` : reason}
+              title={enabled ? t("k_a7f76548", [meta.label]) : reason}
               onClick={() => void onDownload(action)}
               style={{ ["--fab-i" as string]: index }}
             >

@@ -1,5 +1,6 @@
 import type { AgentRuntimeConfigView } from "@/platform/api/index.js";
 import { Check, ShieldCheck, Zap } from "lucide-react";
+import { t } from "@retainpdf/i18n";
 
 export interface AgentRuntimeConfirmationFieldProps {
   confirmationMode: AgentRuntimeConfigView["agent_confirmation_mode"];
@@ -20,7 +21,7 @@ export function AgentRuntimeConfirmationField({
         操作确认
         <span>全局设置</span>
       </legend>
-      <div className="credential-agent-confirmation-options" role="radiogroup" aria-label="Agent 操作确认方式">
+      <div className="credential-agent-confirmation-options" role="radiogroup" aria-label={t("k_fe616668")}>
         <button
           type="button"
           role="radio"

@@ -16,6 +16,7 @@ import type {
   AgentOperationView,
   AgentConfirmationMode,
 } from "../domain/operations/types.js";
+import { t } from "@retainpdf/i18n";
 
 export const HOME_ASK_SUGGESTIONS: Array<{
   prompt: string;
@@ -23,23 +24,23 @@ export const HOME_ASK_SUGGESTIONS: Array<{
   icon: typeof BookOpen;
 }> = [
   {
-    prompt: "最近入库的文献里，有哪些值得优先阅读的主题？",
-    label: "浏览存档主题",
+    prompt: t("k_66c3c741"),
+    label: t("k_a8750b9f"),
     icon: BookOpen,
   },
   {
-    prompt: "帮我对比不同文献对同一问题的主要结论。",
-    label: "跨文献对比结论",
+    prompt: t("k_5c712acc"),
+    label: t("k_2ea1776e"),
     icon: ListTree,
   },
   {
-    prompt: "有哪些常用的方法或实验设计？",
-    label: "梳理方法模型",
+    prompt: t("k_bba1ec54"),
+    label: t("k_ab76b426"),
     icon: FlaskConical,
   },
   {
-    prompt: "用几句话总结图书馆里一篇核心论文。",
-    label: "快速总结一篇",
+    prompt: t("k_dfb6b62e"),
+    label: t("k_2ef68a06"),
     icon: Sparkles,
   },
 ];
@@ -169,7 +170,7 @@ export function HomeAskThread({
                           type="button"
                           className="home-ask-msg-action"
                           onClick={() => setEditingId(m.id)}
-                          title="改写这个问题"
+                          title={t("k_9236f323")}
                         >
                           <Pencil size={13} strokeWidth={2.2} aria-hidden />
                           <span>编辑</span>
@@ -233,8 +234,8 @@ export function HomeAskThread({
                     「复制」就在下面那条操作条上,所以指过去而不是另加一个按钮。 */}
                 <span>
                   {hasBody
-                    ? "已中断，回答只写了一半；它不会保存，刷新后就没了——要留就先复制"
-                    : "已中断，还没开始作答；这一轮不会保存"}
+                    ? t("k_fa432eb1")
+                    : t("k_3c4bb13f")}
                 </span>
               </div>
             ) : null}

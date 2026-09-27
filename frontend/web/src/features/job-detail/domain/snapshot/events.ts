@@ -1,5 +1,6 @@
 import { escapeHtml, formatEventTimestamp } from "./utils.js";
 import { normalizedStageEventRecord } from "@retainpdf/domain/job-status";
+import { t } from "@retainpdf/i18n";
 
 function eventBadgeTone(item) {
   if (item.level === "error" || item.event === "failure_classified" || item.event === "job_terminal") {
@@ -44,19 +45,14 @@ export function buildEventsPresentation(eventsPayload) {
         </div>
         <div class="event-title">${escapeHtml(title)}</div>
         ${record.progressText && record.progressText !== title ? `<div class="event-progress">${escapeHtml(record.progressText)}</div>` : ""}
-        ${payloadText ? `
-          <details class="event-payload-wrap">
-            <summary class="event-payload-toggle">查看数据</summary>
-            <pre class="event-payload">${escapeHtml(payloadText)}</pre>
-          </details>
-        ` : ""}
+        ${payloadText ? t("k_b7dcc15b", [escapeHtml(payloadText)]) : ""}
       </article>
     `;
   }).join("");
   return {
     markup,
     count: items.length,
-    emptyText: "暂无事件",
+    emptyText: t("k_fad64b34"),
     hasItems: items.length > 0,
   };
 }

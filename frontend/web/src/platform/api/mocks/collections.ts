@@ -6,6 +6,7 @@ import {
   patchMockCollection,
   removeMockCollectionDocument,
 } from "@/platform/mock/documents.js";
+import { t } from "@retainpdf/i18n";
 
 export async function listCollections(apiPrefix) {
   void apiPrefix;
@@ -21,7 +22,7 @@ export async function createCollection(apiPrefix, { name, parentId = "" }: any =
 export async function patchCollection(apiPrefix, collectionId, payload = {}) {
   const normalized = `${collectionId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 collection_id。");
+    throw new Error(t("k_de75b8f3"));
   }
   void apiPrefix;
   return patchMockCollection(normalized, payload);
@@ -30,7 +31,7 @@ export async function patchCollection(apiPrefix, collectionId, payload = {}) {
 export async function deleteCollection(apiPrefix, collectionId) {
   const normalized = `${collectionId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 collection_id。");
+    throw new Error(t("k_de75b8f3"));
   }
   void apiPrefix;
   return deleteMockCollection(normalized);
@@ -39,7 +40,7 @@ export async function deleteCollection(apiPrefix, collectionId) {
 export async function addDocumentsToCollection(apiPrefix, collectionId, documentIds = []) {
   const normalized = `${collectionId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 collection_id。");
+    throw new Error(t("k_de75b8f3"));
   }
   void apiPrefix;
   return addMockCollectionDocuments(normalized, documentIds);
@@ -49,7 +50,7 @@ export async function removeDocumentFromCollection(apiPrefix, collectionId, docu
   const normalizedCollectionId = `${collectionId || ""}`.trim();
   const normalizedDocumentId = `${documentId || ""}`.trim();
   if (!normalizedCollectionId || !normalizedDocumentId) {
-    throw new Error("缺少 collection_id 或 document_id。");
+    throw new Error(t("k_7ee1562b"));
   }
   void apiPrefix;
   return removeMockCollectionDocument(normalizedCollectionId, normalizedDocumentId);

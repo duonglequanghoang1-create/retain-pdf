@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { ConfirmDialog } from "@/ui/components/confirm-dialog.js";
 import type { HomeAskSession } from "./use-home-ask-runtime.js";
+import { t as tr } from "@retainpdf/i18n";
 
 function startOfDay(d: Date) {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
@@ -19,19 +20,19 @@ function startOfDay(d: Date) {
 
 function groupLabel(updatedAt: string, now = Date.now()): string {
   const t = Date.parse(updatedAt);
-  if (!Number.isFinite(t)) return "更早";
+  if (!Number.isFinite(t)) return tr("k_c371ec78");
   const day = startOfDay(new Date(t));
   const today = startOfDay(new Date(now));
   const diffDays = Math.round((today - day) / 86400000);
-  if (diffDays <= 0) return "今天";
-  if (diffDays === 1) return "昨天";
-  if (diffDays < 7) return "过去 7 天";
-  if (diffDays < 30) return "过去 30 天";
-  return "更早";
+  if (diffDays <= 0) return tr("k_17e83cc2");
+  if (diffDays === 1) return tr("k_59c4fcb0");
+  if (diffDays < 7) return tr("k_767768b5");
+  if (diffDays < 30) return tr("k_c9e8f0be");
+  return tr("k_c371ec78");
 }
 
 function groupSessions(sessions: HomeAskSession[]) {
-  const order = ["今天", "昨天", "过去 7 天", "过去 30 天", "更早"];
+  const order = [tr("k_17e83cc2"), tr("k_59c4fcb0"), tr("k_767768b5"), tr("k_c9e8f0be"), tr("k_c371ec78")];
   const map = new Map<string, HomeAskSession[]>();
   for (const s of sessions) {
     const label = groupLabel(s.updatedAt);
@@ -45,9 +46,9 @@ function groupSessions(sessions: HomeAskSession[]) {
 
 function displayTitle(raw: string): string {
   const m = `${raw || ""}`.match(/^fork-(\d+)-(.*)$/i);
-  if (!m) return raw || "未命名对话";
+  if (!m) return raw || tr("k_8200c3d5");
   const rest = m[2].trim();
-  return rest ? `${rest} · 分支${m[1]}` : `分支${m[1]}`;
+  return rest ? tr("k_07ad5074", [rest, m[1]]) : tr("k_bfe8bdfc", [m[1]]);
 }
 
 export type HomeAskSidebarProps = {
@@ -117,13 +118,13 @@ export function HomeAskSidebar({
     return (
       <aside
         className="home-ask-sidebar is-collapsed"
-        aria-label="对话历史（已折叠）"
+        aria-label={tr("k_49bb3c52")}
       >
         <button
           type="button"
           className="home-ask-sidebar-icon-btn"
-          title="展开历史"
-          aria-label="展开对话历史"
+          title={tr("k_c146ce85")}
+          aria-label={tr("k_6ae4a2a4")}
           aria-expanded={false}
           onClick={() => onCollapsedChange?.(false)}
         >
@@ -133,8 +134,8 @@ export function HomeAskSidebar({
           type="button"
           className="home-ask-sidebar-icon-btn"
           disabled={busy}
-          title="新对话"
-          aria-label="新对话"
+          title={tr("k_1b7abf96")}
+          aria-label={tr("k_1b7abf96")}
           onClick={onNew}
         >
           <MessageSquarePlus size={16} strokeWidth={2.1} aria-hidden />
@@ -144,15 +145,15 @@ export function HomeAskSidebar({
   }
 
   return (
-    <aside className="home-ask-sidebar" aria-label="对话历史">
+    <aside className="home-ask-sidebar" aria-label={tr("k_f8b27fa9")}>
       <div className="home-ask-sidebar-head">
         <div className="home-ask-sidebar-head-row">
           <span className="home-ask-sidebar-brand">历史</span>
           <button
             type="button"
             className="home-ask-sidebar-icon-btn home-ask-sidebar-collapse"
-            title="折叠侧栏"
-            aria-label="折叠对话历史"
+            title={tr("k_37b948c3")}
+            aria-label={tr("k_864f1cbc")}
             aria-expanded={true}
             onClick={() => onCollapsedChange?.(true)}
           >
@@ -163,7 +164,7 @@ export function HomeAskSidebar({
           type="button"
           className="home-ask-sidebar-new"
           disabled={busy}
-          title="新对话"
+          title={tr("k_1b7abf96")}
           onClick={onNew}
         >
           <MessageSquarePlus size={15} strokeWidth={2.1} aria-hidden />
@@ -195,7 +196,7 @@ export function HomeAskSidebar({
                             value={editTitle}
                             maxLength={80}
                             disabled={busy}
-                            aria-label="对话标题"
+                            aria-label={tr("k_b259c016")}
                             onChange={(e) => setEditTitle(e.target.value)}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
@@ -212,8 +213,8 @@ export function HomeAskSidebar({
                             type="button"
                             className="home-ask-sidebar-icon-btn"
                             disabled={busy || !editTitle.trim()}
-                            aria-label="保存标题"
-                            title="保存"
+                            aria-label={tr("k_fe0e9e6e")}
+                            title={tr("k_fadf24db")}
                             onClick={(e) => {
                               e.stopPropagation();
                               void commitRename();
@@ -225,8 +226,8 @@ export function HomeAskSidebar({
                             type="button"
                             className="home-ask-sidebar-icon-btn"
                             disabled={busy}
-                            aria-label="取消重命名"
-                            title="取消"
+                            aria-label={tr("k_89fdd63b")}
+                            title={tr("k_4d0b4688")}
                             onClick={(e) => {
                               e.stopPropagation();
                               cancelRename();
@@ -241,7 +242,7 @@ export function HomeAskSidebar({
                             type="button"
                             className={`home-ask-sidebar-item${active ? " is-active" : ""}`}
                             disabled={busy}
-                            title={`${title}（双击重命名）`}
+                            title={tr("k_995932e0", [title])}
                             onClick={() => onSelect(s.id)}
                             onDoubleClick={(e) => {
                               e.preventDefault();
@@ -255,8 +256,8 @@ export function HomeAskSidebar({
                             type="button"
                             className="home-ask-sidebar-rename"
                             disabled={busy}
-                            aria-label={`重命名 ${title}`}
-                            title="重命名"
+                            aria-label={tr("k_304cb6f9", [title])}
+                            title={tr("k_1cd80fd7")}
                             onClick={(e) => {
                               e.stopPropagation();
                               startRename(s);
@@ -268,8 +269,8 @@ export function HomeAskSidebar({
                             type="button"
                             className="home-ask-sidebar-del"
                             disabled={busy}
-                            aria-label={`删除 ${title}`}
-                            title="删除"
+                            aria-label={tr("k_65154fc0", [title])}
+                            title={tr("k_3755f56f")}
                             onClick={(e) => {
                               e.stopPropagation();
                               setPendingDelete(s);
@@ -289,9 +290,9 @@ export function HomeAskSidebar({
       </div>
       <ConfirmDialog
         id="home-ask-delete-confirm"
-        title="删除对话"
-        description={pendingDelete ? `确定删除对话「${displayTitle(pendingDelete.title)}」吗？删除后无法恢复。` : "确定删除该对话吗？"}
-        confirmLabel="删除"
+        title={tr("k_3559dc2d")}
+        description={pendingDelete ? tr("k_31be3a6b", [displayTitle(pendingDelete.title)]) : tr("k_28ea67dc")}
+        confirmLabel={tr("k_3755f56f")}
         tone="danger"
         open={Boolean(pendingDelete)}
         onOpenChange={(open) => { if (!open) setPendingDelete(null); }}

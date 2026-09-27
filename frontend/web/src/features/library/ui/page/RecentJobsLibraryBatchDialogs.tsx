@@ -1,4 +1,5 @@
 import { ConfirmDialog } from "@/ui/components/confirm-dialog.js";
+import { t } from "@retainpdf/i18n";
 
 // 批量删除的两步确认弹窗(从 RecentJobsLibrary 抽出,保持同一 id/文案/回调)。
 export function RecentJobsLibraryBatchDialogs({
@@ -19,9 +20,9 @@ export function RecentJobsLibraryBatchDialogs({
         onOpenChange={(nextOpen) => {
           if (!nextOpen) onCancelDelete();
         }}
-        title="删除所选文档？"
-        description={`将永久删除选中的 ${pendingDeleteIds?.length || 0} 篇文档，此操作无法撤销。`}
-        confirmLabel="确认删除"
+        title={t("k_57d9aa94")}
+        description={t("k_f568237b", [pendingDeleteIds?.length || 0])}
+        confirmLabel={t("k_3c06abe1")}
         pending={batchBusy}
         tone="danger"
         onConfirm={onConfirmDelete}
@@ -32,9 +33,9 @@ export function RecentJobsLibraryBatchDialogs({
         onOpenChange={(nextOpen) => {
           if (!nextOpen) onCancelBlocked();
         }}
-        title="部分文档被收藏引用"
-        description={`选中的文档里有 ${pendingBlockedDelete?.length || 0} 篇被收藏引用（共 ${blockedFavoriteTotal} 条收藏）。一并删除收藏后才能删除这些文档，此操作无法撤销。`}
-        confirmLabel="一并删除收藏并删除"
+        title={t("k_61195208")}
+        description={t("k_1d61d7c6", [pendingBlockedDelete?.length || 0, blockedFavoriteTotal])}
+        confirmLabel={t("k_cc185f1c")}
         pending={batchBusy}
         tone="danger"
         onConfirm={onConfirmBlocked}

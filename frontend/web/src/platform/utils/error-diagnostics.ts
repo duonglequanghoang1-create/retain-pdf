@@ -1,4 +1,5 @@
 import { APP_VERSION } from "../generated/app-version.js";
+import { t } from "@retainpdf/i18n";
 
 function cleanText(value) {
   return `${value ?? ""}`.trim();
@@ -10,7 +11,7 @@ function cleanStack(value) {
 
 function inferErrorMessage(error) {
   if (!error) {
-    return "未知错误";
+    return t("k_5f76edc5");
   }
   if (typeof error === "string") {
     return error;
@@ -35,7 +36,7 @@ function normalizeDetails(details: any = {}) {
 
 export function buildErrorDiagnostic(error, context: any = {}) {
   const message = inferErrorMessage(error);
-  const operation = cleanText(context.operation) || "前端操作";
+  const operation = cleanText(context.operation) || t("k_3d9fa23c");
   const status = inferHttpStatus(error, context);
   const url = inferUrl(error, context);
   const jobId = cleanText(context.jobId) || cleanText(error?.jobId);
@@ -44,29 +45,29 @@ export function buildErrorDiagnostic(error, context: any = {}) {
   const stack = context.includeStack === false ? "" : cleanStack(error?.stack);
 
   const diagnosticLines = [
-    "RetainPDF 前端错误诊断",
-    `时间: ${now}`,
-    `前端版本: ${APP_VERSION}`,
-    `操作: ${operation}`,
+    t("k_aab009ec"),
+    t("k_c47bcd8b", [now]),
+    t("k_58694835", [APP_VERSION]),
+    t("k_af0bb987", [operation]),
     jobId ? `job_id: ${jobId}` : "",
-    status ? `HTTP 状态码: ${status}` : "",
+    status ? t("k_bae52236", [status]) : "",
     url ? `URL: ${url}` : "",
-    `错误信息: ${message}`,
+    t("k_bd0cf246", [message]),
     ...details.map(([key, value]) => `${key}: ${value}`),
-    stack ? `堆栈:\n${stack}` : "",
+    stack ? t("k_389b3da7", [stack]) : "",
     cleanText(globalThis.navigator?.userAgent) ? `User-Agent: ${cleanText(globalThis.navigator?.userAgent)}` : "",
   ].filter(Boolean);
 
   return {
     kind: "error-diagnostic",
-    summary: `${operation}失败：${message}`,
+    summary: t("k_717a7015", [operation, message]),
     diagnostic: diagnosticLines.join("\n"),
   };
 }
 
 export function messageForErrorBox(value) {
   if (value && typeof value === "object" && value.kind === "error-diagnostic") {
-    return value.summary || value.diagnostic || "操作失败";
+    return value.summary || value.diagnostic || t("k_09e424b5");
   }
   return value;
 }

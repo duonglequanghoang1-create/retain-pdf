@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 阅读器工具定义（自包含版，从 frontend/web/src/pages/reader/tools/registry.ts 复制）
 
 export type ReaderToolId = "favorites" | "markdown" | "ai";
@@ -16,23 +18,23 @@ export type ReaderToolDef = {
 export const READER_TOOLS: readonly ReaderToolDef[] = Object.freeze([
   {
     id: "favorites",
-    label: "摘录",
-    subIdle: "本书云端收藏",
-    subOpen: "关闭悬浮窗",
+    label: t("k_046a3be9"),
+    subIdle: t("k_54a42370"),
+    subOpen: t("k_803658e0"),
     needsJob: false,
   },
   {
     id: "markdown",
     label: "Markdown",
-    subIdle: "识别 / 译文文本",
-    subOpen: "关闭悬浮窗",
+    subIdle: t("k_991aec8a"),
+    subOpen: t("k_803658e0"),
     needsJob: true,
   },
   {
     id: "ai",
-    label: "AI 问答",
-    subIdle: "基于文档提问",
-    subOpen: "关闭悬浮窗",
+    label: t("k_4e0478a9"),
+    subIdle: t("k_7d66d5a4"),
+    subOpen: t("k_803658e0"),
     needsJob: true,
   },
 ]);

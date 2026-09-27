@@ -7,6 +7,7 @@ import {
   loadStoredConversationId,
   saveStoredConversationId,
 } from "./conversation-store.js";
+import { t } from "@retainpdf/i18n";
 
 // 阅读器问答的 agentic 应答器:走 /api/v1/ai/ask(带 SSE 过程事件与可跳转引用)。
 // document_id 经后端 GET /documents?job_id= 直查(含历史 run),查不到时 fail closed。
@@ -43,19 +44,19 @@ export function buildScopedQuestion({ question = "", scope = "document", context
     const quote = typeof resolveQuote === "function" && context ? resolveQuote(context) : null;
     const quoteText = clipQuoteText(quote?.quoteText || context?.quoteText || "");
     if (quoteText) {
-      const paneLabel = context?.pane === "translated" ? "译文" : "原文";
-      const kindLabel = context?.kind === "formula" ? "公式"
-        : context?.kind === "table" ? "表格"
-          : context?.kind === "figure" ? "图片"
-            : context?.kind === "text" ? "文字" : "片段";
-      return `（针对选中的${paneLabel}${kindLabel}：「${quoteText}」）${trimmed}`;
+      const paneLabel = context?.pane === "translated" ? t("k_647e0016") : t("k_4d69dbdf");
+      const kindLabel = context?.kind === "formula" ? t("k_3f27035a")
+        : context?.kind === "table" ? t("k_150074c2")
+          : context?.kind === "figure" ? t("k_be8da62e")
+            : context?.kind === "text" ? t("k_f4d3dab8") : t("k_70a1195f");
+      return t("k_d3a766be", [paneLabel, kindLabel, quoteText, trimmed]);
     }
     if (context?.page) {
-      return `（针对第 ${Number(context.page)} 页的选区内容）${trimmed}`;
+      return t("k_7e4c804c", [Number(context.page), trimmed]);
     }
   }
   if (scope === "page" && context?.page) {
-    return `（当前第 ${Number(context.page)} 页）${trimmed}`;
+    return t("k_5cc8656c", [Number(context.page), trimmed]);
   }
   return trimmed;
 }
@@ -148,7 +149,7 @@ export function createReaderAskAnswerer({
   } = {}): Promise<any> {
     const scopedQuestion = buildScopedQuestion({ context, question, resolveQuote, scope });
     if (!scopedQuestion) {
-      throw new Error("请输入问题。");
+      throw new Error(t("k_c0af56b0"));
     }
     // Browser overrides are optional. The AI service owns its configured
     // runtime credential and is authoritative when this value is empty.
@@ -157,7 +158,7 @@ export function createReaderAskAnswerer({
     const documentId = await resolveDocumentId();
     // 阅读器默认整本问答:反查不到文档时 fail closed,禁止静默变全库检索
     if (!documentId && `${jobId || ""}`.trim()) {
-      throw new Error("无法关联当前文档，暂不能做整本问答。请确认任务已绑定文档后重试。");
+      throw new Error(t("k_d9d2e953"));
     }
     // document 解析后若 storage 里只有 job key,再补写一份 doc key
     if (!conversationId) {

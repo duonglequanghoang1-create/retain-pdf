@@ -2,11 +2,12 @@
 
 import { cn } from "@/ui/lib/utils";
 import { BookOpen } from "lucide-react";
+import { t } from "@retainpdf/i18n";
 
 export const READING_STATUSES = [
-  { value: "unread", label: "未读" },
-  { value: "reading", label: "在读" },
-  { value: "done", label: "读完" },
+  { value: "unread", label: t("k_1e230aa2") },
+  { value: "reading", label: t("k_4359051d") },
+  { value: "done", label: t("k_391cd357") },
 ];
 
 /**
@@ -21,7 +22,7 @@ export function ReadingStatusPanel({ value, busy, onChange }) {
       <p className="book-detail-reading-status-label flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
         <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />阅读状态
       </p>
-      <div className="inline-flex overflow-hidden rounded-md border border-border" role="group" aria-label="阅读状态">
+      <div className="inline-flex overflow-hidden rounded-md border border-border" role="group" aria-label={t("k_cdbe6f64")}>
         {READING_STATUSES.map((s) => (
           <button
             key={s.value}

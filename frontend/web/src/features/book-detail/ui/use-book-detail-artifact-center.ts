@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
@@ -165,7 +166,7 @@ export function useBookDetailArtifactCenter({
           finishedTokens.add(token);
         } catch (cause) {
           if (cancelled || generation !== generationRef.current) return;
-          setError(`${(cause as Error)?.message || "读取任务产物失败"}`);
+          setError(`${(cause as Error)?.message || t("k_2e626981")}`);
           setManifests((current) => ({ ...current, [jobId]: { items: [] } }));
           finishedTokens.add(token);
         } finally {
@@ -204,7 +205,7 @@ export function useBookDetailArtifactCenter({
       // 随后请求失败抛异常，磁盘上留下一个空文件。用户看到的不是错误，而是一份
       // "打开什么都没有的文档"——Word 导出在打包环境里失败时就是这么表现的。
       const response = await fetchProtected(item.url);
-      if (!response.ok) throw new Error(`下载失败，请稍后重试。(${response.status})`);
+      if (!response.ok) throw new Error(t("k_e15f10fd", [response.status]));
       const target = await prepareDownloadTarget(item.filename || item.label);
       if (target.kind === "aborted") return;
       const filename = fileNameFromDisposition(
@@ -213,7 +214,7 @@ export function useBookDetailArtifactCenter({
       );
       await saveResponseDownload(response, { target, filename, onProgress: undefined });
     } catch (cause) {
-      setError(`${(cause as Error)?.message || "下载失败，请稍后重试。"}`);
+      setError(`${(cause as Error)?.message || t("k_f5de4f61")}`);
     } finally {
       setDownloadingId("");
     }

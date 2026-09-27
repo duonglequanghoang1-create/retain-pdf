@@ -6,6 +6,7 @@ import { Dialog as DialogPrimitive } from "radix-ui"
 
 import { Button } from "@/ui/components/button"
 import { cn } from "@/ui/lib/utils"
+import { t } from "@retainpdf/i18n";
 
 type DialogSize = "compact" | "standard" | "wide" | "workspace"
 type DialogLevel = "base" | "nested"
@@ -123,7 +124,7 @@ function DialogCloseButton({
 }: React.ComponentProps<typeof DialogPrimitive.Close>) {
   return (
     <DialogPrimitive.Close
-      aria-label="关闭"
+      aria-label={t("k_6c14bd7f")}
       data-slot="dialog-close-button"
       className={cn("app-dialog-close", className)}
       {...props}

@@ -7,6 +7,7 @@ import { normalizeDisplayStage, } from "./presentation/job-stage-presentation-ut
 import { normalizeSubstageKey, substageDetail, } from "./contract/job-stage-substage-contract.js";
 import { successDetailForWorkflow, summarizeStageDetail, summarizeStageLabel, } from "./summary/job-status-summary.js";
 import { progressTextForStageProgress, } from "./summary/job-status-summary-progress.js";
+import { t } from "@retainpdf/i18n";
 const PUBLIC_FLOW_STAGE_KEYS = new Set(["ocr", "translate", "render", "done"]);
 const ACTIVE_FLOW_STAGE_KEYS = new Set(["ocr", "translate", "render"]);
 const IGNORED_SNAPSHOT_SOURCES = new Set(["legacy-stage", "canonical-empty-stage"]);
@@ -209,7 +210,7 @@ function doneProgressRecord() {
         progressPercent: 100,
         displayPercent: 100,
         progressUnit: "percent",
-        progressText: "渲染完成",
+        progressText: t("k_5b1f964f"),
         substageKey: "render_compile",
         visualStageKey: "render_compile",
         indeterminate: false,
@@ -224,13 +225,13 @@ function progressForPresentation(job = {}, eventsPayload = {}, stageKey = "", su
 }
 function labelForStage(job = {}, stageKey = "", substageKey = "", progress = {}) {
     if (stageKey === "done") {
-        return "完成";
+        return t("k_33246f6a");
     }
     if (stageKey === "failed") {
-        return "失败";
+        return t("k_3e3c8068");
     }
     if (stageKey === "canceled") {
-        return "已取消";
+        return t("k_a5ffdc95");
     }
     return summarizeStageLabel(stagePayloadForPresentation(job, stageKey, substageKey, progress));
 }
@@ -250,10 +251,10 @@ function detailForStage(job = {}, stageKey = "", substageKey = "", progress = {}
         return successDetailForWorkflow(job);
     }
     if (stageKey === "failed") {
-        return "任务失败，请查看详情";
+        return t("k_0b270e1f");
     }
     if (stageKey === "canceled") {
-        return "任务已取消";
+        return t("k_6df9b765");
     }
     return substageDetail(substageKey)
         || summarizeStageDetail(stagePayloadForPresentation(job, stageKey, substageKey, progress));

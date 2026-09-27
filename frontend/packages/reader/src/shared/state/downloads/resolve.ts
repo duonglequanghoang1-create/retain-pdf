@@ -1,21 +1,23 @@
+import { t } from "@retainpdf/i18n";
+
 // 共享真值（原 frontend/web/src/js/reader/downloads/resolve.ts），已抽离为可注入依赖
 // 纯函数 + 工厂注入：不直接 import frontend/web 的 job/bootstrap/resource-resolver，改为参数注入
 
 export const READER_DOWNLOAD_ACTIONS = Object.freeze({
   source: {
     fallbackSuffix: "source",
-    label: "原始 PDF",
-    operation: "下载原始 PDF",
+    label: t("k_87e9f577"),
+    operation: t("k_ad2b73a4"),
   },
   sideBySide: {
     fallbackSuffix: "side-by-side",
-    label: "对照 PDF",
-    operation: "下载对照 PDF",
+    label: t("k_cfe9fa15"),
+    operation: t("k_bc9c0d0d"),
   },
   translated: {
     fallbackSuffix: "translated",
-    label: "译文 PDF",
-    operation: "下载译文 PDF",
+    label: t("k_d93c8aae"),
+    operation: t("k_edbcfc1a"),
   },
 });
 
@@ -34,15 +36,15 @@ export function readerDownloadNameState({ jobId = "", jobPayload = null, manifes
 
 export function disabledReason(action: string, urls: any) {
   if (action === "sideBySide" && (!urls.source || !urls.translated)) {
-    return "对照 PDF 需要原始 PDF 和译文 PDF 都可用";
+    return t("k_66e6dcca");
   }
   if (!urls.source && (action === "source" || action === "sideBySide")) {
-    return "原始 PDF 尚未生成或清单不可用";
+    return t("k_7b19b7fd");
   }
   if (!urls.translated && (action === "translated" || action === "sideBySide")) {
-    return "译文 PDF 尚未生成或清单不可用";
+    return t("k_5c3a0605");
   }
-  return "下载地址暂不可用";
+  return t("k_2ee72c4b");
 }
 
 export interface ReaderDownloadResolverOptions {

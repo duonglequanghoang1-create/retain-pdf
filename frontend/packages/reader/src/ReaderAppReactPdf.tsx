@@ -1,4 +1,5 @@
 // 从 frontend/web 迁入的 React-pdf 视图真值，现为 @retainpdf/reader 主入口
+import { t } from "@retainpdf/i18n";
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReaderReactController } from "./hooks/use-reader-react-controller.js";
 import { useReaderKeyboard } from "./hooks/use-reader-keyboard.js";
@@ -324,7 +325,7 @@ export function ReaderAppReactPdf() {
         className={`reader-live-translation-toggle${liveTranslationVisible ? " is-active" : ""}`}
         onClick={() => setLiveTranslationVisible((visible) => !visible)}
         aria-pressed={liveTranslationVisible}
-        title={liveTranslationVisible ? "隐藏实时译文" : "在原文 PDF 上叠加实时译文"}
+        title={liveTranslationVisible ? t("k_5a95b341") : t("k_a5e75bbb")}
       >
         译文
       </button>

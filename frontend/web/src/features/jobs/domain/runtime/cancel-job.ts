@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 /**
  * 取消当前任务：按 workflow 路由到 OCR / 通用取消接口，
  * 请求期间锁取消按钮，失败解锁，成功保持锁定直到权威状态变为 canceled。
@@ -10,9 +12,9 @@ export const CANCEL_FETCH_TIMEOUT_MS = 8000;
 
 function describeCancelError(cause: unknown): string {
   const message = `${(cause as Error)?.message || cause || ""}`.trim();
-  const base = message || "取消请求失败";
+  const base = message || t("k_1879afad");
   const punctuated = /[。！？!?.]$/.test(base) ? base : `${base}。`;
-  return `${punctuated}可重试取消，或去详情页确认任务状态。`;
+  return t("k_0230fb01", [punctuated]);
 }
 
 export function createCancelCurrentJob({
@@ -28,7 +30,7 @@ export function createCancelCurrentJob({
   return async function cancelCurrentJob() {
     const jobId = currentJobPort.jobId();
     if (!jobId) {
-      setText("error-box", "当前没有可取消的任务");
+      setText("error-box", t("k_4b50f87b"));
       return;
     }
     shellViewPort.setCancelDisabled(true);
@@ -39,7 +41,7 @@ export function createCancelCurrentJob({
       const workflow = `${snapshot?.workflow || job?.workflow || raw?.workflow || ""}`.trim();
       const cancel = workflow === "ocr" ? cancelOcrJob : cancelJob;
       if (typeof cancel !== "function") {
-        throw new Error("任务取消接口未注入");
+        throw new Error(t("k_914e05a9"));
       }
       await cancel(jobId, apiPrefix);
       if (typeof fetchJob !== "function") return;
@@ -50,7 +52,7 @@ export function createCancelCurrentJob({
           new Promise((_, reject) => {
             timeoutId = setTimeout(() => {
               const timeoutError = new Error(
-                `取消请求已发送，但 ${Math.round(cancelFetchTimeoutMs / 1000)} 秒内未收到权威状态回包。`,
+                t("k_1d8d72df", [Math.round(cancelFetchTimeoutMs / 1000)]),
               );
               timeoutError.name = "CancelFetchTimeoutError";
               reject(timeoutError);
@@ -67,7 +69,7 @@ export function createCancelCurrentJob({
       shellViewPort.setCancelDisabled(false);
       const message = describeCancelError(err);
       if (err?.name === "CancelFetchTimeoutError") {
-        setText("error-box", `${message}若任务仍在运行，可重试取消。`);
+        setText("error-box", t("k_38442107", [message]));
       } else {
         setText("error-box", message);
       }

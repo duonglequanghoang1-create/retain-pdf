@@ -1,20 +1,22 @@
+import { t } from "@retainpdf/i18n";
+
 export const USER_STAGE_FLOW = [
   {
     key: "ocr",
-    label: "OCR 解析",
-    detail: "正在识别 PDF 内容",
+    label: t("k_9417cc31"),
+    detail: t("k_d0689981"),
     matches: ["ocr", "parse", "mineru", "paddle", "normaliz", "document", "submit", "startup"],
   },
   {
     key: "translate",
-    label: "翻译",
-    detail: "正在翻译正文内容",
+    label: t("k_23141370"),
+    detail: t("k_576f69cb"),
     matches: ["translat"],
   },
   {
     key: "render",
-    label: "渲染",
-    detail: "正在生成翻译后的 PDF",
+    label: t("k_0d2759cb"),
+    detail: t("k_7c939ac7"),
     matches: ["render", "sav"],
   },
 ];

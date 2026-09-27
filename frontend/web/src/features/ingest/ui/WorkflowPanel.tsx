@@ -41,6 +41,7 @@ import {
 import type { UploadViewStore } from "../domain/upload-store.js";
 import { HeroUpload } from "./components/UploadTile.jsx";
 import { InlineErrorBox } from "./InlineErrorBox.jsx";
+import { t } from "@retainpdf/i18n";
 
 export function WorkflowPanel({ hiddenInputsSlot = null }: { hiddenInputsSlot?: React.ReactNode | null }) {
   const workflowViewStore = useHomeWorkflowViewStore();
@@ -97,12 +98,12 @@ export function WorkflowPanel({ hiddenInputsSlot = null }: { hiddenInputsSlot?: 
         onValueChange={handleModeChange}
         className="upload-workflow-mode-tabs"
       >
-        <TabsPrimitive.List id="ocr-only-toggle" className="upload-workflow-mode-tabs-list" aria-label="工作流模式">
-          <TabsPrimitive.Trigger value="translate" className="upload-workflow-mode-tab" aria-label="翻译模式">
+        <TabsPrimitive.List id="ocr-only-toggle" className="upload-workflow-mode-tabs-list" aria-label={t("k_dadc7f1c")}>
+          <TabsPrimitive.Trigger value="translate" className="upload-workflow-mode-tab" aria-label={t("k_7ba27e62")}>
             <Languages aria-hidden="true" />
             翻译
           </TabsPrimitive.Trigger>
-          <TabsPrimitive.Trigger value="ocr" className="upload-workflow-mode-tab" aria-label="仅 OCR 模式">
+          <TabsPrimitive.Trigger value="ocr" className="upload-workflow-mode-tab" aria-label={t("k_095673b2")}>
             <ScanSearch aria-hidden="true" />
             仅 OCR
           </TabsPrimitive.Trigger>

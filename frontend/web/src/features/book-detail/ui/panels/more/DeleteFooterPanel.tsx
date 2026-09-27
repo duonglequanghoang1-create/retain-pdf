@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ConfirmDialog } from "@/ui/components/confirm-dialog.js";
 import { Trash2 } from "lucide-react";
+import { t } from "@retainpdf/i18n";
 
 /**
  * @param {object} props
@@ -40,9 +41,9 @@ export function DeleteFooterPanel({
         </button>
         <ConfirmDialog
           id="book-detail-delete-confirm"
-          title="删除书籍"
-          description={bookName ? `确定删除「${bookName}」吗？关联的任务与文件将一并删除，无法恢复。` : "确定删除这本书吗？关联的任务与文件将一并删除，无法恢复。"}
-          confirmLabel="删除"
+          title={t("k_50706caa")}
+          description={bookName ? t("k_196f4686", [bookName]) : t("k_5bb20c68")}
+          confirmLabel={t("k_3755f56f")}
           tone="danger"
           level="nested"
           open={confirmOpen}
@@ -52,9 +53,9 @@ export function DeleteFooterPanel({
         />
         <ConfirmDialog
           id="book-detail-clear-favorites-confirm"
-          title="文档被收藏引用"
-          description={`该文档有 ${blockedFavoriteCount} 条收藏锚点。收藏会一并删除，之后才能删除文档，此操作无法恢复。`}
-          confirmLabel="一并删除收藏并删除"
+          title={t("k_77642d4f")}
+          description={t("k_753a22cb", [blockedFavoriteCount])}
+          confirmLabel={t("k_cc185f1c")}
           tone="danger"
           level="nested"
           open={clearFavoritesOpen}

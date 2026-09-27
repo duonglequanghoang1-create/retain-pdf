@@ -5,6 +5,7 @@ import type {
   ReaderAiSessionSummary,
   ReaderAiSessionsBag,
 } from "../types/types.js";
+import { t } from "@retainpdf/i18n";
 
 export const MAX_SESSIONS = 20;
 const TITLE_MAX = 18;
@@ -17,7 +18,7 @@ export function deriveSessionTitle(session: ReaderAiChatSession = {}): string {
   );
   const raw = `${(firstUser as any)?.text || (session as any)?.title || ""}`.replace(/\s+/g, " ").trim();
   if (!raw) {
-    return "新对话";
+    return t("k_1b7abf96");
   }
   return raw.length > TITLE_MAX ? `${raw.slice(0, TITLE_MAX).trim()}…` : raw;
 }

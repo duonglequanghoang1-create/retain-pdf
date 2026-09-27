@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 export function capRunningStagePercent(percent, stageKey = "", status = "") {
     const normalizedStageKey = `${stageKey || ""}`.trim();
     const normalizedStatus = `${status || ""}`.trim();
@@ -86,7 +87,7 @@ export function buildStatusCardProgressPresentation({ selected, selectedIsCurren
     const percent = cappedPercentOrNull(rawPercent, selected, status);
     const progressText = displayedCurrent === null || displayedCurrent >= Number(selectedProgress?.current)
         ? selectedProgress?.progressText || ""
-        : `第 ${displayedCurrent}/${total} 页`;
+        : t("k_64aa4d66", [displayedCurrent, total]);
     return {
         current,
         total,

@@ -16,6 +16,7 @@
 import { createContext, createElement, useContext } from "react";
 import type { Context, ReactNode } from "react";
 import type { DialogStore } from "@/platform/store/dialog-store.js";
+import { t } from "@retainpdf/i18n";
 
 /** 窄口只暴露 store 读侧；写入仍经 store.actions / 域 action。
  *  subscribe 只建模单参监听（各域 store 的 notify 均为单参），兼容通用 Store
@@ -216,7 +217,7 @@ function createNarrowHook<T>(context: Context<T | null>, name: string): () => T 
   return function useNarrow(): T {
     const narrow = useContext(context);
     if (!narrow) {
-      throw new Error(`${name} 必须在 <HomeShellProviders> 内使用`);
+      throw new Error(t("k_32387fa4", [name]));
     }
     return narrow;
   };
@@ -372,7 +373,7 @@ export const HomeTabsProvider = HomeTabsContext.Provider;
 export function useHomeTabs(): HomeTabsValue {
   const tabs = useContext(HomeTabsContext);
   if (!tabs) {
-    throw new Error("useHomeTabs 必须在 <HomeTabsProvider> 内使用(HomeApp 维护 tabs 本地态)");
+    throw new Error(t("k_7592de02"));
   }
   return tabs;
 }

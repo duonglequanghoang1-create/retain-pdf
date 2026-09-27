@@ -6,6 +6,7 @@
 // React 后续重渲染不会碰它(虚拟 DOM 无 diff),命令式写入得以保留。
 
 import { MetaRow } from "./JobSummaryCard.jsx";
+import { t } from "@retainpdf/i18n";
 
 function ActionLink({ id, link, onClick, children }: any) {
   const enabled = Boolean(link?.enabled);
@@ -31,7 +32,7 @@ export function DetailHeader({ t, links, onProtectedDownload }) {
       <div className="detail-hero-top">
         <div>
           <h1>任务详情</h1>
-          <p id="detail-head-note">{t("detail-head-note", "通过 `detail.html?job_id=...` 可直接分享当前任务详情。")}</p>
+          <p id="detail-head-note">{t("detail-head-note", t("k_8b5abcda"))}</p>
         </div>
         <div className="detail-actions">
           <ActionLink id="detail-reader-btn" link={links["detail-reader-btn"]}>对照阅读</ActionLink>
@@ -58,15 +59,15 @@ export function DetailHeader({ t, links, onProtectedDownload }) {
           </ActionLink>
         </div>
       </div>
-      <div className="detail-task-actions" aria-label="任务操作">
+      <div className="detail-task-actions" aria-label={t("k_2ab11880")}>
         <button id="detail-rerun-btn" type="button" className="detail-trigger-btn" disabled>断点恢复/重新运行</button>
-        <span id="detail-rerun-status" className="detail-inline-note">{t("detail-rerun-status", "当前任务暂不可恢复。")}</span>
+        <span id="detail-rerun-status" className="detail-inline-note">{t("detail-rerun-status", t("k_eabf123e"))}</span>
       </div>
       <div className="detail-meta-list">
-        <MetaRow label="任务 ID" id="detail-job-id" mono value={t("detail-job-id")} />
-        <MetaRow label="状态摘要" id="detail-status-summary" value={t("detail-status-summary")} />
-        <MetaRow label="当前阶段" id="detail-stage-detail" value={t("detail-stage-detail")} />
-        <MetaRow label="完成时间" id="detail-finished-at" value={t("detail-finished-at")} />
+        <MetaRow label={t("k_04151642")} id="detail-job-id" mono value={t("detail-job-id")} />
+        <MetaRow label={t("k_4563f51a")} id="detail-status-summary" value={t("detail-status-summary")} />
+        <MetaRow label={t("k_0a2489f6")} id="detail-stage-detail" value={t("detail-stage-detail")} />
+        <MetaRow label={t("k_754a8a2e")} id="detail-finished-at" value={t("detail-finished-at")} />
       </div>
     </section>
   );

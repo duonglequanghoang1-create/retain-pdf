@@ -6,6 +6,7 @@ import type {
 // import 回 credentials 功能，形成 index -> ui -> host -> index 的循环，
 // 循环下 defaultCredentialsStatePort 在模块初始化期为 undefined。
 import { CREDENTIALS_CHANGED_EVENT } from "@retainpdf/reader/runtime/ai";
+import { t } from "@retainpdf/i18n";
 
 export function activeMode(runtime = ""): AgentRuntimeMode | null {
   const normalized = runtime.toLowerCase();
@@ -20,15 +21,15 @@ export function activeMode(runtime = ""): AgentRuntimeMode | null {
 }
 
 export function modeLabel(mode: AgentRuntimeMode) {
-  if (mode === "openai") return "OpenAI 兼容 Agent";
-  return mode === "fx" ? "FX Gateway Agent" : "Markdown 检索问答";
+  if (mode === "openai") return t("k_026c480b");
+  return mode === "fx" ? "FX Gateway Agent" : t("k_6764e631");
 }
 
 export function modeShortLabel(mode: AgentRuntimeMode | null) {
   if (mode === "openai") return "OpenAI";
   if (mode === "fx") return "FX";
   if (mode === "python") return "Markdown";
-  return "不可用";
+  return t("k_beff4a1c");
 }
 
 export function delay(ms: number) {

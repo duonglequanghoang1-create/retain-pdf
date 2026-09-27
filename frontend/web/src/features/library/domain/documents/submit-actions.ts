@@ -13,6 +13,7 @@ import type {
 } from "../types.js";
 import { friendlyTranslateError, type ErrorLike } from "./error-messages.js";
 import { assembleOcrPayload, assembleTranslatePayload } from "./submit-payloads.js";
+import { t } from "@retainpdf/i18n";
 
 export function createDocumentSubmitActions({
   buildTranslateConfig,
@@ -82,9 +83,9 @@ export function createDocumentSubmitActions({
     } catch (error) {
       const message = typeof error === "string" ? error : `${(error as Error)?.message || error || ""}`;
       if (/(token|key|凭据|令牌|密钥|credential)/i.test(message)) {
-        throw new Error("OCR 需要先在「设置」里配置 OCR 凭据后再试。");
+        throw new Error(t("k_c3c57b8a"));
       }
-      throw new Error(message || "发起 OCR 失败，请稍后重试。");
+      throw new Error(message || t("k_f3210dd9"));
     } finally {
       ocrDocumentIds.delete(normalizedId);
     }

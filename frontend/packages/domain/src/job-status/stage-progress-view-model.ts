@@ -6,6 +6,7 @@ import {
 } from "./progress/job-stage-render-progress.js";
 import { compositeTranslationProgressFromRecord } from "./progress/job-stage-translation-progress.js";
 import type { ProgressRecord, StageProgressViewSnapshot } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 function finiteNumber(value: unknown): number {
   const number = Number(value);
@@ -99,7 +100,7 @@ export function currentStageProgressViewModel(
       current: 100,
       total: 100,
       displayPercent: 100,
-      progressText: "渲染完成",
+      progressText: t("k_5b1f964f"),
       progressUnit: "percent",
       visualStageKey: renderVisualStageKey,
       substageKey: renderProgress.substageKey || currentProgress.substageKey || "render_compile",
@@ -112,7 +113,7 @@ export function currentStageProgressViewModel(
       current: 100,
       total: 100,
       displayPercent: 100,
-      progressText: currentProgress.progressText || "渲染完成",
+      progressText: currentProgress.progressText || t("k_5b1f964f"),
       progressUnit: currentProgress.progressUnit || "percent",
       visualStageKey: renderVisualStageKey,
       substageKey: currentProgress.substageKey || "render_compile",
@@ -121,7 +122,7 @@ export function currentStageProgressViewModel(
 
   return {
     ...renderProgress,
-    progressText: renderProgress.progressText || "渲染完成",
+    progressText: renderProgress.progressText || t("k_5b1f964f"),
     visualStageKey: renderVisualStageKey,
   };
 }

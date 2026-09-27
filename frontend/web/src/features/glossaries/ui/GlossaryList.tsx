@@ -3,6 +3,7 @@
 
 import { EmptyState } from "@/ui/icons/EmptyState.jsx";
 import { GLOSSARY_DOM_IDS } from "./glossaries-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 export function GlossaryList({ items, selectedId, onSelect, onCreateNew }) {
   const hasItems = items.length > 0;
@@ -42,8 +43,8 @@ export function GlossaryList({ items, selectedId, onSelect, onCreateNew }) {
         {!hasItems ? (
           <EmptyState
             instrument="atom"
-            title="暂无术语表"
-            hint="点右上角「新建」，为领域术语建一份对照表。"
+            title={t("k_6ef8cec6")}
+            hint={t("k_c2e0e856")}
           />
         ) : null}
       </div>

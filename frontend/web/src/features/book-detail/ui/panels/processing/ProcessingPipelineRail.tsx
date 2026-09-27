@@ -16,12 +16,13 @@ import { Check, TriangleAlert, X } from "lucide-react";
 
 import type { LibraryCardItem } from "@/features/library/domain.js";
 import { translationProcessModel } from "../../../domain/translation-process-model.js";
+import { t } from "@retainpdf/i18n";
 
 const STAGES = [
   { key: "ocr", label: "OCR" },
-  { key: "translate", label: "翻译" },
-  { key: "render", label: "渲染" },
-  { key: "done", label: "完成" },
+  { key: "translate", label: t("k_23141370") },
+  { key: "render", label: t("k_0d2759cb") },
+  { key: "done", label: t("k_33246f6a") },
 ] as const;
 
 type StageKey = (typeof STAGES)[number]["key"];
@@ -96,8 +97,8 @@ export function ProcessingPipelineRail({
     ? loadingModel()
     : hasTranslationJob ? translationProcessModel(item) : deriveOcrModel(ocrStatus);
   const stationLabels: Record<StageKey, string> = {
-    ocr: loading ? "读取中…" : ocrStatus.label || "未执行",
-    translate: loading ? "读取中…" : translationStatus.label || "未翻译",
+    ocr: loading ? t("k_f950213a") : ocrStatus.label || t("k_373c54c1"),
+    translate: loading ? t("k_f950213a") : translationStatus.label || t("k_b99ebee4"),
     render: "",
     done: "",
   };
@@ -105,13 +106,13 @@ export function ProcessingPipelineRail({
   return (
     <section
       className="book-detail-pipeline"
-      aria-label="处理流程"
+      aria-label={t("k_6f12fa77")}
       data-translation-process="true"
       data-current-stage={model.currentStage}
       data-status={model.status}
       {...(loading ? { "data-loading": "true", "aria-busy": true } : {})}
     >
-      <ol className="book-detail-pipeline-track" aria-label="OCR、翻译、渲染、完成">
+      <ol className="book-detail-pipeline-track" aria-label={t("k_f1890ab4")}>
         {STAGES.map((stage) => {
           const step = model.steps.find((entry) => entry.key === stage.key)
             || { key: stage.key, label: stage.label, state: "pending" as StepState };
@@ -120,7 +121,7 @@ export function ProcessingPipelineRail({
             : stage.key === "translate"
               ? "translation"
               : undefined;
-          const label = stage.key === "ocr" && model.ocrReused ? "OCR 复用" : stage.label;
+          const label = stage.key === "ocr" && model.ocrReused ? t("k_dbd936c2") : stage.label;
           return (
             <li
               key={stage.key}

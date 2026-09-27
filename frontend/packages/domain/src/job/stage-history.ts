@@ -9,6 +9,7 @@ import type {
   JobPayload,
   StageHistoryEntry,
 } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 export function summarizeStageName(stage, detail) {
   const detailText = `${detail || ""}`.trim();
@@ -21,7 +22,7 @@ export function summarizeStageName(stage, detail) {
     || normalizedStage.includes("submit")
     || normalizedStage.includes("queued")
   ) {
-    return "上传 PDF";
+    return t("k_f77257b3");
   }
   if (
     normalizedStage.includes("ocr_processing")
@@ -32,7 +33,7 @@ export function summarizeStageName(stage, detail) {
     || normalizedStage.includes("normalization")
     || normalizedStage.includes("normaliz")
   ) {
-    return "云端 OCR / 标准化";
+    return t("k_5c2705bc");
   }
   if (
     normalizedStage.includes("translation_prepare")
@@ -41,7 +42,7 @@ export function summarizeStageName(stage, detail) {
     || normalizedStage.includes("garbled")
     || normalizedStage.includes("translat")
   ) {
-    return "翻译准备 / 跨栏跨页判断";
+    return t("k_4bb74091");
   }
   if (
     normalizedStage.includes("render")
@@ -49,26 +50,26 @@ export function summarizeStageName(stage, detail) {
     || normalizedStage.includes("compile")
     || normalizedStage.includes("overlay")
   ) {
-    return "渲染 PDF";
+    return t("k_2db0bc32");
   }
   switch (normalizedStage) {
     case "queued":
-      return "排队中";
+      return t("k_4dcbbcfa");
     case "running":
-      return "处理中";
+      return t("k_fcb979ef");
     case "translating":
-      return "翻译";
+      return t("k_23141370");
     case "parsing":
     case "ocr":
-      return "解析 / OCR";
+      return t("k_871fdd6f");
     case "translation_prepare":
-      return "翻译准备";
+      return t("k_a74d9db6");
     case "rendering":
-      return "渲染";
+      return t("k_0d2759cb");
     case "succeeded":
-      return "已完成";
+      return t("k_e99b48a2");
     case "failed":
-      return "失败";
+      return t("k_3e3c8068");
     default:
       return `${stage || "-"}`.trim() || "-";
   }

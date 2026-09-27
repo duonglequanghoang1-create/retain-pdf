@@ -36,6 +36,9 @@ import { useDialogReturnFocus } from "@/ui/hooks/use-dialog-return-focus.js";
 import { APP_SETTINGS_DIALOG_IDS } from "./settings-dialog-ids.js";
 import { ThemeAppearancePanel } from "./ThemeAppearancePanel.jsx";
 import { Button as ButtonBase } from "@/ui/Button.jsx";
+import { t } from "@retainpdf/i18n";
+import { useLocale } from "@/platform/i18n/use-i18n.js";
+import { LanguagePanel } from "./LanguagePanel.js";
 
 // Decoupled: settings → credentials / app-update 横向依赖改为经 HomeApp 注入(slot)。
 // - credentialsWorkbenchSlot: 由 HomeApp 传入 <CredentialsWorkbench />
@@ -81,27 +84,33 @@ function IconUpdate(props) {
   );
 }
 
+// 标签与面板标题必须在 render 时才调 t()：t() 读的是模块级当前语言，模块级
+// 常量在 import 阶段就求值完，那时 initI18n 还没跑，nhãn 会永远停在中文。
+// 存 key，文案渲染时再查表；用 useLocale 订阅，切语言才会重画。
 const TABS = [
-  { id: "api", label: "接口设置", Icon: IconKey },
-  { id: "glossary", label: "术语表", Icon: IconBook },
-  { id: "appearance", label: "外观", Icon: IconPalette },
-  { id: "update", label: "更新", Icon: IconUpdate },
+  { id: "api", labelKey: "k_521f2250", Icon: IconKey },
+  { id: "glossary", labelKey: "k_12f4ade1", Icon: IconBook },
+  { id: "appearance", labelKey: "k_09b58aa3", Icon: IconPalette },
+  { id: "update", labelKey: "k_d9db02d0", Icon: IconUpdate },
+  { id: "language", labelKey: "k_d5d8edd1", Icon: IconPalette },
 ];
 
-const PANE_HEADS = {
-  api: { title: "接口设置", desc: "" },
-  glossary: { title: "术语表", desc: "维护术语偏好，翻译时优先使用你的术语。" },
-  appearance: { title: "外观", desc: "选择界面配色，立即生效并记住本机选择。" },
-  update: { title: "更新", desc: "查看当前版本，并从 GitHub Releases 重新检查更新。" },
+const PANE_HEAD_KEYS = {
+  api: { titleKey: "k_521f2250", descKey: "" },
+  glossary: { titleKey: "k_12f4ade1", descKey: "k_8ad7c2b7" },
+  appearance: { titleKey: "k_09b58aa3", descKey: "k_ca4c25d7" },
+  update: { titleKey: "k_d9db02d0", descKey: "k_74b00260" },
+  language: { titleKey: "k_d5d8edd1", descKey: "k_6ebd1b72" },
 };
 
-function PaneHead({ tab, subtitle = null }: { tab: keyof typeof PANE_HEADS; subtitle?: React.ReactNode }) {
-  const head = PANE_HEADS[tab];
+function PaneHead({ tab, subtitle = null }: { tab: keyof typeof PANE_HEAD_KEYS; subtitle?: React.ReactNode }) {
+  const head = PANE_HEAD_KEYS[tab];
+  const desc = head.descKey ? t(head.descKey) : "";
   return (
     <header className="app-settings-pane-head">
-      <h3>{head.title}</h3>
+      <h3>{t(head.titleKey)}</h3>
       {subtitle}
-      {head.desc ? <p>{head.desc}</p> : null}
+      {desc ? <p>{desc}</p> : null}
     </header>
   );
 }
@@ -171,6 +180,9 @@ export function SettingsDialog({
     onOpenGlossaries();
   }
 
+  // 订阅语言变化：t() 读模块级状态，不订阅就不会重画。
+  useLocale();
+
   function panelClass(tab: string) {
     // 纯字面量拼接（含空格分隔），避开 v4 扫描器的 `x${y}` 模板坑
     return activeTab === tab ? "app-settings-panel is-current" : "app-settings-panel";
@@ -194,10 +206,10 @@ export function SettingsDialog({
             >
               <aside className="app-settings-rail">
                 <DialogTitle asChild>
-                  <h2>设置</h2>
+                  <h2>{t("k_7debf9cb")}</h2>
                 </DialogTitle>
-                <TabsPrimitive.List className="app-settings-nav" aria-label="设置分类">
-                  {TABS.map(({ id, label, Icon }) => (
+                <TabsPrimitive.List className="app-settings-nav" aria-label={t("k_f7bbde69")}>
+                  {TABS.map(({ id, labelKey, Icon }) => (
                     <TabsPrimitive.Trigger
                       key={id}
                       value={id}
@@ -205,7 +217,7 @@ export function SettingsDialog({
                       data-settings-tab={id}
                     >
                       <Icon />
-                      {label}
+                      {t(labelKey)}
                     </TabsPrimitive.Trigger>
                   ))}
                 </TabsPrimitive.List>
@@ -256,6 +268,17 @@ export function SettingsDialog({
                 >
                   <PaneHead tab="appearance" />
                   <ThemeAppearancePanel />
+                </TabsPrimitive.Content>
+
+                <TabsPrimitive.Content
+                  value="language"
+                  forceMount
+                  hidden={activeTab !== "language"}
+                  className={panelClass("language")}
+                  data-settings-panel="language"
+                >
+                  <PaneHead tab="language" />
+                  <LanguagePanel />
                 </TabsPrimitive.Content>
 
                 <TabsPrimitive.Content

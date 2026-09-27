@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   runSubmitFlow,
   type AppActionsConfigPort,
@@ -216,7 +217,7 @@ export function mountAppActionsFeature({
       const label = typeof configPort.apiBaseLabel === "function"
         ? configPort.apiBaseLabel()
         : configPort.apiBaseLabel;
-      const message = `当前前端无法连接后端。API Base: ${label}。请确认本地服务已经启动，然后重试。`;
+      const message = t("k_725e1bb7", [label]);
       setText("error-box", message);
       throw new Error(message);
     }

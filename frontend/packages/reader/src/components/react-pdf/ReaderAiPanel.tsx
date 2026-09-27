@@ -8,6 +8,7 @@ import { ReaderAssistantThread } from "./assistant/ReaderAssistantThread.js";
 import { ReaderConversationBar } from "./assistant/ReaderConversationBar.js";
 import { useReaderAskRuntime } from "./assistant/use-reader-ask-runtime.js";
 import type { ReaderSelection } from "../../shared/data/reader-regions.js";
+import { t } from "@retainpdf/i18n";
 
 export type ReaderAiPanelProps = {
   open: boolean;
@@ -79,7 +80,7 @@ export function ReaderAiPanel({
     const ok = await branchFromAnswer(assistantId);
     if (ok) {
       setBranchNotice(
-        "已保存新对话（fork-n-原名）：复制了到此答案的上文，原对话不变。顶部列表可切换。",
+        t("k_ecebbb97"),
       );
       window.setTimeout(() => setBranchNotice(""), 6000);
     }
@@ -98,7 +99,7 @@ export function ReaderAiPanel({
       title="RetainPDF AI"
       titleIcon={<Sparkles size={14} strokeWidth={2.1} aria-hidden />}
       storageKey="retainpdf.reader.ai-float.pos.v2"
-      ariaLabel="阅读问答"
+      ariaLabel={t("k_8e7621d7")}
       width={420}
       placement={layout === "workspace" ? "workspace" : layout === "docked" ? "dock-right" : "floating"}
       showHeader={layout !== "workspace"}

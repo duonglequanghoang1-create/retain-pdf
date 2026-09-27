@@ -1,5 +1,6 @@
 // jobs-submit — pure
 import { buildJobsEndpoint, submitJson, submitUploadRequest } from "./http.js";
+import { t } from "@retainpdf/i18n";
 function isObject(value) {
     return !!value && typeof value === "object" && !Array.isArray(value);
 }
@@ -11,10 +12,10 @@ export function collectUploadFormData(file) {
 }
 function assertGroupedJobPayload(payload) {
     if (!isObject(payload))
-        throw new Error("提交失败: /api/v1/jobs 需要 JSON object 请求体。");
+        throw new Error(t("k_72310754"));
     const p = payload;
     if (!p.workflow || !isObject(p.source))
-        throw new Error("提交失败: /api/v1/jobs 必须使用 grouped JSON，至少包含 workflow 和 source。");
+        throw new Error(t("k_f879f52c"));
     const legacyTopLevelFields = ["upload_id", "artifact_job_id", "mode", "model", "base_url", "api_key", "mineru_token", "paddle_token", "model_version", "language", "render_mode", "skip_title_translation", "batch_size", "workers", "classify_batch_size", "compile_workers", "rule_profile_name", "custom_rules_text", "timeout_seconds", "no_output_timeout_seconds"];
     const leaked = legacyTopLevelFields.filter((f) => f in p);
     if (leaked.length > 0)
@@ -84,7 +85,7 @@ function buildOcrFormData(payload) {
 export async function submitJobRequest(apiPrefix, payload) {
     if (isOcrWorkflowPayload(payload)) {
         if (!isObject(payload) || !isObject(payload.source)) {
-            throw new Error("提交失败: /api/v1/ocr/jobs 需要 grouped JSON，至少包含 workflow=ocr 和 source。");
+            throw new Error(t("k_59fa7bf5"));
         }
         const form = buildOcrFormData(payload);
         return submitUploadRequest(buildJobsEndpoint(apiPrefix, "ocr"), form);

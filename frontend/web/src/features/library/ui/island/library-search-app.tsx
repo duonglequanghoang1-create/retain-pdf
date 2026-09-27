@@ -6,6 +6,7 @@ import {
   highlightSegments,
   nextReadingStatus,
 } from "./view-model.js";
+import { t } from "@retainpdf/i18n";
 
 function Snippet({ text }) {
   return (
@@ -25,7 +26,7 @@ function SearchHit({ hit, onOpenReader }) {
       type="button"
       className="lib-search-hit"
       onClick={() => onOpenReader(hit)}
-      title={`第 ${Number(hit.page_idx) + 1} 页 · ${hit.block_id}`}
+      title={t("k_fe8e63f1", [Number(hit.page_idx) + 1, hit.block_id])}
     >
       <Snippet text={hit.source_snippet} />
       {hit.translated_snippet ? <Snippet text={hit.translated_snippet} /> : null}
@@ -52,7 +53,7 @@ function DocumentRow({ doc, onOpenReader, onCycleStatus }) {
         type="button"
         className={`lib-search-doc-status is-${doc.reading_status}`}
         onClick={() => onCycleStatus(doc)}
-        title="点击切换阅读状态"
+        title={t("k_318af045")}
       >
         {meta.label}
       </button>
@@ -97,7 +98,7 @@ function LibrarySearchPanel({ ports }) {
         setError("");
       } catch (searchError) {
         if (requestSeqRef.current === seq) {
-          setError(searchError?.message || "检索失败");
+          setError(searchError?.message || t("k_34d083c9"));
         }
       } finally {
         if (requestSeqRef.current === seq) {
@@ -130,11 +131,11 @@ function LibrarySearchPanel({ ports }) {
   const matchedDocuments = filterDocuments(documents, { query: trimmed, readingStatus: statusFilter });
 
   return (
-    <div className="lib-search-panel" role="region" aria-label="库检索结果">
+    <div className="lib-search-panel" role="region" aria-label={t("k_c975e641")}>
       <div className="lib-search-head">
         <strong>库检索</strong>
-        <span className="lib-search-status">{busy ? "检索中…" : error || `${hits.length} 条全文命中 · ${matchedDocuments.length} 篇文档`}</span>
-        <div className="lib-search-filters" role="group" aria-label="按阅读状态过滤">
+        <span className="lib-search-status">{busy ? t("k_c1ec3b34") : error || t("k_60d93f90", [hits.length, matchedDocuments.length])}</span>
+        <div className="lib-search-filters" role="group" aria-label={t("k_c6594716")}>
           <button type="button" className={statusFilter === "" ? "is-active" : ""} onClick={() => setStatusFilter("")}>全部</button>
           {Object.entries(READING_STATUS_META).map(([value, meta]) => (
             <button

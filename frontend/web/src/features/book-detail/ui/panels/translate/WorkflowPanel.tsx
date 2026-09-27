@@ -13,6 +13,7 @@ import { BookTranslateLaunchForm } from "./TranslateForm.jsx";
 import { TranslationStageActions } from "./TranslationStageActions.jsx";
 import type { LibraryCardItem } from "@/features/library/domain.js";
 import type { JobRetryStage, JobStageRetryActionView } from "@/platform/api/index.js";
+import { t } from "@retainpdf/i18n";
 
 export type BookTranslationWorkflowPanelProps = {
   item?: LibraryCardItem;
@@ -106,7 +107,7 @@ export function BookTranslationWorkflowPanel({
         <section
           id="book-detail-status-section"
           className="book-translation-status-panel"
-          aria-label="任务进度"
+          aria-label={t("k_01eaf9f5")}
         >
           <BookTranslateProgressPanel
             item={item}

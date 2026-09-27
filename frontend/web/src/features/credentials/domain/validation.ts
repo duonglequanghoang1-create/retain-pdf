@@ -6,6 +6,7 @@ import type {
   CredentialsStatePort,
   OcrValidationCachePayload,
 } from "./state.js";
+import { t } from "@retainpdf/i18n";
 
 export interface ProviderValidationResult {
   ok?: boolean;
@@ -134,7 +135,7 @@ export async function runOcrTokenValidation({
     };
   }
   if (showResult) {
-    setOcrValidationMessage(`正在检测 ${definition.label} Token…`, "pending", definition.id);
+    setOcrValidationMessage(t("k_729abd20", [definition.label]), "pending", definition.id);
   }
   try {
     const result = asValidationResult(await validateOcrToken(apiPrefix, definition.id, normalizedToken));
@@ -152,7 +153,7 @@ export async function runOcrTokenValidation({
   } catch (err) {
     resetOcrValidationRuntime({ state, credentialsStatePort, legacyRuntimePort });
     const timedOut = timeoutSummary(err);
-    const summary = timedOut || `${definition.label} Token 检测失败，请稍后重试。`;
+    const summary = timedOut || t("k_f9749f9a", [definition.label]);
     if (showResult) {
       setOcrValidationMessage(summary, "error", definition.id);
     }
@@ -183,7 +184,7 @@ export async function runDeepSeekConnectivityCheck({
     return { ok: false, status: 0 };
   }
   if (showResult) {
-    setDeepSeekValidationMessage("正在检测翻译接口…", "pending");
+    setDeepSeekValidationMessage(t("k_20ea7a20"), "pending");
   }
   try {
     const result = asValidationResult(await validateDeepSeekToken(apiPrefix, {
@@ -219,9 +220,9 @@ export function summarizeDeepSeekBalance(result) {
     return `余额 ${parts.join("，")}`;
   }
   if (result?.is_available) {
-    return "余额可用";
+    return t("k_27d33355");
   }
-  return "余额不足";
+  return t("k_5a4401ff");
 }
 
 export async function runDeepSeekBalanceCheck({

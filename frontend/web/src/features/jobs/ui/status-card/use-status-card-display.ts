@@ -8,6 +8,7 @@ import {
 import { resolveVisualStageKeyForSnapshot } from "./visual-stage.js";
 import type { StatusCardSnapshot } from "../../domain/status-card-store.js";
 import type { StatusCardSelection, StatusCardStageDisplay } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 export type StatusCardDisplayDerivation = {
   displaySnapshot: StatusCardSnapshot;
@@ -47,7 +48,7 @@ export function useStatusCardDisplay({
 
   const ringLabel = display.selectedIsCurrent
     ? statusStageLabel(selection.currentStageKey || flowStageKey, snapshot.label)
-    : statusStageLabel(selection.selectedStageKey, "阶段");
+    : statusStageLabel(selection.selectedStageKey, t("k_4ca39faa"));
 
   const stageKeyForFlow = flowStageKey || snapshot.stageKey;
   const selectedForFlow = display.selected || stageKeyForFlow;

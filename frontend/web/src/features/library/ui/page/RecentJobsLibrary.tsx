@@ -32,7 +32,8 @@ import { RecentJobsLibraryGrid } from "./RecentJobsLibraryGrid.jsx";
 import { RecentJobsLibraryBatchDialogs } from "./RecentJobsLibraryBatchDialogs.jsx";
 import { useRecentJobsListDerivation } from "./useRecentJobsListDerivation.js";
 import { useRecentJobsBatchSelection } from "./useRecentJobsBatchSelection.js";
-import { VIEW_TEXT } from "./recent-jobs-library-helpers.js";
+import { viewText } from "./recent-jobs-library-helpers.js";
+import { t } from "@retainpdf/i18n";
 
 export function RecentJobsLibrary({ onBatchModeChange }: any = {}) {
   const { viewPort, recentJobsStore, actions } = useHomeLibrary();
@@ -117,7 +118,7 @@ export function RecentJobsLibrary({ onBatchModeChange }: any = {}) {
   }
 
   return (
-    <section id="library-view" className="library-view" aria-label="图书馆">
+    <section id="library-view" className="library-view" aria-label={t("k_21347f9f")}>
       <div id="recent-jobs-scroll-body" className="library-scroll-body" ref={scrollBodyRef}>
         <div id="recent-jobs-summary" className="status-panel-note library-summary">{summary.text}</div>
         <RecentJobsLibraryEmpty
@@ -164,7 +165,7 @@ export function RecentJobsLibrary({ onBatchModeChange }: any = {}) {
             disabled={loadMoreLoading}
             onClick={handleLoadMoreClick}
           >
-            {loadMoreLoading ? VIEW_TEXT.loadMoreLoading : VIEW_TEXT.loadMore}
+            {loadMoreLoading ? viewText().loadMoreLoading : viewText().loadMore}
           </button>
         </div>
       </div>

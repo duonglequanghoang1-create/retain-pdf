@@ -1,5 +1,6 @@
 import { createStore } from "@/platform/store/store.js";
 import type { Store } from "@/platform/store/store.js";
+import { t } from "@retainpdf/i18n";
 
 // workflow 域视图 store + React viewPort。
 //
@@ -92,7 +93,7 @@ export function createWorkflowViewStore(): WorkflowViewStore {
   return createStore<WorkflowViewState, WorkflowViewActions>({
     name: "homeWorkflowView",
     initialState: {
-      submitLabel: "直接翻译",
+      submitLabel: t("k_d8a65dd3"),
       submitDisabled: true,
       submitBusy: false,
       pageRangeButtonVisible: true,
@@ -199,10 +200,10 @@ export function createWorkflowViewFeature({
   } = {}) {
     uploadTilePort?.setUploadTileLocked({ locked: true, enabled: false });
     uploadTilePort?.setUploadTileText({
-      label: "Mock 模式",
+      label: t("k_a010b572"),
       labelTitle: "",
       help: `当前为 mock 模式：${mockScenario || "running"}。不会上传文件，也不会请求真实后端。`,
-      status: "Mock 模式已启用，可直接点击开始翻译。",
+      status: t("k_86770b66"),
       statusVisible: true,
     });
     setSubmitControls({
@@ -228,13 +229,13 @@ export function createWorkflowViewFeature({
   } = {}) {
     uploadTilePort?.setUploadTileLocked({ locked: !needsUpload, enabled: needsUpload });
     uploadTilePort?.setUploadTileText({
-      label: !uploadReady ? (needsUpload ? defaultFileLabel : "复用已有任务产物") : "",
+      label: !uploadReady ? (needsUpload ? defaultFileLabel : t("k_dd53a29e")) : "",
       labelTitle: "",
       help: headline,
       status: !needsUpload
         ? (renderSourceJobId
-            ? `当前将复用任务: ${renderSourceJobId}`
-            : "请先在开发者设置里填写 Render 源任务 ID。")
+            ? t("k_f2052881", [renderSourceJobId])
+            : t("k_20ad9b7c"))
         : "",
       statusVisible: !needsUpload ? true : (!uploadReady ? false : null),
     });

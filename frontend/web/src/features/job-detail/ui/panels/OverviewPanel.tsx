@@ -20,6 +20,7 @@ import {
   STATUS_DETAIL_MARKDOWN_BUNDLE_ID,
 } from "../../domain/status-detail-dom-ids.js";
 import { StatusDetailTabPanel } from "./StatusDetailTabPanel.jsx";
+import { t } from "@retainpdf/i18n";
 
 type DetailItemProps = {
   id: string;
@@ -55,7 +56,7 @@ function OverviewMarkdownBundleLink() {
   const ready = Boolean(cardSnapshot.snapshot?.markdownBundleReady);
   const url = cardSnapshot.snapshot?.markdownBundleUrl || "";
   const enabled = ready && Boolean(url) && !busyState.busy;
-  const label = busyState.busy ? (busyState.label || "下载中...") : "下载 Markdown ZIP";
+  const label = busyState.busy ? (busyState.label || t("k_a0ef0da2")) : t("k_7f22760b");
 
   return (
     <a
@@ -98,20 +99,20 @@ export function OverviewPanel({ overview, active }: OverviewPanelProps) {
           <span id={ids.runtime.currentStage} className="info-value">{runtime.currentStage}</span>
         </div>
         <div className="status-detail-metrics-grid">
-          <DetailItem id={ids.runtime.stageElapsed} label="本阶段" value={runtime.stageElapsed} icon={Clock3} compact />
-          <DetailItem id={ids.runtime.totalElapsed} label="总耗时" value={runtime.totalElapsed} icon={Timer} compact />
-          <DetailItem id={ids.runtime.retryCount} label="重试" value={runtime.retryCount} icon={RotateCcw} compact />
+          <DetailItem id={ids.runtime.stageElapsed} label={t("k_073957fe")} value={runtime.stageElapsed} icon={Clock3} compact />
+          <DetailItem id={ids.runtime.totalElapsed} label={t("k_2db420d1")} value={runtime.totalElapsed} icon={Timer} compact />
+          <DetailItem id={ids.runtime.retryCount} label={t("k_e2d53a6d")} value={runtime.retryCount} icon={RotateCcw} compact />
         </div>
         <div className="status-detail-secondary-meta">
-          <DetailItem id={ids.runtime.lastTransition} label="最近切换" value={runtime.lastTransition} optional compact />
-          <DetailItem id={ids.runtime.terminalReason} label="终态原因" value={runtime.terminalReason} optional compact />
+          <DetailItem id={ids.runtime.lastTransition} label={t("k_0ca7ec8e")} value={runtime.lastTransition} optional compact />
+          <DetailItem id={ids.runtime.terminalReason} label={t("k_9c096ac4")} value={runtime.terminalReason} optional compact />
         </div>
         <details className="status-detail-technical-details status-detail-runtime-details">
           <summary><SlidersHorizontal aria-hidden="true" />运行参数</summary>
           <div className="status-detail-runtime-grid">
-            <DetailItem id={ids.runtime.inputProtocol} label="输入协议" value={runtime.inputProtocol} compact />
-            <DetailItem id={ids.runtime.stageSpecVersion} label="阶段协议" value={runtime.stageSpecVersion} compact />
-            <DetailItem id={ids.runtime.mathMode} label="公式模式" value={runtime.mathMode} compact />
+            <DetailItem id={ids.runtime.inputProtocol} label={t("k_1e8cc7c1")} value={runtime.inputProtocol} compact />
+            <DetailItem id={ids.runtime.stageSpecVersion} label={t("k_07ce56bd")} value={runtime.stageSpecVersion} compact />
+            <DetailItem id={ids.runtime.mathMode} label={t("k_be71c089")} value={runtime.mathMode} compact />
           </div>
         </details>
       </section>

@@ -13,6 +13,7 @@ import { APP_UPDATE_STATES } from "./app-update-states.js";
 import { APP_VERSION } from "./current-version.js";
 import { createStore } from "@/platform/store/store.js";
 import type { Store } from "@/platform/store/store.js";
+import { t } from "@retainpdf/i18n";
 
 /** 事件处理函数表（viewPort.bindEvents 写入 handlersRef） */
 export type HandlersBag = {
@@ -57,7 +58,7 @@ export type AppUpdateReleaseInfo = {
 };
 
 function panelOf({
-  title = "检查更新",
+  title = t("k_a6df3858"),
   body = "",
   latestVersion = "",
   currentVersion = APP_VERSION,
@@ -72,11 +73,11 @@ export function createAppUpdateViewFeature() {
     initialState: {
       buttonState: APP_UPDATE_STATES.idle,
       hasUpdate: false,
-      buttonTitle: "检查更新",
+      buttonTitle: t("k_a6df3858"),
       statusText: "",
       panel: panelOf({
-        title: "检查更新",
-        body: "点击“重新检查”从 GitHub Releases 获取最新版本。",
+        title: t("k_a6df3858"),
+        body: t("k_32cfb9ca"),
       }),
     },
     actions: {
@@ -96,30 +97,30 @@ export function createAppUpdateViewFeature() {
     setChecking: () => store.actions.apply({
       buttonState: APP_UPDATE_STATES.checking,
       hasUpdate: store.getSnapshot().hasUpdate,
-      buttonTitle: "正在检查更新",
-      statusText: "正在检查 GitHub Releases...",
+      buttonTitle: t("k_ec437645"),
+      statusText: t("k_41375d3b"),
       panel: panelOf({
-        title: "正在检查更新",
-        body: "正在连接 GitHub Releases...",
+        title: t("k_ec437645"),
+        body: t("k_0740a4e7"),
       }),
     }),
     // 抄自 view.js:102-115(setUpdateReady)
     setReady: () => store.actions.apply({
       buttonState: APP_UPDATE_STATES.idle,
       hasUpdate: false,
-      buttonTitle: "检查更新",
+      buttonTitle: t("k_a6df3858"),
       statusText: "",
       panel: panelOf({
-        title: "检查更新",
-        body: "点击“重新检查”从 GitHub Releases 获取最新版本。",
+        title: t("k_a6df3858"),
+        body: t("k_32cfb9ca"),
       }),
     }),
     // 抄自 view.js:117-133(setUpdateAvailable)
     setAvailable: (info: AppUpdateReleaseInfo = {}) => store.actions.apply({
       buttonState: APP_UPDATE_STATES.available,
       hasUpdate: true,
-      buttonTitle: `发现新版本 ${info.latestVersion}`,
-      statusText: "发现新版本",
+      buttonTitle: t("k_3f9c2e45", [info.latestVersion]),
+      statusText: t("k_01047404"),
       panel: panelOf({
         title: info.title || `RetainPDF ${info.latestVersion}`,
         body: info.body,
@@ -132,11 +133,11 @@ export function createAppUpdateViewFeature() {
     setLatest: (info?: AppUpdateReleaseInfo | null) => store.actions.apply({
       buttonState: APP_UPDATE_STATES.latest,
       hasUpdate: false,
-      buttonTitle: "已是最新版本",
-      statusText: "已是最新版本",
+      buttonTitle: t("k_e0f88c29"),
+      statusText: t("k_e0f88c29"),
       panel: panelOf({
-        title: "已是最新版本",
-        body: "当前版本已经是 GitHub Releases 上的最新版本。",
+        title: t("k_e0f88c29"),
+        body: t("k_66fe304c"),
         latestVersion: info?.latestVersion || APP_VERSION,
         currentVersion: info?.currentVersion || APP_VERSION,
         htmlUrl: info?.htmlUrl || "",
@@ -146,11 +147,11 @@ export function createAppUpdateViewFeature() {
     setError: (error?: { message?: string } | null) => store.actions.apply({
       buttonState: APP_UPDATE_STATES.error,
       hasUpdate: false,
-      buttonTitle: "检查更新失败",
-      statusText: "检查失败",
+      buttonTitle: t("k_c76c74e8"),
+      statusText: t("k_9fe494e7"),
       panel: panelOf({
-        title: "检查更新失败",
-        body: error?.message || "暂时无法连接 GitHub Releases。",
+        title: t("k_c76c74e8"),
+        body: error?.message || t("k_a894ec0b"),
       }),
     }),
   };

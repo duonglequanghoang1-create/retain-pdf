@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 "use client"
 
 import { AlertTriangle, Info } from "lucide-react"
@@ -33,8 +34,8 @@ type ConfirmDialogProps = {
 }
 
 function ConfirmDialog({
-  cancelLabel = "取消",
-  confirmLabel = "确认",
+  cancelLabel = t("k_4d0b4688"),
+  confirmLabel = t("k_b56d9ac6"),
   description,
   id,
   level = "base",
@@ -81,7 +82,7 @@ function ConfirmDialog({
               disabled={pending}
               onClick={onConfirm}
             >
-              {pending ? "处理中…" : confirmLabel}
+              {pending ? t("k_1cac8ac7") : confirmLabel}
             </Button>
           </DialogFooter>
         </DialogShell>

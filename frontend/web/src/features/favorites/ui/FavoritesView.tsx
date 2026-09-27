@@ -9,6 +9,7 @@ import { API_PREFIX } from "@/platform/config/api-constants.js";
 import { APP_EVENTS } from "@/platform/contracts/app-contract.js";
 import { fetchFavorites } from "@/platform/api/index.js";
 import { EmptyState } from "@/ui/icons/EmptyState.jsx";
+import { t } from "@retainpdf/i18n";
 
 type FavoriteItem = {
   favorite_id?: string;
@@ -25,16 +26,16 @@ type FavoriteItem = {
 
 function kindLabel(kind: string) {
   const k = `${kind || ""}`.trim();
-  if (k === "figure") return "图表";
-  if (k === "data") return "数据";
-  if (k === "sentence") return "摘录";
-  return k || "摘录";
+  if (k === "figure") return t("k_a66b71e2");
+  if (k === "data") return t("k_54b8a90b");
+  if (k === "sentence") return t("k_046a3be9");
+  return k || t("k_046a3be9");
 }
 
 function formatPage(pageIdx: unknown) {
   const n = Number(pageIdx);
   if (!Number.isFinite(n) || n < 0) return "";
-  return `第 ${n + 1} 页`;
+  return t("k_62866db3", [n + 1]);
 }
 
 function openFavoriteInReader(item: FavoriteItem): boolean {
@@ -78,7 +79,7 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
         setItems(list);
       })
       .catch((err: { message?: string }) => {
-        setError(err?.message || "读取收藏失败，请稍后重试。");
+        setError(err?.message || t("k_afe40037"));
         setItems([]);
       })
       .finally(() => setLoading(false));
@@ -89,7 +90,7 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
   }, [reload]);
 
   return (
-    <section id="favorites-view" className="library-view favorites-view" aria-label="收藏">
+    <section id="favorites-view" className="library-view favorites-view" aria-label={t("k_d07cee78")}>
       <div className="favorites-head">
         <h2 className="favorites-title">我的收藏</h2>
         <p className="favorites-subtitle">阅读时选中文字即可收藏，在这里统一回看</p>
@@ -109,8 +110,8 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
           id="favorites-empty"
           className="favorites-empty"
           instrument="flask"
-          title="暂无收藏"
-          hint="打开一本书，选中段落或图表后点「收藏」，之后就能在这里快速跳回原文。"
+          title={t("k_8a99d5db")}
+          hint={t("k_c67f5e9a")}
         >
           <button
             type="button"
@@ -136,7 +137,7 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
                   data-favorite-id={id}
                   onClick={() => {
                     if (!openFavoriteInReader(item)) {
-                      toast.error("无法打开：缺少关联书籍信息");
+                      toast.error(t("k_a7c9265c"));
                     }
                   }}
                 >
@@ -144,7 +145,7 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
                     <span className="favorites-card-kind">{kind}</span>
                     {page ? <span className="favorites-card-page">{page}</span> : null}
                   </div>
-                  <p className="favorites-card-quote">{quote || "（无摘录文本）"}</p>
+                  <p className="favorites-card-quote">{quote || t("k_89f2c433")}</p>
                   {note ? <p className="favorites-card-note">{note}</p> : null}
                 </button>
               </li>

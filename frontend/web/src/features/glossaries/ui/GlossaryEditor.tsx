@@ -8,6 +8,7 @@
 import { X } from "lucide-react";
 import { EmptyState } from "@/ui/icons/EmptyState.jsx";
 import { GLOSSARY_DOM_IDS, ENTRY_LEVEL_OPTIONS, MATCH_MODE_OPTIONS } from "./glossaries-dom-ids.js";
+import { t } from "@retainpdf/i18n";
 
 export function GlossaryEditor({ entries, onFieldChange, onRemoveRow }) {
   const hasEntries = entries.length > 0;
@@ -41,7 +42,7 @@ export function GlossaryEditor({ entries, onFieldChange, onRemoveRow }) {
                 <input
                   type="text"
                   className="glossary-entry-target"
-                  placeholder="可留空"
+                  placeholder={t("k_3afb3640")}
                   value={row.target}
                   onChange={(event) => onFieldChange(index, "target", event.target.value)}
                 />
@@ -50,7 +51,7 @@ export function GlossaryEditor({ entries, onFieldChange, onRemoveRow }) {
                 <input
                   type="text"
                   className="glossary-entry-note"
-                  placeholder="可选"
+                  placeholder={t("k_53e32830")}
                   value={row.note}
                   onChange={(event) => onFieldChange(index, "note", event.target.value)}
                 />
@@ -81,7 +82,7 @@ export function GlossaryEditor({ entries, onFieldChange, onRemoveRow }) {
                 <button
                   type="button"
                   className="glossary-entry-remove secondary"
-                  aria-label="删除词条"
+                  aria-label={t("k_9fb322c6")}
                   onClick={() => onRemoveRow(index)}
                 >
                   <X className="h-4 w-4" />
@@ -95,8 +96,8 @@ export function GlossaryEditor({ entries, onFieldChange, onRemoveRow }) {
         {!hasEntries ? (
           <EmptyState
             instrument="spectrum"
-            title="暂无词条"
-            hint="添加原词与译文，翻译时会优先用你的术语。"
+            title={t("k_4b549d03")}
+            hint={t("k_7cc0b508")}
           />
         ) : null}
       </div>

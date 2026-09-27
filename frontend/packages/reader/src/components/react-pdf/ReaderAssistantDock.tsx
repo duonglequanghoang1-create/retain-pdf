@@ -2,13 +2,14 @@ import { FileCode2, Sparkles, X } from "lucide-react";
 import type { ReactElement } from "react";
 import { useReaderContext } from "./reader-context.js";
 import type { ReaderAssistantPanel } from "./reader-assistant-types.js";
+import { t } from "@retainpdf/i18n";
 
 // 既有 import 兼容：类型真值已移至叶子文件。
 export type { ReaderAssistantPanel } from "./reader-assistant-types.js";
 
 const PANELS = [
   { id: "markdown", label: "Markdown", Icon: FileCode2 },
-  { id: "ai", label: "AI 问答", Icon: Sparkles },
+  { id: "ai", label: t("k_4e0478a9"), Icon: Sparkles },
 ] as const;
 
 export type ReaderAssistantDockProps = {
@@ -29,13 +30,13 @@ export function ReaderAssistantDock(props: ReaderAssistantDockProps): ReactEleme
   const onClose = props.onClose ?? ctx?.assistant.close ?? (() => {});
   if (!active) {
     return (
-      <nav className="reader-assistant-rail" aria-label="阅读辅助工具">
+      <nav className="reader-assistant-rail" aria-label={t("k_bf045130")}>
         {PANELS.map(({ id, label, Icon }) => (
           <button
             key={id}
             type="button"
             className="reader-assistant-rail-button"
-            aria-label={`打开${label}`}
+            aria-label={t("k_53c78d69", [label])}
             title={label}
             onClick={() => onSelect(id)}
           >
@@ -49,7 +50,7 @@ export function ReaderAssistantDock(props: ReaderAssistantDockProps): ReactEleme
 
   return (
     <header className="reader-assistant-dock-header">
-      <div className="reader-assistant-dock-tabs" role="tablist" aria-label="阅读辅助面板">
+      <div className="reader-assistant-dock-tabs" role="tablist" aria-label={t("k_a09ce546")}>
         {PANELS.map(({ id, label, Icon }) => {
           const selected = active === id;
           return (
@@ -70,8 +71,8 @@ export function ReaderAssistantDock(props: ReaderAssistantDockProps): ReactEleme
       <button
         type="button"
         className="reader-assistant-dock-close"
-        aria-label="关闭阅读辅助面板"
-        title="关闭辅助面板"
+        aria-label={t("k_e2aadb52")}
+        title={t("k_c5a60540")}
         onClick={onClose}
       >
         <X size={16} strokeWidth={2.25} aria-hidden />

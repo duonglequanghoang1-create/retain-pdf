@@ -1,6 +1,7 @@
 import {
   firstNonEmptyText,
 } from "./formatters.js";
+import { t } from "@retainpdf/i18n";
 
 function firstJobIdFromPayload(payload) {
   return firstNonEmptyText(
@@ -26,17 +27,17 @@ export function summarizeResumePlan(plan) {
     return "";
   }
   if (!plan.can_resume) {
-    return plan.reason || "当前任务暂不可从断点恢复。";
+    return plan.reason || t("k_fab2d822");
   }
   const fromStage = firstNonEmptyText(plan.from_stage, plan.resume_from, "checkpoint");
   const workflow = firstNonEmptyText(plan.resume_workflow, plan.workflow);
   const reruns = Array.isArray(plan.reruns_stages) ? plan.reruns_stages.join("、") : "";
-  const bits = [`可从 ${fromStage} 恢复`];
+  const bits = [t("k_1b5adb58", [fromStage])];
   if (workflow) {
     bits.push(`workflow=${workflow}`);
   }
   if (reruns) {
-    bits.push(`重跑 ${reruns}`);
+    bits.push(t("k_5cd973ac", [reruns]));
   }
   return bits.join("，");
 }
@@ -53,8 +54,8 @@ export function syncRerunAction({
   viewPort.setRerunAction({
     enabled,
     status: statusText || (enabled
-      ? summarizeResumePlan(resumePlan) || "后端支持从当前任务产物创建恢复任务。"
-      : summarizeResumePlan(resumePlan) || "当前任务暂不可从断点恢复。"),
+      ? summarizeResumePlan(resumePlan) || t("k_0df37973")
+      : summarizeResumePlan(resumePlan) || t("k_fab2d822")),
   });
   return actions.rerun || "";
 }
@@ -69,7 +70,7 @@ export async function rerunCurrentJob({
 }: any = {}) {
   const actionUrl = syncRerunAction({
     ...rerunContext,
-    statusText: "正在提交恢复任务...",
+    statusText: t("k_c9b88c89"),
     viewPort,
     resolveActions,
   });
@@ -77,7 +78,7 @@ export async function rerunCurrentJob({
   if (!actionUrl) {
     syncRerunAction({
       ...rerunContext,
-      statusText: "当前任务暂不可从断点恢复（缺少恢复入口，请刷新后重试）。",
+      statusText: t("k_d202a8a3"),
       viewPort,
       resolveActions,
     });
@@ -91,14 +92,14 @@ export async function rerunCurrentJob({
     if (!nextJobId) {
       syncRerunAction({
         ...rerunContext,
-        statusText: "恢复任务已提交，但响应中没有 job_id（请刷新后重试，或去详情页确认新任务）。",
+        statusText: t("k_813e3895"),
         viewPort,
         resolveActions,
       });
       return;
     }
     viewPort.closeDialog();
-    setText?.("error-box", `已创建恢复任务 ${nextJobId}，开始轮询。`);
+    setText?.("error-box", t("k_a64f1211", [nextJobId]));
     startPolling?.(nextJobId);
   } catch (error) {
     syncRerunAction({

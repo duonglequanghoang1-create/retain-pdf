@@ -4,6 +4,7 @@
 import type { DocumentJobSummary } from "@/features/library/domain.js";
 import { isPollingBootstrapPlaceholder } from "@/features/jobs/index.js";
 import { isTerminalJobStatus } from "@/platform/contracts/job-status.js";
+import { t } from "@retainpdf/i18n";
 
 const ACTIVE_STATUSES = new Set(["queued", "pending", "running", "validating"]);
 export const DOCUMENT_JOBS_REFRESH_INTERVAL_MS = 2_000;
@@ -138,13 +139,13 @@ export function mergeRuntimeDocumentJob(
   return upsertDocumentJob(jobs, runtimeJob, documentId);
 }
 
-export function documentJobPresentation(job?: DocumentJobSummary | null, idleLabel = "尚未开始") {
+export function documentJobPresentation(job?: DocumentJobSummary | null, idleLabel = t("k_434621d9")) {
   if (!job) return { label: idleLabel, tone: "muted" };
   const status = `${job.status || ""}`.trim().toLowerCase();
-  if (ACTIVE_STATUSES.has(status)) return { label: "处理中", tone: "active" };
-  if (status === "succeeded") return { label: "已完成", tone: "done" };
-  if (status === "failed") return { label: "失败", tone: "failed" };
-  if (status === "cancelled" || status === "canceled") return { label: "已取消", tone: "muted" };
+  if (ACTIVE_STATUSES.has(status)) return { label: t("k_fcb979ef"), tone: "active" };
+  if (status === "succeeded") return { label: t("k_e99b48a2"), tone: "done" };
+  if (status === "failed") return { label: t("k_3e3c8068"), tone: "failed" };
+  if (status === "cancelled" || status === "canceled") return { label: t("k_a5ffdc95"), tone: "muted" };
   return { label: status || idleLabel, tone: "muted" };
 }
 

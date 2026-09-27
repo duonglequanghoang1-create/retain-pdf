@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // 把 StatusDetailDialog 的运行时/失败/事件三块视图打回初始态。
 //
 // 原在 src/js/features/app-shell/idle-reset.ts，与 initializeIdleAppView 同住一个
@@ -40,7 +42,7 @@ export function resetStatusDetailRuntimeView({
   setText("failure-suggestion", "-");
   setText("failure-last-log-line", "-");
   setText("failure-retryable", "-");
-  setText("events-status", "全部事件");
+  setText("events-status", t("k_1e0e9810"));
   resetEventsList();
   activateDetailTab("overview");
 }

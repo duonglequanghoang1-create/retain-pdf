@@ -1,4 +1,5 @@
 import { APP_VERSION, GITHUB_REPO } from "@/platform/generated/app-version.js";
+import { t } from "@retainpdf/i18n";
 
 export const GITHUB_LATEST_RELEASE_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
 
@@ -113,7 +114,7 @@ export async function fetchLatestGithubRelease(
     },
   });
   if (!resp.ok) {
-    throw new Error(`检查更新失败: GitHub ${resp.status}`);
+    throw new Error(t("k_4de5ba3a", [resp.status]));
   }
   return await resp.json();
 }
@@ -124,7 +125,7 @@ export function normalizeReleaseInfo(release: any = {}) {
     currentVersion: APP_VERSION,
     latestVersion,
     hasUpdate: isNewerVersion(latestVersion, APP_VERSION),
-    title: release.name || latestVersion || "RetainPDF 更新",
+    title: release.name || latestVersion || t("k_5f6976ce"),
     body: release.body || "",
     htmlUrl: release.html_url || `https://github.com/${GITHUB_REPO}/releases`,
     publishedAt: release.published_at || "",

@@ -11,6 +11,7 @@ import {
 import type {
   Store,
 } from "@/platform/store/store.js";
+import { t } from "@retainpdf/i18n";
 
 // 状态卡 store + presenter(蓝图 §2 features/status/,§4 生命周期)。
 //
@@ -181,8 +182,8 @@ export type StatusCardPresenterDeps = {
 const EMPTY_STATUS_CARD_SNAPSHOT: StatusCardSnapshot = Object.freeze({
   jobId: "",
   status: "",
-  label: "等待中",
-  value: "准备中",
+  label: t("k_bd3488d0"),
+  value: t("k_4f1f8aa3"),
   detail: "",
   stageKey: "",
   progressCurrent: NaN,

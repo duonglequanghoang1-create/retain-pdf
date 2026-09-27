@@ -5,6 +5,7 @@ import type {
   OcrAmbiguityResolutionView,
   OcrAmbiguityView,
 } from "@/platform/api/index.js";
+import { t } from "@retainpdf/i18n";
 
 type LooseRecord = Record<string, any>;
 export type OcrReceiptValues = Partial<Record<OcrAmbiguityReceiptField["name"], string>>;
@@ -97,7 +98,7 @@ export function buildOcrAmbiguityRequest(
   values: OcrReceiptValues = {},
 ): OcrAmbiguityResolutionRequest {
   if (!descriptor.allowed_resolutions.includes(resolution)) {
-    throw new Error("当前 OCR 请求不允许执行该恢复操作");
+    throw new Error(t("k_f551f0af"));
   }
   const request: OcrAmbiguityResolutionRequest = {
     resolution,
@@ -107,7 +108,7 @@ export function buildOcrAmbiguityRequest(
 
   for (const field of descriptor.receipt_fields) {
     const fieldValue = `${values[field.name] || ""}`.trim();
-    if (field.required && !fieldValue) throw new Error(`请填写 ${field.label}`);
+    if (field.required && !fieldValue) throw new Error(t("k_6fc875b0", [field.label]));
     if (fieldValue) request[field.name] = fieldValue;
   }
   return request;
@@ -155,11 +156,11 @@ export async function resolveOcrAmbiguityRecovery({
   const unwrappedJob = unwrapJob(job);
   const jobId = `${unwrappedJob.job_id || unwrappedJob.id || ""}`.trim();
   if (!jobId) {
-    setStatus?.("无法恢复：缺少任务 ID。");
+    setStatus?.(t("k_7af6eb4c"));
     return { ok: false, conflict: false };
   }
   if (!descriptor) {
-    setStatus?.("恢复信息已过期，请刷新任务诊断。");
+    setStatus?.(t("k_9515ebb9"));
     return { ok: false, conflict: true };
   }
 
@@ -174,25 +175,25 @@ export async function resolveOcrAmbiguityRecovery({
   setPending?.(true);
   setStatus?.(
     resolution === "bind_existing_receipt"
-      ? "正在绑定已有 OCR 任务…"
-      : "正在创建新的 OCR 恢复任务…",
+      ? t("k_6531314d")
+      : t("k_a13dce4a"),
   );
   try {
     const response = await resolveOcrAmbiguity(jobId, apiPrefix, request);
     const nextJobId = ocrRecoveryJobId(response);
-    if (!nextJobId) throw new Error("后端未返回新的 OCR 任务 ID");
+    if (!nextJobId) throw new Error(t("k_66549475"));
     closeDialog?.();
     setGlobalError?.("");
     startPolling?.(nextJobId);
     return { ok: true, conflict: false };
   } catch (error) {
     if (isConflictError(error)) {
-      setStatus?.("OCR 状态已变化，正在刷新诊断，请重新确认。");
+      setStatus?.(t("k_8798dd6b"));
       await refreshDiagnostics?.();
       return { ok: false, conflict: true };
     }
     const message = error instanceof Error ? error.message : String(error);
-    setStatus?.(`恢复失败：${message}`);
+    setStatus?.(t("k_0796a95d", [message]));
     return { ok: false, conflict: false };
   } finally {
     setPending?.(false);

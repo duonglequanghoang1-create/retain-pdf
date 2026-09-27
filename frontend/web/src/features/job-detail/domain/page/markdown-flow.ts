@@ -4,6 +4,7 @@ import {
   renderMarkdownImagePreview,
   resolveMarkdownImagesBaseUrl,
 } from "./artifacts.js";
+import { t } from "@retainpdf/i18n";
 
 export function renderInitialMarkdownContract({
   job,
@@ -50,7 +51,7 @@ export async function loadAndRenderMarkdownFlow({
         fetchProtected,
       });
     } else if (isMarkdownReady(job)) {
-      setText("detail-markdown-status", "Markdown 已标记 ready，但 /markdown 暂未返回内容");
+      setText("detail-markdown-status", t("k_c3633536"));
     }
   } catch (error) {
     renderMarkdownContract({
@@ -60,6 +61,6 @@ export async function loadAndRenderMarkdownFlow({
       setText,
       setActionLink,
     });
-    setText("detail-markdown-status", error.message || "读取 Markdown 失败");
+    setText("detail-markdown-status", error.message || t("k_f16b0597"));
   }
 }

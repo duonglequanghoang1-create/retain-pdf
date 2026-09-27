@@ -3,6 +3,7 @@ import {
   deleteMockFavorite,
   getMockFavorites,
 } from "@/platform/mock/documents.js";
+import { t } from "@retainpdf/i18n";
 
 // mock-only 适配器:index.ts 的 mockable() 只在 mock 模式调用这些实现。
 // 必填:document_id、page_idx、block_id、quote_text(引文快照)。
@@ -22,7 +23,7 @@ export async function deleteFavorite(apiPrefix, favoriteId) {
   void apiPrefix;
   const normalized = `${favoriteId || ""}`.trim();
   if (!normalized) {
-    throw new Error("缺少 favorite_id。");
+    throw new Error(t("k_659d27f6"));
   }
   return deleteMockFavorite(normalized);
 }

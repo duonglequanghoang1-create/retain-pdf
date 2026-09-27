@@ -10,6 +10,7 @@ import {
   isMarkdownReady,
 } from "@retainpdf/domain/job";
 import { escapeHtml } from "@/platform/utils/html-formatting.js";
+import { t } from "@retainpdf/i18n";
 
 export {
   formatSizeBytes,
@@ -38,9 +39,9 @@ export function renderArtifactsManifest(manifestPayload) {
     return;
   }
   const items = Array.isArray(manifestPayload?.items) ? [...manifestPayload.items] : [];
-  summary.textContent = items.length > 0 ? `共 ${items.length} 项` : "暂无已登记产物";
+  summary.textContent = items.length > 0 ? t("k_a3289da9", [items.length]) : t("k_b7dfc536");
   if (items.length === 0) {
-    container.innerHTML = '<div class="detail-empty">暂无产物清单</div>';
+    container.innerHTML = t("k_cda4810f");
     return;
   }
   const preferredOrder = [
@@ -146,7 +147,7 @@ export function renderMarkdownContract({
   setActionLink("detail-markdown-raw-btn", rawUrl, contract.ready && !!rawUrl);
   if (!contract.ready) {
     revokeMarkdownImageUrls(markdownImageUrls);
-    setText("detail-markdown-status", "当前任务没有已发布 Markdown");
+    setText("detail-markdown-status", t("k_265c78bd"));
     setText("detail-markdown-image-count", "0");
     setText("detail-markdown-preview", "-");
     const grid = document.getElementById("detail-markdown-image-grid");
@@ -158,7 +159,7 @@ export function renderMarkdownContract({
     return;
   }
   if (!markdownPayload) {
-    setText("detail-markdown-status", "已发布，正在读取内容…");
+    setText("detail-markdown-status", t("k_d6fbb1a6"));
     return;
   }
   const refs = Array.isArray(markdownPayload?.images) && markdownPayload.images.length > 0
@@ -166,7 +167,7 @@ export function renderMarkdownContract({
     : collectMarkdownImageRefs(previewContent);
   const fileName = firstNonEmptyText(markdownPayload?.file_name, markdownArtifact.file_name);
   const sizeText = formatSizeBytes(markdownPayload?.size_bytes ?? markdownArtifact.size_bytes);
-  const statusBits = [markdownPayload?.content_with_absolute_image_urls ? "已加载 /markdown/document" : "已加载 /markdown JSON"];
+  const statusBits = [markdownPayload?.content_with_absolute_image_urls ? t("k_231b6254") : t("k_42dd95f1")];
   if (fileName) {
     statusBits.push(fileName);
   }
@@ -203,7 +204,7 @@ export async function renderMarkdownImagePreview({
   const previews = await Promise.all(previewRefs.map(async (ref) => {
     const absoluteUrl = resolveMarkdownAssetUrl(imagesBaseUrl, ref);
     if (!absoluteUrl) {
-      return { ref, absoluteUrl: "", objectUrl: "", error: "无法解析图片地址" };
+      return { ref, absoluteUrl: "", objectUrl: "", error: t("k_759350d9") };
     }
     try {
       const resp = await fetchProtected(absoluteUrl);
@@ -215,7 +216,7 @@ export async function renderMarkdownImagePreview({
       markdownImageUrls.push(objectUrl);
       return { ref, absoluteUrl, objectUrl, error: "" };
     } catch (error) {
-      return { ref, absoluteUrl, objectUrl: "", error: error.message || "图片读取失败" };
+      return { ref, absoluteUrl, objectUrl: "", error: error.message || t("k_7b96a416") };
     }
   }));
   grid.innerHTML = previews.map((item) => `
@@ -223,7 +224,7 @@ export async function renderMarkdownImagePreview({
       <div class="detail-artifact-meta mono">${escapeHtml(item.ref)}</div>
       ${item.objectUrl
         ? `<img class="detail-markdown-image" src="${escapeHtml(item.objectUrl)}" alt="${escapeHtml(item.ref)}" />`
-        : `<div class="detail-empty">${escapeHtml(item.error || "图片不可用")}</div>`}
+        : `<div class="detail-empty">${escapeHtml(item.error || t("k_b4e83909"))}</div>`}
       <div class="detail-artifact-meta mono">${escapeHtml(item.absoluteUrl || "-")}</div>
     </article>
   `).join("");

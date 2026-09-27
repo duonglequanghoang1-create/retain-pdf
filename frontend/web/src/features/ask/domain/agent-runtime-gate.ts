@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 export type AgentRuntimeCredentialConfig = {
   active_runtime?: string;
   configured_runtime?: "python" | "openai" | "fx";
@@ -24,8 +26,8 @@ export function activeAgentRuntimeMode(runtime = ""): AgentRuntimeMode {
 }
 
 export function agentRuntimeModeLabel(mode: AgentRuntimeMode): string {
-  if (mode === "openai") return "OpenAI 兼容 Agent";
-  return mode === "fx" ? "FX Gateway Agent" : "Markdown 检索问答";
+  if (mode === "openai") return t("k_026c480b");
+  return mode === "fx" ? "FX Gateway Agent" : t("k_6764e631");
 }
 
 export function resolveAgentRuntimeCredentialGate({
@@ -43,13 +45,13 @@ export function resolveAgentRuntimeCredentialGate({
     if (loading) {
       return {
         blocked: true,
-        message: "正在读取 AI Agent 配置…",
+        message: t("k_1b229bf8"),
         mode: "python",
       };
     }
     return {
       blocked: true,
-      message: error || "无法读取 AI Agent 配置，请检查本机服务后重试。",
+      message: error || t("k_d0274009"),
       mode: "python",
     };
   }
@@ -69,7 +71,7 @@ export function resolveAgentRuntimeCredentialGate({
     const target = agentRuntimeModeLabel(config.configured_runtime || "python");
     return {
       blocked: true,
-      message: `AI 服务正在切换到${target}，请稍候…`,
+      message: t("k_8148e592", [target]),
       mode,
     };
   }
@@ -79,7 +81,7 @@ export function resolveAgentRuntimeCredentialGate({
       blocked: !config.fx_gateway_api_key_configured,
       message: config.fx_gateway_api_key_configured
         ? ""
-        : "请先在设置 → 接口设置 → AI Agent 中填写 Gateway Key",
+        : t("k_2643dec5"),
       mode,
     };
   }
@@ -96,7 +98,7 @@ export function resolveAgentRuntimeCredentialGate({
     blocked: !modelKeyConfigured,
     message: modelKeyConfigured
       ? ""
-        : "请先在设置 → 接口设置 → AI Agent 中填写模型 API Key",
+        : t("k_397d9c72"),
     mode,
   };
 }

@@ -7,6 +7,7 @@ import { STATUS_DETAIL_DIALOG_IDS } from "../domain/status-detail-dom-ids.js";
 import {
   summarizeTranslationFilter,
 } from "../domain/dialog/formatters.js";
+import { t } from "@retainpdf/i18n";
 
 export function TranslationSummary({ translation }) {
   const summary = translation.summary?.summary || {};
@@ -26,7 +27,7 @@ export function TranslationSummary({ translation }) {
         <div className="translation-summary-card"><span className="label">Provider</span><span id={ids.providerFamily} className="info-value">{providerFamily}</span></div>
       </div>
       <div className="translation-summary-notes">
-        <span id={ids.listFilter} className="status-panel-note">{`当前列表筛选：${filterText}`}</span>
+        <span id={ids.listFilter} className="status-panel-note">{t("k_13cb837d", [filterText])}</span>
       </div>
     </section>
   );

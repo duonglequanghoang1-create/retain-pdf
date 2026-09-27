@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { Tabs as TabsPrimitive } from "radix-ui";
 import { cn } from "@/ui/lib/utils";
+import { t } from "@retainpdf/i18n";
 
 function IconBook(props) {
   return (
@@ -35,9 +36,9 @@ function IconFile(props) {
 }
 // shortLabel 用于按钮显示，避免挤占关闭钮；title 完整名称给悬停/无障碍
 export const BOOK_DETAIL_TABS = Object.freeze([
-  { id: "overview", label: "概览", title: "文档概览", Icon: IconBook },
-  { id: "processing", label: "进度", title: "文档进度", Icon: IconProcessing },
-  { id: "artifacts", label: "文件", title: "文件与产物", Icon: IconFile },
+  { id: "overview", label: t("k_5060421d"), title: t("k_8a427a6a"), Icon: IconBook },
+  { id: "processing", label: t("k_acf014bf"), title: t("k_d9d7e3b9"), Icon: IconProcessing },
+  { id: "artifacts", label: t("k_49deaf7d"), title: t("k_452cb5d5"), Icon: IconFile },
 ]);
 
 /**
@@ -87,7 +88,7 @@ export function BookDetailRightTabs({
     >
       <TabsPrimitive.List
         className="book-detail-right-tabs-list"
-        aria-label="书籍详情分区"
+        aria-label={t("k_5a64dc5c")}
       >
         {BOOK_DETAIL_TABS.map((tab) => {
           const isActive = activeTab === tab.id;

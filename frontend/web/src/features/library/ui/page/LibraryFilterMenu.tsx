@@ -4,14 +4,15 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@retainpdf/ui/lib/utils";
 import { isOcrOnlyItem } from "../../domain/card/library-card-semantics.js";
+import { t as tr } from "@retainpdf/i18n";
 
 export const STATUS_FILTERS = [
-  { value: "all", label: "全部" },
-  { value: "untranslated", label: "仅收藏" },
-  { value: "ocr", label: "仅 OCR" },
-  { value: "done", label: "已翻译" },
-  { value: "active", label: "处理中" },
-  { value: "failed", label: "失败" },
+  { value: "all", label: tr("k_778fc8f9") },
+  { value: "untranslated", label: tr("k_70a5ae0f") },
+  { value: "ocr", label: tr("k_4358b50f") },
+  { value: "done", label: tr("k_6b1aa462") },
+  { value: "active", label: tr("k_fcb979ef") },
+  { value: "failed", label: tr("k_3e3c8068") },
 ];
 
 const EMPTY_STATUS_COUNTS = Object.freeze({
@@ -108,7 +109,7 @@ export function LibraryFilterMenu({
           id="library-filter-surface"
           className="app-floating-surface absolute right-0 z-30 mt-2 w-64 origin-top-right p-4"
           role="dialog"
-          aria-label="筛选书库"
+          aria-label={tr("k_46788aa5")}
         >
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">处理状态</p>
           <div className="flex flex-wrap gap-2">

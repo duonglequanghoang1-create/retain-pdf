@@ -6,6 +6,7 @@
 
 import type { StatusCardJobRecord, StatusCardSnapshot } from "./status-card-store.js";
 import { isPollingBootstrapPlaceholder } from "./polling-placeholder.js";
+import { t } from "@retainpdf/i18n";
 
 // 保持向后兼容：旧路径仍可 import isPollingBootstrapPlaceholder（迁移期）
 export { isPollingBootstrapPlaceholder } from "./polling-placeholder.js";
@@ -61,8 +62,8 @@ export function mergeSnapshotWithFallback(
     ...snapshot!,
     jobId: itemJob,
     status: itemStatus,
-    label: itemStatus === "failed" ? "失败" : itemStatus === "succeeded" ? "完成" : "等待中",
-    value: itemStatus === "failed" ? "任务失败" : "准备中",
+    label: itemStatus === "failed" ? t("k_3e3c8068") : itemStatus === "succeeded" ? t("k_33246f6a") : t("k_bd3488d0"),
+    value: itemStatus === "failed" ? t("k_b0082f8b") : t("k_4f1f8aa3"),
     detail: "",
     stageKey: "",
     visualStageKey: "",
@@ -145,7 +146,7 @@ export function mergeSnapshotWithFallback(
           job_id: itemJob,
           status: "succeeded",
           stage: "finished",
-          stage_detail: fallbackDetail || "任务完成",
+          stage_detail: fallbackDetail || t("k_765b7fbf"),
           progress: {
             percent: 100,
             current: succeededCurrent,
@@ -162,15 +163,15 @@ export function mergeSnapshotWithFallback(
       jobId: itemJob,
       status: "succeeded",
       stageKey: "done",
-      label: "完成",
-      value: "翻译 PDF 已生成",
-      detail: fallbackDetail || "任务完成",
+      label: t("k_33246f6a"),
+      value: t("k_aefbc670"),
+      detail: fallbackDetail || t("k_765b7fbf"),
       displayPercent: 100,
       progressPercent: 100,
       progressCurrent: succeededCurrent,
       progressTotal: succeededTotal,
-      progressFallbackText: "完成",
-      progressText: "渲染完成",
+      progressFallbackText: t("k_33246f6a"),
+      progressText: t("k_5b1f964f"),
       progressUnit: succeededUnit,
       progressIndeterminate: false,
       visualStageKey: "done",
@@ -202,13 +203,13 @@ export function mergeSnapshotWithFallback(
       || "";
     const failedText = fallbackDetail
       || (failedPercent !== null && Number.isFinite(failedPercent)
-        ? `失败于约 ${Math.round(failedPercent)}%`
-        : "任务失败");
+        ? t("k_a27dfa30", [Math.round(failedPercent)])
+        : t("k_b0082f8b"));
     const failedJob: StatusCardJobRecord = {
       job_id: itemJob,
       status: "failed",
       stage: fallbackStage || "failed",
-      stage_detail: fallbackDetail || "任务失败",
+      stage_detail: fallbackDetail || t("k_b0082f8b"),
       progress: {
         percent: failedPercent ?? undefined,
         current: Number.isFinite(failedCurrent) ? failedCurrent : undefined,
@@ -224,8 +225,8 @@ export function mergeSnapshotWithFallback(
       ...isolatedSnapshot!,
       jobId: itemJob,
       status: "failed",
-      label: "失败",
-      value: "任务失败",
+      label: t("k_3e3c8068"),
+      value: t("k_b0082f8b"),
       detail: fallbackDetail,
       stageKey: fallbackStage,
       visualStageKey: fallbackStage,
@@ -257,7 +258,7 @@ export function mergeSnapshotWithFallback(
       jobId: itemJob,
       status: itemStatus,
       stageKey: fallbackStage || isolatedSnapshot?.stageKey || "ocr",
-      label: isolatedSnapshot?.label || (itemStatus === "queued" ? "排队中" : "处理中"),
+      label: isolatedSnapshot?.label || (itemStatus === "queued" ? t("k_4dcbbcfa") : t("k_fcb979ef")),
       detail: fallbackDetail || `${isolatedSnapshot?.detail || ""}`.trim(),
       displayPercent: Number.isFinite(itemPercent) ? itemPercent : isolatedSnapshot?.displayPercent ?? null,
       progressPercent: Number.isFinite(itemPercent) ? itemPercent : (isolatedSnapshot?.progressPercent ?? NaN),

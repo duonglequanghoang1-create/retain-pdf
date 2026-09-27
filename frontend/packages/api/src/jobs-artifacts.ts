@@ -1,6 +1,7 @@
 // jobs-artifacts — pure (no mock)
 import { API_PREFIX, buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildJobDetailEndpoint } from "./http.js";
+import { t } from "@retainpdf/i18n";
 
 function buildOcrJobDetailEndpoint(jobId: string, apiPrefix?: string): string {
   return buildJobDetailEndpoint(jobId, apiPrefix).replace(/\/jobs\//, "/ocr/jobs/");
@@ -51,13 +52,13 @@ export async function fetchJobArtifacts(jobId: string, apiPrefix = API_PREFIX): 
   const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/artifacts`, { headers: buildApiHeaders() });
   if (resp.ok) return unwrapEnvelope(await resp.json());
   if (resp.status !== 404) {
-    throw new Error(`读取任务产物失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_f17679a2", [resp.status]));
   }
 
   const ocrResp = await fetch(`${buildOcrJobDetailEndpoint(jobId, apiPrefix)}/artifacts`, { headers: buildApiHeaders() });
   if (ocrResp.ok) return unwrapEnvelope(await ocrResp.json());
   if (ocrResp.status === 404) return null;
-  throw new Error(`读取 OCR 产物失败，请稍后重试。(${ocrResp.status})`);
+  throw new Error(t("k_9412bdfb", [ocrResp.status]));
 }
 
 export async function fetchJobArtifactsManifest(jobId: string, apiPrefix = API_PREFIX): Promise<any> {
@@ -69,7 +70,7 @@ export async function fetchJobArtifactsManifest(jobId: string, apiPrefix = API_P
       if (ocrResp.status === 404) return { items: [] };
     }
     if (resp.status === 404) return { items: [] };
-    throw new Error(`读取产物清单失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_b12db8a1", [resp.status]));
   }
   return unwrapEnvelope(await resp.json());
 }
@@ -78,7 +79,7 @@ export async function fetchJobMarkdown(jobId: string, apiPrefix = API_PREFIX): P
   const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/markdown`, { headers: buildApiHeaders() });
   if (!resp.ok) {
     if (resp.status === 404) return null;
-    throw new Error(`读取 Markdown 失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_5a4bde5c", [resp.status]));
   }
   return unwrapEnvelope(await resp.json());
 }
@@ -87,7 +88,7 @@ export async function fetchJobMarkdownDocument(jobId: string, apiPrefix = API_PR
   const resp = await fetch(`${buildJobDetailEndpoint(jobId, apiPrefix)}/markdown/document`, { headers: buildApiHeaders() });
   if (!resp.ok) {
     if (resp.status === 404) return null;
-    throw new Error(`读取结构化 Markdown 失败，请稍后重试。(${resp.status})`);
+    throw new Error(t("k_f0a8c685", [resp.status]));
   }
   return unwrapEnvelope(await resp.json());
 }

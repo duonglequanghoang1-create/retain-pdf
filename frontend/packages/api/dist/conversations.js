@@ -1,6 +1,7 @@
 // conversations — pure (mock branches removed, runtime via internal)
 import { API_PREFIX, buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildApiEndpoint } from "./http.js";
+import { t as tr } from "@retainpdf/i18n";
 async function apiJson(path, options = {}, apiPrefix = API_PREFIX) {
     const url = path.startsWith("http") ? path : buildApiEndpoint(apiPrefix, path.replace(/^\//, ""));
     const headers = buildApiHeaders({ "Content-Type": "application/json", ...options.headers });
@@ -69,12 +70,12 @@ export async function appendConversationMessage(conversationId, payload, apiPref
 export function baseConversationTitle(title) {
     let t = `${title || ""}`.replace(/\s+/g, " ").trim();
     if (!t)
-        return "未命名对话";
+        return tr("k_8200c3d5");
     const fork = t.match(/^fork-\d+-(.+)$/i);
     if (fork?.[1])
         t = fork[1].trim();
     t = t.replace(/^分支\s*[·•\-—]\s*/, "").trim();
-    return t || "未命名对话";
+    return t || tr("k_8200c3d5");
 }
 export function nextForkConversationTitle(sourceTitle, existingTitles = []) {
     const base = baseConversationTitle(sourceTitle);
@@ -98,7 +99,7 @@ export async function forkConversationFromPath(options, apiPrefix = API_PREFIX) 
     if (!path.length)
         throw new Error("fork path empty");
     const firstUser = path.find((m) => m.role === "user");
-    const rawTitle = `${options.title || firstUser?.content || "未命名对话"}`.replace(/\s+/g, " ").trim();
+    const rawTitle = `${options.title || firstUser?.content || tr("k_8200c3d5")}`.replace(/\s+/g, " ").trim();
     const title = rawTitle.length > 80 ? `${rawTitle.slice(0, 79).trim()}…` : rawTitle;
     const idMap = new Map();
     const makeId = (role, i) => `fork-${role[0] || "m"}-${Date.now().toString(36)}-${i}-${Math.random().toString(36).slice(2, 7)}`;
@@ -125,7 +126,7 @@ export async function forkConversationFromPath(options, apiPrefix = API_PREFIX) 
     try {
         const detail = await apiJson("ai/conversations/fork", {
             method: "POST",
-            body: JSON.stringify({ title: title || "未命名对话", document_id: options.documentId || "", messages: forkMessages.map((m) => ({ role: m.role, content: m.content, message_id: m.message_id, parent_id: m.parent_id, citations_json: m.citations_json })) }),
+            body: JSON.stringify({ title: title || tr("k_8200c3d5"), document_id: options.documentId || "", messages: forkMessages.map((m) => ({ role: m.role, content: m.content, message_id: m.message_id, parent_id: m.parent_id, citations_json: m.citations_json })) }),
         }, apiPrefix);
         const conversation = {
             conversation_id: detail.conversation_id || "",
@@ -144,7 +145,7 @@ export async function forkConversationFromPath(options, apiPrefix = API_PREFIX) 
         return { conversation: { ...conversation, head_id: items[items.length - 1]?.message.id || "", message_count: items.length }, items };
     }
     catch { }
-    const conversation = await createConversation({ title: title || "未命名对话", document_id: options.documentId || "" }, apiPrefix);
+    const conversation = await createConversation({ title: title || tr("k_8200c3d5"), document_id: options.documentId || "" }, apiPrefix);
     const convId = conversation.conversation_id;
     for (let i = 0; i < forkMessages.length; i += 1) {
         const fm = forkMessages[i];

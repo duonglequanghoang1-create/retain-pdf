@@ -3,6 +3,7 @@
 // No DOM, no window, no fetch — only string/object formatting.
 import { firstNonEmpty } from "./core.js";
 import { resolveJobMarkdownContract } from "./artifacts.js";
+import { t } from "@retainpdf/i18n";
 
 export function firstJobIdFromPayload(payload: unknown): string {
   const candidate = payload as {
@@ -39,10 +40,10 @@ export function summarizeResumePlan(plan: {
   reruns_stages?: unknown;
 } | null | undefined): string {
   if (!plan) {
-    return "当前任务暂不可恢复。";
+    return t("k_eabf123e");
   }
   if (!plan.can_resume) {
-    return `${(plan.reason as string) || "当前任务暂不可恢复。"}`;
+    return `${(plan.reason as string) || t("k_eabf123e")}`;
   }
   const fromStage = firstNonEmpty(
     plan.from_stage,
@@ -51,12 +52,12 @@ export function summarizeResumePlan(plan: {
   );
   const workflow = firstNonEmpty(plan.resume_workflow, plan.workflow);
   const reruns = Array.isArray(plan.reruns_stages) ? plan.reruns_stages.join("、") : "";
-  const bits = [`可从 ${fromStage} 恢复`];
+  const bits = [t("k_1b5adb58", [fromStage])];
   if (workflow) {
     bits.push(`workflow=${workflow}`);
   }
   if (reruns) {
-    bits.push(`重跑 ${reruns}`);
+    bits.push(t("k_5cd973ac", [reruns]));
   }
   return bits.join("，");
 }
@@ -64,10 +65,10 @@ export function summarizeResumePlan(plan: {
 export function summarizeMathMode(job: { request_payload_math_mode?: unknown } | null | undefined): string {
   const mathMode = `${job?.request_payload_math_mode || ""}`.trim();
   if (mathMode === "placeholder") {
-    return "placeholder - 公式占位保护";
+    return t("k_d4f698d0");
   }
   if (mathMode === "direct_typst") {
-    return "direct_typst - 模型直出公式";
+    return t("k_7a005173");
   }
   return mathMode || "-";
 }
@@ -91,21 +92,21 @@ export function truncatePreview(value: unknown, maxChars = 4000): string {
   if (text.length <= maxChars) {
     return text;
   }
-  return `${text.slice(0, maxChars)}\n\n...（预览已截断）`;
+  return t("k_53489368", [text.slice(0, maxChars)]);
 }
 
 export function summarizeArtifactLabel(key: unknown): string {
   switch (`${key || ""}`.trim()) {
     case "source_pdf":
-      return "源 PDF";
+      return t("k_77ebbd3a");
     case "translated_pdf":
-      return "译后 PDF";
+      return t("k_df749c02");
     case "typst_render_pdf":
-      return "Typst 渲染 PDF";
+      return t("k_68ab7b40");
     case "markdown_raw":
       return "Markdown Raw";
     case "markdown_images_dir":
-      return "Markdown 图片目录";
+      return t("k_f44b3549");
     case "markdown_bundle_zip":
       return "Markdown Bundle";
     case "normalized_document_json":

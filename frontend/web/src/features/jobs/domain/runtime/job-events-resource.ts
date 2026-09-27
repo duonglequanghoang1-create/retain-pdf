@@ -1,5 +1,6 @@
 import { createResource } from "@/platform/store/resource.js";
 import { fetchJobEventPages, mergeJobEventPages, validateJobEventsPage } from "@retainpdf/api/jobs-events";
+import { t } from "@retainpdf/i18n";
 
 export const JOB_EVENTS_PAGE_SIZE = 500;
 export const JOB_EVENTS_PREVIEW_PAGE_SIZE = 500;
@@ -30,7 +31,7 @@ export function createJobEventsResource({ fetchJobEvents, apiPrefix, mode = "rec
     }),
     loader: async ({ jobId = "", terminal = false, isCurrent = () => true, onReset = () => {} }: any = {}) => {
       const id = `${jobId}`.trim();
-      if (!id) throw new Error("缺少 job_id，无法加载事件流。");
+      if (!id) throw new Error(t("k_f5212623"));
       const historyMode = terminal || mode === "all" ? "all" : "recent";
       let session = sessions.get(id);
       if (!session || session.mode !== historyMode) {

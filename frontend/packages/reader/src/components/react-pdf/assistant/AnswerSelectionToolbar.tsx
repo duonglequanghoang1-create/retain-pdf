@@ -14,6 +14,7 @@
 import { Quote } from "lucide-react";
 import { SelectionToolbarPrimitive, useAui } from "@assistant-ui/react";
 import { buildQuoteBlock, mergeQuoteIntoDraft } from "../../../shared/ai/answer-quote.js";
+import { t } from "@retainpdf/i18n";
 
 export function AnswerSelectionToolbar() {
   const aui = useAui();
@@ -43,7 +44,7 @@ export function AnswerSelectionToolbar() {
         type="button"
         className="reader-ai-selection-quote"
         onPointerDown={quoteSelection}
-        title="引用这段话继续提问"
+        title={t("k_4f44e95c")}
       >
         <Quote size={12} strokeWidth={2.4} aria-hidden />
         <span>引用</span>

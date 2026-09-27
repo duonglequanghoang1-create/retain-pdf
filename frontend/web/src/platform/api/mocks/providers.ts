@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // mock-only 适配器:index.ts 的 mockable() 只在 mock 模式调用这些实现。
 export async function validateMineruToken(apiPrefix, payload) {
   void apiPrefix;
@@ -5,7 +7,7 @@ export async function validateMineruToken(apiPrefix, payload) {
   return {
     ok: true,
     status: "valid",
-    summary: "模拟模式：MinerU Token 检测通过（未访问远端）",
+    summary: t("k_16d5af72"),
   };
 }
 
@@ -35,7 +37,7 @@ export async function queryDeepSeekBalance(apiPrefix, payload) {
   return {
     ok: true,
     status: "available",
-    summary: "mock mode: DeepSeek 余额可用：CNY 100.00",
+    summary: t("k_dab6be46"),
     is_available: true,
     balance_infos: [
       {

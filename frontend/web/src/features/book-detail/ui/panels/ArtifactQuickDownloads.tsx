@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { useCallback, useState } from "react";
 import {
   Columns2,
@@ -43,11 +44,11 @@ import {
 } from "../../domain/word-export-settings.js";
 
 const DOWNLOADS = [
-  { id: "source", label: "原始 PDF", Icon: FileDown },
+  { id: "source", label: t("k_87e9f577"), Icon: FileDown },
   { id: "markdown", label: "Markdown", Icon: SquareM },
-  { id: "translated", label: "翻译 PDF", Icon: Languages },
-  { id: "comparison", label: "对照 PDF", Icon: Columns2 },
-  { id: "word", label: "Word 排版稿", Icon: FileType2 },
+  { id: "translated", label: t("k_425fb4d7"), Icon: Languages },
+  { id: "comparison", label: t("k_cfe9fa15"), Icon: Columns2 },
+  { id: "word", label: t("k_548e8795"), Icon: FileType2 },
 ] satisfies Array<{
   id: ArtifactQuickDownloadId;
   label: string;
@@ -83,16 +84,16 @@ export function ArtifactQuickDownloads({
   }, [dpi, onDownload]);
 
   return (
-    <section className="book-detail-quick-downloads" aria-label="常用文件下载">
+    <section className="book-detail-quick-downloads" aria-label={t("k_121002bb")}>
       <header>
         <PackageOpen aria-hidden="true" />
         <span>文件下载</span>
-        {loading ? <LoaderCircle className="book-detail-quick-downloads-loader" aria-label="正在读取产物" /> : null}
+        {loading ? <LoaderCircle className="book-detail-quick-downloads-loader" aria-label={t("k_0fb6923b")} /> : null}
         <button
           id="book-detail-download-settings-btn"
           type="button"
           className="book-detail-quick-downloads-settings"
-          aria-label="导出设置"
+          aria-label={t("k_7aaa2f87")}
           onClick={() => setSettingsOpen(true)}
         >
           <Settings2 aria-hidden="true" />
@@ -103,7 +104,7 @@ export function ArtifactQuickDownloads({
           {DOWNLOADS.map(({ id, label, Icon }) => {
             const item = items[id];
             const downloading = Boolean(item && downloadingId === item.id);
-            const unavailableLabel = loading ? `正在读取${label}` : `${label}尚未生成`;
+            const unavailableLabel = loading ? t("k_002108b5", [label]) : t("k_bea9970d", [label]);
             return (
               <Tooltip key={id}>
                 <TooltipTrigger asChild>
@@ -114,7 +115,7 @@ export function ArtifactQuickDownloads({
                       className="book-detail-quick-download-btn"
                       disabled={!item || Boolean(downloadingId)}
                       data-available={item ? "true" : "false"}
-                      aria-label={item ? `下载${label}` : unavailableLabel}
+                      aria-label={item ? t("k_a7f76548", [label]) : unavailableLabel}
                       aria-busy={downloading || undefined}
                       onClick={() => item && download(id, item)}
                     >
@@ -125,7 +126,7 @@ export function ArtifactQuickDownloads({
                   </span>
                 </TooltipTrigger>
                 <TooltipContent side="top" sideOffset={7}>
-                  {item ? `下载${label}` : unavailableLabel}
+                  {item ? t("k_a7f76548", [label]) : unavailableLabel}
                 </TooltipContent>
               </Tooltip>
             );
@@ -155,7 +156,7 @@ export function ArtifactQuickDownloads({
                 Word 排版稿把每一页的原始扫描件作为背景图，再把译文按排版层算好的位置盖上去。
                 清晰度只影响背景图，不影响文字。
               </DialogDescription>
-              <div className="book-detail-export-settings" role="radiogroup" aria-label="背景图清晰度">
+              <div className="book-detail-export-settings" role="radiogroup" aria-label={t("k_1cc465a0")}>
                 {WORD_EXPORT_DPI_OPTIONS.map((option) => (
                   <button
                     key={option.value}

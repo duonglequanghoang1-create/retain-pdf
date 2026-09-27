@@ -3,6 +3,7 @@
 // 设计：docs/core/frontend/theme-system/THEME_SYSTEM.md · ADDING_A_THEME.md
 
 import { THEME_STORAGE_KEY } from "@/platform/config/storage-keys.js";
+import { t as tr } from "@retainpdf/i18n";
 
 export { THEME_STORAGE_KEY };
 export const DEFAULT_THEME_ID = "classic";
@@ -31,8 +32,8 @@ export type ThemeSeries = {
 };
 
 export const THEME_SERIES: readonly ThemeSeries[] = [
-  { id: "base", label: "基础", order: 10 },
-  { id: "baijia", label: "诸子百家", order: 20 },
+  { id: "base", label: tr("k_5f83e7f6"), order: 10 },
+  { id: "baijia", label: tr("k_c7b92cb5"), order: 20 },
   // 规划中：{ id: "wangchao", label: "王朝", order: 30 },
   //         { id: "niji", label: "二次元", order: 40 },
 ] as const;
@@ -64,8 +65,8 @@ export type ThemeDefinition = {
 export const THEME_REGISTRY: readonly ThemeDefinition[] = [
   {
     id: "classic",
-    label: "经典",
-    description: "黑白灰克制，默认观感",
+    label: tr("k_c0ca4b88"),
+    description: tr("k_e4dc7895"),
     group: "light",
     order: 10,
     preview: {
@@ -78,8 +79,8 @@ export const THEME_REGISTRY: readonly ThemeDefinition[] = [
   },
   {
     id: "jiangnan",
-    label: "素纸",
-    description: "冷石灰底 · 冷青绿强调（去土黄）",
+    label: tr("k_f9e9f1e1"),
+    description: tr("k_4669df82"),
     group: "accent",
     order: 20,
     decorPack: "jiangnan",
@@ -93,8 +94,8 @@ export const THEME_REGISTRY: readonly ThemeDefinition[] = [
   },
   {
     id: "mojia",
-    label: "墨家",
-    description: "素绢暖底 · 青铜机关",
+    label: tr("k_1cdcb142"),
+    description: tr("k_27332e10"),
     group: "accent",
     order: 25,
     decorPack: "mojia",
@@ -109,8 +110,8 @@ export const THEME_REGISTRY: readonly ThemeDefinition[] = [
   },
   {
     id: "seacliff",
-    label: "雾青",
-    description: "冷灰蓝底 · 青灰强调",
+    label: tr("k_d6f2f07e"),
+    description: tr("k_7b37dcc7"),
     group: "accent",
     order: 30,
     preview: {
@@ -123,8 +124,8 @@ export const THEME_REGISTRY: readonly ThemeDefinition[] = [
   },
   {
     id: "night",
-    label: "黛瓦夜色",
-    description: "深底阅读 · 黛瓦墨黑",
+    label: tr("k_6f9b112e"),
+    description: tr("k_815ccfe6"),
     group: "dark",
     order: 40,
     preview: {
@@ -140,9 +141,9 @@ export const THEME_REGISTRY: readonly ThemeDefinition[] = [
 export type ThemeId = (typeof THEME_REGISTRY)[number]["id"] | string;
 
 const GROUP_LABEL: Record<ThemeGroup, string> = {
-  light: "浅色",
-  dark: "深色",
-  accent: "意境",
+  light: tr("k_80ec9e2b"),
+  dark: tr("k_30b2c979"),
+  accent: tr("k_63a59798"),
 };
 
 export function themeGroupLabel(group: ThemeGroup): string {

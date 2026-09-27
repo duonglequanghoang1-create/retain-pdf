@@ -17,6 +17,13 @@ import "@/app/bootstrap/job-domain-adapters.js";
 import { createRoot } from "react-dom/client";
 import type { ReactNode } from "react";
 import { bootTheme } from "@/ui/theme/theme.js";
+import { initI18n, messages } from "@retainpdf/i18n";
+
+// 消息表在这里初始化，不能等到 mountShellPage：三页的入口形态不同——
+// detail 顶层直接调 mountShellPage，reader 只 import 本模块的副作用再走
+// 自己的 bootReader()，home 则在异步 bootHome() 里才挂载。只有模块作用域
+// 才是三页唯一的公共点。initI18n 自身幂等，重复进入不会重置用户选择。
+initI18n(messages);
 
 export type ShellHostOptions = {
   // home/reader 缺根时兜底创建；detail 保持“缺根即不挂载”的旧语义，默认 false。

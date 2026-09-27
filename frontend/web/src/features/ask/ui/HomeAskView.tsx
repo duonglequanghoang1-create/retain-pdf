@@ -1,5 +1,6 @@
 // 主页 AI 问答：Notion 式 —— 左历史侧栏（可折叠）+ 中空态居中 / 对话流
 
+import { t } from "@retainpdf/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Quote, Sparkles } from "lucide-react";
 import { CREDENTIALS_CHANGED_EVENT } from "@retainpdf/reader/runtime/ai";
@@ -114,7 +115,7 @@ export function HomeAskView() {
         .catch((error) => {
           if (!active || revision !== requestRevision) return;
           setRuntimeConfigError(
-            (error as Error)?.message || "无法读取 AI Agent 配置，请检查本机服务后重试。",
+            (error as Error)?.message || t("k_d0274009"),
           );
         })
         .finally(() => {
@@ -167,7 +168,7 @@ export function HomeAskView() {
         empty ? "is-empty" : "is-chat",
         sidebarCollapsed ? "is-sidebar-collapsed" : "",
       ].filter(Boolean).join(" ")}
-      aria-label="AI 问答"
+      aria-label={t("k_4e0478a9")}
       data-home-ask=""
     >
       <HomeAskSidebar
@@ -211,7 +212,7 @@ export function HomeAskView() {
               onStop={stop}
               variant="hero"
             />
-            <div className="home-ask-suggestions" role="group" aria-label="推荐问题">
+            <div className="home-ask-suggestions" role="group" aria-label={t("k_402274e3")}>
               {HOME_ASK_SUGGESTIONS.map((item) => {
                 const Icon = item.icon;
                 return (

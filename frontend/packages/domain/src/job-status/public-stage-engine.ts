@@ -36,6 +36,7 @@ import type {
   StageSnapshot,
   StructuredProgress,
 } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 export type {
   EventsPayload,
@@ -280,7 +281,7 @@ function doneProgressRecord(): ProgressRecord {
     progressPercent: 100,
     displayPercent: 100,
     progressUnit: "percent",
-    progressText: "渲染完成",
+    progressText: t("k_5b1f964f"),
     substageKey: "render_compile",
     visualStageKey: "render_compile",
     indeterminate: false,
@@ -307,13 +308,13 @@ function labelForStage(
   progress: ProgressRecord | Record<string, unknown> = {},
 ): string {
   if (stageKey === "done") {
-    return "完成";
+    return t("k_33246f6a");
   }
   if (stageKey === "failed") {
-    return "失败";
+    return t("k_3e3c8068");
   }
   if (stageKey === "canceled") {
-    return "已取消";
+    return t("k_a5ffdc95");
   }
   return summarizeStageLabel(stagePayloadForPresentation(job, stageKey, substageKey, progress));
 }
@@ -339,10 +340,10 @@ function detailForStage(
     return successDetailForWorkflow(job);
   }
   if (stageKey === "failed") {
-    return "任务失败，请查看详情";
+    return t("k_0b270e1f");
   }
   if (stageKey === "canceled") {
-    return "任务已取消";
+    return t("k_6df9b765");
   }
   return substageDetail(substageKey)
     || summarizeStageDetail(stagePayloadForPresentation(job, stageKey, substageKey, progress));

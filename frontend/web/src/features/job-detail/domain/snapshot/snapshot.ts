@@ -16,6 +16,7 @@ import {
 } from "./utils.js";
 import { summarizeStageName } from "@retainpdf/domain/job";
 import type { JobLike, JobPayload } from "@retainpdf/domain/job";
+import { t } from "@retainpdf/i18n";
 
 /** Options forwarded to resolveLiveDurations / stage history. */
 export interface StatusDetailDurationOptions {
@@ -86,17 +87,17 @@ export function buildFailureLogText(job: StatusDetailJob): string {
   const sources = [diagnostics, failure, failureDiagnostic, jobRecord];
   const fields: Array<[string, unknown]> = [
     ["Job ID", jobRecord.job_id],
-    ["状态", jobRecord.status],
-    ["阶段", firstDiagnosticValue(sources, ["failed_stage", "stage", "provider_stage", "display_stage"])],
-    ["错误码", firstDiagnosticValue(sources, ["failure_code", "error_code", "provider_code", "code"])],
+    [t("k_62e951a6"), jobRecord.status],
+    [t("k_4ca39faa"), firstDiagnosticValue(sources, ["failed_stage", "stage", "provider_stage", "display_stage"])],
+    [t("k_e08c1d4f"), firstDiagnosticValue(sources, ["failure_code", "error_code", "provider_code", "code"])],
     ["Trace ID", firstDiagnosticValue(sources, ["trace_id", "provider_trace_id"])],
     ["Request ID", firstDiagnosticValue(sources, ["request_id", "provider_request_id"])],
-    ["摘要", firstDiagnosticValue(sources, ["summary", "final_failure_summary", "detail", "message"])],
-    ["根因", firstDiagnosticValue(sources, ["root_cause", "raw_exception_type", "error_type"])],
-    ["建议", firstDiagnosticValue(sources, ["suggestion", "recovery_hint"])],
-    ["异常类型", firstDiagnosticValue(sources, ["raw_exception_type", "exception_type"])],
-    ["异常信息", firstDiagnosticValue(sources, ["raw_exception_message", "exception_message"])],
-    ["错误片段", firstDiagnosticValue(sources, ["raw_excerpt", "stderr_tail", "stdout_tail"])],
+    [t("k_46d4c1b4"), firstDiagnosticValue(sources, ["summary", "final_failure_summary", "detail", "message"])],
+    [t("k_4917290f"), firstDiagnosticValue(sources, ["root_cause", "raw_exception_type", "error_type"])],
+    [t("k_c5134eb1"), firstDiagnosticValue(sources, ["suggestion", "recovery_hint"])],
+    [t("k_5d55174a"), firstDiagnosticValue(sources, ["raw_exception_type", "exception_type"])],
+    [t("k_b1eec751"), firstDiagnosticValue(sources, ["raw_exception_message", "exception_message"])],
+    [t("k_e8131fef"), firstDiagnosticValue(sources, ["raw_excerpt", "stderr_tail", "stdout_tail"])],
     ["Traceback", firstDiagnosticValue(sources, ["traceback", "stack_trace", "stack"])],
   ];
   const lines = fields.flatMap(([label, value]) => {
@@ -107,9 +108,9 @@ export function buildFailureLogText(job: StatusDetailJob): string {
     ? job.log_tail.map(diagnosticValueText).filter(Boolean)
     : [];
   if (logTail.length) {
-    lines.push("", "最近日志", ...logTail);
+    lines.push("", t("k_70f1aab1"), ...logTail);
   }
-  if (!lines.length) return "暂无可复制的错误日志。";
+  if (!lines.length) return t("k_aa261a2a");
   return redactDiagnosticText(lines.join("\n"));
 }
 
@@ -136,25 +137,25 @@ function stageIconMarkup(job: StatusDetailJob, stageText: string | undefined): s
 
 function statusDetailNote(job: StatusDetailJob = {}): string {
   return job.status === "failed"
-    ? "查看失败原因、建议与事件流"
+    ? t("k_447360ea")
     : job.status === "succeeded" && isJobTerminal(job)
-      ? "任务已完成，可查看概览与事件流"
-      : "查看任务概览、失败原因与事件流";
+      ? t("k_737b0598")
+      : t("k_daa88539");
 }
 
 function headlineStatus(job: StatusDetailJob = {}) {
   const status = `${job?.status || ""}`.trim().toLowerCase();
-  if (status === "failed") return { statusLabel: "失败", tone: "failed" as const };
+  if (status === "failed") return { statusLabel: t("k_3e3c8068"), tone: "failed" as const };
   if (status === "succeeded" && isJobTerminal(job)) {
-    return { statusLabel: "已完成", tone: "success" as const };
+    return { statusLabel: t("k_e99b48a2"), tone: "success" as const };
   }
   if (["running", "validating"].includes(status)) {
-    return { statusLabel: "处理中", tone: "running" as const };
+    return { statusLabel: t("k_fcb979ef"), tone: "running" as const };
   }
   if (["queued", "pending"].includes(status)) {
-    return { statusLabel: "排队中", tone: "neutral" as const };
+    return { statusLabel: t("k_4dcbbcfa"), tone: "neutral" as const };
   }
-  return { statusLabel: "准备中", tone: "neutral" as const };
+  return { statusLabel: t("k_4f1f8aa3"), tone: "neutral" as const };
 }
 
 function buildHeadline(job: StatusDetailJob, stageText: string | undefined) {
@@ -169,10 +170,10 @@ function buildHeadline(job: StatusDetailJob, stageText: string | undefined) {
 function summarizeMathMode(job: StatusDetailJob): string {
   const mathMode = `${(job as JobPayload)?.request_payload_math_mode || ""}`.trim();
   if (mathMode === "placeholder") {
-    return "placeholder - 公式占位保护";
+    return t("k_d4f698d0");
   }
   if (mathMode === "direct_typst") {
-    return "direct_typst - 模型直出公式";
+    return t("k_7a005173");
   }
   return mathMode || "-";
 }
@@ -236,7 +237,7 @@ function buildFailureDetails(job: StatusDetailJob) {
       diagnostics.raw_excerpt || diagnostics.detail || failureLastLogLine,
     ),
     logText: buildFailureLogText(job),
-    retryable: typeof (diagnostics.retryable ?? retryable) === "boolean" ? ((diagnostics.retryable ?? retryable) ? "是" : "否") : "-",
+    retryable: typeof (diagnostics.retryable ?? retryable) === "boolean" ? ((diagnostics.retryable ?? retryable) ? t("k_30160a21") : t("k_8bf5c10a")) : "-",
   };
 }
 
@@ -260,8 +261,8 @@ export function buildStatusDetailSnapshot(
     rerun: {
       enabled: rerunEnabled,
       status: rerunEnabled
-        ? "后端支持从当前任务产物创建恢复任务。"
-        : "当前任务暂不可从断点恢复。",
+        ? t("k_0df37973")
+        : t("k_fab2d822"),
     },
   };
 }

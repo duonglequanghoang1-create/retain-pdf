@@ -2,6 +2,7 @@ import { firstJobIdFromPayload, firstNonEmpty as firstNonEmptyText } from "@reta
 import { buildDetailPageUrl } from "./routing.js";
 import { retryJobStage } from "@retainpdf/api/jobs-actions";
 import { API_PREFIX } from "@/platform/config/api-constants.js";
+import { t } from "@retainpdf/i18n";
 
 export { summarizeResumePlan } from "@retainpdf/domain/job";
 
@@ -16,7 +17,7 @@ export function bindRerunButton({
     const jobId = detailPageState.job?.job_id || getJobId();
     const actionUrl = `${detailPageState.rerunActionUrl || ""}`.trim();
     if (!button || (!jobId && !actionUrl)) {
-      setText("detail-rerun-status", "当前任务暂不可从断点恢复。");
+      setText("detail-rerun-status", t("k_fab2d822"));
       return;
     }
     // 409 后的二次确认走同一按钮的两步态（整页无 React，不用 ConfirmDialog）：
@@ -27,22 +28,22 @@ export function bindRerunButton({
       return;
     }
     button.disabled = true;
-    setText("detail-rerun-status", "正在提交恢复任务...");
+    setText("detail-rerun-status", t("k_c9b88c89"));
     try {
       const payload = await resumePort.submit({ actionUrl, jobId });
       const nextJobId = firstJobIdFromPayload(payload);
       if (!nextJobId) {
-        setText("detail-rerun-status", "恢复任务已提交，但响应中没有 job_id。");
+        setText("detail-rerun-status", t("k_e9f16272"));
         return;
       }
-      setText("detail-rerun-status", `已创建恢复任务 ${nextJobId}，正在跳转...`);
+      setText("detail-rerun-status", t("k_a384f4fc", [nextJobId]));
       window.location.href = buildDetailPageUrl(nextJobId);
     } catch (error) {
       const message = error.message || String(error);
       // 409 翻译歧义：通用重跑被后端暂停，直接报死用户就卡住了。
       // 给出路：二次确认重复风险后，用 retry-stage(translation) 显式重跑。
       if (/409|ambiguous/i.test(message)) {
-        setText("detail-rerun-status", "检测到重复翻译风险：重跑可能产生重复费用/产物。再点一次按钮确认仍要从翻译阶段重试。");
+        setText("detail-rerun-status", t("k_7ce89e95"));
         if (button.dataset) button.dataset.confirmRisk = "1";
         button.disabled = false;
         return;
@@ -57,18 +58,18 @@ export function bindRerunButton({
 async function retryTranslationWithRisk({ button, jobId, setText }) {
   const clearConfirm = () => { if (button.dataset) button.dataset.confirmRisk = ""; };
   try {
-    setText("detail-rerun-status", "已确认风险，正在从翻译阶段重试...");
+    setText("detail-rerun-status", t("k_7c36f9fe"));
     const retried = await retryJobStage(jobId, API_PREFIX, "translation", {
       ambiguous_request_policy: "accept_duplicate_risk",
     });
     const retryJobId = `${retried?.job_id || ""}`.trim();
     if (!retryJobId) {
-      setText("detail-rerun-status", "重试已提交，但响应中没有 job_id。");
+      setText("detail-rerun-status", t("k_4bd539e6"));
       clearConfirm();
       button.disabled = false;
       return;
     }
-    setText("detail-rerun-status", `已创建重试任务 ${retryJobId}，正在跳转...`);
+    setText("detail-rerun-status", t("k_9624d08d", [retryJobId]));
     window.location.href = buildDetailPageUrl(retryJobId);
     return;
   } catch (retryError) {

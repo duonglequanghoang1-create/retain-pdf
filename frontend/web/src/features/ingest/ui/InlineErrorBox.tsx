@@ -9,13 +9,14 @@ import { copyText } from "@/platform/utils/clipboard.js";
 import { messageForErrorBox } from "@/platform/utils/error-diagnostics.js";
 import { useStoreSnapshot } from "@/ui/hooks/use-store.js";
 import { useHomeTextStore } from "@/ui/context/home-services-context.js";
+import { t } from "@retainpdf/i18n";
 
 const selectErrorBoxValue = (snapshot) => snapshot?.texts?.["error-box"];
 
 export function InlineErrorBox() {
   const textStore = useHomeTextStore();
   const value = useStoreSnapshot(textStore, selectErrorBoxValue);
-  const [copyLabel, setCopyLabel] = useState("复制诊断");
+  const [copyLabel, setCopyLabel] = useState(t("k_6dfb2feb"));
 
   const summary = messageForErrorBox(value);
   const text = `${summary ?? ""}`.trim();
@@ -27,10 +28,10 @@ export function InlineErrorBox() {
   async function handleCopy() {
     try {
       await copyText(diagnostic);
-      setCopyLabel("已复制");
-      globalThis.window?.setTimeout(() => setCopyLabel("复制诊断"), 1600);
+      setCopyLabel(t("k_e381a576"));
+      globalThis.window?.setTimeout(() => setCopyLabel(t("k_6dfb2feb")), 1600);
     } catch {
-      setCopyLabel("复制失败");
+      setCopyLabel(t("k_f2c6b516"));
     }
   }
 

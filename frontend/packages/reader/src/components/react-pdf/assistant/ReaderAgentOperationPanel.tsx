@@ -22,6 +22,7 @@ import type {
   ReaderAgentOperationEntry,
   ReaderAgentOperationPerformOptions,
 } from "./use-reader-agent-operations.js";
+import { t } from "@retainpdf/i18n";
 
 type OperationAction = "run" | "cancel" | "commit" | "retry";
 const DISMISSED_OPERATIONS_STORAGE_KEY = "retainpdf.reader-agent-operation.dismissed.v1";
@@ -58,15 +59,15 @@ function writeDismissedOperationKeys(keys: Set<string>) {
 function statusLabel(status: ReaderAgentOperationStatus, mode: ReaderAgentRuntimeConfig["agent_confirmation_mode"]): string {
   switch (status) {
     case "draft":
-    case "awaiting_confirmation": return mode === "green_light" ? "等待自动执行" : "等待确认";
-    case "queued": return "等待执行";
-    case "running": return "正在执行";
-    case "validating": return "正在验证";
-    case "result_ready": return mode === "green_light" ? "等待自动应用" : "候选已就绪";
-    case "committed": return mode === "green_light" ? "AI 已直接应用" : "已应用";
-    case "failed": return "执行失败";
-    case "cancelled": return "已取消";
-    case "ambiguous": return "结果不确定";
+    case "awaiting_confirmation": return mode === "green_light" ? t("k_abd26d76") : t("k_25a45621");
+    case "queued": return t("k_d0de7734");
+    case "running": return t("k_0a7f07c3");
+    case "validating": return t("k_545a65a6");
+    case "result_ready": return mode === "green_light" ? t("k_1e174064") : t("k_1e53ba5e");
+    case "committed": return mode === "green_light" ? t("k_39aa2266") : t("k_c99c6952");
+    case "failed": return t("k_9746cfc7");
+    case "cancelled": return t("k_a5ffdc95");
+    case "ambiguous": return t("k_590a8964");
     default: return `${status}`;
   }
 }
@@ -76,22 +77,22 @@ function actionItems(status: ReaderAgentOperationStatus) {
     case "draft":
     case "awaiting_confirmation":
       return [
-        { action: "cancel" as const, label: "拒绝" },
-        { action: "run" as const, label: "确认执行", primary: true },
+        { action: "cancel" as const, label: t("k_03e210a6") },
+        { action: "run" as const, label: t("k_ae1109f3"), primary: true },
       ];
     case "queued":
     case "running":
     case "validating":
-      return [{ action: "cancel" as const, label: "取消 PDF 操作", danger: true }];
+      return [{ action: "cancel" as const, label: t("k_84442f48"), danger: true }];
     case "result_ready":
       return [
-        { action: "cancel" as const, label: "拒绝候选" },
-        { action: "commit" as const, label: "接受并应用", primary: true },
+        { action: "cancel" as const, label: t("k_12a73a13") },
+        { action: "commit" as const, label: t("k_9bfb5d92"), primary: true },
       ];
     case "failed":
-      return [{ action: "retry" as const, label: "重试", primary: true }];
+      return [{ action: "retry" as const, label: t("k_e2d53a6d"), primary: true }];
     case "ambiguous":
-      return [{ action: "retry" as const, label: "确认风险并重试", danger: true, risk: true }];
+      return [{ action: "retry" as const, label: t("k_cb916333"), danger: true, risk: true }];
     default:
       return [];
   }
@@ -110,7 +111,7 @@ function OperationTimeline({ events, mode }: {
   mode: ReaderAgentRuntimeConfig["agent_confirmation_mode"];
 }) {
   return (
-    <ol className="reader-agent-operation-timeline" aria-label="PDF 操作步骤">
+    <ol className="reader-agent-operation-timeline" aria-label={t("k_e53a2f17")}>
       {events.map((event) => {
         const Icon = eventIcon(event.status);
         const spinning = ["queued", "running", "validating"].includes(event.status);
@@ -150,7 +151,7 @@ function CandidatePreview({
         setObjectUrl(nextUrl);
       })
       .catch(() => {
-        if (!cancelled) setError("候选 PDF 加载失败，请重试。");
+        if (!cancelled) setError(t("k_729d4268"));
       });
     return () => {
       cancelled = true;
@@ -169,19 +170,19 @@ function CandidatePreview({
           <span>候选 PDF</span>
         </div>
         <button type="button" disabled={!objectUrl} onClick={() => setPreviewOpen((value) => !value)}>
-          {!objectUrl ? "加载中…" : previewOpen ? "收起" : "预览"}
+          {!objectUrl ? t("k_300ee3de") : previewOpen ? t("k_5d581564") : t("k_de61aa8e")}
         </button>
         <button
           type="button"
           disabled={!objectUrl}
-          aria-label="新窗口打开候选 PDF"
+          aria-label={t("k_20c74def")}
           onClick={() => window.open(objectUrl, "_blank", "noopener,noreferrer")}
         >
           <ExternalLink size={12} aria-hidden />
         </button>
       </div>
       {previewOpen ? (
-        <iframe className="reader-agent-operation-preview" src={objectUrl} title="候选 PDF 预览" />
+        <iframe className="reader-agent-operation-preview" src={objectUrl} title={t("k_2c845c17")} />
       ) : null}
       {error ? <p className="reader-agent-operation-error" role="alert">{error}</p> : null}
     </>
@@ -222,7 +223,7 @@ function OperationCard({
         <span className="reader-agent-operation-icon" aria-hidden><Bot size={15} /></span>
         <div className="reader-agent-operation-title">
           <span>PDF 操作</span>
-          <strong>{operation.intent_summary || "处理当前 PDF"}</strong>
+          <strong>{operation.intent_summary || t("k_848fbe6a")}</strong>
         </div>
         <div className="reader-agent-operation-head-actions">
           <span className="reader-agent-operation-status">{statusLabel(operation.status, mode)}</span>
@@ -230,8 +231,8 @@ function OperationCard({
             <button
               type="button"
               className="reader-agent-operation-dismiss"
-              aria-label={operation.status === "failed" ? "隐藏这条失败提示" : "隐藏这条已取消提示"}
-              title="隐藏"
+              aria-label={operation.status === "failed" ? t("k_d1ea7ca0") : t("k_c1a90a2e")}
+              title={t("k_bb0e7e01")}
               onClick={() => onDismiss(operation)}
             >
               <X size={13} aria-hidden />
@@ -248,7 +249,7 @@ function OperationCard({
         <div className="reader-agent-operation-details">
           <button type="button" onClick={() => setDetailsOpen((value) => !value)}>
             {detailsOpen ? <ChevronUp size={12} aria-hidden /> : <ChevronDown size={12} aria-hidden />}
-            {detailsOpen ? "收起步骤" : `执行步骤 ${events.length}`}
+            {detailsOpen ? t("k_c4cb1897") : t("k_ad75ebcb", [events.length])}
           </button>
           {detailsOpen ? <OperationTimeline events={events} mode={mode} /> : null}
         </div>
@@ -259,7 +260,7 @@ function OperationCard({
       {error ? <p className="reader-agent-operation-error" role="alert">{error}</p> : null}
 
       {riskOpen ? (
-        <div className="reader-agent-operation-risk" role="alertdialog" aria-label="确认重复执行风险">
+        <div className="reader-agent-operation-risk" role="alertdialog" aria-label={t("k_875120ef")}>
           <TriangleAlert size={14} aria-hidden />
           <p>上一次执行结果不确定，重试可能重复操作。确认接受风险后再继续。</p>
           <div>
@@ -273,7 +274,7 @@ function OperationCard({
                 setRiskOpen(false);
               }}
             >
-              {pendingAction === "retry" ? "处理中…" : "接受风险并重试"}
+              {pendingAction === "retry" ? t("k_1cac8ac7") : t("k_5ded2022")}
             </button>
           </div>
         </div>
@@ -290,7 +291,7 @@ function OperationCard({
                 else void onAction(item.action, operation);
               }}
             >
-              {pendingAction === item.action ? "处理中…" : item.label}
+              {pendingAction === item.action ? t("k_1cac8ac7") : item.label}
             </button>
           ))}
         </div>
@@ -332,10 +333,10 @@ export function ReaderAgentOperationPanel({
   }
 
   return (
-    <section className={`reader-agent-operations${visibleEntries.length ? " has-operations" : ""}`} aria-label="AI PDF 操作">
+    <section className={`reader-agent-operations${visibleEntries.length ? " has-operations" : ""}`} aria-label={t("k_3476c2fd")}>
       <div className={`reader-agent-mode${confirmationMode === "green_light" ? " is-green" : ""}`}>
         <ShieldCheck size={13} aria-hidden />
-        <span>{confirmationMode === "green_light" ? "绿灯模式 · 自动执行并应用" : "需要确认 · 操作前等待授权"}</span>
+        <span>{confirmationMode === "green_light" ? t("k_af4d8105") : t("k_012643ef")}</span>
       </div>
       {runtimeRestarting ? (
         <div className="reader-agent-restarting" role="status">

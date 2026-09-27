@@ -70,6 +70,7 @@ import {
 // 功能静默失效——只有真实浏览器渲染能看出来,jsdom 不会报错)。这里经 composition/external
 // 显式接管注册，避免 pages 层直连 src/js（门禁：home features/pages → external）。
 import "@/features/library/ui/island/index.js";
+import { t } from "@retainpdf/i18n";
 
 const HOME_TABS = ["library", "categories", "favorites", "ask"] as const;
 type HomeTab = (typeof HOME_TABS)[number];
@@ -250,7 +251,7 @@ function HomeShell() {
                   id="task-center-back-btn"
                   type="button"
                   className="secondary"
-                  aria-label="返回"
+                  aria-label={t("k_11d02415")}
                   onClick={() => setTasksOpen(false)}
                 >
                   ← 返回

@@ -2,20 +2,21 @@
 
 import type { StatusCardStageRetryAction } from "../../domain/status-card-store.js";
 import type { StatusCardSelectedRetry } from "./types.js";
+import { t } from "@retainpdf/i18n";
 
 export const STATUS_CARD_STAGE_RETRY_META = {
   ocr: {
-    label: "重新 OCR",
+    label: t("k_a78a2466"),
     dispatchStage: "ocr",
     actionKeys: ["ocr"] as const,
   },
   translate: {
-    label: "重新翻译",
+    label: t("k_7cb45a33"),
     dispatchStage: "translation",
     actionKeys: ["translate", "translation"] as const,
   },
   render: {
-    label: "重新渲染",
+    label: t("k_f7a515b5"),
     dispatchStage: "render",
     actionKeys: ["render"] as const,
   },
@@ -72,7 +73,7 @@ export function resolveStatusCardSelectedRetry(options: {
     return {
       label: action?.label || meta.label,
       dispatchStage: meta.dispatchStage,
-      title: "从 OCR 重新执行",
+      title: t("k_5d0eefcb"),
     };
   }
   const enabled = Boolean(action?.canRetry) || failed || succeeded;

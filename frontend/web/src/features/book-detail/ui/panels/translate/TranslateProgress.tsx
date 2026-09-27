@@ -16,6 +16,7 @@ import type { LibraryCardItem } from "@/features/library/domain.js";
 import {
   isLibraryOnlyItem,
 } from "@/features/library/domain.js";
+import { t } from "@retainpdf/i18n";
 
 const PROGRESS_STATUSES = new Set(["queued", "pending", "running", "validating"]);
 
@@ -107,7 +108,7 @@ export function BookTranslateProgressPanel({
           <div className="min-w-0">
             <p className="text-xs font-medium text-foreground">本次翻译失败</p>
             <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
-              {detail && detail !== "任务失败" ? detail : "查看失败原因后可重新提交"}
+              {detail && detail !== "任务失败" ? detail : t("k_09de8491")}
             </p>
           </div>
           <button
@@ -158,7 +159,7 @@ export function BookTranslateProgressPanel({
           type="button"
           className="home-book-live-translation-entry w-full rounded-lg bg-foreground px-4 py-2.5 text-sm font-medium text-background hover:opacity-90"
           onClick={() => onOpenLiveReader(cardJobId || jobId)}
-          aria-label="在阅读器中查看实时译文"
+          aria-label={t("k_12b4033a")}
         >
           <span className="home-book-live-translation-entry-icon" aria-hidden="true">
             <Radio />

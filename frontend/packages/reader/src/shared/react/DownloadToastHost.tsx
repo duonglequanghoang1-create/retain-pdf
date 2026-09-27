@@ -4,6 +4,7 @@
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { Toaster } from "sonner";
+import { t } from "@retainpdf/i18n";
 
 declare module "react" {
   namespace JSX {
@@ -16,9 +17,9 @@ declare module "react" {
 const TOAST_ID = "download-toast";
 
 function DownloadToastCard({
-  title = "下载中",
-  status = "正在准备...",
-  meta = "等待响应...",
+  title = t("k_327d59b5"),
+  status = t("k_90ae404e"),
+  meta = t("k_138c396c"),
   percent = NaN,
   tone = "progress",
 }) {
@@ -42,9 +43,9 @@ function DownloadToastCard({
 function applyToastState(state: any = {}) {
   const {
     visible = false,
-    title = "下载中",
-    status = "正在准备...",
-    meta = "等待响应...",
+    title = t("k_327d59b5"),
+    status = t("k_90ae404e"),
+    meta = t("k_138c396c"),
     percent = NaN,
     tone = "progress",
   } = state;

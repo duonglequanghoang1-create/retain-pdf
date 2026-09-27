@@ -4,6 +4,7 @@
 import type { ReactNode } from "react";
 import { Check, Languages } from "lucide-react";
 import { btn } from "../ui.jsx";
+import { t } from "@retainpdf/i18n";
 
 export type BookTranslateLaunchFormProps = {
   canTranslate: boolean;
@@ -62,7 +63,7 @@ export function BookTranslateLaunchForm({
               <span
                 className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-muted px-2 py-1 text-[11px] font-medium text-foreground"
                 data-ocr-reuse="true"
-                title={`复用 OCR 任务 ${ocrReuse.jobId}`}
+                title={t("k_ea1da0a5", [ocrReuse.jobId])}
               >
                 <Check className="size-3" aria-hidden="true" />
                 复用已有 OCR
@@ -83,7 +84,7 @@ export function BookTranslateLaunchForm({
                   type="number"
                   min="1"
                   value={startPage}
-                  aria-label="起始页"
+                  aria-label={t("k_f574ab40")}
                   onChange={(e) => onStartPageChange(e.target.value)}
                   className="h-8 w-16 rounded-md border border-input bg-background px-2 text-sm"
                 />
@@ -92,7 +93,7 @@ export function BookTranslateLaunchForm({
                   type="number"
                   min="1"
                   value={endPage}
-                  aria-label="结束页"
+                  aria-label={t("k_9a0c7c96")}
                   onChange={(e) => onEndPageChange(e.target.value)}
                   className="h-8 w-16 rounded-md border border-input bg-background px-2 text-sm"
                 />
@@ -113,12 +114,12 @@ export function BookTranslateLaunchForm({
             >
               <Languages className="mr-1 size-4" aria-hidden="true" />
               {busy === "translate"
-                ? "提交中…"
+                ? t("k_17e519c5")
                 : rangeOn
-                  ? "翻译选定页码"
+                  ? t("k_b4e70a37")
                   : statusTone === "failed"
-                    ? "重新翻译整本"
-                    : "翻译整本"}
+                    ? t("k_57c7f6a1")
+                    : t("k_8963c2ba")}
             </button>
           </div>
         </div>

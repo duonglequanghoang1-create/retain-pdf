@@ -11,6 +11,7 @@ import {
   writeBrowserStoredConfig,
   writeDeveloperStoredConfig,
 } from "./storage.js";
+import { t } from "@retainpdf/i18n";
 
 let desktopPersistedSnapshot = null;
 
@@ -163,14 +164,14 @@ export async function savePersistedDeveloperConfig(nextDeveloperConfig) {
 
 export async function desktopInvoke(command, args = {}) {
   if (!desktopBridge) {
-    throw new Error("桌面接口不可用");
+    throw new Error(t("k_91970a5a"));
   }
   return desktopBridge.invoke(command, args);
 }
 
 export async function openDesktopOutputDirectory() {
   if (!desktopBridge) {
-    throw new Error("桌面接口不可用");
+    throw new Error(t("k_91970a5a"));
   }
   return desktopBridge.openOutputDirectory();
 }

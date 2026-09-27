@@ -1,10 +1,11 @@
 // providers — pure
 import { buildApiEndpoint, submitJson } from "./http.js";
+import { t } from "@retainpdf/i18n";
 // 凭据检测都是"用户点了按钮在等结果"的前台请求，必须有上限：后端探针自身
 // 超时 20s（RUST_API_DEEPSEEK_PROBE_TIMEOUT_SECS），这里留 10s 余量兜住
 // 后端处理与网络往返。没有它，对端挂起就会让面板的检测按钮永久停在"检测中"。
 const PROVIDER_PROBE_TIMEOUT_MS = 30_000;
-const PROBE_TIMEOUT_MESSAGE = "检测超时（30s），请检查 API URL 与网络后重试。";
+const PROBE_TIMEOUT_MESSAGE = t("k_14ea6578");
 const probeOptions = {
     timeoutMs: PROVIDER_PROBE_TIMEOUT_MS,
     timeoutMessage: PROBE_TIMEOUT_MESSAGE,

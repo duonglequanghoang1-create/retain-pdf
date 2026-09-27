@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   RECENT_JOBS_LOADING_STATES,
 } from "./loading-state-contract.js";
@@ -140,7 +141,7 @@ export function createRecentJobsLoader({
       cache: false,
     });
     if (snapshot.status === "error") {
-      throw snapshot.error || new Error("读取最近任务失败");
+      throw snapshot.error || new Error(t("k_b4728ff8"));
     }
     return (snapshot.data || {
       collected: [],

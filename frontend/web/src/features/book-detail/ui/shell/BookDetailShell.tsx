@@ -19,6 +19,7 @@ import {
   DialogShell,
   DialogTitle,
 } from "@/ui/components/dialog.js";
+import { t } from "@retainpdf/i18n";
 
 /**
  * @param {object} props
@@ -34,7 +35,7 @@ export function BookDetailShell({
   open,
   onOpenChange,
   onCloseAutoFocus,
-  title = "书籍详情",
+  title = t("k_9e6b300f"),
   left,
   right,
   contentClassName = "",

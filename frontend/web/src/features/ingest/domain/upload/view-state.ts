@@ -1,3 +1,5 @@
+import { t } from "@retainpdf/i18n";
+
 // upload 视图 store 的状态形状与默认态。
 //
 // 从 upload-store.ts 抽出：类型定义 + 初始状态工厂。动作在 view-actions.ts，
@@ -66,16 +68,16 @@ export function createInitialUploadViewState(): UploadViewState {
     tileEnabled: true,
     ready: false,
     uploading: false,
-    label: "添加 PDF",
+    label: t("k_34be0e84"),
     labelTitle: "",
     labelVisible: true,
-    help: "上传后会先完成文件校验，再进入任务处理。",
+    help: t("k_11b6167b"),
     helpVisible: true,
-    status: "尚未选择文件",
+    status: t("k_dee789fd"),
     statusVisible: false,
     progressVisible: false,
     progressPercent: 0,
-    progressText: "上传中",
+    progressText: t("k_6818eb17"),
     actionSlotVisible: false,
     inlinePageRangeVisible: false,
     pageRangeStart: "",

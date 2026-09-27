@@ -6,6 +6,7 @@ import { OverviewPanel } from "./panels/OverviewPanel.jsx";
 import { FailurePanel } from "./panels/FailurePanel.jsx";
 import { EventsPanel } from "./panels/EventsPanel.jsx";
 import { TranslationPanel } from "./panels/TranslationPanel.jsx";
+import { t } from "@retainpdf/i18n";
 
 type TabDefinition = {
   key: "overview" | "failure" | "events" | "translation";
@@ -15,10 +16,10 @@ type TabDefinition = {
 };
 
 const TABS: TabDefinition[] = [
-  { key: "overview", label: "概览", icon: Gauge },
-  { key: "failure", label: "问题", icon: CircleAlert },
-  { key: "events", label: "活动", icon: Activity },
-  { key: "translation", label: "诊断", icon: Wrench, advanced: true },
+  { key: "overview", label: t("k_5060421d"), icon: Gauge },
+  { key: "failure", label: t("k_2fb49eec"), icon: CircleAlert },
+  { key: "events", label: t("k_b2548636"), icon: Activity },
+  { key: "translation", label: t("k_e0b47894"), icon: Wrench, advanced: true },
 ];
 
 type StatusDetailTabsProps = Pick<
@@ -48,7 +49,7 @@ export function StatusDetailTabs({
       onValueChange={(tab) => controller.activateDetailTab(tab)}
     >
       <div className="status-detail-navigation">
-        <TabsPrimitive.List className="detail-tabs" aria-label="任务详情">
+        <TabsPrimitive.List className="detail-tabs" aria-label={t("k_b19fb2fe")}>
           {TABS.map((tab) => {
             const Icon = tab.icon;
             return (

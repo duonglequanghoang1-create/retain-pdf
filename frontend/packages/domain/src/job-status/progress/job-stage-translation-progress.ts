@@ -5,6 +5,7 @@ import {
   substageProgressRange,
 } from "../contract/job-stage-substage-contract.js";
 import type { ProgressRecord } from "../types.js";
+import { t } from "@retainpdf/i18n";
 
 function percentForProgress(progress: ProgressRecord | JobProgress | null | undefined): number | null {
   const rawCurrent = progress?.current;
@@ -125,7 +126,7 @@ function progressTextForRecord(
     return substageDetail(substageKey) || progressRecord.progressText || "";
   }
   if (substageKey === "translation_batches" && ratio >= 1) {
-    return "翻译批次完成";
+    return t("k_8fe0e5e3");
   }
   return progressRecord.progressText || substageDetail(substageKey) || "";
 }

@@ -5,6 +5,7 @@
 // - 校验：s/e/pageCount 边界（供 handleTranslate 复用）
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { t } from "@retainpdf/i18n";
 
 export type UsePageRangeOptions = {
   open: boolean;
@@ -69,7 +70,7 @@ export function usePageRange({ open, documentId, pageCount }: UsePageRangeOption
     ) {
       return {
         valid: false as const,
-        error: `页码范围不合法（1–${pageCount || "总页数"}）`,
+        error: `页码范围不合法（1–${pageCount || t("k_3e19f7db")}）`,
       };
     }
     return { valid: true as const, s, e };

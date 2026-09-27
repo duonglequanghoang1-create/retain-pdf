@@ -8,6 +8,7 @@ import { btn } from "../panels/ui.jsx";
 import { documentJobPresentation, isDocumentJobActive } from "../use-document-jobs.js";
 import { countFromProgress, percentFromProgress } from "../../domain/progress-value.js";
 import { Languages, LoaderCircle, Square } from "lucide-react";
+import { t } from "@retainpdf/i18n";
 
 function progressOf(source: any): { current?: number; total?: number; percent: number | null } {
   const progress: any = source?.stage_snapshot?.progress || source?.progress || {};
@@ -27,15 +28,15 @@ function progressTextOf(source: any): string | null {
 /** 顶部一行状态：只读传入的真实任务数据，不编假数；OCR 活跃优先，否则跟翻译。 */
 function unifiedHeadline(ocr: any, translation: any): string {
   if (ocr && isDocumentJobActive(ocr.job)) {
-    const presentation = documentJobPresentation(ocr.job, "OCR 处理中");
+    const presentation = documentJobPresentation(ocr.job, t("k_7b1e2576"));
     const progress = progressTextOf(ocr.job);
-    return progress ? `OCR 处理中 · ${progress}` : `${presentation.label || "OCR 处理中"}`;
+    return progress ? t("k_d1abd768", [progress]) : `${presentation.label || t("k_7b1e2576")}`;
   }
   if (translation?.isActive) {
     const progress = progressTextOf(translation.item);
-    return progress ? `翻译中 · ${progress}` : "翻译中";
+    return progress ? t("k_59d04a2b", [progress]) : t("k_45235e0f");
   }
-  return `${translation?.status?.label || "未翻译"}`;
+  return `${translation?.status?.label || t("k_b99ebee4")}`;
 }
 
 /** 统一进度条：OCR 活跃跟 OCR，否则跟翻译；无真实数字时不渲染。 */
@@ -60,14 +61,14 @@ function ScanIcon() {
 export function BookDetailProcessingTab({ ocr, translation, loading = false, error = "", resultActionsSlot = null }: any) {
   const ocrJob = ocr?.job ?? null;
   const ocrActive = isDocumentJobActive(ocrJob);
-  const ocrStatus = documentJobPresentation(ocrJob, "尚未执行");
+  const ocrStatus = documentJobPresentation(ocrJob, t("k_6da92c16"));
   const ocrStatusLabel = ocrStatus.tone === "active"
-    ? "处理中"
+    ? t("k_fcb979ef")
     : ocrStatus.tone === "done"
-      ? "已完成"
+      ? t("k_e99b48a2")
       : ocrStatus.tone === "failed"
-        ? "失败"
-        : "未执行";
+        ? t("k_3e3c8068")
+        : t("k_373c54c1");
   const ocrShowDetail = ocrActive || ocrStatus.tone === "failed";
   const unifiedPercent = unifiedPercentOf(ocr, translation);
 
@@ -88,8 +89,8 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
 
   const ocrConfigurable = !bootstrapping && !ocrActive && !ocr?.pending;
   const translationDescription = translation.ocrReuse
-    ? "复用已有 OCR，直接翻译并生成阅读产物"
-    : "执行 OCR、翻译并生成阅读产物";
+    ? t("k_262d18a8")
+    : t("k_83bdd7c3");
   // 翻译运行中不允许再单独发起 OCR：派生出的 OCR 状态此时是 succeeded，
   // 会让按钮显示成可点的「重新 OCR」，点下去会并发一个竞争任务。
   const translationActive = Boolean(translation?.isActive);
@@ -107,11 +108,11 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
         type="button"
         className={btn("outline")}
         disabled={bootstrapping || Boolean(ocr?.pending) || ocrActive || ocrBlockedByTranslation || Boolean(translation?.busy)}
-        title={ocrBlockedByTranslation ? "翻译进行中，暂不能单独执行 OCR" : undefined}
+        title={ocrBlockedByTranslation ? t("k_d6268438") : undefined}
         onClick={ocr?.onOcr}
       >
         <ScanIcon />
-        <span className="ml-1.5">{bootstrapping ? "读取中…" : ocr?.pending ? "提交中…" : ocrActive ? "OCR 处理中" : ocrJob ? "重新 OCR" : "开始 OCR"}</span>
+        <span className="ml-1.5">{bootstrapping ? t("k_f950213a") : ocr?.pending ? t("k_17e519c5") : ocrActive ? t("k_7b1e2576") : ocrJob ? t("k_a78a2466") : t("k_694e8fd2")}</span>
       </button>
       {ocrCancelable ? (
         <button
@@ -122,7 +123,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
           onClick={() => ocr?.onCancel?.(ocrJobId)}
         >
           {ocr?.cancelling ? <LoaderCircle className="size-3.5 animate-spin" aria-hidden="true" /> : <Square className="size-3.5" aria-hidden="true" />}
-          <span className="ml-1.5">{ocr?.cancelling ? "取消中…" : "取消任务"}</span>
+          <span className="ml-1.5">{ocr?.cancelling ? t("k_b3f55eec") : t("k_d258a63c")}</span>
         </button>
       ) : null}
     </>
@@ -136,7 +137,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
       {error ? <p className="rounded-lg border border-foreground/20 bg-muted/40 px-3 py-2 text-xs text-foreground" role="alert">{error}</p> : null}
       {loading ? <p className="text-xs text-muted-foreground">正在读取文档任务…</p> : null}
       {/* 全卡唯一 .book-detail-processing-card：OCR / 翻译收敛成同一条流水线。 */}
-      <section className="book-detail-processing-card" data-processing-capability="processing" aria-label="处理">
+      <section className="book-detail-processing-card" data-processing-capability="processing" aria-label={t("k_9263e46a")}>
         <header className="book-detail-processing-head">
           <span className="book-detail-processing-head-icon" aria-hidden="true">
             <Languages />
@@ -144,7 +145,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
           <div className="book-detail-processing-head-copy">
             <h3>处理</h3>
             <p className="book-detail-processing-unified-status" data-processing-unified-status="true">
-              {bootstrapping ? "正在读取处理状态…" : unifiedHeadline(ocr, translation)}
+              {bootstrapping ? t("k_a888df58") : unifiedHeadline(ocr, translation)}
             </p>
           </div>
         </header>
@@ -173,9 +174,9 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
           {ocrShowDetail ? (
             <ProcessingJobSummary
               job={ocrJob}
-              idleText="尚未执行 OCR"
+              idleText={t("k_d9fee0ce")}
               id="book-detail-ocr-progress"
-              labels={{ active: "OCR 处理中", done: "OCR 完成", failed: "OCR 失败" }}
+              labels={{ active: t("k_7b1e2576"), done: t("k_5f973658"), failed: t("k_e32947cf") }}
               subject="OCR"
             />
           ) : (
@@ -200,7 +201,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
               {ocr?.rangeOn ? (
                 <div className="book-detail-ocr-range-inputs">
                   <input
-                    aria-label="OCR 起始页"
+                    aria-label={t("k_d65181ac")}
                     type="number"
                     min="1"
                     value={ocr?.startPage ?? ""}
@@ -209,7 +210,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
                   />
                   <span className="text-xs text-muted-foreground">–</span>
                   <input
-                    aria-label="OCR 结束页"
+                    aria-label={t("k_03b766f7")}
                     type="number"
                     min="1"
                     value={ocr?.endPage ?? ""}

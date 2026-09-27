@@ -1,19 +1,20 @@
 // glossaries — pure
 import { buildApiHeaders, unwrapEnvelope } from "./internal/runtime.js";
 import { buildApiEndpoint, submitJson } from "./http.js";
+import { t } from "@retainpdf/i18n";
 export async function fetchGlossaries(apiPrefix) {
     const resp = await fetch(buildApiEndpoint(apiPrefix, "glossaries"), { headers: buildApiHeaders() });
     if (!resp.ok)
-        throw new Error(`读取术语表失败，请稍后重试。(${resp.status})`);
+        throw new Error(t("k_e566b4ef", [resp.status]));
     return unwrapEnvelope(await resp.json());
 }
 export async function fetchGlossary(glossaryId, apiPrefix) {
     const normalizedGlossaryId = `${glossaryId || ""}`.trim();
     if (!normalizedGlossaryId)
-        throw new Error("读取术语表失败: 缺少 glossary_id");
+        throw new Error(t("k_048670d4"));
     const resp = await fetch(buildApiEndpoint(apiPrefix, `glossaries/${encodeURIComponent(normalizedGlossaryId)}`), { headers: buildApiHeaders() });
     if (!resp.ok)
-        throw new Error(`读取术语表详情失败，请稍后重试。(${resp.status})`);
+        throw new Error(t("k_2169805e", [resp.status]));
     return unwrapEnvelope(await resp.json());
 }
 export async function createGlossary(apiPrefix, payload) {
@@ -22,7 +23,7 @@ export async function createGlossary(apiPrefix, payload) {
 export async function updateGlossary(apiPrefix, glossaryId, payload) {
     const normalizedGlossaryId = `${glossaryId || ""}`.trim();
     if (!normalizedGlossaryId)
-        throw new Error("保存术语表失败: 缺少 glossary_id");
+        throw new Error(t("k_3facc259"));
     const resp = await fetch(buildApiEndpoint(apiPrefix, `glossaries/${encodeURIComponent(normalizedGlossaryId)}`), {
         method: "PUT",
         headers: buildApiHeaders({ "Content-Type": "application/json" }),
@@ -30,25 +31,25 @@ export async function updateGlossary(apiPrefix, glossaryId, payload) {
     });
     if (!resp.ok) {
         const text = await resp.text();
-        throw new Error(`保存术语表失败: ${resp.status} ${text}`);
+        throw new Error(t("k_002f4d31", [resp.status, text]));
     }
     return unwrapEnvelope(await resp.json());
 }
 export async function deleteGlossary(apiPrefix, glossaryId) {
     const normalizedGlossaryId = `${glossaryId || ""}`.trim();
     if (!normalizedGlossaryId)
-        throw new Error("删除术语表失败: 缺少 glossary_id");
+        throw new Error(t("k_00f5150c"));
     const resp = await fetch(buildApiEndpoint(apiPrefix, `glossaries/${encodeURIComponent(normalizedGlossaryId)}`), { method: "DELETE", headers: buildApiHeaders() });
     if (!resp.ok) {
         const text = await resp.text();
-        throw new Error(`删除术语表失败: ${resp.status} ${text}`);
+        throw new Error(t("k_89f3a37e", [resp.status, text]));
     }
     return unwrapEnvelope(await resp.json());
 }
 export async function exportGlossaryCsv(apiPrefix, glossaryId) {
     const normalizedGlossaryId = `${glossaryId || ""}`.trim();
     if (!normalizedGlossaryId)
-        throw new Error("导出术语表失败: 缺少 glossary_id");
+        throw new Error(t("k_7bbecdd1"));
     const resp = await fetch(buildApiEndpoint(apiPrefix, `glossaries/${encodeURIComponent(normalizedGlossaryId)}/export.csv`), { headers: buildApiHeaders() });
     if (!resp.ok) {
         const text = await resp.text();

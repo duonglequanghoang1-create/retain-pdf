@@ -1,9 +1,9 @@
 export declare const STATUS_STAGE_FLOW: readonly string[];
 export declare const STATUS_STAGE_LABELS: Readonly<{
     ocr: "OCR";
-    translate: "翻译";
-    render: "渲染";
-    done: "完成";
+    translate: string;
+    render: string;
+    done: string;
 }>;
 export declare function isStatusStageKey(stageKey?: string): boolean;
 export declare function statusStageLabel(stageKey?: string, fallback?: string): any;

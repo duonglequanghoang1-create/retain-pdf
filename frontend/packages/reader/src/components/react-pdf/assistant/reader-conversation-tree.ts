@@ -4,6 +4,7 @@
 import type { Dispatch, MutableRefObject, SetStateAction } from "react";
 import type { ReaderAskTreeItem } from "./reader-ask-tree.js";
 import type { ReaderConversationTreePort } from "./reader-conversation-ports.js";
+import { t } from "@retainpdf/i18n";
 
 export function createReaderConversationTreePort(input: {
   setItems: Dispatch<SetStateAction<ReaderAskTreeItem[]>>;
@@ -42,7 +43,7 @@ export function createReaderConversationTreePort(input: {
             id: assistantId,
             role: "assistant",
             content: "",
-            progress: "正在重新生成…",
+            progress: t("k_f7adee6c"),
             status: { type: "running" },
             citations: [],
           },
@@ -60,7 +61,7 @@ export function createReaderConversationTreePort(input: {
                 ...item.message,
                 status: { type: "incomplete", reason: "cancelled" as const },
                 progress: "",
-                content: item.message.content.trim() || "已取消",
+                content: item.message.content.trim() || t("k_a5ffdc95"),
               },
             }
             : item,
@@ -68,7 +69,7 @@ export function createReaderConversationTreePort(input: {
       );
     },
     markRunningAsError: (message) => {
-      const fallback = `${message || ""}`.trim() || "生成回答失败，请重试。";
+      const fallback = `${message || ""}`.trim() || t("k_dbb9ca66");
       setItems((prev) => prev.map((item) => (
         item.message.status?.type === "running"
           ? {

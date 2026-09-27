@@ -4,6 +4,7 @@ import { MOCK_JOB_ID } from "./constants.js";
 import { MOCK_DOCUMENT_ID, documents, getMockDocumentByJobId } from "./document-seed.js";
 import { nowIso, sequentialId, trimId } from "./mock-utils.js";
 import type { MockFavorite, MockFavoriteCreatePayload } from "./documents.types.js";
+import { t } from "@retainpdf/i18n";
 
 let mockFavorites: MockFavorite[] | null = null;
 let favoriteSeq = 0;
@@ -19,7 +20,7 @@ function favorites(): MockFavorite[] {
         page_idx: 0,
         block_id: "b-intro-3",
         kind: "sentence",
-        quote_text: "现代有机合成已达到极高的精密水平。",
+        quote_text: t("k_75b89594"),
         translated_quote_text: "",
         note: "",
         created_at: "2026-06-01T11:00:00Z",
@@ -33,7 +34,7 @@ function favorites(): MockFavorite[] {
         kind: "figure",
         quote_text: "Scheme 1b",
         translated_quote_text: "",
-        note: "萘系刚性对位阻的影响",
+        note: t("k_d9bc642e"),
         created_at: "2026-06-01T11:20:00Z",
       },
     ];
@@ -50,7 +51,7 @@ export function createMockFavorite(payload: MockFavoriteCreatePayload = {}): Moc
     ? documents().find((item) => item.document_id === requestedDocId)
     : (jobId ? getMockDocumentByJobId(jobId) : null);
   if (!doc || payload.page_idx === undefined || !payload.block_id || !quoteText) {
-    throw new Error("document_id 或 job_id、page_idx、block_id、quote_text 为必填。(400)");
+    throw new Error(t("k_ad3cb2f0"));
   }
   favorites(); // 先确保种子数据与 favoriteSeq 初始化,再分配新 id
   favoriteSeq += 1;
@@ -88,7 +89,7 @@ export function deleteMockFavorite(favoriteId: string): { favorite_id: string } 
   const list = favorites();
   const index = list.findIndex((item) => item.favorite_id === favoriteId);
   if (index < 0) {
-    throw new Error("未找到该收藏。(404)");
+    throw new Error(t("k_46a3581e"));
   }
   list.splice(index, 1);
   return { favorite_id: favoriteId };
@@ -108,10 +109,10 @@ export function countMockFavoritesForDocument(documentId: string): number {
 export function clearMockFavoritesForDocument(documentId: string): number {
   const normalized = trimId(documentId);
   if (!normalized) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   if (!documents().some((item) => item.document_id === normalized)) {
-    throw new Error("未找到该文档。(404)");
+    throw new Error(t("k_733b242f"));
   }
   const list = favorites();
   const before = list.length;

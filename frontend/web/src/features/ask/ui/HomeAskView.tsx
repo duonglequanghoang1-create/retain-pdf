@@ -199,7 +199,7 @@ export function HomeAskView() {
             <div className="home-ask-empty-mascot" aria-hidden>
               <Sparkles size={22} strokeWidth={1.85} />
             </div>
-            <h2 className="home-ask-empty-title">随时待命，有什么可以帮你？</h2>
+            <h2 className="home-ask-empty-title">{t("k_f03399b4")}</h2>
             <HomeAskComposer
               isRunning={isRunning}
               credentialBlocked={credentialGate.blocked}
@@ -253,7 +253,7 @@ export function HomeAskView() {
                 }}
               >
                 <Quote size={12} strokeWidth={2.4} aria-hidden />
-                <span>引用</span>
+                <span>{t("k_23c0e102")}</span>
               </button>
             ) : null}
             <div className="home-ask-scroll" ref={threadScrollRef}>

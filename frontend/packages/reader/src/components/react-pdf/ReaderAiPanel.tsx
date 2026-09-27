@@ -109,8 +109,8 @@ export function ReaderAiPanel({
       {!jobId ? (
         <div className="reader-float-ai-empty">
           <Sparkles size={22} strokeWidth={1.75} aria-hidden />
-          <p>当前文档还没有可用于 AI 的解析产物</p>
-          <span>请先完成 OCR 文档解析</span>
+          <p>{t("k_05f5a0fc")}</p>
+          <span>{t("k_074e206d")}</span>
         </div>
       ) : (
         <div className="reader-float-ai-body">

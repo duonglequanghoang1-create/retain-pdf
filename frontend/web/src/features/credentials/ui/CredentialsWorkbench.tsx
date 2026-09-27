@@ -87,7 +87,7 @@ export function CredentialsWorkbench() {
               <div className="credential-card-head credential-card-head-rich">
                 <span className="credential-card-icon" aria-hidden="true"><ScanText /></span>
                 <div className="credential-card-copy">
-                  <h3>OCR 识别</h3>
+                  <h3>{t("k_bb5acef1")}</h3>
                 </div>
                 <select
                   id={BROWSER_IDS.ocrProviderSelect}
@@ -110,7 +110,7 @@ export function CredentialsWorkbench() {
       </div>
       {setupMode ? (
         <p className="credential-agent-setup-note">
-          AI Agent 可稍后在设置中配置。
+          {t("k_5f748271")}
         </p>
       ) : (
         <div className="credential-agent-section">

@@ -179,7 +179,7 @@ export function StatusCardEmbedded({
               aria-label={t("k_b19fb2fe")}
               onClick={openDetail}
             >
-              详情
+              {t("k_4f55ee1e")}
             </button>
           </div>
 

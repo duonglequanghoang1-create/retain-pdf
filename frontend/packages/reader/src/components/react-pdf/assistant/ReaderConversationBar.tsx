@@ -213,7 +213,7 @@ export function ReaderConversationBar({
           ) : (
             <Plus size={14} strokeWidth={2.4} aria-hidden />
           )}
-          <span>新对话</span>
+          <span>{tr("k_1b7abf96")}</span>
         </button>
       </div>
 
@@ -307,7 +307,7 @@ export function ReaderConversationBar({
                     >
                       <span className="aui-session-item-title">{text}</span>
                       {selected ? (
-                        <span className="aui-session-item-badge">当前</span>
+                        <span className="aui-session-item-badge">{tr("k_25e74dce")}</span>
                       ) : null}
                     </button>
                     <button

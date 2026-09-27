@@ -41,7 +41,7 @@ export function AgentCandidatePreview({
   return (
     <div className="home-ask-operation-candidate">
       <div className="home-ask-operation-candidate-head">
-        <span><FileText size={14} aria-hidden />候选 PDF</span>
+        <span><FileText size={14} aria-hidden />{t("k_dc40dd3d")}</span>
         <div>
           <button type="button" disabled={!objectUrl} onClick={() => setExpanded((value) => !value)}>
             {!objectUrl ? t("k_300ee3de") : expanded ? t("k_f629e49d") : t("k_de61aa8e")}
@@ -51,7 +51,7 @@ export function AgentCandidatePreview({
             disabled={!objectUrl}
             onClick={() => window.open(objectUrl, "_blank", "noopener,noreferrer")}
           >
-            新窗口打开<ExternalLink size={12} aria-hidden />
+            {t("k_9b850cb9")}<ExternalLink size={12} aria-hidden />
           </button>
         </div>
       </div>

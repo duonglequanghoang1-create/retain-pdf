@@ -19,6 +19,7 @@
 //   - ./book-card/BookCardCover.tsx        封面/徽标/进度覆盖层
 //   - ./book-card/BookCardMediaOverlays.tsx 批量选择与 hover 操作菜单
 
+import { t } from "@retainpdf/i18n";
 import { memo } from "react";
 import { cn } from "@retainpdf/ui/lib/utils";
 import { isLibraryCardProcessing, libraryCardBadge } from "../../domain/card/library-card-badge.js";
@@ -184,7 +185,7 @@ function BookCardImpl({
           {title}
         </h3>
         <p className="book-card-meta recent-job-real-id line-clamp-1 text-[10px] text-muted-foreground">
-          {pageCount} 页 · {updatedAt}
+          {pageCount} {t("k_aa0f1ce1")} {updatedAt}
         </p>
       </div>
     </div>

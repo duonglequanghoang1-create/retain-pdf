@@ -45,10 +45,10 @@ function NoteItem({
         </span>
         <div className="reader-notes-item-actions">
           <button type="button" className="reader-notes-link" onClick={() => onJump(note)}>
-            定位
+            {t("k_84476c81")}
           </button>
           <button type="button" className="reader-notes-danger" onClick={() => onRemove(note.id)}>
-            删除
+            {t("k_3755f56f")}
           </button>
         </div>
       </div>
@@ -71,10 +71,10 @@ function NoteItem({
                 setEditing(false);
               }}
             >
-              保存
+              {t("k_fadf24db")}
             </button>
             <button type="button" className="reader-notes-link" onClick={() => setEditing(false)}>
-              取消
+              {t("k_4d0b4688")}
             </button>
           </div>
         </div>
@@ -89,7 +89,7 @@ function NoteItem({
         </button>
       ) : (
         <button type="button" className="reader-notes-add-note" onClick={() => setEditing(true)}>
-          添加笔记
+          {t("k_efb37dd0")}
         </button>
       )}
     </article>
@@ -120,7 +120,7 @@ export function ReaderNotesPanel({
       onClose={onClose}
       toolbar={(
         <>
-          <span className="reader-notes-count">{count} 条</span>
+          <span className="reader-notes-count">{count} {t("k_bce2ef61")}</span>
           <button
             type="button"
             className="reader-notes-export"
@@ -140,12 +140,12 @@ export function ReaderNotesPanel({
     >
       {count === 0 ? (
         <p className="reader-notes-empty">
-          暂无批注。在 PDF 上拖选文字，点「添加批注」。
+          {t("k_496a8d50")}
         </p>
       ) : (
         groups.map((group) => (
           <section key={group.page} className="reader-notes-group">
-            <h3 className="reader-notes-group-title">第 {group.page} 页</h3>
+            <h3 className="reader-notes-group-title">{t("k_dae828fe")} {group.page} {t("k_73422182")}</h3>
             {group.items.map((note) => (
               <NoteItem
                 key={note.id}

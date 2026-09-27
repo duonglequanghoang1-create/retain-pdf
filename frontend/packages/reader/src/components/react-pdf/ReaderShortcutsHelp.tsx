@@ -81,7 +81,7 @@ export function ReaderShortcutsHelp() {
           aria-label={t("k_e9476de3")}
         >
           <div className="reader-react-shortcuts-head">
-            <strong>快捷键</strong>
+            <strong>{t("k_31e33107")}</strong>
             <button
               type="button"
               className="reader-react-shortcuts-close reader-floating-close"
@@ -106,7 +106,7 @@ export function ReaderShortcutsHelp() {
               </section>
             ))}
           </div>
-          <p className="reader-react-shortcuts-foot">在输入框内不会触发快捷键</p>
+          <p className="reader-react-shortcuts-foot">{t("k_19f41b9d")}</p>
         </div>
       ) : null}
     </div>

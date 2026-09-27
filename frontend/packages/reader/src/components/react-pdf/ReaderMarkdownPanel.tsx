@@ -168,7 +168,7 @@ export function ReaderMarkdownPanel({
           }}
         >
           <ListTree size={13} aria-hidden />
-          目录{outline.length > 0 ? ` ${outline.length}` : ""}
+          {t("k_41e5243e")}{outline.length > 0 ? ` ${outline.length}` : ""}
         </button>
         {pendingResume ? (
           <button
@@ -176,14 +176,14 @@ export function ReaderMarkdownPanel({
             className="reader-markdown-resume"
             onClick={() => resumeCleanupRef.current?.()}
           >
-            继续加载
+            {t("k_4a467776")}
           </button>
         ) : null}
       </div>
       {outlineOpen && outline.length > 0 ? (
         <nav className="reader-markdown-outline" aria-label={t("k_f15eb0a3")}>
           {!outlineComplete ? (
-            <p className="reader-markdown-outline-note">仅显示已加载内容，滚动可加载更多</p>
+            <p className="reader-markdown-outline-note">{t("k_5782b942")}</p>
           ) : null}
           {outline.map((item) => (
             <button

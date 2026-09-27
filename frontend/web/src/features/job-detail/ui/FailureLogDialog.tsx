@@ -63,7 +63,7 @@ export function FailureLogDialog({
                 <FileWarning />
               </span>
               <div>
-                <DialogTitle>错误日志</DialogTitle>
+                <DialogTitle>{t("k_6a1d4ecc")}</DialogTitle>
                 <DialogDescription>{jobId && jobId !== "-" ? t("k_2d29c0fa", [jobId]) : t("k_e94d4252")}</DialogDescription>
               </div>
             </div>

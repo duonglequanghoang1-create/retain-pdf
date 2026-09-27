@@ -18,8 +18,8 @@ export function AgentRuntimeConfirmationField({
   return (
     <fieldset className="credential-agent-confirmation">
       <legend>
-        操作确认
-        <span>全局设置</span>
+        {t("k_2f371962")}
+        <span>{t("k_c3d367e4")}</span>
       </legend>
       <div className="credential-agent-confirmation-options" role="radiogroup" aria-label={t("k_fe616668")}>
         <button
@@ -31,7 +31,7 @@ export function AgentRuntimeConfirmationField({
           disabled={busy}
         >
           <ShieldCheck aria-hidden="true" />
-          <span>需要确认</span>
+          <span>{t("k_9deb52e2")}</span>
           {confirmationMode === "explicit" ? <Check className="credential-agent-confirmation-check" aria-hidden="true" /> : null}
         </button>
         <button
@@ -43,13 +43,13 @@ export function AgentRuntimeConfirmationField({
           disabled={busy}
         >
           <Zap aria-hidden="true" />
-          <span>绿灯模式</span>
+          <span>{t("k_0c8e07f4")}</span>
           {confirmationMode === "green_light" ? <Check className="credential-agent-confirmation-check" aria-hidden="true" /> : null}
         </button>
       </div>
       {confirmationMode === "green_light" ? (
         <p>
-          AI 可直接执行并应用受支持的 PDF 操作，无需逐步确认；不允许执行 shell 或任意系统命令。
+          {t("k_1add3c5d")}
         </p>
       ) : null}
     </fieldset>

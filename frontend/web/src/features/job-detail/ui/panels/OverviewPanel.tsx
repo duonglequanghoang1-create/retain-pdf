@@ -89,13 +89,13 @@ export function OverviewPanel({ overview, active }: OverviewPanelProps) {
         <div className="status-detail-section-head">
           <div className="status-detail-section-title">
             <Activity aria-hidden="true" />
-            <h3>运行概览</h3>
+            <h3>{t("k_aa4a9820")}</h3>
           </div>
           <OverviewMarkdownBundleLink />
         </div>
         <div className="status-detail-current-stage">
           <Activity aria-hidden="true" />
-          <span className="label">当前</span>
+          <span className="label">{t("k_25e74dce")}</span>
           <span id={ids.runtime.currentStage} className="info-value">{runtime.currentStage}</span>
         </div>
         <div className="status-detail-metrics-grid">
@@ -108,7 +108,7 @@ export function OverviewPanel({ overview, active }: OverviewPanelProps) {
           <DetailItem id={ids.runtime.terminalReason} label={t("k_9c096ac4")} value={runtime.terminalReason} optional compact />
         </div>
         <details className="status-detail-technical-details status-detail-runtime-details">
-          <summary><SlidersHorizontal aria-hidden="true" />运行参数</summary>
+          <summary><SlidersHorizontal aria-hidden="true" />{t("k_b215c993")}</summary>
           <div className="status-detail-runtime-grid">
             <DetailItem id={ids.runtime.inputProtocol} label={t("k_1e8cc7c1")} value={runtime.inputProtocol} compact />
             <DetailItem id={ids.runtime.stageSpecVersion} label={t("k_07ce56bd")} value={runtime.stageSpecVersion} compact />
@@ -120,7 +120,7 @@ export function OverviewPanel({ overview, active }: OverviewPanelProps) {
         <div className="status-detail-section-head">
           <div className="status-detail-section-title">
             <History aria-hidden="true" />
-            <h3>过程时间线</h3>
+            <h3>{t("k_902ed25d")}</h3>
           </div>
         </div>
         <StageHistoryList job={overview.job} finishedAtFallback={overview.finishedAtFallback} />

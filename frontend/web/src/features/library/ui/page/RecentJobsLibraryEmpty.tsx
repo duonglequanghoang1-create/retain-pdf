@@ -6,7 +6,7 @@ export function RecentJobsLibraryEmpty({ mode, errorMessage, emptyMessage, onUpl
   return (
     <div id="recent-jobs-empty" className={mode === "list" ? "hidden" : undefined}>
       {mode === "loading" ? (
-        <div className="events-empty">正在加载最近任务…</div>
+        <div className="events-empty">{t("k_c4b01fa0")}</div>
       ) : mode === "error" ? (
         <div className="events-empty">{errorMessage}</div>
       ) : (
@@ -20,7 +20,7 @@ export function RecentJobsLibraryEmpty({ mode, errorMessage, emptyMessage, onUpl
             className="app-button empty-state-action"
             onClick={onUpload}
           >
-            上传 PDF
+            {t("k_f77257b3")}
           </button>
         </EmptyState>
       )}

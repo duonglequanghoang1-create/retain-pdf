@@ -49,7 +49,7 @@ export function TitleMetaPanel({
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             />
             <div>
-              <p className="mb-1 text-xs text-muted-foreground">标签（逗号或顿号分隔）</p>
+              <p className="mb-1 text-xs text-muted-foreground">{tr("k_9894d32a")}</p>
               <input
                 id="book-detail-tags-input"
                 type="text"
@@ -61,7 +61,7 @@ export function TitleMetaPanel({
             </div>
             <div className="flex justify-end gap-2">
               <button className={btn("outline")} disabled={busy === "meta"} onClick={onCancelEdit}>
-                <X className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />取消
+                <X className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />{tr("k_4d0b4688")}
               </button>
               <button
                 id="book-detail-save-btn"
@@ -105,7 +105,7 @@ export function TitleMetaPanel({
           onClick={onStartEdit}
           className="shrink-0 rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
         >
-          <Pencil className="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />编辑
+          <Pencil className="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />{tr("k_a7f814c0")}
         </button>
       ) : null}
     </div>

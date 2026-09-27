@@ -60,9 +60,9 @@ export function UploadDropzone({
         </strong>
         <em id="upload-help" className={upload.helpVisible ? "" : "hidden"}>{upload.help}</em>
         <div className={`upload-meta upload-meta-inline${upload.tileEnabled ? "" : " hidden"}`}>
-          <span>单个 PDF</span>
-          <span>最大 50MB</span>
-          <span>最多 999 页</span>
+          <span>{t("k_3f2cb731")}</span>
+          <span>{t("k_ea014b68")}</span>
+          <span>{t("k_1c130f35")}</span>
         </div>
       </div>
 

@@ -96,7 +96,7 @@ export function GlossariesDialog({ feature, view: viewFeature, open, dialogStore
             <DialogHeader className="desktop-head">
               <div className="credential-dialog-head">
                 <DialogTitle asChild>
-                  <h2>术语表</h2>
+                  <h2>{t("k_12f4ade1")}</h2>
                 </DialogTitle>
               </div>
               <DialogCloseButton id={GLOSSARY_DOM_IDS.closeButton} />
@@ -111,7 +111,7 @@ export function GlossariesDialog({ feature, view: viewFeature, open, dialogStore
 
               <section className="glossary-editor-panel">
                 <label className="glossary-name-field">
-                  <span>名称</span>
+                  <span>{t("k_1be7ae4f")}</span>
                   <input
                     id={GLOSSARY_DOM_IDS.nameInput}
                     type="text"
@@ -122,10 +122,10 @@ export function GlossariesDialog({ feature, view: viewFeature, open, dialogStore
                   />
                 </label>
                 <div className="glossary-toolbar">
-                  <Button id={GLOSSARY_DOM_IDS.addRowButton} className="app-button secondary" onClick={() => handlers?.addRow?.()}>添加</Button>
+                  <Button id={GLOSSARY_DOM_IDS.addRowButton} className="app-button secondary" onClick={() => handlers?.addRow?.()}>{t("k_94191ce2")}</Button>
                   <Button id={GLOSSARY_DOM_IDS.importButton} className="app-button secondary" onClick={() => handlers?.showImport?.()}>CSV</Button>
-                  <Button id={GLOSSARY_DOM_IDS.exportButton} className="app-button secondary" disabled={opBusy} onClick={() => void runOp(() => handlers?.exportCurrent?.())}>导出</Button>
-                  <Button id={GLOSSARY_DOM_IDS.deleteButton} className="app-button secondary danger" disabled={opBusy} onClick={() => setConfirmDeleteOpen(true)}>删除</Button>
+                  <Button id={GLOSSARY_DOM_IDS.exportButton} className="app-button secondary" disabled={opBusy} onClick={() => void runOp(() => handlers?.exportCurrent?.())}>{t("k_18889679")}</Button>
+                  <Button id={GLOSSARY_DOM_IDS.deleteButton} className="app-button secondary danger" disabled={opBusy} onClick={() => setConfirmDeleteOpen(true)}>{t("k_3755f56f")}</Button>
                 </div>
                 <div className="glossary-editor-scroll">
                   <GlossaryEditor
@@ -143,7 +143,7 @@ export function GlossariesDialog({ feature, view: viewFeature, open, dialogStore
                 </div>
                 <DialogFooter className="glossary-footer">
                   <FormStatusLine id={GLOSSARY_DOM_IDS.status} status={view.status} className="upload-status" />
-                  <Button id={GLOSSARY_DOM_IDS.saveButton} className="app-button" disabled={opBusy} onClick={() => void runOp(() => handlers?.save?.())}>保存</Button>
+                  <Button id={GLOSSARY_DOM_IDS.saveButton} className="app-button" disabled={opBusy} onClick={() => void runOp(() => handlers?.save?.())}>{t("k_fadf24db")}</Button>
                 </DialogFooter>
               </section>
             </DialogBody>

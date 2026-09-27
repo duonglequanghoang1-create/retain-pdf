@@ -99,12 +99,12 @@ function FontSelector() {
 
   return (
     <div className="font-selector" id="font-selector" data-testid="font-selector">
-      <h3 className="theme-appearance-group-title">渲染字体</h3>
+      <h3 className="theme-appearance-group-title">{t("k_121bc38e")}</h3>
       <p className="text-xs text-neutral-500" style={{ margin: "4px 0 8px" }}>
-        用于 Typst 渲染的正文字体族（request.render.typst_font_family），随下次新建任务生效。
+        {t("k_a9f03c16")}
       </p>
       <label htmlFor="typst-font-family-select" className="sr-only">
-        渲染字体
+        {t("k_121bc38e")}
       </label>
       <select
         id="typst-font-family-select"
@@ -122,9 +122,9 @@ function FontSelector() {
           </option>
         ))}
       </select>
-      {loading ? <span className="text-xs text-neutral-400">加载字体列表…</span> : null}
-      {error ? <span className="text-xs text-amber-600">字体列表加载失败，已显示本地备选：{error}</span> : null}
-      <span className="text-xs text-neutral-400">已选：{selected}</span>
+      {loading ? <span className="text-xs text-neutral-400">{t("k_7493f100")}</span> : null}
+      {error ? <span className="text-xs text-amber-600">{t("k_81330c2e")}{error}</span> : null}
+      <span className="text-xs text-neutral-400">{t("k_3e68e54b")}{selected}</span>
     </div>
   );
 }

@@ -135,7 +135,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
       data-book-detail-tab="processing"
     >
       {error ? <p className="rounded-lg border border-foreground/20 bg-muted/40 px-3 py-2 text-xs text-foreground" role="alert">{error}</p> : null}
-      {loading ? <p className="text-xs text-muted-foreground">正在读取文档任务…</p> : null}
+      {loading ? <p className="text-xs text-muted-foreground">{t("k_d04e5653")}</p> : null}
       {/* 全卡唯一 .book-detail-processing-card：OCR / 翻译收敛成同一条流水线。 */}
       <section className="book-detail-processing-card" data-processing-capability="processing" aria-label={t("k_9263e46a")}>
         <header className="book-detail-processing-head">
@@ -143,7 +143,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
             <Languages />
           </span>
           <div className="book-detail-processing-head-copy">
-            <h3>处理</h3>
+            <h3>{t("k_9263e46a")}</h3>
             <p className="book-detail-processing-unified-status" data-processing-unified-status="true">
               {bootstrapping ? t("k_a888df58") : unifiedHeadline(ocr, translation)}
             </p>
@@ -196,7 +196,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
                   checked={Boolean(ocr?.rangeOn)}
                   onChange={(event) => ocr?.onRangeOnChange?.(event.target.checked)}
                 />
-                OCR 指定页码
+                {t("k_088f1a62")}
               </label>
               {ocr?.rangeOn ? (
                 <div className="book-detail-ocr-range-inputs">
@@ -217,7 +217,7 @@ export function BookDetailProcessingTab({ ocr, translation, loading = false, err
                     onChange={(event) => ocr?.onEndPageChange?.(event.target.value)}
                     className="h-8 w-16 rounded-md border border-input bg-background px-2 text-sm"
                   />
-                  <span className="text-[11px] text-muted-foreground">/ {ocr?.pageCount || "?"} 页</span>
+                  <span className="text-[11px] text-muted-foreground">/ {ocr?.pageCount || "?"} {t("k_73422182")}</span>
                 </div>
               ) : null}
             </div>

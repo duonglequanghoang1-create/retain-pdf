@@ -87,7 +87,7 @@ export function ArtifactQuickDownloads({
     <section className="book-detail-quick-downloads" aria-label={t("k_121002bb")}>
       <header>
         <PackageOpen aria-hidden="true" />
-        <span>文件下载</span>
+        <span>{t("k_575540b1")}</span>
         {loading ? <LoaderCircle className="book-detail-quick-downloads-loader" aria-label={t("k_0fb6923b")} /> : null}
         <button
           id="book-detail-download-settings-btn"
@@ -148,13 +148,12 @@ export function ArtifactQuickDownloads({
         >
           <DialogShell>
             <DialogHeader>
-              <DialogTitle>导出设置</DialogTitle>
+              <DialogTitle>{t("k_7aaa2f87")}</DialogTitle>
               <DialogCloseButton />
             </DialogHeader>
             <DialogBody>
               <DialogDescription>
-                Word 排版稿把每一页的原始扫描件作为背景图，再把译文按排版层算好的位置盖上去。
-                清晰度只影响背景图，不影响文字。
+                {t("k_c22d740f")}
               </DialogDescription>
               <div className="book-detail-export-settings" role="radiogroup" aria-label={t("k_1cc465a0")}>
                 {WORD_EXPORT_DPI_OPTIONS.map((option) => (
@@ -175,7 +174,7 @@ export function ArtifactQuickDownloads({
             </DialogBody>
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="button">完成</Button>
+                <Button type="button">{t("k_33246f6a")}</Button>
               </DialogClose>
             </DialogFooter>
           </DialogShell>

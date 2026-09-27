@@ -94,7 +94,7 @@ export function ReaderFavoritesPanel({
             disabled={loading}
             onClick={() => void reload()}
           >
-            刷新
+            {t("k_38108eaa")}
           </button>
         </>
       )}
@@ -102,10 +102,10 @@ export function ReaderFavoritesPanel({
       {error ? (
         <p className="reader-notes-empty" role="alert">{error}</p>
       ) : loading ? (
-        <p className="reader-notes-empty">正在加载摘录…</p>
+        <p className="reader-notes-empty">{t("k_12fa2bd5")}</p>
       ) : items.length === 0 ? (
         <p className="reader-notes-empty">
-          暂无摘录。可从主页收藏内容后在这里定位阅读。
+          {t("k_bbd2f403")}
         </p>
       ) : (
         items.map((item) => (
@@ -118,7 +118,7 @@ export function ReaderFavoritesPanel({
                   className="reader-notes-link"
                   onClick={() => onJumpPage(Math.max(1, (item.pageIdx || 0) + 1))}
                 >
-                  第 {(item.pageIdx || 0) + 1} 页
+                  {t("k_dae828fe")} {(item.pageIdx || 0) + 1} {t("k_73422182")}
                 </button>
               </div>
             </div>

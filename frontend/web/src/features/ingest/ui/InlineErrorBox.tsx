@@ -46,7 +46,7 @@ export function InlineErrorBox() {
           <div className="inline-error-summary">{summary}</div>
           <div className="inline-error-actions">
             <details className="inline-error-details">
-              <summary>查看诊断</summary>
+              <summary>{t("k_4024bc89")}</summary>
               <pre>{diagnostic}</pre>
             </details>
             <button type="button" className="inline-error-copy-btn" onClick={handleCopy}>

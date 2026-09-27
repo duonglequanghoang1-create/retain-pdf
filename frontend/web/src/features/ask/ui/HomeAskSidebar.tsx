@@ -148,7 +148,7 @@ export function HomeAskSidebar({
     <aside className="home-ask-sidebar" aria-label={tr("k_f8b27fa9")}>
       <div className="home-ask-sidebar-head">
         <div className="home-ask-sidebar-head-row">
-          <span className="home-ask-sidebar-brand">历史</span>
+          <span className="home-ask-sidebar-brand">{tr("k_be78b205")}</span>
           <button
             type="button"
             className="home-ask-sidebar-icon-btn home-ask-sidebar-collapse"
@@ -168,15 +168,15 @@ export function HomeAskSidebar({
           onClick={onNew}
         >
           <MessageSquarePlus size={15} strokeWidth={2.1} aria-hidden />
-          <span>新对话</span>
+          <span>{tr("k_1b7abf96")}</span>
         </button>
       </div>
 
       <div className="home-ask-sidebar-scroll">
         {loading && sessions.length === 0 ? (
-          <p className="home-ask-sidebar-empty">加载历史…</p>
+          <p className="home-ask-sidebar-empty">{tr("k_de887546")}</p>
         ) : sessions.length === 0 ? (
-          <p className="home-ask-sidebar-empty">暂无历史对话</p>
+          <p className="home-ask-sidebar-empty">{tr("k_e3f12ab7")}</p>
         ) : (
           groups.map((g) => (
             <div key={g.label} className="home-ask-sidebar-group">

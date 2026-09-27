@@ -97,7 +97,7 @@ export function LibraryFilterMenu({
           activeCount > 0 ? "bg-secondary text-secondary-foreground" : "border border-border text-foreground hover:bg-muted/30",
         )}
       >
-        筛选
+        {tr("k_dcce9a14")}
         {activeCount > 0 ? <span className="tabular-nums text-[11px] text-muted-foreground/70">{activeCount}</span> : null}
       </button>
 
@@ -111,7 +111,7 @@ export function LibraryFilterMenu({
           role="dialog"
           aria-label={tr("k_46788aa5")}
         >
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">处理状态</p>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{tr("k_8542beb9")}</p>
           <div className="flex flex-wrap gap-2">
             {STATUS_FILTERS.map((s) => (
               <Pill key={s.value} active={statusFilter === s.value} onClick={() => setStatusFilter(s.value)}>
@@ -122,9 +122,9 @@ export function LibraryFilterMenu({
 
           {tags.length ? (
             <>
-              <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">标签</p>
+              <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{tr("k_ae0a7afe")}</p>
               <div className="flex flex-wrap gap-2">
-                <Pill active={!tagFilter} onClick={() => setTagFilter("")}>全部</Pill>
+                <Pill active={!tagFilter} onClick={() => setTagFilter("")}>{tr("k_778fc8f9")}</Pill>
                 {tags.map((t) => (
                   <Pill key={t} active={tagFilter === t} onClick={() => setTagFilter(tagFilter === t ? "" : t)}>{t}</Pill>
                 ))}
@@ -137,7 +137,7 @@ export function LibraryFilterMenu({
               type="button"
               onClick={() => { setStatusFilter("all"); setTagFilter(""); }}
               className="mt-4 text-xs text-muted-foreground hover:text-foreground hover:underline"
-            >清空筛选</button>
+            >{tr("k_4f761bb4")}</button>
           ) : null}
         </div>
       ) : null}

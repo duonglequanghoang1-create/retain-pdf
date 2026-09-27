@@ -65,7 +65,7 @@ test("ReaderFab exposes notes as a tool row with a count badge", () => {
   assert.match(fab, /ReaderFabToolId = ReaderToolId \| "notes"/);
   assert.match(fab, /notes: StickyNote/);
   assert.match(fab, /reader-fab-row-badge/);
-  assert.match(fab, />批注</);
+  assert.match(fab, /\{t?r?\(\"k_[0-9a-f]{8}\"\)\}/);
   assert.match(fab, /handleTool\("notes"\)/);
   assert.match(fab, /noteCount/);
 });

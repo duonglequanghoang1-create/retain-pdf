@@ -16,8 +16,8 @@ export function GlossaryImportPanel({ visible, csvText, onCsvTextChange, onApply
         onChange={(event) => onCsvTextChange(event.target.value)}
       />
       <div className="glossary-import-actions">
-        <button id={GLOSSARY_DOM_IDS.importApplyButton} type="button" className="app-button" onClick={onApply}>解析</button>
-        <button id={GLOSSARY_DOM_IDS.importCancelButton} type="button" className="app-button secondary" onClick={onCancel}>取消</button>
+        <button id={GLOSSARY_DOM_IDS.importApplyButton} type="button" className="app-button" onClick={onApply}>{t("k_af57b02c")}</button>
+        <button id={GLOSSARY_DOM_IDS.importCancelButton} type="button" className="app-button secondary" onClick={onCancel}>{t("k_4d0b4688")}</button>
       </div>
     </div>
   );

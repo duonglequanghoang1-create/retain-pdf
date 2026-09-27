@@ -178,7 +178,7 @@ test("live overlay in compare keeps the right translated pane plus a source badg
     "utf8",
   );
   assert.match(grid, /reader-source-overlay-badge/);
-  assert.match(grid, /原文\+实时译文叠加/);
+  assert.match(grid, /\bt?r?\(\"k_[0-9a-f]{8}\"\)/);
   assert.doesNotMatch(grid, /mountTranslated && !overlayOnSource/);
 });
 

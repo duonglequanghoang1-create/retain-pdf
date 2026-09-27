@@ -106,7 +106,7 @@ export function BookTranslateProgressPanel({
           data-item-status={itemStatus}
         >
           <div className="min-w-0">
-            <p className="text-xs font-medium text-foreground">本次翻译失败</p>
+            <p className="text-xs font-medium text-foreground">{t("k_2f9bbc77")}</p>
             <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
               {detail && detail !== "任务失败" ? detail : t("k_09de8491")}
             </p>
@@ -116,7 +116,7 @@ export function BookTranslateProgressPanel({
             className="shrink-0 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-muted"
             onClick={() => statusDetail.controller.openStatusDetailDialog("failure")}
           >
-            查看日志
+            {t("k_b923b26d")}
           </button>
         </div>
       );
@@ -165,8 +165,8 @@ export function BookTranslateProgressPanel({
             <Radio />
           </span>
           <span>
-            <strong>查看实时译文 →</strong>
-            <small>在原 PDF 上逐页显示</small>
+            <strong>{t("k_695f86ec")}</strong>
+            <small>{t("k_4625e0c8")}</small>
           </span>
           <ArrowUpRight aria-hidden="true" />
         </button>

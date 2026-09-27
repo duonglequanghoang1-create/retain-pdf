@@ -77,13 +77,13 @@ function TaskRow({ job, busyAction, onOpen, onCancel, onRetry }: {
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">文档</span>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">{t("k_10691272")}</span>
             <h3 className="min-w-0 truncate text-sm font-semibold text-foreground" title={taskDocumentLabel(job)}>
               {taskDocumentLabel(job)}
             </h3>
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-            <span>任务 <code title={job.job_id}>{shortJobId(job.job_id)}</code></span>
+            <span>{t("k_3172b317")} <code title={job.job_id}>{shortJobId(job.job_id)}</code></span>
             <span>{taskWorkflowLabel(job)}</span>
             {job.updated_at ? <span>{formatUpdatedAt(job.updated_at)}</span> : null}
           </div>
@@ -106,7 +106,7 @@ function TaskRow({ job, busyAction, onOpen, onCancel, onRetry }: {
           className="inline-flex h-8 items-center justify-center rounded-lg border border-border bg-background px-3 text-xs font-medium text-foreground hover:bg-muted disabled:opacity-50"
           onClick={() => onOpen(job)}
         >
-          打开详情
+          {t("k_0d428278")}
         </button>
         {isActive ? (
           <button
@@ -127,7 +127,7 @@ function TaskRow({ job, busyAction, onOpen, onCancel, onRetry }: {
             onClick={() => onRetry(job)}
           >
             {busyAction === "retry" ? <LoaderCircle className="size-3.5 animate-spin" /> : <RotateCcw className="size-3.5" />}
-            重试
+            {t("k_e2d53a6d")}
           </button>
         ) : null}
       </div>
@@ -280,8 +280,8 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
     <section id="task-center-view" className="mx-auto flex h-full w-full max-w-6xl flex-col px-5 pb-28 pt-5" aria-label={t("k_f692ff9e")}>
       <header className="mb-5 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-medium text-muted-foreground">任务中心</p>
-          <h1 className="mt-1 text-xl font-semibold tracking-tight text-foreground">PDF 处理任务</h1>
+          <p className="text-xs font-medium text-muted-foreground">{t("k_f692ff9e")}</p>
+          <h1 className="mt-1 text-xl font-semibold tracking-tight text-foreground">{t("k_0872740f")}</h1>
           <p className="mt-1 text-xs text-muted-foreground">
             {reachedLimit
               ? t("k_33b7a098", [TASK_CENTER_MAX_ITEMS])
@@ -296,7 +296,7 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
           onClick={() => void load()}
         >
           <RefreshCw className={`size-4${refreshing ? " animate-spin" : ""}`} />
-          刷新
+          {t("k_38108eaa")}
         </button>
       </header>
 
@@ -317,23 +317,23 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
 
       {loading ? (
         <div className="flex flex-1 items-center justify-center gap-2 text-sm text-muted-foreground">
-          <LoaderCircle className="size-4 animate-spin" /> 正在读取任务…
+          <LoaderCircle className="size-4 animate-spin" /> {t("k_e9b1e33e")}
         </div>
       ) : error && items.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
           <TriangleAlert className="size-7 text-muted-foreground" />
           <p className="text-sm text-foreground">{error}</p>
-          <button type="button" className="rounded-lg border border-border px-3 py-2 text-sm" onClick={() => void load()}>重新加载</button>
+          <button type="button" className="rounded-lg border border-border px-3 py-2 text-sm" onClick={() => void load()}>{t("k_5982c44c")}</button>
         </div>
       ) : items.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-2 text-center">
           <Clock3 className="size-7 text-muted-foreground" />
-          <p className="text-sm font-medium text-foreground">暂无处理任务</p>
-          <p className="text-xs text-muted-foreground">上传 PDF 并执行 OCR 或翻译后，任务会出现在这里。</p>
+          <p className="text-sm font-medium text-foreground">{t("k_2cb9dc70")}</p>
+          <p className="text-xs text-muted-foreground">{t("k_e6ec7b28")}</p>
         </div>
       ) : (
         <div className="min-h-0 flex-1 overflow-y-auto pr-1">
-          {error ? <div className="mb-3 rounded-xl border border-border bg-background px-3 py-2 text-xs text-muted-foreground">刷新失败：{error}</div> : null}
+          {error ? <div className="mb-3 rounded-xl border border-border bg-background px-3 py-2 text-xs text-muted-foreground">{t("k_1df7c2d8")}{error}</div> : null}
           <div className="grid items-start gap-4 lg:grid-cols-2">
             {groups.map((group) => {
               const Icon = GROUP_ICONS[group.key];
@@ -360,7 +360,7 @@ export function TaskCenter({ onOpenBookDetail }: TaskCenterProps) {
                       ))}
                     </div>
                   ) : (
-                    <div className="rounded-2xl border border-dashed border-border px-3 py-6 text-center text-xs text-muted-foreground">暂无{group.label}任务</div>
+                    <div className="rounded-2xl border border-dashed border-border px-3 py-6 text-center text-xs text-muted-foreground">{t("k_5dbd0154")}{group.label}{t("k_3172b317")}</div>
                   )}
                 </section>
               );

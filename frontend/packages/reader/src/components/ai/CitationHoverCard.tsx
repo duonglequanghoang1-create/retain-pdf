@@ -177,7 +177,7 @@ export function CitationHoverCard({
             width={PREVIEW_WIDTH}
           />
           {imageState === "failed" ? (
-            <span className="reader-ai-citation-card-thumb-fallback">预览暂不可用</span>
+            <span className="reader-ai-citation-card-thumb-fallback">{t("k_7e215fd9")}</span>
           ) : null}
         </div>
       ) : null}

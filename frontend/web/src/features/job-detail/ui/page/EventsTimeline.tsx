@@ -94,10 +94,10 @@ export function StageHistoryTriggerCard({ onOpen }) {
     <article className="detail-card">
       <div className="detail-modal-trigger">
         <div className="detail-trigger-head">
-          <h2>阶段时间线</h2>
-          <button id="detail-open-stage-history-btn" type="button" className="detail-trigger-btn" onClick={onOpen}>查看</button>
+          <h2>{t("k_0a440184")}</h2>
+          <button id="detail-open-stage-history-btn" type="button" className="detail-trigger-btn" onClick={onOpen}>{t("k_f7acefd2")}</button>
         </div>
-        <p className="detail-trigger-copy">默认收起，不再把整页拉长。需要时再打开查看完整阶段切换记录。</p>
+        <p className="detail-trigger-copy">{t("k_44ae58d8")}</p>
       </div>
     </article>
   );
@@ -108,10 +108,10 @@ export function EventsTriggerCard({ buttonText, onOpen }) {
     <article className="detail-card">
       <div className="detail-modal-trigger">
         <div className="detail-trigger-head">
-          <h2>事件流</h2>
+          <h2>{t("k_9e6bc8d5")}</h2>
           <button id="detail-open-events-btn" type="button" className="detail-trigger-btn" onClick={onOpen}>{buttonText}</button>
         </div>
-        <p className="detail-trigger-copy">默认不请求事件流。只有点击查看时才加载，避免分享页初次打开就消耗过多流量。</p>
+        <p className="detail-trigger-copy">{t("k_2eb5ffe0")}</p>
       </div>
     </article>
   );
@@ -185,7 +185,7 @@ export function StageHistoryModal({ open, job, onClose }) {
       open={open}
       onClose={onClose}
     >
-      <div id="detail-stage-history-empty" className={hasItems ? "detail-empty hidden" : "detail-empty"}>暂无阶段记录</div>
+      <div id="detail-stage-history-empty" className={hasItems ? "detail-empty hidden" : "detail-empty"}>{t("k_1363c17e")}</div>
       <div id="detail-stage-history-list" className={hasItems ? "detail-list" : "detail-list hidden"}>
         {history.map((entry, index) => (
           <StageHistoryItem key={index} entry={entry} index={index} job={job} />
@@ -258,7 +258,7 @@ export function EventsModal({ open, eventsPayload, status, onClose }) {
       onClose={onClose}
     >
       <div id="detail-events-status" className="detail-modal-status">{status}</div>
-      <div id="detail-events-empty" className={hasItems ? "detail-empty hidden" : "detail-empty"}>暂无事件</div>
+      <div id="detail-events-empty" className={hasItems ? "detail-empty hidden" : "detail-empty"}>{t("k_fad64b34")}</div>
       <div id="detail-events-list" className={hasItems ? "detail-list" : "detail-list hidden"}>
         {items.map((item, index) => (
           <EventItem key={item?.seq ?? index} item={item} />

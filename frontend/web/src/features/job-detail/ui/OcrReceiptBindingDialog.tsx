@@ -72,7 +72,7 @@ export function OcrReceiptBindingDialog({
                 <Link2 className="h-4 w-4" />
               </span>
               <div>
-                <DialogTitle>绑定已有 OCR 任务</DialogTitle>
+                <DialogTitle>{t("k_da1d2872")}</DialogTitle>
                 <DialogDescription>
                   {providerLabel} · {operationLabel}
                 </DialogDescription>
@@ -103,14 +103,14 @@ export function OcrReceiptBindingDialog({
                 );
               })}
               <p className="status-panel-note">
-                回执只用于本次恢复，不会保存在浏览器中。带星号字段来自后端当前任务契约。
+                {t("k_923a2287")}
               </p>
               {status ? <p className="status-panel-note" role="status" aria-live="polite">{status}</p> : null}
             </div>
           </DialogBody>
           <DialogFooter>
             <Button type="button" variant="outline" disabled={pending} onClick={() => onOpenChange(false)}>
-              取消
+              {t("k_4d0b4688")}
             </Button>
             <Button id={`${id}-submit`} type="button" disabled={pending} onClick={submit}>
               {pending ? t("k_306f8cb6") : t("k_22b71321")}

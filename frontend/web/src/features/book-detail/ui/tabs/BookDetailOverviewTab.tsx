@@ -162,18 +162,18 @@ export function BookDetailOverviewTab({
           </span>
           <div className="book-detail-overview-page-count">
             <strong>{pageCount || "—"}</strong>
-            <span>页文档</span>
+            <span>{t("k_7ac9e597")}</span>
           </div>
         </div>
         <div className="book-detail-overview-actions">
           <button id="book-detail-overview-process-btn" type="button" className="book-detail-overview-action is-primary" onClick={onOpenProcessing}>
             <span aria-hidden="true"><Languages /></span>
-            <small>进度</small>
+            <small>{t("k_acf014bf")}</small>
             <ArrowRight className="book-detail-overview-action-arrow" aria-hidden="true" />
           </button>
           <button id="book-detail-overview-files-btn" type="button" className="book-detail-overview-action" onClick={onOpenArtifacts}>
             <span aria-hidden="true"><FolderOpen /></span>
-            <small>文件</small>
+            <small>{t("k_49deaf7d")}</small>
             <ArrowRight className="book-detail-overview-action-arrow" aria-hidden="true" />
           </button>
         </div>
@@ -182,15 +182,15 @@ export function BookDetailOverviewTab({
       <div className="book-detail-overview-stats" aria-label={t("k_a79a04b9")}>
         <article className="book-detail-overview-stat">
           <span className="book-detail-overview-stat-icon" aria-hidden="true"><HardDrive /></span>
-          <div><span>大小</span><strong>{sizeText || "—"}</strong></div>
+          <div><span>{t("k_fd20702c")}</span><strong>{sizeText || "—"}</strong></div>
         </article>
         <article className="book-detail-overview-stat">
           <span className="book-detail-overview-stat-icon" aria-hidden="true"><CalendarDays /></span>
-          <div><span>入库</span><strong>{dateText || "—"}</strong></div>
+          <div><span>{t("k_cb7c9a7b")}</span><strong>{dateText || "—"}</strong></div>
         </article>
         <article className="book-detail-overview-stat">
           <span className="book-detail-overview-stat-icon" aria-hidden="true"><FolderOpen /></span>
-          <div><span>合集</span><strong title={memberCollections.join("、")}>
+          <div><span>{t("k_01dc4d09")}</span><strong title={memberCollections.join("、")}>
               {memberCollections.length ? memberCollections.join("、") : t("k_8dabc5fb")}
           </strong></div>
         </article>
@@ -201,7 +201,7 @@ export function BookDetailOverviewTab({
           <div className="book-detail-overview-card-heading">
             <div className="book-detail-overview-heading-title">
               <span aria-hidden="true"><FileStack /></span>
-              <h3>进度</h3>
+              <h3>{t("k_acf014bf")}</h3>
             </div>
             <button type="button" className="book-detail-overview-icon-link" onClick={onOpenProcessing} aria-label={t("k_b2800976")}>
               <ArrowRight aria-hidden="true" />
@@ -214,7 +214,7 @@ export function BookDetailOverviewTab({
             </div>
             <div className="book-detail-overview-capability">
               <span className="book-detail-overview-capability-icon" aria-hidden="true"><Languages /></span>
-              <div><span>翻译</span><strong className={`is-${translationStatus.tone}`}>{translationStatus.label}</strong></div>
+              <div><span>{t("k_23141370")}</span><strong className={`is-${translationStatus.tone}`}>{translationStatus.label}</strong></div>
             </div>
           </div>
         </section>
@@ -223,7 +223,7 @@ export function BookDetailOverviewTab({
           <section className="book-detail-overview-management" aria-label={t("k_24aa7a6c")}>
           <div className="book-detail-overview-section-heading">
             <span aria-hidden="true"><BookOpenCheck /></span>
-            <h3>阅读</h3>
+            <h3>{t("k_aac0ef6c")}</h3>
           </div>
           {management}
           </section>
@@ -234,7 +234,7 @@ export function BookDetailOverviewTab({
           <div className="book-detail-overview-card-heading">
             <div className="book-detail-overview-heading-title">
               <span aria-hidden="true"><Clock3 /></span>
-              <h3>最近活动</h3>
+              <h3>{t("k_8764fbcf")}</h3>
             </div>
         </div>
         {activities.length ? (
@@ -253,7 +253,7 @@ export function BookDetailOverviewTab({
             ))}
           </ol>
         ) : (
-          <p className="book-detail-overview-empty-activity">任务开始后，进度记录会显示在这里。</p>
+          <p className="book-detail-overview-empty-activity">{t("k_c194239c")}</p>
         )}
       </section>
     </div>

@@ -30,7 +30,7 @@ function SearchHit({ hit, onOpenReader }) {
     >
       <Snippet text={hit.source_snippet} />
       {hit.translated_snippet ? <Snippet text={hit.translated_snippet} /> : null}
-      <span className="lib-search-hit-meta">第 {Number(hit.page_idx) + 1} 页</span>
+      <span className="lib-search-hit-meta">{t("k_dae828fe")} {Number(hit.page_idx) + 1} {t("k_73422182")}</span>
     </button>
   );
 }
@@ -46,7 +46,7 @@ function DocumentRow({ doc, onOpenReader, onCycleStatus }) {
       >
         <span className="lib-search-doc-title">{doc.title || doc.source_filename}</span>
         <span className="lib-search-doc-meta">
-          {doc.page_count} 页{doc.tags.length ? ` · ${doc.tags.join(" / ")}` : ""}
+          {doc.page_count} {t("k_73422182")}{doc.tags.length ? ` · ${doc.tags.join(" / ")}` : ""}
         </span>
       </button>
       <button
@@ -133,10 +133,10 @@ function LibrarySearchPanel({ ports }) {
   return (
     <div className="lib-search-panel" role="region" aria-label={t("k_c975e641")}>
       <div className="lib-search-head">
-        <strong>库检索</strong>
+        <strong>{t("k_eb2d9236")}</strong>
         <span className="lib-search-status">{busy ? t("k_c1ec3b34") : error || t("k_60d93f90", [hits.length, matchedDocuments.length])}</span>
         <div className="lib-search-filters" role="group" aria-label={t("k_c6594716")}>
-          <button type="button" className={statusFilter === "" ? "is-active" : ""} onClick={() => setStatusFilter("")}>全部</button>
+          <button type="button" className={statusFilter === "" ? "is-active" : ""} onClick={() => setStatusFilter("")}>{t("k_778fc8f9")}</button>
           {Object.entries(READING_STATUS_META).map(([value, meta]) => (
             <button
               key={value}
@@ -151,7 +151,7 @@ function LibrarySearchPanel({ ports }) {
       </div>
       {hits.length > 0 && (
         <section className="lib-search-section">
-          <h4>全文命中</h4>
+          <h4>{t("k_68727d85")}</h4>
           <div className="lib-search-hits">
             {hits.map((hit) => (
               <SearchHit key={`${hit.job_id}-${hit.page_idx}-${hit.block_id}`} hit={hit} onOpenReader={ports.openReader} />
@@ -160,9 +160,9 @@ function LibrarySearchPanel({ ports }) {
         </section>
       )}
       <section className="lib-search-section">
-        <h4>文档</h4>
+        <h4>{t("k_10691272")}</h4>
         {matchedDocuments.length === 0
-          ? <p className="lib-search-empty">没有匹配的文档</p>
+          ? <p className="lib-search-empty">{t("k_0fae2b99")}</p>
           : (
             <div className="lib-search-docs">
               {matchedDocuments.map((doc) => (

@@ -327,7 +327,7 @@ export function ReaderAppReactPdf() {
         aria-pressed={liveTranslationVisible}
         title={liveTranslationVisible ? t("k_5a95b341") : t("k_a5e75bbb")}
       >
-        译文
+        {t("k_647e0016")}
       </button>
     );
   }, [hasOverlayContent, paneComposition.showSource, liveTranslationVisible]);

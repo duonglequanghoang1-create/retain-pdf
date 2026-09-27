@@ -37,7 +37,7 @@ export function DeleteFooterPanel({
           className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border/70 bg-background px-3 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/25 hover:bg-muted hover:text-foreground disabled:opacity-55"
         >
           <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-          删除
+          {t("k_3755f56f")}
         </button>
         <ConfirmDialog
           id="book-detail-delete-confirm"

@@ -45,15 +45,15 @@ export function AgentRuntimeFields({
   return (
     <div className="credential-agent-grid">
       <label className="credential-agent-mode-field">
-        <span className="developer-label">运行模式</span>
+        <span className="developer-label">{t("k_340e9a6d")}</span>
         <select
           aria-label={t("k_c8206b63")}
           value={mode}
           onChange={(event) => onModeChange(event.target.value as AgentRuntimeMode)}
           disabled={busy}
         >
-          <option value="python">Markdown 检索问答</option>
-          <option value="openai">OpenAI 兼容 Agent</option>
+          <option value="python">{t("k_6764e631")}</option>
+          <option value="openai">{t("k_026c480b")}</option>
           <option value="fx">FX Gateway Agent</option>
         </select>
       </label>
@@ -61,7 +61,7 @@ export function AgentRuntimeFields({
       {mode !== "fx" ? (
         <>
           <label className="credential-agent-url-field">
-            <span className="developer-label">模型 API URL</span>
+            <span className="developer-label">{t("k_907fd02b")}</span>
             <input
               aria-label={t("k_907fd02b")}
               type="url"
@@ -71,7 +71,7 @@ export function AgentRuntimeFields({
             />
           </label>
           <label className="credential-agent-model-field">
-            <span className="developer-label">模型</span>
+            <span className="developer-label">{t("k_98fd0cbd")}</span>
             <input
               aria-label={t("k_1b5fc091")}
               value={model}
@@ -80,7 +80,7 @@ export function AgentRuntimeFields({
             />
           </label>
           <label className="credential-agent-key-field">
-            <span className="developer-label">模型 API Key</span>
+            <span className="developer-label">{t("k_8f79e857")}</span>
             <SecretInput
               aria-label={t("k_8f79e857")}
               secretLabel={t("k_8f79e857")}
@@ -95,7 +95,7 @@ export function AgentRuntimeFields({
       ) : (
         <>
           <label className="credential-agent-url-field">
-            <span className="developer-label">FX Gateway URL（可选）</span>
+            <span className="developer-label">{t("k_478e6172")}</span>
             <input
               aria-label="FX Gateway URL"
               type="url"
@@ -106,10 +106,10 @@ export function AgentRuntimeFields({
             />
           </label>
           <p className="credential-agent-fx-url-note">
-            仅支持本机 HTTP + 端口；远程地址请使用 OpenAI 模式。留空使用官方 Gateway。
+            {t("k_e5f363f3")}
           </p>
           <label className="credential-agent-model-field">
-            <span className="developer-label">FX 模型（可选）</span>
+            <span className="developer-label">{t("k_37065a8b")}</span>
             <input
               aria-label={t("k_75d6609d")}
               value={fxModel}

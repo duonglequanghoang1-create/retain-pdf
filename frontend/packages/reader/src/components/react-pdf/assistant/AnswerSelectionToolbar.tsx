@@ -47,7 +47,7 @@ export function AnswerSelectionToolbar() {
         title={t("k_4f44e95c")}
       >
         <Quote size={12} strokeWidth={2.4} aria-hidden />
-        <span>引用</span>
+        <span>{t("k_23c0e102")}</span>
       </button>
     </SelectionToolbarPrimitive.Root>
   );

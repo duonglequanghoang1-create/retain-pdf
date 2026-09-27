@@ -2,6 +2,7 @@
 // 封面像扑克牌一样扇形叠放,越靠前的书 z 越高、叠在最外面)。封面图沿用
 // BookCard 同一个 useRecentJobCover hook(同一份 objectURL 缓存,不会
 // 因为这里多渲染一份而重复请求)。
+import { t } from "@retainpdf/i18n";
 import { useRecentJobCover } from "@/features/library/index.js";
 
 const MAX_STACK = 4;
@@ -45,7 +46,7 @@ export function FolderCoverStack({ items }) {
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3 7a2 2 0 0 1 2-2h4.5l1.5 2H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
           </svg>
-          <span>空合集</span>
+          <span>{t("k_4e2672a5")}</span>
         </div>
       ) : (
         stack.map((item, index) => (

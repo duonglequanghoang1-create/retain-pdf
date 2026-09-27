@@ -21,7 +21,12 @@ const STORAGE_KEY = "retainpdf.locale";
 const DEFAULT_LOCALE = "zh";
 /** 随模块载入的默认表;t() 在没显式 init 之前就用它。 */
 const BUILT_IN = { zh, vi };
-let activeLocale = DEFAULT_LOCALE;
+// 当前语言在模块加载时就定下来，而不是等 initI18n()：仓库里有 300 多处把
+// t() 写在模块顶层常量里（主题 registry、工具 registry、阶段契约、tab 列表
+// …），那些常量在 import 阶段求值。若那时 activeLocale 还是默认中文，它们
+// 就永久定格在中文——用户在设置里选越南语，这些地方也不会变。
+// 先读一次存储能覆盖「选了语言再打开页面」这条主路径。
+let activeLocale = detectLocale();
 let catalogs = BUILT_IN;
 let warned = new Set();
 const listeners = new Set();

@@ -26,7 +26,7 @@ export function TranslationDebugTab({ translation, controller }) {
   return (
     <section className="status-panel translation-debug-panel">
       <div className="status-panel-head">
-        <h3>翻译调试</h3>
+        <h3>{t("k_b8af2b74")}</h3>
         <span id={ids.debugStatus} className="status-panel-note">
           {hidden ? placeholder : t("k_6e51f4ec")}
         </span>

@@ -66,7 +66,7 @@ export function BookTranslateLaunchForm({
                 title={t("k_ea1da0a5", [ocrReuse.jobId])}
               >
                 <Check className="size-3" aria-hidden="true" />
-                复用已有 OCR
+                {t("k_e969b7ca")}
               </span>
             ) : null}
             <label className="flex cursor-pointer select-none items-center gap-2 text-xs text-muted-foreground">
@@ -76,7 +76,7 @@ export function BookTranslateLaunchForm({
                 checked={rangeOn}
                 onChange={(e) => onRangeOnChange(e.target.checked)}
               />
-              指定页码
+              {t("k_ba58b1c0")}
             </label>
             {rangeOn ? (
               <div className="flex items-center gap-2">
@@ -98,7 +98,7 @@ export function BookTranslateLaunchForm({
                   className="h-8 w-16 rounded-md border border-input bg-background px-2 text-sm"
                 />
                 <span className="text-[11px] text-muted-foreground/70">
-                  / {pageCount || "?"} 页
+                  / {pageCount || "?"} {t("k_73422182")}
                 </span>
               </div>
             ) : null}
@@ -125,11 +125,11 @@ export function BookTranslateLaunchForm({
         </div>
       ) : extraActions ? (
         <div className="book-detail-processing-actions flex flex-wrap items-center justify-end gap-2">
-          {readerAvailable ? <p className="book-detail-processing-hint">左侧可直接对照阅读</p> : null}
+          {readerAvailable ? <p className="book-detail-processing-hint">{t("k_5729306f")}</p> : null}
           {extraActions}
         </div>
       ) : readerAvailable ? (
-        <p className="book-detail-processing-hint">左侧可直接对照阅读</p>
+        <p className="book-detail-processing-hint">{t("k_5729306f")}</p>
       ) : isActive ? (
         null
       ) : null}

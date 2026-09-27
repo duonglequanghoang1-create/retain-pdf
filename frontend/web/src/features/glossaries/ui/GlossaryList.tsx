@@ -10,14 +10,14 @@ export function GlossaryList({ items, selectedId, onSelect, onCreateNew }) {
   return (
     <aside className="glossary-list-panel">
       <div className="glossary-panel-head">
-        <strong>列表</strong>
+        <strong>{t("k_d46f82fd")}</strong>
         <button
           id={GLOSSARY_DOM_IDS.newButton}
           type="button"
           className="app-button secondary"
           onClick={onCreateNew}
         >
-          新建
+          {t("k_0cda8d1c")}
         </button>
       </div>
       <div id={GLOSSARY_DOM_IDS.list} className="glossary-list">
@@ -34,7 +34,7 @@ export function GlossaryList({ items, selectedId, onSelect, onCreateNew }) {
               onClick={() => onSelect(glossaryId)}
             >
               <strong>{item.name || glossaryId}</strong>
-              <span>{Number(item.entry_count) || 0} 条</span>
+              <span>{Number(item.entry_count) || 0} {t("k_bce2ef61")}</span>
             </button>
           );
         })}

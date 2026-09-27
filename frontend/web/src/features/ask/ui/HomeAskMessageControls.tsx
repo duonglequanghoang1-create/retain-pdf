@@ -100,7 +100,7 @@ export function MessageActions({
           title={t("k_e9ffc19a")}
         >
           <Pencil size={13} strokeWidth={2.2} aria-hidden />
-          <span>改写提问</span>
+          <span>{t("k_4dbb9426")}</span>
         </button>
       ) : null}
     </div>
@@ -207,7 +207,7 @@ export function QuestionEditor({
       />
       <div className="home-ask-msg-editor-actions">
         <button type="button" className="home-ask-msg-action" onClick={onCancel}>
-          取消
+          {t("k_4d0b4688")}
         </button>
         <button
           type="button"
@@ -215,7 +215,7 @@ export function QuestionEditor({
           onClick={submit}
           disabled={!draft.trim()}
         >
-          发送
+          {t("k_1214d633")}
         </button>
       </div>
     </div>

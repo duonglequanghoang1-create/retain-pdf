@@ -97,7 +97,7 @@ export function AssistantMessageRow({
             只认识的原因才渲染——将来契约多一种值时,宁可不显示也别瞎解释一句。 */}
         {!streaming && incompleteReason === "rounds_exhausted" ? (
           <div className="aui-msg-truncated" role="status">
-            检索与计算的步数已用尽，这个回答是提前收尾的——追问一句可以让它接着做。
+            {t("k_3be85c90")}
           </div>
         ) : null}
         {content ? (
@@ -216,7 +216,7 @@ export function ModeSwitch({
         onClick={() => onChange?.("reading")}
       >
         <BookOpen size={12} strokeWidth={2.2} aria-hidden />
-        <span>阅读问答</span>
+        <span>{t("k_8e7621d7")}</span>
       </button>
       <button
         type="button"
@@ -255,7 +255,7 @@ export function SelectionBanner({
     <div className="aui-selection-context" data-reader-ai-selection-context="">
       <SelectionIcon size={14} strokeWidth={2.1} aria-hidden />
       <span className="aui-selection-context-meta">
-        {selectionContext.pane === "translated" ? t("k_647e0016") : t("k_4d69dbdf")} · {selectionContext.page} 页 · {label}
+        {selectionContext.pane === "translated" ? t("k_647e0016") : t("k_4d69dbdf")} · {selectionContext.page} {t("k_aa0f1ce1")} {label}
       </span>
       <span className="aui-selection-context-text">{text || t("k_3ec18a8b")}</span>
       <button
@@ -317,7 +317,7 @@ export function AssistantComposer({
           </div>
         </div>
       </div>
-      <p className="aui-hint">AI 可能会出错，请核对原文与引用</p>
+      <p className="aui-hint">{t("k_60444962")}</p>
     </ComposerPrimitive.Root>
   );
 }
@@ -326,7 +326,7 @@ export function LockedComposer() {
   return (
     <div className="aui-composer aui-composer-locked" role="alert">
       <p className="aui-llm-lock-msg">{MISSING_MODEL_API_KEY_MESSAGE}</p>
-      <p className="aui-hint">请到首页「设置 → API 设置」填写模型 Key 后即可提问</p>
+      <p className="aui-hint">{t("k_0c36d150")}</p>
     </div>
   );
 }

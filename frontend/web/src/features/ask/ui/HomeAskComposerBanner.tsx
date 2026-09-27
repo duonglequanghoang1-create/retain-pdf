@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 // HomeAskComposer 凭据缺失横幅
 
 export type HomeAskComposerBannerProps = {
@@ -17,7 +18,7 @@ export function HomeAskComposerBanner({
         className="home-ask-key-banner-btn"
         onClick={onOpenSettings}
       >
-        打开设置
+        {t("k_857329ea")}
       </button>
     </div>
   );

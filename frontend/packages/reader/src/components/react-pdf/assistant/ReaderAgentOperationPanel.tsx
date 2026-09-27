@@ -167,7 +167,7 @@ function CandidatePreview({
       <div className="reader-agent-operation-candidate">
         <div>
           <FileText size={13} aria-hidden />
-          <span>候选 PDF</span>
+          <span>{t("k_dc40dd3d")}</span>
         </div>
         <button type="button" disabled={!objectUrl} onClick={() => setPreviewOpen((value) => !value)}>
           {!objectUrl ? t("k_300ee3de") : previewOpen ? t("k_5d581564") : t("k_de61aa8e")}
@@ -222,7 +222,7 @@ function OperationCard({
       <header>
         <span className="reader-agent-operation-icon" aria-hidden><Bot size={15} /></span>
         <div className="reader-agent-operation-title">
-          <span>PDF 操作</span>
+          <span>{t("k_8d364eb8")}</span>
           <strong>{operation.intent_summary || t("k_848fbe6a")}</strong>
         </div>
         <div className="reader-agent-operation-head-actions">
@@ -242,7 +242,7 @@ function OperationCard({
       </header>
 
       {operation.affected_pages?.length ? (
-        <p className="reader-agent-operation-scope">影响页码：{operation.affected_pages.join("、")}</p>
+        <p className="reader-agent-operation-scope">{t("k_3c526601")}{operation.affected_pages.join("、")}</p>
       ) : null}
 
       {events.length ? (
@@ -262,9 +262,9 @@ function OperationCard({
       {riskOpen ? (
         <div className="reader-agent-operation-risk" role="alertdialog" aria-label={t("k_875120ef")}>
           <TriangleAlert size={14} aria-hidden />
-          <p>上一次执行结果不确定，重试可能重复操作。确认接受风险后再继续。</p>
+          <p>{t("k_1daec36c")}</p>
           <div>
-            <button type="button" onClick={() => setRiskOpen(false)} disabled={Boolean(pendingAction)}>返回</button>
+            <button type="button" onClick={() => setRiskOpen(false)} disabled={Boolean(pendingAction)}>{t("k_11d02415")}</button>
             <button
               type="button"
               className="is-danger"
@@ -341,7 +341,7 @@ export function ReaderAgentOperationPanel({
       {runtimeRestarting ? (
         <div className="reader-agent-restarting" role="status">
           <Loader2 className="is-spinning" size={13} aria-hidden />
-          正在重启 Agent，新请求暂不可用
+          {t("k_38fae07b")}
         </div>
       ) : null}
       {visibleEntries.map((entry) => (

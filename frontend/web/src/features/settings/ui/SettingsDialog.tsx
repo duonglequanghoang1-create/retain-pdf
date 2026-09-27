@@ -250,11 +250,10 @@ export function SettingsDialog({
                   <PaneHead tab="glossary" />
                   <div className="app-settings-launcher">
                     <p>
-                      术语表决定翻译时的优先译法。可维护多张术语表并
-                      按需启用，翻译任务发起时生效。
+                      {t("k_432f61d1")}
                     </p>
                     <Button id={APP_SETTINGS_DIALOG_IDS.glossaryButton} className="app-settings-action" onClick={openGlossaries}>
-                      打开术语表
+                      {t("k_d75273ac")}
                     </Button>
                   </div>
                 </TabsPrimitive.Content>

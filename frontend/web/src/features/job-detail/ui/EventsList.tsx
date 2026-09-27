@@ -58,7 +58,7 @@ function EventItem({ item }) {
       {showProgress ? <div className="event-progress">{record.progressText}</div> : null}
       {payloadText ? (
         <details className="event-payload-wrap" open={payloadOpen} onToggle={(event) => setPayloadOpen(event.currentTarget.open)}>
-          <summary className="event-payload-toggle">查看数据</summary>
+          <summary className="event-payload-toggle">{t("k_8afda7e6")}</summary>
           <pre className="event-payload">{payloadText}</pre>
         </details>
       ) : null}
@@ -76,7 +76,7 @@ export function EventsList({ eventsPayload }) {
   const ids = STATUS_DETAIL_DIALOG_IDS.events;
   return (
     <>
-      <div id={ids.empty} className={hasItems ? "events-empty hidden" : "events-empty"}>暂无事件</div>
+      <div id={ids.empty} className={hasItems ? "events-empty hidden" : "events-empty"}>{t("k_fad64b34")}</div>
       <div id={ids.list} className={hasItems ? "events-list" : "events-list hidden"}>
         {entries.map(({ item }, index) => (
           // 排序后位次前缀保证唯一——不能只用 item.seq/event_id(mock/真实数据都

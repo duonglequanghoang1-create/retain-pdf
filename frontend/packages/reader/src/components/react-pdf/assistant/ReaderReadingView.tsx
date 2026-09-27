@@ -68,8 +68,8 @@ export function ReaderReadingView({
               <Sparkles size={21} strokeWidth={1.9} />
             </span>
           </div>
-          <h2 className="aui-empty-title">一起读懂这篇文档</h2>
-          <p className="aui-empty-sub">总结、解释、检索与计算，不修改 PDF</p>
+          <h2 className="aui-empty-title">{t("k_fa7ccc3f")}</h2>
+          <p className="aui-empty-sub">{t("k_2dff1715")}</p>
           <div className="aui-suggestions" role="group" aria-label={t("k_402274e3")}>
             {READING_SUGGESTIONS.map((item) => {
               const Icon = item.icon;

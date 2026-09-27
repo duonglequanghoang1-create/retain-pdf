@@ -27,7 +27,7 @@ export function TranslationFilterPanel({ query, onApply }) {
     <section className="translation-filter-panel">
       <div className="translation-filter-row">
         <label className="translation-filter-field">
-          <span className="label">状态</span>
+          <span className="label">{t("k_62e951a6")}</span>
           <select
             id={ids.filterFinalStatus}
             value={finalStatus}
@@ -39,7 +39,7 @@ export function TranslationFilterPanel({ query, onApply }) {
           </select>
         </label>
         <label className="translation-filter-field translation-filter-search">
-          <span className="label">检索</span>
+          <span className="label">{t("k_1c037676")}</span>
           <input
             id={ids.filterQuery}
             type="search"
@@ -54,7 +54,7 @@ export function TranslationFilterPanel({ query, onApply }) {
             }}
           />
         </label>
-        <button id={ids.filterApply} type="button" className="button-link secondary" onClick={submit}>刷新</button>
+        <button id={ids.filterApply} type="button" className="button-link secondary" onClick={submit}>{t("k_38108eaa")}</button>
       </div>
     </section>
   );

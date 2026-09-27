@@ -454,7 +454,7 @@ const PdfDocumentPaneInner = forwardRef<HTMLElement, PdfDocumentPaneProps>(
         ) : null}
         {loading ? (
           <div className="reader-empty reader-react-pdf-loading" data-reader-pdf-loading={pane}>
-            正在加载 PDF…
+            {t("k_00fe0130")}
           </div>
         ) : null}
         {documentFile && !fetchError ? (

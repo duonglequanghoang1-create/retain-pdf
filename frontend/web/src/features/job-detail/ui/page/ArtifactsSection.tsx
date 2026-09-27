@@ -15,11 +15,11 @@ export const ArtifactsSection = memo(function ArtifactsSection() {
   return (
     <article className="detail-card">
       <div className="detail-trigger-head">
-        <h2>产物清单</h2>
-        <span id="detail-artifacts-summary" className="detail-inline-note">尚未加载</span>
+        <h2>{t("k_55feb405")}</h2>
+        <span id="detail-artifacts-summary" className="detail-inline-note">{t("k_3e2e1ebf")}</span>
       </div>
       <div id="detail-artifacts-list" className="detail-artifact-list">
-        <div className="detail-empty">暂无产物清单</div>
+        <div className="detail-empty">{t("k_df1d42e3")}</div>
       </div>
     </article>
   );
@@ -29,7 +29,7 @@ const MarkdownImageIsland = memo(function MarkdownImageIsland() {
   return (
     <>
       <div id="detail-markdown-image-grid" className="detail-markdown-image-grid hidden"></div>
-      <div id="detail-markdown-image-empty" className="detail-empty">暂无 Markdown 图片引用</div>
+      <div id="detail-markdown-image-empty" className="detail-empty">{t("k_141c07dd")}</div>
     </>
   );
 });
@@ -38,7 +38,7 @@ export function MarkdownCard({ t }) {
   return (
     <article className="detail-card">
       <div className="detail-trigger-head">
-        <h2>Markdown 预览</h2>
+        <h2>{t("k_c712492f")}</h2>
         <span id="detail-markdown-status" className="detail-inline-note">{t("detail-markdown-status", t("k_17a5e86b"))}</span>
       </div>
       <div className="detail-meta-list">

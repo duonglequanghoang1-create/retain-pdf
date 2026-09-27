@@ -81,7 +81,7 @@ export function ProcessingChoicePanel({
           onClick={onToggleTranslationOptions}
         >
           <SlidersHorizontal aria-hidden="true" />
-          选项
+          {t("k_221ee0cc")}
         </button>
         <button
           id="store-only-btn"
@@ -91,7 +91,7 @@ export function ProcessingChoicePanel({
           title={t("k_69a8f3e3")}
           onClick={onStoreOnly}
         >
-          仅收藏
+          {t("k_70a5ae0f")}
         </button>
         <button
           id="submit-btn"

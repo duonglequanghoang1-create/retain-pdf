@@ -173,7 +173,7 @@ export function HomeAskThread({
                           title={t("k_9236f323")}
                         >
                           <Pencil size={13} strokeWidth={2.2} aria-hidden />
-                          <span>编辑</span>
+                          <span>{t("k_a7f814c0")}</span>
                         </button>
                       ) : null}
                     </div>
@@ -212,7 +212,7 @@ export function HomeAskThread({
             {streaming && !m.progress && !hasBody ? (
               <div className="home-ask-thinking" role="status">
                 <Loader2 className="home-ask-spin" size={13} strokeWidth={2.4} aria-hidden />
-                <span>思考中…</span>
+                <span>{t("k_29653ff3")}</span>
               </div>
             ) : null}
             {hasBody || failed ? (
@@ -242,7 +242,7 @@ export function HomeAskThread({
             {cutShort ? (
               <div className="home-ask-msg-truncated" role="status">
                 <AlertTriangle size={13} strokeWidth={2.2} aria-hidden />
-                <span>检索与计算的步数已用尽，这个回答是提前收尾的——追问一句可以让它接着做。</span>
+                <span>{t("k_3be85c90")}</span>
               </div>
             ) : null}
             {!streaming && (hasBody || failed || interrupted || cutShort) ? (

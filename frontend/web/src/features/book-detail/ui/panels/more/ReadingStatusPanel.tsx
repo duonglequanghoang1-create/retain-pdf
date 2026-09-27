@@ -20,7 +20,7 @@ export function ReadingStatusPanel({ value, busy, onChange }) {
   return (
     <div className="book-detail-reading-status-panel space-y-1.5">
       <p className="book-detail-reading-status-label flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-        <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />阅读状态
+        <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />{t("k_cdbe6f64")}
       </p>
       <div className="inline-flex overflow-hidden rounded-md border border-border" role="group" aria-label={t("k_cdbe6f64")}>
         {READING_STATUSES.map((s) => (

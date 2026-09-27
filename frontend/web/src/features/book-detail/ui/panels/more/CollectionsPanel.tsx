@@ -1,5 +1,6 @@
 // 右栏：合集成员切换。
 
+import { t } from "@retainpdf/i18n";
 import { cn } from "@/ui/lib/utils";
 import { Layers3 } from "lucide-react";
 
@@ -15,7 +16,7 @@ export function CollectionsPanel({ collections, collectionsBusy, onToggle }) {
   return (
     <div className="book-detail-collections-panel space-y-1.5 border-t border-border/30 pt-3">
       <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-        <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />合集
+        <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />{t("k_01dc4d09")}
       </p>
       <div className="flex flex-wrap gap-2">
         {collections.map((c) => (

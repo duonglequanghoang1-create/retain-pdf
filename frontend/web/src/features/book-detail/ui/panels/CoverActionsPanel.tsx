@@ -79,7 +79,7 @@ export function CoverActionsPanel({
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-paper/80 shadow-sm">
               <IconEye className="h-6 w-6" />
             </span>
-            <span className="text-xs tracking-wide">无封面</span>
+            <span className="text-xs tracking-wide">{t("k_293087fe")}</span>
           </div>
         )}
         {processing ? <BookCardProcessingOverlay /> : null}
@@ -137,7 +137,7 @@ export function CoverActionsPanel({
           onClick={onReadSource}
         >
           <IconEye className="mr-0.5 h-4 w-4" />
-          查看原版
+          {t("k_c31e5a69")}
         </button>
       </div>
       {quickDownloadsSlot}

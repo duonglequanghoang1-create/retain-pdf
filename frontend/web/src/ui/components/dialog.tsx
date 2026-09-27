@@ -110,7 +110,7 @@ function DialogFooter({
       {children}
       {showCloseButton ? (
         <DialogPrimitive.Close asChild>
-          <Button variant="outline">关闭</Button>
+          <Button variant="outline">{t("k_6c14bd7f")}</Button>
         </DialogPrimitive.Close>
       ) : null}
     </div>
@@ -130,7 +130,7 @@ function DialogCloseButton({
       {...props}
     >
       {children ?? <XIcon className="h-4 w-4" />}
-      <span className="sr-only">关闭</span>
+      <span className="sr-only">{t("k_6c14bd7f")}</span>
     </DialogPrimitive.Close>
   )
 }

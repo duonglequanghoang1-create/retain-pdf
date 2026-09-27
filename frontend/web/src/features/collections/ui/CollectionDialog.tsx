@@ -183,7 +183,7 @@ export function CollectionDialog({
             </DialogHeader>
             <DialogBody className="desktop-body collection-manage-body">
               <label className="collection-name-field">
-                <span>名称</span>
+                <span>{t("k_1be7ae4f")}</span>
                 <input
                   id="collection-name-input"
                   type="text"
@@ -194,11 +194,11 @@ export function CollectionDialog({
                 />
               </label>
               <div className="collection-doc-picker">
-                <p className="muted">从书库勾选加入这个合集的书</p>
+                <p className="muted">{t("k_7fded267")}</p>
                 {loading ? (
-                  <div className="collection-doc-list-empty">正在加载书目…</div>
+                  <div className="collection-doc-list-empty">{t("k_30c5be89")}</div>
                 ) : allDocuments.length === 0 ? (
-                  <div className="collection-doc-list-empty">书库暂无书</div>
+                  <div className="collection-doc-list-empty">{t("k_2b8ef439")}</div>
                 ) : (
                   <ul className="collection-doc-list">
                     {allDocuments.map((doc) => (
@@ -226,7 +226,7 @@ export function CollectionDialog({
                   disabled={saving}
                   onClick={() => setConfirmDeleteOpen(true)}
                 >
-                  删除合集
+                  {t("k_485aa434")}
                 </Button>
               ) : <span />}
               <Button

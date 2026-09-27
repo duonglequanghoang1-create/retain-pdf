@@ -90,7 +90,7 @@ export function WorkflowPanel({ hiddenInputsSlot = null }: { hiddenInputsSlot?: 
   return (
     <section className="translation-workflow-card">
       <div id="job-warning" className={`job-warning${workflow.jobWarningVisible ? "" : " hidden"}`}>
-        检测到上一个任务仍在处理中。建议先等待当前任务结束，再提交新的 PDF。
+        {t("k_d9876710")}
       </div>
 
       <TabsPrimitive.Root
@@ -101,11 +101,11 @@ export function WorkflowPanel({ hiddenInputsSlot = null }: { hiddenInputsSlot?: 
         <TabsPrimitive.List id="ocr-only-toggle" className="upload-workflow-mode-tabs-list" aria-label={t("k_dadc7f1c")}>
           <TabsPrimitive.Trigger value="translate" className="upload-workflow-mode-tab" aria-label={t("k_7ba27e62")}>
             <Languages aria-hidden="true" />
-            翻译
+            {t("k_23141370")}
           </TabsPrimitive.Trigger>
           <TabsPrimitive.Trigger value="ocr" className="upload-workflow-mode-tab" aria-label={t("k_095673b2")}>
             <ScanSearch aria-hidden="true" />
-            仅 OCR
+            {t("k_4358b50f")}
           </TabsPrimitive.Trigger>
         </TabsPrimitive.List>
       </TabsPrimitive.Root>

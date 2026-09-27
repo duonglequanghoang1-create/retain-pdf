@@ -5,6 +5,7 @@
 // 居中做法:logo 左、两侧各一条 flex:1 的 spacer 把 tabs 挤到正中。#developer-btn/
 // #open-output-btn 是契约 id(测试引用),保留在 display:none 的隐藏容器里,不占布局。
 
+import { t } from "@retainpdf/i18n";
 import { LibraryTopTabs } from "./tabs/LibraryTopTabs.jsx";
 import { useHomeTabs } from "../home-services-context.js";
 
@@ -32,8 +33,8 @@ export function AppTopBar({ activeTab, onTabChange }: { activeTab?: string; onTa
           <span>RetainPDF</span>
         </a>
         <div className="hero-actions hidden" aria-hidden="true">
-          <button id="developer-btn" type="button" className="secondary hidden" aria-hidden="true">开发者</button>
-          <button id="open-output-btn" type="button" className="secondary hidden">打开输出目录</button>
+          <button id="developer-btn" type="button" className="secondary hidden" aria-hidden="true">{t("k_3e1274e4")}</button>
+          <button id="open-output-btn" type="button" className="secondary hidden">{t("k_344a481f")}</button>
         </div>
         <div className="library-topbar-spacer" aria-hidden="true" />
         <LibraryTopTabs active={active} onChange={onChange} />

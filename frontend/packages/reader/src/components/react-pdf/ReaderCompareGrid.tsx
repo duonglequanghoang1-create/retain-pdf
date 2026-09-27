@@ -223,7 +223,7 @@ export function ReaderCompareGrid(props: ReaderCompareGridProps): ReactElement {
                   data-source-overlay-badge="true"
                   title={t("k_481ec305")}
                 >
-                  原文+实时译文叠加
+                  {t("k_3c0697b7")}
                 </span>
               </>
             ) : props.sourcePaneAction}

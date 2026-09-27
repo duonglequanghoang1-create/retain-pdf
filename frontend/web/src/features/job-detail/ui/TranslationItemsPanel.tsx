@@ -65,9 +65,9 @@ export function TranslationItemsPanel({ translation, onSelect, onChangePage }) {
 
   return (
     <section className="translation-debug-column translation-debug-column-list">
-      <div className="translation-debug-subhead"><h4>条目列表</h4><span id={ids.itemsMeta} className="status-panel-note">{meta}</span></div>
+      <div className="translation-debug-subhead"><h4>{t("k_52960abc")}</h4><span id={ids.itemsMeta} className="status-panel-note">{meta}</span></div>
       <div className="translation-panel-body">
-        <div id={ids.itemsLoading} className={loading ? "events-empty" : "events-empty hidden"}>正在读取翻译条目...</div>
+        <div id={ids.itemsLoading} className={loading ? "events-empty" : "events-empty hidden"}>{t("k_526b04dd")}</div>
         <div id={ids.itemsEmpty} className={!loading && !hasItems ? "events-empty" : "events-empty hidden"}>
           {translation.itemsErrorText || t("k_d27c16e2")}
         </div>
@@ -89,7 +89,7 @@ export function TranslationItemsPanel({ translation, onSelect, onChangePage }) {
           className="button-link secondary"
           disabled={loading || !canPrev}
           onClick={() => onChangePage("prev")}
-        >上一页</button>
+        >{t("k_b41561d8")}</button>
         <span id={ids.itemsPage} className="status-panel-note">{pageLabel}</span>
         <button
           id={ids.itemsNext}
@@ -97,7 +97,7 @@ export function TranslationItemsPanel({ translation, onSelect, onChangePage }) {
           className="button-link secondary"
           disabled={loading || !canNext}
           onClick={() => onChangePage("next")}
-        >下一页</button>
+        >{t("k_67a246a3")}</button>
       </div>
     </section>
   );

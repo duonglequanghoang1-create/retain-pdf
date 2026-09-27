@@ -1,6 +1,7 @@
 // 书架列表视图的行(照搬 PDF_MD_lib 的 BookListRow):小封面缩略图 + 标题/副标题/
 // 更新日期 + 右侧眼睛(快速阅读)。点行 → 书籍详情弹窗。数据/动作与卡片一致。
 
+import { t } from "@retainpdf/i18n";
 import { memo } from "react";
 import { cn } from "@/ui/lib/utils";
 import { formatZhDateCompact } from "@/platform/utils/datetime.js";
@@ -174,7 +175,7 @@ function BookListRowImpl({
 
       <div className="relative min-w-0 flex-1 pr-2 pt-0.5">
         <h3 className="recent-job-id line-clamp-2 min-w-0 text-sm font-semibold leading-snug text-foreground" title={fullTitle}>{title}</h3>
-        <p className="mt-2 text-[11px] tabular-nums text-muted-foreground/55">{pageCount} 页 · 更新 {formatDate(item.updated_at)}</p>
+        <p className="mt-2 text-[11px] tabular-nums text-muted-foreground/55">{pageCount} {t("k_c8232ca5")} {formatDate(item.updated_at)}</p>
       </div>
 
       {batchMode ? null : (

@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import {
   projectReaderRegion,
   readerRegionKindForRegion,
@@ -53,7 +54,7 @@ export function ReaderTextHoverLayer({ target }: { target: ReaderTextHoverTarget
         data-reader-text-hover-id={target.itemId}
         style={target.rect}
       >
-        <span className="reader-text-hover-label">文字</span>
+        <span className="reader-text-hover-label">{t("k_f4d3dab8")}</span>
       </div>
     </div>
   );

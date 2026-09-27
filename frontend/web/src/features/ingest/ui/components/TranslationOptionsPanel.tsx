@@ -49,9 +49,9 @@ export function TranslationOptionsPanel() {
         <div>
           <h3 id="page-range-title">
             <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-            翻译选项
+            {t("k_813235a2")}
           </h3>
-          <p id="page-range-limit-text">按需设置页码范围和术语表；留空表示处理整份 PDF。</p>
+          <p id="page-range-limit-text">{t("k_3d1a07c1")}</p>
         </div>
         <Button
           id="page-range-close-btn"
@@ -69,10 +69,10 @@ export function TranslationOptionsPanel() {
         <fieldset className="translation-options-range">
           <legend>
             <FileText className="h-4 w-4" aria-hidden="true" />
-            页码范围
+            {t("k_6271cba4")}
           </legend>
           <div>
-            <label htmlFor="page-range-start">起始页</label>
+            <label htmlFor="page-range-start">{t("k_f574ab40")}</label>
             <input
               id="page-range-start"
               type="number"
@@ -88,7 +88,7 @@ export function TranslationOptionsPanel() {
           </div>
           <span className="translation-options-range-separator" aria-hidden="true">—</span>
           <div>
-            <label htmlFor="page-range-end">结束页</label>
+            <label htmlFor="page-range-end">{t("k_9a0c7c96")}</label>
             <input
               id="page-range-end"
               type="number"
@@ -107,14 +107,14 @@ export function TranslationOptionsPanel() {
         <label className="translation-options-glossary" htmlFor="job-glossary-id">
           <span>
             <BookOpen className="h-4 w-4" aria-hidden="true" />
-            术语表
+            {t("k_12f4ade1")}
           </span>
           <select
             id="job-glossary-id"
             value={selectedId}
             onChange={(event) => workflowViewActions.setSelectedGlossaryId(event.target.value)}
           >
-            <option value="">不使用术语表</option>
+            <option value="">{t("k_24e17be6")}</option>
             {workflow.glossaries.map((glossary) => (
               <option key={glossary.glossaryId} value={glossary.glossaryId}>
                 {glossary.name}
@@ -135,14 +135,14 @@ export function TranslationOptionsPanel() {
           variant="outline"
           onClick={() => features.uploadFeature?.clearPageRanges()}
         >
-          清除页码
+          {t("k_8e604d07")}
         </Button>
         <Button
           id="page-range-apply-btn"
           type="button"
           onClick={() => features.uploadFeature?.applyPageRanges()}
         >
-          完成
+          {t("k_33246f6a")}
         </Button>
       </div>
     </section>

@@ -1,5 +1,6 @@
 // 展示组件边界：只收 props 发回调，不直连 services/store；
 // 凭据门/预算提示的可见性与文案由 UploadTile 容器映射为 props。
+import { t } from "@retainpdf/i18n";
 import type { ReactNode } from "react";
 
 export type TranslationBudgetView = {
@@ -27,15 +28,15 @@ export function CredentialGateNotice({
             <circle cx="12" cy="16" r="1.2" fill="currentColor" />
           </svg>
         </span>
-        <strong id="credential-gate-title">处理前需要完成接口设置</strong>
-        <em id="credential-gate-help">仍可上传或收藏 PDF；执行 OCR 或翻译前，请先填写对应 API 凭据。</em>
+        <strong id="credential-gate-title">{t("k_069a289f")}</strong>
+        <em id="credential-gate-help">{t("k_41722954")}</em>
         <button
           id="credential-gate-action"
           type="button"
           className="credential-gate-action"
           onClick={onOpenSettings}
         >
-          打开设置
+          {t("k_857329ea")}
         </button>
       </div>
     </div>
@@ -56,7 +57,7 @@ export function TranslationBudgetNote({ budget }: { budget: TranslationBudgetVie
       {budget.visible && budget.blocking ? (
         <>
           {" · "}
-          <a href={budget.topUpUrl} target="_blank" rel="noopener noreferrer">去充值</a>
+          <a href={budget.topUpUrl} target="_blank" rel="noopener noreferrer">{t("k_daa87728")}</a>
         </>
       ) : null}
     </div>

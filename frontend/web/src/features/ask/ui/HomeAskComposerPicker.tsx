@@ -32,7 +32,7 @@ export function HomeAskComposerPicker({
       {loadingOpts && !optionsLoaded ? (
         <div className="home-ask-picker-empty">
           <Loader2 className="home-ask-spin" size={14} aria-hidden />
-          加载中…
+          {t("k_300ee3de")}
         </div>
       ) : filtered.length === 0 ? (
         <div className="home-ask-picker-empty">
@@ -66,9 +66,9 @@ export function HomeAskComposerPicker({
         ))
       )}
       {scopeCount >= MAX_SCOPES ? (
-        <div className="home-ask-picker-hint">最多指定 {MAX_SCOPES} 个范围</div>
+        <div className="home-ask-picker-hint">{t("k_8418c889")} {MAX_SCOPES} {t("k_8e16bf45")}</div>
       ) : (
-        <div className="home-ask-picker-hint">合集会展开其中的文献再检索</div>
+        <div className="home-ask-picker-hint">{t("k_4c1c7ae9")}</div>
       )}
     </div>
   );

@@ -92,17 +92,17 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
   return (
     <section id="favorites-view" className="library-view favorites-view" aria-label={t("k_d07cee78")}>
       <div className="favorites-head">
-        <h2 className="favorites-title">我的收藏</h2>
-        <p className="favorites-subtitle">阅读时选中文字即可收藏，在这里统一回看</p>
+        <h2 className="favorites-title">{t("k_93a41f50")}</h2>
+        <p className="favorites-subtitle">{t("k_7909c5a3")}</p>
       </div>
 
       {loading ? (
-        <div className="events-empty" id="favorites-loading">正在加载收藏…</div>
+        <div className="events-empty" id="favorites-loading">{t("k_214da275")}</div>
       ) : error ? (
         <div className="events-empty" id="favorites-error" role="alert">
           <p>{error}</p>
           <button type="button" className="app-button favorites-retry-btn" onClick={() => reload()}>
-            重试
+            {t("k_e2d53a6d")}
           </button>
         </div>
       ) : items.length === 0 ? (
@@ -118,7 +118,7 @@ export function FavoritesView({ onRequestUpload }: FavoritesViewProps) {
             className="app-button empty-state-action"
             onClick={onRequestUpload}
           >
-            上传 PDF
+            {t("k_f77257b3")}
           </button>
         </EmptyState>
       ) : (

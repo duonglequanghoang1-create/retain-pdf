@@ -365,7 +365,7 @@ function Be({
               width: De
             }
           ),
-          g === "failed" ? /* @__PURE__ */ i("span", { className: "reader-ai-citation-card-thumb-fallback", children: "预览暂不可用" }) : null
+          g === "failed" ? /* @__PURE__ */ i("span", { className: "reader-ai-citation-card-thumb-fallback", children: b("k_7e215fd9") }) : null
         ] }) : null,
         /* @__PURE__ */ x("div", { className: "reader-ai-citation-card-text", children: [
           /* @__PURE__ */ i("div", { className: "reader-ai-citation-card-head", children: c ? b("k_62866db3", [c]) : b("k_c63f79e6") }),
@@ -636,4 +636,4 @@ function rt({
 export {
   rt as A
 };
-//# sourceMappingURL=AiMarkdownAnswer-7J-eZRXt.js.map
+//# sourceMappingURL=AiMarkdownAnswer-H48K5cBm.js.map

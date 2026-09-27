@@ -95,7 +95,7 @@ export function AppUpdateBanner({ view, handlersRef }: AppUpdateBannerProps) {
         data-update-state={state.buttonState}
         onClick={() => setDialogOpen(true)}
       >
-        检查更新
+        {t("k_a6df3858")}
         <span className="app-update-dot" aria-hidden="true"></span>
       </Button>
       <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
@@ -125,7 +125,7 @@ export function AppUpdateBanner({ view, handlersRef }: AppUpdateBannerProps) {
                   className="home-action-btn secondary"
                   onClick={() => handlersRef.current?.onCheck?.()}
                 >
-                  重新检查
+                  {t("k_4fab9865")}
                 </Button>
                 <a
                   className={`app-update-link${panel.htmlUrl ? "" : " hidden"}`}
@@ -133,7 +133,7 @@ export function AppUpdateBanner({ view, handlersRef }: AppUpdateBannerProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  打开 Release
+                  {t("k_20ae753a")}
                 </a>
               </DialogFooter>
             </DialogShell>

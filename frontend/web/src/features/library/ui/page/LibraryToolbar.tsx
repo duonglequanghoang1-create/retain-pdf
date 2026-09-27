@@ -43,7 +43,7 @@ export function LibraryToolbar({
     <div className="mb-4 border-b border-border/10 pb-3">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 items-baseline gap-2">
-          <span className="truncate text-[15px] font-semibold tracking-tight text-foreground/90 sm:text-[16px]">全部书库</span>
+          <span className="truncate text-[15px] font-semibold tracking-tight text-foreground/90 sm:text-[16px]">{t("k_271083ed")}</span>
           {Number.isFinite(count) ? (
             <span className="inline-flex h-5 shrink-0 items-center rounded-full bg-muted/45 px-2 text-[11px] tabular-nums text-muted-foreground/70">{count}</span>
           ) : null}
@@ -59,13 +59,13 @@ export function LibraryToolbar({
                 "inline-flex h-8 items-center gap-1.5 rounded-[var(--btn-radius)] px-3 text-xs transition active:scale-95",
                 batchMode ? "bg-secondary text-secondary-foreground" : "border border-border text-foreground hover:bg-muted/30",
               )}
-            ><IconCheckSquare className="opacity-70" />批量</button>
+            ><IconCheckSquare className="opacity-70" />{t("k_1ba909c4")}</button>
           ) : null}
 
           {filterSlot}
 
           <label className="inline-flex h-8 shrink-0 items-center rounded-[var(--btn-radius)] px-2.5 text-xs transition-colors hover:bg-muted/30">
-            <span className="sr-only">排序</span>
+            <span className="sr-only">{t("k_dc35af8d")}</span>
             <select
               value={sortMode}
               onChange={(e) => setSortMode(e.target.value)}

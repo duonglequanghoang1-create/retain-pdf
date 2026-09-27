@@ -61,8 +61,8 @@ export function ReaderOperationsView({
               <Sparkles size={21} strokeWidth={1.9} />
             </span>
           </div>
-          <h2 className="aui-empty-title">想怎样处理 PDF？</h2>
-          <p className="aui-empty-sub">创建候选版本后由你预览和确认</p>
+          <h2 className="aui-empty-title">{t("k_3e757987")}</h2>
+          <p className="aui-empty-sub">{t("k_966f0b28")}</p>
           <div className="aui-suggestions" role="group" aria-label={t("k_402274e3")}>
             {OPERATION_SUGGESTIONS.map((item) => {
               const Icon = item.icon;

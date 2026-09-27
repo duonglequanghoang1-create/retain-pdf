@@ -56,11 +56,11 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
         <div className="credential-card-copy">
           <h3>{TRANSLATION_PROVIDER_DEFINITION.label}</h3>
         </div>
-        <span className="credential-card-tag">OpenAI 兼容</span>
+        <span className="credential-card-tag">{t("k_83a19c76")}</span>
       </div>
       <div className="credential-translation-grid">
         <label className="credential-translation-provider-field">
-          <span className="developer-label">API 服务</span>
+          <span className="developer-label">{t("k_6938681d")}</span>
           <SelectPrimitive.Root
             value={providerDefinition.id}
             onValueChange={(value) => handlers?.changeTranslationProvider?.(value)}
@@ -125,7 +125,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
           />
         </label>
         <label className="credential-translation-model-field">
-          <span className="developer-label">模型</span>
+          <span className="developer-label">{t("k_98fd0cbd")}</span>
           <input
             id={BROWSER_IDS.modelName}
             type="text"
@@ -149,7 +149,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
           />
         </label>
         <label className="credential-translation-workers-field">
-          <span className="developer-label">并发数</span>
+          <span className="developer-label">{t("k_ad9cc268")}</span>
           <input
             id={BROWSER_IDS.translationWorkers}
             type="number"
@@ -169,7 +169,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
       {providerDefinition.id === "custom" ? (
         <p className="credential-custom-api-warning" role="note">
           <TriangleAlert aria-hidden="true" />
-          自定义 API 建议并发不超过 5，过高可能导致接口异常。
+          {t("k_9ab2d2b8")}
         </p>
       ) : null}
       <div className="credential-card-footer">
@@ -213,7 +213,7 @@ export function TranslationPanel({ footerAction = null }: { footerAction?: React
               target="_blank"
               rel="noopener noreferrer"
             >
-              DeepSeek 充值
+              {t("k_c0a78048")}
               <ExternalLink aria-hidden="true" />
             </a>
           ) : (

@@ -66,7 +66,7 @@ export function AgentOperationCard({
       <header className="home-ask-operation-head">
         <span className="home-ask-operation-icon" aria-hidden><Bot size={16} /></span>
         <div>
-          <span className="home-ask-operation-kicker">Agent 操作</span>
+          <span className="home-ask-operation-kicker">{t("k_a71cf174")}</span>
           <h3>{operation.intent_summary || t("k_8d364eb8")}</h3>
         </div>
         <span className="home-ask-operation-status">
@@ -81,7 +81,7 @@ export function AgentOperationCard({
         </ol>
       ) : null}
       {operation.affected_pages?.length ? (
-        <p className="home-ask-operation-scope">影响页码：{operation.affected_pages.join("、")}</p>
+        <p className="home-ask-operation-scope">{t("k_3c526601")}{operation.affected_pages.join("、")}</p>
       ) : null}
 
       {events.length ? (

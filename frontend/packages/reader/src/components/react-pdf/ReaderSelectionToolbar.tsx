@@ -112,7 +112,7 @@ export function ReaderSelectionToolbar({
           <span className="reader-sel-pop-context-divider" aria-hidden>·</span>
           <span>{paneLabel}</span>
           <span className="reader-sel-pop-context-divider" aria-hidden>·</span>
-          <span>{selection.page} 页</span>
+          <span>{selection.page} {t("k_73422182")}</span>
         </div>
 
         <div className="reader-sel-pop-actions">
@@ -134,7 +134,7 @@ export function ReaderSelectionToolbar({
               <span>{copied ? t("k_e381a576") : kind === "formula" ? t("k_f70cafe8") : t("k_4edd1d00")}</span>
             </button>
           ) : (
-            <span className="reader-sel-pop-selection-hint">已选择图片</span>
+            <span className="reader-sel-pop-selection-hint">{t("k_be69fa00")}</span>
           )}
           {onAddNote && copyValue ? (
             <button
@@ -143,7 +143,7 @@ export function ReaderSelectionToolbar({
               onClick={() => onAddNote({ page: selection.page, pane: selection.pane, quote: copyValue })}
             >
               <StickyNote size={15} strokeWidth={2.2} aria-hidden />
-              <span>添加批注</span>
+              <span>{t("k_4f01f6ef")}</span>
             </button>
           ) : null}
           {onAskAi ? (
@@ -153,7 +153,7 @@ export function ReaderSelectionToolbar({
               onClick={() => onAskAi(selection)}
             >
               <Sparkles size={15} strokeWidth={2.2} aria-hidden />
-              <span>问 AI</span>
+              <span>{t("k_22d11b3e")}</span>
             </button>
           ) : null}
           <button

@@ -84,7 +84,7 @@ export function ReaderCloseHome({ onBeforeClose }: { onBeforeClose?: () => void 
       onClick={close}
     >
       <X className="reader-close-home-icon" size={18} strokeWidth={2.25} aria-hidden />
-      <span className="reader-close-home-label">关闭</span>
+      <span className="reader-close-home-label">{t("k_6c14bd7f")}</span>
     </button>
   );
 }

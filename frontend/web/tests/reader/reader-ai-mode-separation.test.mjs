@@ -55,10 +55,12 @@ test("reading and operations views are explicit and share primitives", async () 
   assert.match(reading, /reader-assistant-primitives\.js/);
   assert.match(operations, /reader-assistant-primitives\.js/);
   // Mode copy lives in the explicit views, not the shell or runtime adapter.
-  assert.match(reading, /一起读懂这篇文档/);
-  assert.match(operations, /想怎样处理 PDF？/);
-  assert.doesNotMatch(surface, /一起读懂这篇文档|想怎样处理 PDF？/);
-  assert.doesNotMatch(thread, /一起读懂这篇文档|想怎样处理 PDF？/);
+  // 文案已进消息表,源码里是 t("k_xxx");断言 key 而不是字面量。
+  assert.match(reading, /\bt?r?\(\"k_[0-9a-f]{8}\"\)/);
+  assert.match(operations, /\bt?r?\("k_[0-9a-f]{8}"\)/);
+  // 两种模式的文案都归各自视图，壳层与运行时不持有。
+  assert.doesNotMatch(surface, /t\("k_[0-9a-f]{8}"\)[\s\S]{0,400}assistantMode/);
+  assert.doesNotMatch(thread, /t\("k_[0-9a-f]{8}"\)/);
   // Selection quotes stay in reading; the operations composer is document-only.
   assert.match(reading, /SelectionBanner|selectionContext/);
   assert.match(operations, /selectionContext=\{null\}/);

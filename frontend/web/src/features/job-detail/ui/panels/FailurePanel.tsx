@@ -135,13 +135,13 @@ export function FailurePanel({
       <section className="status-detail-section failure-summary-section">
         <div className="status-detail-section-head">
           <div>
-            <h3>问题摘要</h3>
-            <p>先看原因，再选择是否恢复任务</p>
+            <h3>{t("k_af06026b")}</h3>
+            <p>{t("k_5e5dfe20")}</p>
           </div>
-          <span className="status-detail-state-badge is-failed">失败</span>
+          <span className="status-detail-state-badge is-failed">{t("k_3e3c8068")}</span>
         </div>
         <div className="failure-hero-card">
-          <span className="label">失败摘要</span>
+          <span className="label">{t("k_3b5d2c28")}</span>
           <span id={ids.failure.summary} className="info-value">{failure.summary}</span>
           <span id={ids.failure.rootCause} className="status-detail-failure-root-cause">{failure.rootCause}</span>
         </div>
@@ -154,9 +154,9 @@ export function FailurePanel({
             onClick={() => setLogDialogOpen(true)}
           >
             <FileText className="h-4 w-4" aria-hidden="true" />
-            查看错误日志
+            {t("k_ad782dc4")}
           </button>
-          <span className="status-panel-note">包含错误码、阶段、Trace ID 和最近日志，可一键复制。</span>
+          <span className="status-panel-note">{t("k_7b4b5da3")}</span>
         </div>
 
         <div className="status-detail-failure-recovery">
@@ -172,7 +172,7 @@ export function FailurePanel({
                   onClick={() => setReceiptDialogOpen(true)}
                 >
                   <Link2 className="h-4 w-4" aria-hidden="true" />
-                  绑定已有任务
+                  {t("k_9932731f")}
                 </button>
               ) : null}
               {canAcceptDuplicateRisk ? (
@@ -185,12 +185,12 @@ export function FailurePanel({
                   onClick={() => setOcrConfirmOpen(true)}
                 >
                   <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                  重新提交 OCR
+                  {t("k_6934ec36")}
                 </button>
               ) : null}
               {!descriptor ? (
                 <button type="button" className="button-link secondary" disabled title={t("k_188f7e31")}>
-                  恢复信息不可用
+                  {t("k_2659405e")}
                 </button>
               ) : null}
               <span id={ids.failure.ocrAmbiguityStatus} className="status-panel-note">
@@ -251,7 +251,7 @@ export function FailurePanel({
                     onClick={copyTraceId}
                   >
                     <Copy className="h-4 w-4" aria-hidden="true" />
-                    复制 Trace ID
+                    {t("k_c6a0024b")}
                   </button>
                 ) : null}
                 <button
@@ -261,7 +261,7 @@ export function FailurePanel({
                   onClick={openProviderSettings}
                 >
                   <Settings2 className="h-4 w-4" aria-hidden="true" />
-                  切换 OCR 服务
+                  {t("k_122b337d")}
                 </button>
                 <span id={ids.failure.traceFeedback} className="status-panel-note" role="status">
                   {recoveryFeedback || (recovery.traceId ? `Trace ID：${recovery.traceId}` : "")}
@@ -286,7 +286,7 @@ export function FailurePanel({
                 title={rerun.disabled ? rerunDisabledReason : undefined}
                 onClick={rerun.run}
               >
-                从断点恢复/重新运行
+                {t("k_7f57eb05")}
               </button>
               <span id={ids.failure.rerunStatus} className="status-panel-note">
                 {rerun.status || t("k_333a50c7")}
@@ -297,13 +297,13 @@ export function FailurePanel({
         </div>
 
         <details className="status-detail-technical-details">
-          <summary>技术详情</summary>
+          <summary>{t("k_9eb33f79")}</summary>
           <div className="info-list detail-info-list">
-            <div className="info-row"><span className="label">分类</span><span id={ids.failure.category} className="info-value mono">{failure.category}</span></div>
-            <div className="info-row"><span className="label">阶段</span><span id={ids.failure.stage} className="info-value">{failure.stage}</span></div>
-            <div className="info-row"><span className="label">可重试</span><span id={ids.failure.retryable} className="info-value">{failure.retryable}</span></div>
-            <div className="info-row status-detail-failure-detail-wide"><span className="label">建议</span><span id={ids.failure.suggestion} className="info-value">{failure.suggestion}</span></div>
-            <div className="info-row status-detail-failure-detail-wide"><span className="label">最近日志</span><span id={ids.failure.lastLogLine} className="info-value mono">{failure.lastLogLine}</span></div>
+            <div className="info-row"><span className="label">{t("k_435c5259")}</span><span id={ids.failure.category} className="info-value mono">{failure.category}</span></div>
+            <div className="info-row"><span className="label">{t("k_4ca39faa")}</span><span id={ids.failure.stage} className="info-value">{failure.stage}</span></div>
+            <div className="info-row"><span className="label">{t("k_5ffe0b99")}</span><span id={ids.failure.retryable} className="info-value">{failure.retryable}</span></div>
+            <div className="info-row status-detail-failure-detail-wide"><span className="label">{t("k_c5134eb1")}</span><span id={ids.failure.suggestion} className="info-value">{failure.suggestion}</span></div>
+            <div className="info-row status-detail-failure-detail-wide"><span className="label">{t("k_70f1aab1")}</span><span id={ids.failure.lastLogLine} className="info-value mono">{failure.lastLogLine}</span></div>
           </div>
         </details>
       </section>
@@ -318,7 +318,7 @@ export function FailurePanel({
             title={t("k_d10487ee")}
             description={(
               <>
-                <span>上游可能已经收到上一次请求。继续会创建新的 OCR 任务，可能造成重复处理或计费。</span>
+                <span>{t("k_0a31dd35")}</span>
                 {overview.ocrAmbiguity.status ? (
                   <span className="status-panel-note" role="status">{overview.ocrAmbiguity.status}</span>
                 ) : null}

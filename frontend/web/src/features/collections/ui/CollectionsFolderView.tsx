@@ -32,12 +32,12 @@ export function CollectionsFolderView({
           className="categories-back-btn"
           onClick={onBack}
         >
-          ← 返回合集
+          {t("k_960da141")}
         </button>
         <h2>{folder.name}</h2>
       </div>
       {loading ? (
-        <div className="events-empty">正在加载…</div>
+        <div className="events-empty">{t("k_1d08846f")}</div>
       ) : error ? (
         <div className="events-empty">
           <p>{error}</p>
@@ -47,7 +47,7 @@ export function CollectionsFolderView({
             style={{ marginTop: 12 }}
             onClick={onRetry}
           >
-            重试
+            {t("k_e2d53a6d")}
           </button>
         </div>
       ) : items.length === 0 ? (

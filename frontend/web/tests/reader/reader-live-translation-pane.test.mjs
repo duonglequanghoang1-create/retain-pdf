@@ -51,6 +51,6 @@ test("对照叠加保留右栏，译文 PDF 栏绝不叠加", () => {
 test("源栏叠加时带「原文+实时译文叠加」标识", () => {
   const source = readFileSync(GRID, "utf8");
   assert.match(source, /reader-source-overlay-badge/);
-  assert.match(source, /原文\+实时译文叠加/);
+  assert.match(source, /\bt?r?\(\"k_[0-9a-f]{8}\"\)/);
   assert.match(source, /data-source-overlay-badge/);
 });

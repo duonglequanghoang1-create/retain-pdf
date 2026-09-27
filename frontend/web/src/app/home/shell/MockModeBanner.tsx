@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { isMockMode, mockScenario } from "@/platform/config/runtime.js";
 // Mock 演示模式提示条：URL 带 ?mock=demo / parallel 等时显示。
 // 引导用户打开馆藏书 → 翻译 Tab → 翻译整本，看 live 进度动画。
@@ -14,10 +15,9 @@ export function MockModeBanner() {
       role="status"
       data-mock-scenario={scenario}
     >
-      <strong>Mock 演示模式</strong>
+      <strong>{t("k_b7ae19ec")}</strong>
       <span>
-        ：不连真实后端。打开带「存档」徽标的书 →「翻译」Tab →「翻译整本」，
-        可在详情内看到约 16 秒的假进度（OCR → 翻译 → 渲染 → 完成）。
+        {t("k_58872c2b")}
       </span>
     </div>
   );

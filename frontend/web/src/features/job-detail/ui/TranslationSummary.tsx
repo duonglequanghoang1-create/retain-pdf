@@ -20,10 +20,10 @@ export function TranslationSummary({ translation }) {
   return (
     <section className="translation-summary-shell">
       <div className="translation-summary-grid">
-        <div className="translation-summary-card"><span className="label">已翻译</span><span id={ids.countTranslated} className="info-value">{counts.translated ?? 0}</span></div>
-        <div className="translation-summary-card"><span className="label">部分翻译</span><span id={ids.countPartiallyTranslated} className="info-value">{counts.partially_translated ?? 0}</span></div>
-        <div className="translation-summary-card"><span className="label">保留原文</span><span id={ids.countKeptOrigin} className="info-value">{counts.kept_origin ?? 0}</span></div>
-        <div className="translation-summary-card"><span className="label">失败</span><span id={ids.countFailed} className="info-value">{counts.failed ?? 0}</span></div>
+        <div className="translation-summary-card"><span className="label">{t("k_6b1aa462")}</span><span id={ids.countTranslated} className="info-value">{counts.translated ?? 0}</span></div>
+        <div className="translation-summary-card"><span className="label">{t("k_89351c86")}</span><span id={ids.countPartiallyTranslated} className="info-value">{counts.partially_translated ?? 0}</span></div>
+        <div className="translation-summary-card"><span className="label">{t("k_a80b7cd4")}</span><span id={ids.countKeptOrigin} className="info-value">{counts.kept_origin ?? 0}</span></div>
+        <div className="translation-summary-card"><span className="label">{t("k_3e3c8068")}</span><span id={ids.countFailed} className="info-value">{counts.failed ?? 0}</span></div>
         <div className="translation-summary-card"><span className="label">Provider</span><span id={ids.providerFamily} className="info-value">{providerFamily}</span></div>
       </div>
       <div className="translation-summary-notes">

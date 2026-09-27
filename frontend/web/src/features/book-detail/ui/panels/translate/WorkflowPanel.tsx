@@ -141,7 +141,7 @@ export function BookTranslationWorkflowPanel({
         onTranslate={onTranslate}
       />
       {isActive ? (
-        <p className="text-[11px] text-muted-foreground">实时译文随 OCR 逐页可见，无需等待全部完成。</p>
+        <p className="text-[11px] text-muted-foreground">{t("k_cdbf5497")}</p>
       ) : null}
     </div>
   );

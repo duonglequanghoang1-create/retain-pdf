@@ -33,8 +33,8 @@ export function ReaderFabMenuHeader({ onClose }: ReaderFabMenuHeaderProps): Reac
   return (
     <header className="reader-fab-menu-head">
       <div className="reader-fab-menu-head-text">
-        <strong>工具</strong>
-        <span>拖动圆钮可移动</span>
+        <strong>{t("k_a72ef18d")}</strong>
+        <span>{t("k_c16d4427")}</span>
       </div>
       <button
         type="button"
@@ -105,7 +105,7 @@ export function ReaderFabDownloadSection({
     <div className="reader-fab-section" role="group" aria-label={t("k_2b9d0131")}>
       <div className="reader-fab-section-head">
         <Download size={12} strokeWidth={2.5} aria-hidden />
-        <span>下载 PDF</span>
+        <span>{t("k_8aa3abe1")}</span>
       </div>
       <div className="reader-fab-download-grid">
         {items.map((action, index) => {
@@ -139,7 +139,7 @@ export function ReaderFabDownloadSection({
         })}
       </div>
       {items.every((a) => !trimReaderDownloadString(urls[a])) ? (
-        <p className="reader-fab-empty">产物尚未就绪</p>
+        <p className="reader-fab-empty">{t("k_0dd4d772")}</p>
       ) : null}
     </div>
   );

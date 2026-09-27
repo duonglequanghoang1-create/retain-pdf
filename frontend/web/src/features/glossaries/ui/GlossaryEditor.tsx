@@ -17,11 +17,11 @@ export function GlossaryEditor({ entries, onFieldChange, onRemoveRow }) {
       <table className="glossary-table">
         <thead>
           <tr>
-            <th className="glossary-col-source">原词</th>
-            <th className="glossary-col-target">译文</th>
-            <th className="glossary-col-note">备注</th>
-            <th className="glossary-col-level">类型</th>
-            <th className="glossary-col-match">匹配</th>
+            <th className="glossary-col-source">{t("k_45c6f684")}</th>
+            <th className="glossary-col-target">{t("k_647e0016")}</th>
+            <th className="glossary-col-note">{t("k_e0361480")}</th>
+            <th className="glossary-col-level">{t("k_e4e46c72")}</th>
+            <th className="glossary-col-match">{t("k_c7127bb6")}</th>
             <th className="glossary-col-action"></th>
           </tr>
         </thead>

@@ -88,7 +88,7 @@ function ArtifactRow({
             onClick={() => onPreview(item)}
           >
             <ExternalLink aria-hidden="true" />
-            <small>查看</small>
+            <small>{t("k_f7acefd2")}</small>
           </button>
         ) : null}
         <button
@@ -153,7 +153,7 @@ export function ArtifactCenterView({
                   onClick={() => onOpenJob(previewJob.jobId)}
                 >
                   <ExternalLink aria-hidden="true" />
-                  <small>查看</small>
+                  <small>{t("k_f7acefd2")}</small>
                 </button>
               ) : null}
             </header>
@@ -171,13 +171,13 @@ export function ArtifactCenterView({
               </ul>
             ) : (
               <p className="book-detail-artifact-empty">
-                任务已记录，当前没有后端可下载产物。
+                {t("k_cb721e58")}
               </p>
             )}
           </section>
         );
       })}
-      {loading ? <p className="text-[10px] text-muted-foreground" role="status">正在读取任务产物…</p> : null}
+      {loading ? <p className="text-[10px] text-muted-foreground" role="status">{t("k_2a0a98b8")}</p> : null}
       {error ? <p className="text-[10px] text-destructive" role="alert">{error}</p> : null}
     </div>
   );

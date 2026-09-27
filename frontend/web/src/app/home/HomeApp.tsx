@@ -186,7 +186,7 @@ function SettingsDialogSlot() {
       onPrepareCredentialPanels={(options) => credentials?.feature?.prepareCredentialsPanels?.(options)}
       credentialsWorkbenchSlot={<CredentialsWorkbench />}
       apiPaneSetupHintSlot={
-        <p id={CREDENTIAL_DOM_IDS.browser.subtitle} className="muted">先配好接口再开始</p>
+        <p id={CREDENTIAL_DOM_IDS.browser.subtitle} className="muted">{t("k_f6971872")}</p>
       }
       appUpdateBannerSlot={<AppUpdateBannerSlot />}
     />
@@ -254,7 +254,7 @@ function HomeShell() {
                   aria-label={t("k_11d02415")}
                   onClick={() => setTasksOpen(false)}
                 >
-                  ← 返回
+                  {t("k_4968e7f6")}
                 </button>
               </div>
               <TaskCenterSlot />
@@ -281,7 +281,7 @@ function HomeShell() {
             <HomeAskView />
           ) : null}
         </div>
-        <button id="open-query-btn" type="button" className="secondary hidden" aria-hidden="true">最近任务</button>
+        <button id="open-query-btn" type="button" className="secondary hidden" aria-hidden="true">{t("k_abc5c37d")}</button>
         <SettingsDialogSlot />
         <IngestDialog hiddenInputsSlot={<HiddenCredentialInputs />} />
       </main>

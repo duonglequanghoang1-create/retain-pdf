@@ -66,10 +66,10 @@ export function LibraryBatchToolbar({
           type="button"
           className="shrink-0 rounded-[var(--btn-radius)] px-2 py-1 text-xs font-medium text-muted-foreground transition active:scale-95 hover:bg-muted/40 hover:text-foreground"
           onClick={onCancel}
-        >取消</button>
+        >{t("k_4d0b4688")}</button>
 
         <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
-          已选 {count}{Number.isFinite(totalSelectable) ? ` / ${totalSelectable}` : ""}
+          {t("k_f24ddc2b")} {count}{Number.isFinite(totalSelectable) ? ` / ${totalSelectable}` : ""}
         </span>
 
         <button
@@ -91,7 +91,7 @@ export function LibraryBatchToolbar({
               onClick={() => setCollectionsOpen((v) => !v)}
             >
               <IconFolderPlus className="opacity-70" />
-              加入合集
+              {t("k_ccafc276")}
             </button>
             {collectionsOpen ? (
               <div
@@ -120,7 +120,7 @@ export function LibraryBatchToolbar({
             onClick={onDelete}
           >
             <IconTrash />
-            删除
+            {t("k_3755f56f")}
           </button>
         </div>
       </div>

@@ -98,7 +98,7 @@ export function ReaderFab(props: ReaderFabProps): ReactElement {
                   <StickyNote size={18} strokeWidth={2} />
                 </span>
                 <span className="reader-fab-row-copy">
-                  <span className="reader-fab-row-title">批注</span>
+                  <span className="reader-fab-row-title">{t("k_290d5385")}</span>
                   <span className="reader-fab-row-sub">
                     {notesActive ? t("k_803658e0") : t("k_e1428aac")}
                   </span>

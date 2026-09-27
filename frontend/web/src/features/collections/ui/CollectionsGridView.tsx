@@ -33,11 +33,11 @@ export function CollectionsGridView({
           className="app-button"
           onClick={onCreate}
         >
-          新建合集
+          {t("k_5a21456c")}
         </button>
       </div>
       {loading ? (
-        <div className="events-empty">正在加载合集…</div>
+        <div className="events-empty">{t("k_c99c2250")}</div>
       ) : error ? (
         <div className="events-empty">
           <p>{error}</p>
@@ -47,7 +47,7 @@ export function CollectionsGridView({
             style={{ marginTop: 12 }}
             onClick={onRetry}
           >
-            重试
+            {t("k_e2d53a6d")}
           </button>
         </div>
       ) : collections.length === 0 ? (
@@ -62,7 +62,7 @@ export function CollectionsGridView({
             className="app-button empty-state-action"
             onClick={onCreate}
           >
-            新建合集
+            {t("k_5a21456c")}
           </button>
         </EmptyState>
       ) : (
@@ -76,7 +76,7 @@ export function CollectionsGridView({
               >
                 <FolderCoverStack items={previews[collection.collection_id]} />
                 <span className="category-card-name" title={collection.name}>{collection.name}</span>
-                <span className="category-card-count">{collection.document_count} 本</span>
+                <span className="category-card-count">{collection.document_count} {t("k_d3cc0cab")}</span>
               </button>
               <button
                 type="button"

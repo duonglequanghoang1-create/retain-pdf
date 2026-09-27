@@ -1,3 +1,4 @@
+import { t } from "@retainpdf/i18n";
 import { EventsList, eventsStatusText } from "../EventsList.jsx";
 import type { StatusDetailOverview } from "../../domain/status-detail-store.js";
 import { STATUS_DETAIL_DIALOG_IDS } from "../../domain/status-detail-dom-ids.js";
@@ -16,8 +17,8 @@ export function EventsPanel({ overview, active }: EventsPanelProps) {
       <section className="status-detail-section">
         <div className="status-detail-section-head">
           <div>
-            <h3>任务活动</h3>
-            <p>按时间倒序查看任务发生的变化</p>
+            <h3>{t("k_78d67d8c")}</h3>
+            <p>{t("k_1df08eb8")}</p>
           </div>
           <span id={ids.events.status} className="status-panel-note">
             {eventsStatusText(overview.eventsPayload)}

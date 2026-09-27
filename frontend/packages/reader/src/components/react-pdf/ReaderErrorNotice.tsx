@@ -38,7 +38,7 @@ export function ReaderErrorNotice({
   return (
     <div className="reader-error-notice" role="status" data-reader-error-notice="true">
       <span className="reader-error-notice-text">
-        {failedParts.join("、")}加载失败，正文仍可正常阅读。
+        {failedParts.join("、")}{t("k_7de8a75d")}
       </span>
       <button
         type="button"

@@ -110,7 +110,7 @@ export function ProcessingJobSummary({
         </div>
       ) : null}
       {elapsedMs !== null && subject ? (
-        <p className="mt-1.5 text-xs text-muted-foreground">{subject} 已用 {formatElapsed(elapsedMs)}</p>
+        <p className="mt-1.5 text-xs text-muted-foreground">{subject} {t("k_4c9426f3")} {formatElapsed(elapsedMs)}</p>
       ) : null}
     </div>
   );

@@ -32,7 +32,7 @@ export declare const resolveReaderJobId: (...a: any[]) => string;
 export declare const resolveReaderArtifactUrl: (...a: any[]) => string;
 export declare const resolveReaderSourcePdf: (...a: any[]) => any;
 export declare const resolveReaderTranslatedPdfUrl: (...a: any[]) => string;
-export { READER_PROGRESS_COPY } from "./shared/state/page-state.js";
+export { readerProgressCopy } from "./shared/state/page-state.js";
 export { READER_DOWNLOAD_ACTIONS, disabledReason as readerDownloadDisabledReason, trimString as trimReaderDownloadString, } from "./shared/state/downloads/resolve.js";
 export declare const resolveReaderDownloadName: typeof defaultResolveReaderDownloadName;
 export declare const resolveReaderDownloadUrls: typeof defaultResolveReaderDownloadUrls;

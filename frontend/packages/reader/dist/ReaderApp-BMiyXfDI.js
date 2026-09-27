@@ -4,20 +4,20 @@ var Cn = (e) => {
 var Ln = (e, t, n) => t.has(e) || Cn("Cannot " + n);
 var et = (e, t, n) => (Ln(e, t, "read from private field"), n ? n.call(e) : t.get(e)), zn = (e, t, n) => t.has(e) ? Cn("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, n), Dn = (e, t, n, r) => (Ln(e, t, "write to private field"), r ? r.call(e, n) : t.set(e, n), n);
 import { jsxs as z, jsx as p, Fragment as At } from "react/jsx-runtime";
+import { t as y } from "@retainpdf/i18n";
 import { useMemo as q, useState as C, useEffect as $, useCallback as N, useRef as x, useLayoutEffect as $e, memo as an, forwardRef as po, useImperativeHandle as sn, createContext as cn, useContext as ln, useSyncExternalStore as ho, useId as dn, Suspense as go, lazy as un } from "react";
 import { requireAdapter as ve, getReaderAdapters as de } from "./adapters.js";
-import { resolveReaderDownloadName as bo, createReaderServerFavoritesPort as yo, resolveReaderDownloadUrls as vo, READER_PROGRESS_COPY as Re, trimString as ct, READER_DOWNLOAD_ACTIONS as wo, disabledReason as So } from "./runtime/state.js";
-import { d as ko } from "./ask-answerer--8DnuY26.js";
+import { i as bo, d as yo, j as vo, g as Re, t as ct, R as wo, f as So } from "./page-state-CmBNULWh.js";
+import { d as ko } from "./ask-answerer-I2yuqneN.js";
 import "@retainpdf/api/conversations";
 import { r as Po, b as Io } from "./page-config-Ct7qR5rm.js";
 import { c as Ro, n as To, f as Dt, h as On, a as _o, b as Eo, i as kr, p as Nt, g as Pr, r as Ir, j as Fn, e as Mo } from "./reader-regions-DsePY7B_.js";
-import { t as y } from "./i18n-Bsr2eycf.js";
 import { i as Ao, c as No } from "./live-translation-CbniFg2b.js";
-import { sortByPageAndCreatedAt as xo, buildAnnotationsMarkdown as Co, groupByPageAndCreatedAt as Lo } from "./runtime/content.js";
+import { d as xo, b as Co, c as Lo } from "./view-model-BUJHLlQm.js";
 import { toast as qt, Toaster as zo } from "sonner";
 import { X as Qe, Radio as Do, FileText as Rr, Columns2 as Tr, Languages as _r, FileCode2 as Er, Sparkles as fn, GripHorizontal as Oo, StickyNote as xt, Sigma as Fo, Table2 as $o, Type as jo, Image as Uo, Check as Bo, Copy as Ho, Keyboard as Wo, Download as Jo, Bookmark as qo } from "lucide-react";
 import { pdfjs as Vo, Page as Ko, Document as Go } from "react-pdf";
-import { e as Yo, m as Zo, a as Xo } from "./markdown-math-CgnL-C9d.js";
+import { e as Yo, m as Zo, a as Xo } from "./markdown-math-DjIC5Aa5.js";
 const Qo = (...e) => {
   var t, n;
   return ((n = (t = de()) == null ? void 0 : t.isMockMode) == null ? void 0 : n.call(t, ...e)) ?? !1;
@@ -571,7 +571,7 @@ function Na(e) {
   ), [ae, re] = C({
     loading: !0,
     percent: 4,
-    text: Re.boot,
+    text: Re().boot,
     stage: "progress",
     failed: !1
   });
@@ -601,10 +601,10 @@ function Na(e) {
       R(!0), re({
         loading: !1,
         percent: 100,
-        text: Re.ready,
+        text: Re().ready,
         stage: "ready",
         failed: !1
-      }), Vt({ percent: 100, text: Re.ready, stage: "ready" });
+      }), Vt({ percent: 100, text: Re().ready, stage: "ready" });
     }
     function ge() {
       return i != null && i.documentId ? Un(
@@ -732,7 +732,7 @@ function Na(e) {
         manifestPayload: V.manifestPayload || null,
         sessionIdentity: c
       }), L(i ? [] : Ro(V.regionsPayload)), H(i ? { source: null, translated: null } : To(V.readerMetadata)), oe(i ? wt : V.readerErrors ?? wt), !Ie && !Me) {
-        Q(Re.failed, Re.failed);
+        Q(Re().failed, Re().failed);
         return;
       }
       const Be = await Aa({
@@ -750,14 +750,14 @@ function Na(e) {
       }
     }
     async function ce() {
-      R(!1), E(null), T(null), L([]), H({ source: null, translated: null }), oe(wt), Rt(re, 8, Re.metadata, "metadata");
+      R(!1), E(null), T(null), L([]), H({ source: null, translated: null }), oe(wt), Rt(re, 8, Re().metadata, "metadata");
       try {
         if (s) {
           await he();
           return;
         }
         if (!t) {
-          Q(Re.failed, Re.failed);
+          Q(Re().failed, Re().failed);
           return;
         }
         await U();
@@ -775,7 +775,7 @@ function Na(e) {
           d({ type: "missing-document-job", documentId: r, jobId: t }), d({ type: "cleared-resolved-document-job" }), m("source");
           return;
         }
-        const se = ee instanceof Error ? ee.message : Re.failed;
+        const se = ee instanceof Error ? ee.message : Re().failed;
         Q(se, se);
       }
     }
@@ -6650,7 +6650,7 @@ function cl() {
     /* @__PURE__ */ p("download-toast", { style: { display: "none" }, "aria-hidden": "true", ref: e })
   ] });
 }
-const ll = un(() => import("./ReaderFavoritesPanel-DJsR6Xy7.js").then((e) => ({ default: e.ReaderFavoritesPanel }))), dl = un(() => import("./ReaderMarkdownPanel-B_8JLRvr.js").then((e) => ({ default: e.ReaderMarkdownPanel }))), ul = un(() => import("./ReaderAiPanel-CNoezfRA.js").then((e) => ({ default: e.ReaderAiPanel })));
+const ll = un(() => import("./ReaderFavoritesPanel-Duz_fDyT.js").then((e) => ({ default: e.ReaderFavoritesPanel }))), dl = un(() => import("./ReaderMarkdownPanel-C5tHFarp.js").then((e) => ({ default: e.ReaderMarkdownPanel }))), ul = un(() => import("./ReaderAiPanel-Btes66uJ.js").then((e) => ({ default: e.ReaderAiPanel })));
 function Jt(e) {
   const t = x(!1);
   return e && (t.current = !0), t.current;
@@ -6891,4 +6891,4 @@ export {
   Fl as j,
   Ol as r
 };
-//# sourceMappingURL=ReaderApp-DztBjLD_.js.map
+//# sourceMappingURL=ReaderApp-BMiyXfDI.js.map

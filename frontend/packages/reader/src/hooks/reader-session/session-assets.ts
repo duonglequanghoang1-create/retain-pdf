@@ -15,7 +15,7 @@ import {
   isMockMode,
   MOCK_DOCUMENT_SOURCE_PDF_URL,
   readerSessionDataPort,
-  READER_PROGRESS_COPY,
+  readerProgressCopy,
   API_PREFIX,
 } from "../../external.js";
 import {
@@ -137,7 +137,7 @@ export function useSessionAssets(options: {
   const [boot, setBoot] = useState<ReaderSessionState["boot"]>({
     loading: true,
     percent: 4,
-    text: READER_PROGRESS_COPY.boot,
+    text: readerProgressCopy().boot,
     stage: "progress",
     failed: false,
   });
@@ -180,11 +180,11 @@ export function useSessionAssets(options: {
       setBoot({
         loading: false,
         percent: 100,
-        text: READER_PROGRESS_COPY.ready,
+        text: readerProgressCopy().ready,
         stage: "ready",
         failed: false,
       });
-      postProgress({ percent: 100, text: READER_PROGRESS_COPY.ready, stage: "ready" });
+      postProgress({ percent: 100, text: readerProgressCopy().ready, stage: "ready" });
     }
 
     function resolveSourceOnlyUrl(): string {
@@ -377,7 +377,7 @@ export function useSessionAssets(options: {
         : payload.readerErrors ?? NO_OPTIONAL_ARTIFACT_ERRORS);
 
       if (!sourceFinal && !translatedFinal) {
-        failBoot(READER_PROGRESS_COPY.failed, READER_PROGRESS_COPY.failed);
+        failBoot(readerProgressCopy().failed, readerProgressCopy().failed);
         return;
       }
 
@@ -407,7 +407,7 @@ export function useSessionAssets(options: {
       setRegions([]);
       setReaderMetadata({ source: null, translated: null });
       setReaderErrors(NO_OPTIONAL_ARTIFACT_ERRORS);
-      setBootProgress(setBoot, 8, READER_PROGRESS_COPY.metadata, "metadata");
+      setBootProgress(setBoot, 8, readerProgressCopy().metadata, "metadata");
 
       try {
         if (sourceOnly) {
@@ -416,7 +416,7 @@ export function useSessionAssets(options: {
         }
 
         if (!sessionJobId) {
-          failBoot(READER_PROGRESS_COPY.failed, READER_PROGRESS_COPY.failed);
+          failBoot(readerProgressCopy().failed, readerProgressCopy().failed);
           return;
         }
 
@@ -446,7 +446,7 @@ export function useSessionAssets(options: {
           switchSessionMode("source");
           return;
         }
-        const text = err instanceof Error ? err.message : READER_PROGRESS_COPY.failed;
+        const text = err instanceof Error ? err.message : readerProgressCopy().failed;
         failBoot(text, text);
       }
     }

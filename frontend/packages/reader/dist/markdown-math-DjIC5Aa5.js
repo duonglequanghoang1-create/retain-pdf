@@ -1,4 +1,4 @@
-import { t as m } from "./i18n-Bsr2eycf.js";
+import { t as m } from "@retainpdf/i18n";
 const _ = "RP_MATH_", E = "";
 let p = null, $ = null;
 function K(e) {
@@ -300,4 +300,4 @@ export {
   K as s,
   Z as w
 };
-//# sourceMappingURL=markdown-math-CgnL-C9d.js.map
+//# sourceMappingURL=markdown-math-DjIC5Aa5.js.map

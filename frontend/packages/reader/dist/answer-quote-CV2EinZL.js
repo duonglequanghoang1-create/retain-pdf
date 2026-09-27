@@ -1,6 +1,6 @@
 import { n as T } from "./markdown-payload-kK3ewW_I.js";
-import { t as m } from "./i18n-Bsr2eycf.js";
-import { l as I } from "./ask-answerer--8DnuY26.js";
+import { t as m } from "@retainpdf/i18n";
+import { l as I } from "./ask-answerer-I2yuqneN.js";
 function B(t = null) {
   return T(t).content.trim();
 }
@@ -291,4 +291,4 @@ export {
   l as t,
   W as v
 };
-//# sourceMappingURL=answer-quote-C6V12zVh.js.map
+//# sourceMappingURL=answer-quote-CV2EinZL.js.map

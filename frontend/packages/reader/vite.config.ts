@@ -1,7 +1,9 @@
 import { defineConfig } from "vite";
 import path from "path";
 
-const packageDependencyPattern = /^(?:ai|react|react-dom|react-pdf|pdfjs-dist|mathjax-full|marked|markstream-react|katex|lucide-react|sonner|@ai-sdk\/react|@assistant-ui\/react|@retainpdf\/api|@retainpdf\/domain)(?:\/.*)?$/;
+// @retainpdf/i18n 也必须 external：它持有当前语言这份模块级状态，被 inline
+// 进本包就会多出一份 t()，切语言只改到其中一个，另一个仍停在旧语言。
+const packageDependencyPattern = /^(?:ai|react|react-dom|react-pdf|pdfjs-dist|mathjax-full|marked|markstream-react|katex|lucide-react|sonner|@ai-sdk\/react|@assistant-ui\/react|@retainpdf\/api|@retainpdf\/domain|@retainpdf\/i18n)(?:\/.*)?$/;
 
 export default defineConfig({
   build: {

@@ -1,9 +1,9 @@
 import { jsxs as ee, jsx as U } from "react/jsx-runtime";
 import { useRef as I, useState as $, useEffect as me } from "react";
 import { Search as Ce, ChevronUp as Le, ChevronDown as _e, ListTree as Ne, FileCode2 as Re } from "lucide-react";
-import { d as ge, r as de, e as we, b as Ie } from "./ReaderApp-DztBjLD_.js";
-import { e as ke, m as Oe, a as be } from "./markdown-math-CgnL-C9d.js";
-import { t as f } from "./i18n-Bsr2eycf.js";
+import { d as ge, r as de, e as we, b as Ie } from "./ReaderApp-BMiyXfDI.js";
+import { e as ke, m as Oe, a as be } from "./markdown-math-DjIC5Aa5.js";
+import { t as f } from "@retainpdf/i18n";
 import { n as Se } from "./markdown-payload-kK3ewW_I.js";
 const pe = "h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, pre";
 function xe(t) {
@@ -544,4 +544,4 @@ export {
   Te as isProtectedMarkdownAssetUrl,
   ve as startMarkdownImageLoading
 };
-//# sourceMappingURL=ReaderMarkdownPanel-B_8JLRvr.js.map
+//# sourceMappingURL=ReaderMarkdownPanel-C5tHFarp.js.map

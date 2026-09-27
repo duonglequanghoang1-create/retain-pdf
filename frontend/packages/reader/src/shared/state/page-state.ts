@@ -1,15 +1,19 @@
 import { t } from "@retainpdf/i18n";
 
 // 共享真值（原 frontend/web/src/js/reader/page-state.ts），纯常量 + 纯函数，无外部依赖
-export const READER_PROGRESS_COPY = Object.freeze({
-  boot: t("k_4268c4a0"),
-  metadata: t("k_9f2b6df7"),
-  both: t("k_2a3a255d"),
-  sourceOnly: t("k_16baf569"),
-  translatedOnly: t("k_49013855"),
-  ready: t("k_ed712d1e"),
-  failed: t("k_239dbe09"),
-});
+// 做成函数而不是模块级常量：t() 读的是模块级当前语言，常量在 import 阶段
+// 就求值完，那一刻 initI18n 还没跑，进度文案会永远停在中文，切语言也不刷新。
+export function readerProgressCopy(): Record<string, string> {
+  return Object.freeze({
+    boot: t("k_4268c4a0"),
+    metadata: t("k_9f2b6df7"),
+    both: t("k_2a3a255d"),
+    sourceOnly: t("k_16baf569"),
+    translatedOnly: t("k_49013855"),
+    ready: t("k_ed712d1e"),
+    failed: t("k_239dbe09"),
+  });
+}
 
 export function createReaderPageState() {
   return {
@@ -42,7 +46,7 @@ export function resetReaderProgressState(state: any) {
 
 export function computeReaderProgressSnapshot(
   progressState: any,
-  copy: any = READER_PROGRESS_COPY,
+  copy: any = readerProgressCopy(),
 ) {
   if (!progressState?.metadataReady) {
     return { percent: 8, text: copy.boot, stage: "boot" };

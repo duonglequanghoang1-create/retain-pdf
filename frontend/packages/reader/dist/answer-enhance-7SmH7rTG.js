@@ -1,4 +1,4 @@
-import { t as w } from "./i18n-Bsr2eycf.js";
+import { t as w } from "@retainpdf/i18n";
 let v = 0, b = null, k = null, C = !1;
 function A(t = Date.now()) {
   return t < v;
@@ -536,4 +536,4 @@ export {
   rt as y,
   M as z
 };
-//# sourceMappingURL=answer-enhance-HajrqUpu.js.map
+//# sourceMappingURL=answer-enhance-7SmH7rTG.js.map

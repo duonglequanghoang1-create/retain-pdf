@@ -113,7 +113,7 @@ export const resolveReaderJobId = (...a: any[]): string => (getReaderAdapters()?
 export const resolveReaderArtifactUrl = (...a: any[]) => getReaderAdapters()?.resolveReaderArtifactUrl?.(...a) ?? "";
 export const resolveReaderSourcePdf = (...a: any[]) => getReaderAdapters()?.resolveReaderSourcePdf?.(...a) ?? null;
 export const resolveReaderTranslatedPdfUrl = (...a: any[]) => getReaderAdapters()?.resolveReaderTranslatedPdfUrl?.(...a) ?? "";
-export { READER_PROGRESS_COPY } from "./shared/state/page-state.js";
+export { readerProgressCopy } from "./shared/state/page-state.js";
 
 // —— 下载 ——
 export {

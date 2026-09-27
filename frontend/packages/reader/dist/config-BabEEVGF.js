@@ -1,4 +1,4 @@
-import { t as s } from "./i18n-Bsr2eycf.js";
+import { t as s } from "@retainpdf/i18n";
 function f(...e) {
   for (const t of e) {
     const n = `${t ?? ""}`.trim();
@@ -57,4 +57,4 @@ export {
   S as r,
   E as s
 };
-//# sourceMappingURL=config-CMSbavVs.js.map
+//# sourceMappingURL=config-BabEEVGF.js.map

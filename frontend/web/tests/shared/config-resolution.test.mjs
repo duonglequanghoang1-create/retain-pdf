@@ -167,17 +167,26 @@ function walk(dir, out = []) {
 }
 
 test("401 提示文案只收敛一处：读取图书馆失败，请稍后重试。(status)", () => {
+  // 文案真值已随 library-books 客户端收敛到 @retainpdf/api；
+  // frontend/web/src 内不得再出现副本(旧的 src/js/api/library-books.ts 已删除)。
+  // 接入 i18n 后原文进了消息表,源码里只剩 key,所以副本扫描要同时看原文与 key。
+  // 消息表里这条带 {{0}} 状态码占位,原文比对要用占位前那段。
+  const HINT = "读取图书馆失败";
+  const zh = JSON.parse(
+    fs.readFileSync(
+      path.join(frontendRoot, "../packages/i18n/src/messages/zh.json"),
+      "utf8",
+    ),
+  );
+  const keyOfHint = Object.keys(zh).filter((k) => zh[k].includes(HINT));
+  assert.equal(keyOfHint.length, 1, "401 提示在消息表里应只有一条");
+
   const hits = [];
   for (const file of walk(path.join(frontendRoot, "src"))) {
     const content = fs.readFileSync(file, "utf8");
-    if (content.includes("读取图书馆失败")) hits.push(path.relative(frontendRoot, file));
+    if (content.includes(HINT) || content.includes(keyOfHint[0])) {
+      hits.push(path.relative(frontendRoot, file));
+    }
   }
-  // 文案真值已随 library-books 客户端收敛到 @retainpdf/api；
-  // frontend/web/src 内不得再出现副本(旧的 src/js/api/library-books.ts 已删除)。
   assert.deepEqual(hits, []);
-  const lib = fs.readFileSync(
-    path.join(frontendRoot, "../packages/api/src/library-books.ts"),
-    "utf8",
-  );
-  assert.ok(lib.includes("读取图书馆失败，请稍后重试。(${resp.status})"));
 });

@@ -33,7 +33,7 @@ export {
   resolveReaderSourcePdf,
   resolveReaderTranslatedPdfUrl,
 } from "@/features/reader/domain.js";
-export { READER_PROGRESS_COPY } from "@/features/reader/domain.js";
+export { readerProgressCopy } from "@/features/reader/domain.js";
 
 // —— 下载解析 / 受保护下载 ——
 export {

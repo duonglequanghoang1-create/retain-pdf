@@ -99,7 +99,7 @@ export {
 
 export {
   READER_DOWNLOAD_ACTIONS,
-  READER_PROGRESS_COPY,
+  readerProgressCopy,
   computeReaderProgressSnapshot,
   createReaderPageState,
   createReaderServerFavoritesPort,

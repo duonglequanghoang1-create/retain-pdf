@@ -1,18 +1,18 @@
 import { jsx as i, jsxs as E, Fragment as ve } from "react/jsx-runtime";
 import { useState as U, useRef as L, useEffect as H, useMemo as J, useCallback as G, useId as pt } from "react";
 import { Square as mt, ArrowUp as ht, Copy as gt, GitBranch as bt, RefreshCw as yt, Sigma as Ge, Table2 as kt, Image as _t, Type as wt, X as Ie, BookOpen as Ve, Sparkles as be, Loader2 as Re, FileText as Ae, ArrowDown as Ye, Quote as vt, ListTree as It, FlaskConical as Rt, ShieldCheck as Ct, Bot as Nt, ChevronUp as Mt, ChevronDown as Qe, TriangleAlert as Je, ExternalLink as St, Check as Xe, Circle as At, Plus as Tt, Pencil as xt, Trash2 as $t } from "lucide-react";
-import { g as me, h as he, i as ze, j as Et, d as Pt, b as Ot } from "./ReaderApp-DztBjLD_.js";
+import { g as me, h as he, i as ze, j as Et, d as Pt, b as Ot } from "./ReaderApp-BMiyXfDI.js";
 import { ThreadPrimitive as ae, ComposerPrimitive as ke, MessagePrimitive as Ze, ActionBarPrimitive as Me, useAui as Dt, SelectionToolbarPrimitive as zt, useExternalStoreRuntime as qt, AssistantRuntimeProvider as Bt } from "@assistant-ui/react";
-import { A as Ft } from "./AiMarkdownAnswer-6GJQhTGT.js";
+import { t as o } from "@retainpdf/i18n";
+import { A as Ft } from "./AiMarkdownAnswer-7J-eZRXt.js";
 import { r as et } from "./reader-regions-DsePY7B_.js";
-import { M as Lt, C as qe, h as jt } from "./config-CMSbavVs.js";
-import { t as o } from "./i18n-Bsr2eycf.js";
-import { b as fe, n as ce, q as Kt } from "./answer-enhance-HajrqUpu.js";
-import { b as Wt, m as Ut, s as Ht, l as tt, c as ge, d as xe, a as Gt } from "./answer-quote-C6V12zVh.js";
+import { M as Lt, C as qe, h as jt } from "./config-BabEEVGF.js";
+import { b as fe, n as ce, q as Kt } from "./answer-enhance-7SmH7rTG.js";
+import { b as Wt, m as Ut, s as Ht, l as tt, c as ge, d as xe, a as Gt } from "./answer-quote-CV2EinZL.js";
 import { Chat as Vt, useChat as Yt } from "@ai-sdk/react";
 import { describeToolEvent as Qt } from "@retainpdf/domain/ai";
 import { toSessionSummary as Jt } from "@retainpdf/domain/session";
-import { l as Xt } from "./ask-answerer--8DnuY26.js";
+import { l as Xt } from "./ask-answerer-I2yuqneN.js";
 import { getConversation as Be, messagesToBranchItems as we, nextForkConversationTitle as Zt } from "@retainpdf/api/conversations";
 import { c as Se } from "./ai-chat-ZSCffLDD.js";
 import { agentOperationShouldReplace as en, agentOperationEventSeq as tn, agentOperationShouldPoll as nn, agentOperationErrorStatus as rn, agentOperationErrorMessage as sn, resolveAgentOperationActionKey as an, clearAgentOperationActionKey as on } from "@retainpdf/api/agent-operation-model";
@@ -2709,4 +2709,4 @@ function zr({
 export {
   zr as ReaderAiPanel
 };
-//# sourceMappingURL=ReaderAiPanel-CNoezfRA.js.map
+//# sourceMappingURL=ReaderAiPanel-Btes66uJ.js.map

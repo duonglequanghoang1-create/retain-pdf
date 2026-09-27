@@ -71,10 +71,12 @@ test("Markdown-only AI composer 不受翻译状态影响并保持可输入", asy
   ]);
 
   assert.match(primitivesSource, /data-reader-ai-composer/);
-  assert.match(primitivesSource, /aria-label="AI 模式"/);
-  assert.match(primitivesSource, />阅读问答</);
+  // 接入 i18n 后这些文案进了消息表,源码里是 t("k_xxx");断言 key 的存在性,
+  // 而不是字面量——否则换语言就会让契约测试跟着一起坏。
+  assert.match(primitivesSource, /aria-label=\{t\("k_[0-9a-f]{8}"\)\}/);
+  assert.match(primitivesSource, /\{t\("k_[0-9a-f]{8}"\)\}/);
   assert.match(primitivesSource, />PDF Agent</);
-  assert.match(primitivesSource, /placeholder=\{mode === "operations" \? "描述要执行的 PDF 操作…" : "询问当前文档…"\}/);
+  assert.match(primitivesSource, /placeholder=\{mode === "operations" \? t\("k_[0-9a-f]{8}"\) : t\("k_[0-9a-f]{8}"\)\}/);
   assert.match(panelSource, /assistantMode=\{assistantMode\}/);
   assert.match(primitivesSource, /<ComposerPrimitive\.Input[\s\S]*?autoFocus/);
   assert.match(readingViewSource, /<ThreadPrimitive\.ViewportFooter/);

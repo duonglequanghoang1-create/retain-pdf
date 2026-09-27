@@ -6,6 +6,7 @@ import {
   installReaderWindowOpenGuard,
 } from "./external.js";
 import { bootTheme } from "./shared/theme/theme.js";
+import { initI18n } from "@retainpdf/i18n";
 
 export type ReaderBootOptions = {
   body?: HTMLElement;
@@ -56,6 +57,10 @@ export function bootReader(options: ReaderBootOptions = {}): Root {
   const body = options.body ?? document.body;
   const host = options.root ?? resolveReaderRoot(body);
 
+  // reader 页是独立入口，不经过 web 的 shell-boot，所以语言初始化要在这里做，
+  // 否则 t() 一直停在默认中文，用户在主页选的越南语到这一页就不生效。
+  // 幂等：detail/home 已经初始化过的话这次调用只是重新读一次存储。
+  initI18n();
   bootTheme();
   clearReaderAiNavigationLock();
   installReaderWindowOpenGuard();

@@ -1,12 +1,4 @@
-export declare const READER_PROGRESS_COPY: Readonly<{
-    boot: string;
-    metadata: string;
-    both: string;
-    sourceOnly: string;
-    translatedOnly: string;
-    ready: string;
-    failed: string;
-}>;
+export declare function readerProgressCopy(): Record<string, string>;
 export declare function createReaderPageState(): {
     reader: {
         totalPages: number;

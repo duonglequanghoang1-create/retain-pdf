@@ -1,9 +1,9 @@
 import { jsx as r, jsxs as n, Fragment as y } from "react/jsx-runtime";
+import { t as a } from "@retainpdf/i18n";
 import { useState as p, useCallback as N, useEffect as _ } from "react";
 import { Bookmark as g } from "lucide-react";
-import { c as x, f as F, A as S, b as A } from "./ReaderApp-DztBjLD_.js";
-import { t as a } from "./i18n-Bsr2eycf.js";
-import { normalizeServerFavorite as E } from "./runtime/state.js";
+import { c as x, f as F, A as S, b as A } from "./ReaderApp-BMiyXfDI.js";
+import { n as E } from "./page-state-CmBNULWh.js";
 function P(s) {
   const t = `${s || ""}`.trim();
   return t === "figure" ? a("k_a66b71e2") : t === "data" ? a("k_54b8a90b") : t === "sentence" ? a("k_046a3be9") : t || a("k_046a3be9");
@@ -88,4 +88,4 @@ function B({
 export {
   B as ReaderFavoritesPanel
 };
-//# sourceMappingURL=ReaderFavoritesPanel-DJsR6Xy7.js.map
+//# sourceMappingURL=ReaderFavoritesPanel-Duz_fDyT.js.map

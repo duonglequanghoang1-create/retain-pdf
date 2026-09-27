@@ -12,7 +12,7 @@ import { resolveReaderSourcePdf } from "./data.js";
 
 export type * from "@retainpdf/reader/runtime/state";
 
-export const READER_PROGRESS_COPY = readerState.READER_PROGRESS_COPY;
+export const readerProgressCopy = readerState.readerProgressCopy;
 export const createReaderPageState = readerState.createReaderPageState;
 export const resetReaderProgressState = readerState.resetReaderProgressState;
 export const computeReaderProgressSnapshot = readerState.computeReaderProgressSnapshot;

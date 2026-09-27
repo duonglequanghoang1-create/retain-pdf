@@ -1,4 +1,5 @@
 import test from "node:test";
+import { setLocale } from "@retainpdf/i18n";
 import assert from "node:assert/strict";
 import {
   ANNOTATION_KIND_META,
@@ -97,8 +98,22 @@ test("buildAnnotationsMarkdown 输出标题/页小节/引用块/译文/笔记", 
 });
 
 test("buildAnnotationsMarkdown 空列表输出占位文案", () => {
+  // 默认语言是中文，所以下面就是中文原文。这几个串走消息表，导出内容会跟随
+  // 当前语言；契约只要求默认语言下形态不变，所以这里断言默认语言即可。
   assert.equal(buildAnnotationsMarkdown({ title: "Attention", annotations: [] }), "# Attention 批注\n\n(暂无批注)\n");
   assert.equal(buildAnnotationsMarkdown({}), "# 批注\n\n(暂无批注)\n");
+});
+
+test("导出批注 Markdown 跟随当前语言", () => {
+  const zh = buildAnnotationsMarkdown({ title: "Attention", annotations: [] });
+  setLocale("vi");
+  try {
+    const vi = buildAnnotationsMarkdown({ title: "Attention", annotations: [] });
+    assert.notEqual(vi, zh, "切到越南语后导出内容应随之变化");
+    assert.match(vi, /Ghi chú/);
+  } finally {
+    setLocale("zh");
+  }
 });
 
 test("annotationAnchor 只暴露跳转所需的页码与块 id", () => {

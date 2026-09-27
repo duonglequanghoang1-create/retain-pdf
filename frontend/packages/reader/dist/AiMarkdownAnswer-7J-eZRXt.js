@@ -1,8 +1,8 @@
 import { jsxs as x, jsx as i, Fragment as O } from "react/jsx-runtime";
 import { useId as H, useState as T, useCallback as E, useRef as L, useEffect as P, useLayoutEffect as te, createContext as ne, useContext as X, useMemo as F } from "react";
-import { w as G, e as re, j as K, y as j, x as V, v as ae, a as oe, h as se, l as ie, g as le, u as ce } from "./answer-enhance-HajrqUpu.js";
+import { w as G, e as re, j as K, y as j, x as V, v as ae, a as oe, h as se, l as ie, g as le, u as ce } from "./answer-enhance-7SmH7rTG.js";
+import { t as b } from "@retainpdf/i18n";
 import de, { setCustomComponents as ue, PreCodeNode as fe, MathInlineNode as he } from "markstream-react";
-import { t as b } from "./i18n-Bsr2eycf.js";
 import { createPortal as me } from "react-dom";
 const pe = "retainpdf-chart", ge = 6, be = 40, we = /* @__PURE__ */ new Set(["bar", "line", "pie"]);
 function ye(e) {
@@ -636,4 +636,4 @@ function rt({
 export {
   rt as A
 };
-//# sourceMappingURL=AiMarkdownAnswer-6GJQhTGT.js.map
+//# sourceMappingURL=AiMarkdownAnswer-7J-eZRXt.js.map

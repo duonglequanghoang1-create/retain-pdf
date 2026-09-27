@@ -1,5 +1,5 @@
-import { r as X } from "./config-CMSbavVs.js";
-import { t as i } from "./i18n-Bsr2eycf.js";
+import { r as X } from "./config-BabEEVGF.js";
+import { t as i } from "@retainpdf/i18n";
 const k = "retainpdf.reader.ai.conversation.v1:";
 function p(e = {}) {
   const n = `${e.jobId || ""}`.trim(), r = `${e.documentId || ""}`.trim();
@@ -184,4 +184,4 @@ export {
   T as l,
   G as s
 };
-//# sourceMappingURL=ask-answerer--8DnuY26.js.map
+//# sourceMappingURL=ask-answerer-I2yuqneN.js.map

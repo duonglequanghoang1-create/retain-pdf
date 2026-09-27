@@ -1,5 +1,5 @@
 import { c as i, i as c } from "./live-translation-CbniFg2b.js";
-import { t as r } from "./i18n-Bsr2eycf.js";
+import { t as r } from "@retainpdf/i18n";
 import { c as p } from "./ai-chat-ZSCffLDD.js";
 function a(e) {
   return Number(e == null ? void 0 : e.status) || 0;

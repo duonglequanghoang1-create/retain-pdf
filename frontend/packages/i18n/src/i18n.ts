@@ -1,16 +1,23 @@
 // 极简 i18n 运行时——把硬编码中文收敛成 key,交给 catalog 查表。
 //
-// 为什么放在 platform:platform 是最底层,app/features/ui 都能向下 import 而不
-// 违反 layer-boundaries 四层方向门禁(ui 只能引 ui/platform)。反过来放 ui 或
-// features 就会让 platform 侧的渲染代码引不到,或者逼出 features→ui 的新依赖。
+// 为什么放在工作区包而不是 web/src/platform:frontend/packages/* 里的 38 个文件
+// 不在 @/ 别名覆盖范围内(runner 侧 alias 指向 web/src),放平台层它们引不到;
+// 反过来若放 features/ui,又会撞上 layer-boundaries 的四层方向门禁。做成包
+// 与既有 domain/ui 同级,两边都引得到,也不新增层间依赖。
 //
-// 三个设计决定,都是为了让「换语言」这件事不产生半吊子状态:
+// 四个设计决定,都是为了让「换语言」这件事不产生半吊子状态:
 //
-// 1. 消息表是静态 import,不打进动态 require——构建期就要能发现缺 key。
-// 2. t(key, args) 的 args 按位置替换 {{0}}/{{1}}。占位符原样来自源码里的
+// 1. 消息表静态 import,不打进动态 require——构建期就要能发现缺 key。
+// 2. 消息表随本模块一起静态引入,不要求调用方先 initI18n()。测试会直接 import
+//    业务模块(不经过应用入口),若 t() 依赖别处先初始化,那些路径上 t() 全部
+//    返回 key 名,界面和断言一起坏。自加载让「忘记初始化」这种错误不可能发生。
+// 3. t(key, args) 的 args 按位置替换 {{0}}/{{1}}。占位符原样来自源码里的
 //    ${expr},重构代码时表达式会跟着变,不需要动消息表。
-// 3. 缺 key 时回落到简体中文原文并打一次警告,而不是抛错或显示空串:
+// 4. 缺 key 时回落到简体中文原文并打一次警告,而不是抛错或显示空串:
 //    漏翻一条最多丑一句,崩掉整页则是把整个 UI 变成不可用。
+
+import zh from "./messages/zh.json" with { type: "json" };
+import vi from "./messages/vi.json" with { type: "json" };
 
 export type Locale = "zh" | "vi";
 
@@ -19,8 +26,11 @@ export type MessageCatalog = Record<Locale, Record<string, string>>;
 const STORAGE_KEY = "retainpdf.locale";
 const DEFAULT_LOCALE: Locale = "zh";
 
+/** 随模块载入的默认表;t() 在没显式 init 之前就用它。 */
+const BUILT_IN: MessageCatalog = { zh, vi };
+
 let activeLocale: Locale = DEFAULT_LOCALE;
-let catalogs: MessageCatalog = { zh: {}, vi: {} };
+let catalogs: MessageCatalog = BUILT_IN;
 let warned = new Set<string>();
 const listeners = new Set<() => void>();
 
@@ -43,8 +53,8 @@ function detectLocale(): Locale {
   return DEFAULT_LOCALE;
 }
 
-export function initI18n(catalog: MessageCatalog, locale?: Locale): Locale {
-  catalogs = catalog;
+export function initI18n(catalog?: MessageCatalog, locale?: Locale): Locale {
+  catalogs = catalog ?? BUILT_IN;
   activeLocale = locale ?? detectLocale();
   return activeLocale;
 }
@@ -77,9 +87,9 @@ export type TranslateArgs = ReadonlyArray<string | number> | null | undefined;
  * @param args 与源码里 ${} 出现顺序一一对应的值
  */
 export function t(key: string, args?: TranslateArgs): string {
-  const table = catalogs[activeLocale];
+  const table = catalogs[activeLocale] ?? BUILT_IN[activeLocale];
   // 同名 key 在同一语言里只能有一条;取回退值是为了容忍表里残留的中文原文。
-  const raw = table?.[key] ?? catalogs[DEFAULT_LOCALE]?.[key];
+  const raw = table?.[key] ?? BUILT_IN[DEFAULT_LOCALE]?.[key];
   if (typeof raw !== "string") {
     if (!warned.has(key)) {
       warned.add(key);

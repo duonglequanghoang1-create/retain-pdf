@@ -4,18 +4,39 @@ from retainpdf_pipeline.translate.llm.shared.control_context import RetrievalEvi
 from retainpdf_pipeline.translate.llm.shared.control_context import TranslationControlContext
 from retainpdf_pipeline.translate.llm.shared.control_context import build_translation_control_context
 from retainpdf_pipeline.translate.llm.shared.control_context import resolve_engine_profile
+from retainpdf_pipeline.translate.llm.shared.target_languages import (
+    DEFAULT_TARGET_LANG,
+    normalize_target_lang,
+    resolve_target_language_name,
+)
 from retainpdf_pipeline.translate.services.policy import TranslationPolicyConfig
 from retainpdf_pipeline.translate.services.terms import AbbreviationEntry
 from retainpdf_pipeline.translate.services.terms import GlossaryEntry
 from retainpdf_pipeline.translate.services.terms import normalize_glossary_entries
 
 
+def _resolve_target_language_pair(
+    *, target_lang: str, target_language_name: str
+) -> tuple[str, str]:
+    """Chuẩn hoá `target_lang` và suy ra tên hiển thị nhất quán.
+
+    `target_language_name` trở thành **tham số tuỳ chọn**: truyền `target_lang="vi"`
+    là đủ, tên do registry suy ra. Truyền tên sai (lệch với `target_lang`) sẽ bị
+    bỏ qua và dùng tên theo registry — vì hai trường lệch nhau tức là prompt nói
+    dịch ra tiếng A bằng cách gọi tên tiếng B, và đó luôn là lỗi, không bao giờ
+    là ý định. Cố ý **không** ném lỗi ở đây: nhiều call site trong codebase cũ
+    truyền sẵn cả hai, và chúng đang truyền đúng; ném lỗi sẽ phá chúng.
+    """
+    normalized = normalize_target_lang(target_lang or DEFAULT_TARGET_LANG)
+    return normalized, resolve_target_language_name(normalized)
+
+
 def build_translation_context(
     *,
     mode: str = "fast",
     source_lang: str = "auto",
-    target_lang: str = "zh-CN",
-    target_language_name: str = "简体中文",
+    target_lang: str = DEFAULT_TARGET_LANG,
+    target_language_name: str = "",
     domain_guidance: str = "",
     rule_guidance: str = "",
     extra_guidance: str = "",
@@ -29,11 +50,15 @@ def build_translation_context(
     glossary_mode: str = "matched",
     memory_mode: str = "matched",
 ) -> TranslationControlContext:
+    resolved_lang, resolved_name = _resolve_target_language_pair(
+        target_lang=target_lang,
+        target_language_name=target_language_name,
+    )
     return build_translation_control_context(
         mode=mode,
         source_lang=source_lang,
-        target_lang=target_lang,
-        target_language_name=target_language_name,
+        target_lang=resolved_lang,
+        target_language_name=resolved_name,
         domain_guidance=domain_guidance,
         rule_guidance=rule_guidance,
         extra_guidance=extra_guidance,
